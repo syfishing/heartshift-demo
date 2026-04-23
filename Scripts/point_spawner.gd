@@ -5,7 +5,7 @@ extends Node2D
 @export var amplitude: float = 200.0
 @export var frequency: float = 1.0
 @export var curve_line: Line2D
-# @export var line_color: Color = Color(0.2, 0.9, 1.0, 1.0)
+# @export var line_color: Color = Color(0.2, 0.9, 1.0, 1.0) # I decided it'd be better to set this in the Line2D node instead
 @export var line_width: float = 2.0
 @export var handle_strength: float = 0.25
 @export var bezier_steps_per_segment: int = 16
