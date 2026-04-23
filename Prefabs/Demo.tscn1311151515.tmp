@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b7jmlpusn5j51"]
+
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/point_spawner.gd" id="1_0jree"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_64soo"]
+
+[node name="Node2D" type="Node2D" unique_id=253205913]
+
+[node name="PointSpawner" type="Node2D" parent="." unique_id=1240438056]
+script = ExtResource("1_0jree")
+
+[node name="Sprite2D" type="Sprite2D" parent="PointSpawner" unique_id=22899264]
+scale = Vector2(30, 30)
+texture = SubResource("CanvasTexture_64soo")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1677109058]
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cf2fo3mo1rnvy"]
+
+[ext_resource type="Script" uid="uid://bas0eg74fb3od" path="res://Scripts/point.gd" id="1_pmxfa"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5cbcl"]
+
+[node name="Point" type="Node2D" unique_id=1986590811]
+script = ExtResource("1_pmxfa")
+speed = 500.0
+
+[node name="DebugCenter" type="Sprite2D" parent="." unique_id=1883555523]
+visible = false
+self_modulate = Color(1, 0.039215688, 0, 1)
+z_index = -4
+scale = Vector2(4.625, 4.625)
+texture = SubResource("CanvasTexture_5cbcl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1661556869]
+self_modulate = Color(0.12156863, 1, 1, 1)
+z_index = -5
+scale = Vector2(25, 25)
+texture = SubResource("CanvasTexture_5cbcl")

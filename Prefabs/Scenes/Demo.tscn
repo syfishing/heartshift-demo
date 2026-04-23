@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b7jmlpusn5j51"]
+
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/point_spawner.gd" id="1_5cbcl"]
+[ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="2_cqqlt"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_64soo"]
+
+[sub_resource type="Environment" id="Environment_cqqlt"]
+background_mode = 3
+glow_enabled = true
+glow_strength = 2.0
+
+[node name="Node2D" type="Node2D" unique_id=253205913]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1677109058]
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+
+[node name="PointSpawner" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
+script = ExtResource("1_5cbcl")
+point_scene = ExtResource("2_cqqlt")
+curve_line = NodePath("Line2D")
+handle_strength = 0.235
+bezier_steps_per_segment = 32
+
+[node name="Sprite2D" type="Sprite2D" parent="PointSpawner" unique_id=22899264]
+modulate = Color(1, 0.27058825, 0, 1)
+scale = Vector2(30, 30)
+texture = SubResource("CanvasTexture_64soo")
+
+[node name="Line2D" type="Line2D" parent="PointSpawner" unique_id=1209914502]
+width = 6.185
+default_color = Color(0, 1, 0.9166665, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
+environment = SubResource("Environment_cqqlt")
