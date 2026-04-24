@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var point_scene: PackedScene
+const POINT_SCENE: PackedScene = preload("res://Prefabs/Wave/point.tscn")
 
 @export var amplitude: float = 200.0
 @export var frequency: float = 1.0
@@ -13,30 +13,30 @@ extends Node2D
 var time: float = 0.0
 var screen_center: Vector2
 
-var prev_x: float = 0.0
-var last_x: float = 0.0
+var prev_y: float = 0.0
+var last_y: float = 0.0
 var sample_count: int = 0
 
 var spawned_points: Array[Node2D] = []
 
 func _ready() -> void:
 	screen_center = get_viewport_rect().size / 2.0
-	position.x = screen_center.x
-	position.y = - screen_center.y * 4.0
-	prev_x = position.x
-	last_x = position.x
+	position.x = screen_center.x * 4
+	position.y = curve_formula(0.0)
+	prev_y = position.y
+	last_y = position.y
 	sample_count = 1
 
 func _process(delta: float) -> void:
 	time += delta
-	position.x = curve_formula(time)
+	position.y = curve_formula(time)
 
 	if sample_count >= 2:
-		if is_peaking(prev_x, last_x, position.x):
-			spawn_point_at_x(last_x)
+		if is_peaking(prev_y, last_y, position.y):
+			spawn_point_at_y(last_y)
 
-	prev_x = last_x
-	last_x = position.x
+	prev_y = last_y
+	last_y = position.y
 	sample_count += 1
 
 	queue_redraw()
@@ -65,8 +65,8 @@ func _draw() -> void:
 
 		var tangent: Vector2 = (next - prev) * handle_strength
 
-		if i > 0 and i < anchors.size() - 1 and is_peaking(prev.x, curr.x, next.x):
-			tangent.x = 0.0
+		if i > 0 and i < anchors.size() - 1 and is_peaking(prev.y, curr.y, next.y):
+			tangent.y = 0.0
 
 		tangents.append(tangent)
 
@@ -92,26 +92,26 @@ func _draw() -> void:
 	# curve_line.width = line_width
 
 func curve_formula(t: float) -> float:
-	return screen_center.x + amplitude * (
+	return screen_center.y + amplitude * (
 		sin(frequency * t * TAU) + 0.5 * sin(frequency * t * TAU / 2.0)
 	)
 
-func spawn_point_at_x(spawn_x: float) -> void:
-	var n: Node2D = point_scene.instantiate() as Node2D
-	var target: Vector2 = Vector2(spawn_x, global_position.y)
+func spawn_point_at_y(spawn_y: float) -> void:
+	var n: Node2D = POINT_SCENE.instantiate() as Node2D
+	var target: Vector2 = Vector2(global_position.x, spawn_y)
 	n.global_position = target
 
 	get_parent().add_child(n)
 	spawned_points.append(n)
 
-func is_peaking(prev_x: float, curr_x: float, next_x: float) -> bool:
-	var left_dx: float = curr_x - prev_x
-	var right_dx: float = next_x - curr_x
+func is_peaking(prev_value: float, curr_value: float, next_value: float) -> bool:
+	var left_d: float = curr_value - prev_value
+	var right_d: float = next_value - curr_value
 
-	if is_zero_approx(left_dx) or is_zero_approx(right_dx):
+	if is_zero_approx(left_d) or is_zero_approx(right_d):
 		return false
 
-	return left_dx * right_dx < 0.0
+	return left_d * right_d < 0.0
 
 func cubic_bezier(p0: Vector2, c0: Vector2, c1: Vector2, p1: Vector2, t: float) -> Vector2:
 	var u: float = 1.0 - t

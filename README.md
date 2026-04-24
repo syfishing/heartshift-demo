@@ -15,6 +15,7 @@ The demo version for HEARTSHIFT- a rhythm-visual novel hybrid game about a dream
 - [ ] **Dynamic Features**:
     - [ ] Mid-song scroll speed changes(possibly?).
     - [ ] Effect/Visual triggers for specific song segments.
+    - [ ] Make the wave calm down into a regularised, smoother pattern toward the end of a song.
     - [ ] Pause functionality.
 - [ ] **Scoring & Feedback**:
     - [ ] Point system and ranking logic (S/A/B/C).

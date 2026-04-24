@@ -6,7 +6,7 @@
 
 [node name="Point" type="Node2D" unique_id=1986590811]
 script = ExtResource("1_pmxfa")
-speed = 500.0
+speed = -500.0
 
 [node name="DebugCenter" type="Sprite2D" parent="." unique_id=1883555523]
 visible = false

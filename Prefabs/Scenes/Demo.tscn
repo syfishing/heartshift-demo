@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b7jmlpusn5j51"]
 
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/point_spawner.gd" id="1_5cbcl"]
-[ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="2_cqqlt"]
+[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Prefabs/Scenes/CRTAlt.gdshader" id="3_18gwp"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_64soo"]
 
@@ -10,6 +10,31 @@ background_mode = 3
 glow_enabled = true
 glow_strength = 1.5
 glow_bloom = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
+shader = ExtResource("3_18gwp")
+shader_parameter/brightness = 0.9200000437
+shader_parameter/contrast = 0.8400000399
+shader_parameter/saturation = 2.0
+shader_parameter/gamma = 1.10200004582523
+shader_parameter/curvature = 0.050000002375
+shader_parameter/corner_soften = 0.06
+shader_parameter/vignette = 0.38
+shader_parameter/scanline_strength = 0.0
+shader_parameter/scanline_density = 0.5
+shader_parameter/interlace_strength = 0.2
+shader_parameter/mask_strength = 0.0
+shader_parameter/mask_scale = 0.5
+shader_parameter/chroma_offset_px = 1.6
+shader_parameter/luma_smear_px = 2.2
+shader_parameter/jitter_px = 0.0
+shader_parameter/wobble_px = 1.5
+shader_parameter/tape_noise = 0.0
+shader_parameter/tape_lines = 0.070000003325
+shader_parameter/roll_speed = 0.1
+shader_parameter/roll_strength = 0.15
+shader_parameter/glow_strength = 0.25
+shader_parameter/glow_threshold = 0.65
 
 [node name="Node2D" type="Node2D" unique_id=253205913]
 
@@ -21,7 +46,6 @@ limit_bottom = 648
 
 [node name="PointSpawner" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
 script = ExtResource("1_5cbcl")
-point_scene = ExtResource("2_cqqlt")
 curve_line = NodePath("Line2D")
 handle_strength = 0.235
 bezier_steps_per_segment = 32
@@ -37,3 +61,14 @@ default_color = Color(0, 1, 0.98333335, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
 environment = SubResource("Environment_cqqlt")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
+material = SubResource("ShaderMaterial_bn5gq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
