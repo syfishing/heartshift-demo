@@ -43,7 +43,7 @@ The demo version for HEARTSHIFT- a rhythm-visual novel hybrid game about a dream
 ---
 
 ## Game Flow
-1. **Story** (VN Engine)
+1. **Story** (Visual Novel/VN Engine)
 2. **Song** (Rhythm Engine)
 3. **Mid-song events** (Integrated VN/Rhythm)
 4. **Results** (Ranking & Accuracy)
