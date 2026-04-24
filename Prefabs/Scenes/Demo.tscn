@@ -8,7 +8,8 @@
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
 glow_enabled = true
-glow_strength = 2.0
+glow_strength = 1.5
+glow_bloom = 0.1
 
 [node name="Node2D" type="Node2D" unique_id=253205913]
 
@@ -31,8 +32,8 @@ scale = Vector2(30, 30)
 texture = SubResource("CanvasTexture_64soo")
 
 [node name="Line2D" type="Line2D" parent="PointSpawner" unique_id=1209914502]
-width = 6.185
-default_color = Color(0, 1, 0.9166665, 1)
+width = 2.705
+default_color = Color(0, 1, 0.98333335, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
 environment = SubResource("Environment_cqqlt")
