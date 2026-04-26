@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/point_spawner.gd" id="1_5cbcl"]
 [ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Prefabs/Scenes/CRTAlt.gdshader" id="3_18gwp"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_64soo"]
+[ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
+[ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/hit_line.gd" id="3_r3bk5"]
 
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
@@ -18,31 +18,140 @@ shader_parameter/contrast = 0.8400000399
 shader_parameter/saturation = 2.0
 shader_parameter/gamma = 1.10200004582523
 shader_parameter/curvature = 0.050000002375
-shader_parameter/corner_soften = 0.06
-shader_parameter/vignette = 0.38
+shader_parameter/corner_soften = 0.0400000019
+shader_parameter/vignette = 0.0
 shader_parameter/scanline_strength = 0.0
 shader_parameter/scanline_density = 0.5
 shader_parameter/interlace_strength = 0.2
 shader_parameter/mask_strength = 0.0
 shader_parameter/mask_scale = 0.5
-shader_parameter/chroma_offset_px = 1.6
+shader_parameter/chroma_offset_px = 1.2450000591375
 shader_parameter/luma_smear_px = 2.2
 shader_parameter/jitter_px = 0.0
-shader_parameter/wobble_px = 1.5
+shader_parameter/wobble_px = 1.2550000596125
 shader_parameter/tape_noise = 0.0
-shader_parameter/tape_lines = 0.070000003325
+shader_parameter/tape_lines = 0.0850000040375
 shader_parameter/roll_speed = 0.1
 shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
 shader_parameter/glow_threshold = 0.65
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_64soo"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_cqqlt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_18gwp"]
+size = Vector2(7, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_18gwp"]
+
 [node name="Node2D" type="Node2D" unique_id=253205913]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
+environment = SubResource("Environment_cqqlt")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1677109058]
 limit_left = 0
 limit_top = 0
 limit_right = 1152
 limit_bottom = 648
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1967918697]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=669504614]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -103.0
+offset_top = 21.0
+offset_right = 103.0
+offset_bottom = 84.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 45
+text = "85.3849%"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control" unique_id=381179365]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -285.0
+offset_top = 70.0
+offset_right = -79.0
+offset_bottom = 133.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.43219373, 0.8718465, 1, 1)
+theme_override_font_sizes/font_size = 31
+text = "Dreamy!!"
+
+[node name="SongName" type="ColorRect" parent="CanvasLayer/Control" unique_id=1050076660]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.938
+anchor_right = 0.035
+anchor_bottom = 1.0
+offset_top = -50.824036
+offset_right = 204.68
+offset_bottom = -31.0
+grow_vertical = 0
+color = Color(0.1584723, 0.15847233, 0.1584723, 1)
+
+[node name="SongLabel" type="Label" parent="CanvasLayer/Control/SongName" unique_id=1327533810]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Vanishing Point - Haseeb"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelDetail" type="ColorRect" parent="CanvasLayer/Control" unique_id=1502213279]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -245.0
+offset_top = -91.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0.1584723, 0.15847233, 0.1584723, 1)
+
+[node name="DetailLabel" type="Label" parent="CanvasLayer/Control/LevelDetail" unique_id=1977836251]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 21
+text = "Stage 5 - Level 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
+material = SubResource("ShaderMaterial_bn5gq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 
 [node name="PointSpawner" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
 script = ExtResource("1_5cbcl")
@@ -59,16 +168,46 @@ texture = SubResource("CanvasTexture_64soo")
 width = 2.705
 default_color = Color(0, 1, 0.98333335, 1)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
-environment = SubResource("Environment_cqqlt")
+[node name="Hit Line" type="Sprite2D" parent="." unique_id=1702929659]
+position = Vector2(250, 325)
+scale = Vector2(10, 654.035)
+texture = SubResource("CanvasTexture_cqqlt")
+script = ExtResource("3_r3bk5")
+DREAMY_WINDOW = 20.0
+GREAT_WINDOW = 30.0
+GOOD_WINDOW = 40.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
+[node name="Hit" type="Area2D" parent="Hit Line" unique_id=2000000993]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
-material = SubResource("ShaderMaterial_bn5gq")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line/Hit" unique_id=2034191431]
+scale = Vector2(1.0000002, 1)
+shape = SubResource("RectangleShape2D_18gwp")
+debug_color = Color(1, 0.616379, 0, 0.42000002)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=549827527]
+visible = false
+self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+z_index = -3
+position = Vector2(576, 325)
+scale = Vector2(1152, 8.765)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=678003906]
+self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+z_index = -3
+position = Vector2(576, 400)
+scale = Vector2(1152, 8.765)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=517595092]
+self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+z_index = -3
+position = Vector2(576, 250)
+scale = Vector2(1152, 8.765)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="Point" parent="." unique_id=1986590811 instance=ExtResource("3_bn5gq")]
+position = Vector2(476, 491)
+
+[connection signal="area_entered" from="Hit Line/Hit" to="Hit Line" method="_on_hit_area_entered"]
+[connection signal="area_exited" from="Hit Line/Hit" to="Hit Line" method="_on_hit_area_exited"]
