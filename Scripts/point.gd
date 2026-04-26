@@ -16,6 +16,6 @@ func _process(delta: float) -> void:
 		$GPUParticles2D2.emitting = true
 		$GPUParticles2D.emitting = true
 	
-	if position.x < screen_center.x*-4:
+	if position.x < screen_center.x * -4:
 		queue_free()
 	pass

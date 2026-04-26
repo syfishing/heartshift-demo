@@ -8,7 +8,7 @@ The demo version for HEARTSHIFT- a rhythm-visual novel hybrid game about a dream
 - [ ] **Rework Wave Engine**: Transition away from trigonometric formulas to a more user-friendly system.
 - [ ] **Wave Editor**: Develop an in-game tool for creating/editing waves (no Desmos required).
 - [ ] **Rhythm Mechanics**:
-    - [ ] Timed "hits" with input leeway.
+    - [x] Timed "hits" with input leeway.
     - [ ] Hold notes.
     - [ ] Unique/Experimental note types(?).
 - [ ] **Sync System**: Ensure the wave engine is perfectly synced to the music track.
@@ -19,7 +19,7 @@ The demo version for HEARTSHIFT- a rhythm-visual novel hybrid game about a dream
     - [ ] Pause functionality.
 - [ ] **Scoring & Feedback**:
     - [ ] Point system and ranking logic (S/A/B/C).
-    - [ ] Accuracy labels based on millisecond offset (e.g. Critical, Critical, Great, Good).
+    - [x] Accuracy labels based on millisecond offset (e.g. Dreamy, Dreamy, Great, Good, Fail).
     - [ ] Difficulty labeling and life gauges.
 
 ### Narrative & Creative

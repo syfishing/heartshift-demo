@@ -57,6 +57,11 @@ func check_hits() -> void:
 		if not is_instance_valid(area):
 			continue
 
+		# Is Hit code
+		var point_node = area.get_parent()
+		_process_point_hit(point_node)
+
+		# Ranking code(I'll move it to a separate function eventually...)
 		var relative_x: float = area.global_position.x - line_x
 		var distance: float = abs(relative_x)
 		var rating: String = "Pass"
@@ -71,6 +76,13 @@ func check_hits() -> void:
 		print("%s | relative_x=%.2f" % [rating, relative_x])
 
 
+func _process_point_hit(point_node: Node) -> void:
+	var was_hit: bool = point_node.get("hit")
+	point_node.set("hit", true)
+	var is_hit_now: bool = point_node.get("hit")
+	print("was_hit=%s, is_hit_now=%s" % [was_hit, is_hit_now])
+
+
 func _on_hit_area_entered(area: Area2D) -> void:
 	if area == null:
 		return
@@ -82,6 +94,28 @@ func _on_hit_area_entered(area: Area2D) -> void:
 
 
 func _on_hit_area_exited(area: Area2D) -> void:
-	overlapping_areas = overlapping_areas.filter(func(a: Area2D) -> bool:
-		return is_instance_valid(a) and a != area
-	)
+	var filtered_areas: Array[Area2D] = []
+
+	for a in overlapping_areas:
+		if not is_instance_valid(a):
+			continue
+
+		if a == area:
+			continue
+
+		filtered_areas.append(a)
+
+	overlapping_areas = filtered_areas
+
+
+func _on_fail_hit_area_entered(area: Area2D) -> void:
+	if area == null:
+		return
+
+	var point_node = area.get_parent()
+	var was_hit: bool = point_node.get("hit")
+	if was_hit:
+		return
+
+	point_node.set("hit", true)
+	print("Fail")
