@@ -1,8 +1,11 @@
 extends Sprite2D
 
+signal rating_broadcast(rating: String)
+
 @export var DREAMY_WINDOW: float = 6.0
 @export var GREAT_WINDOW: float = 14.0
 @export var GOOD_WINDOW: float = 28.0
+@export_enum("lane1", "lane2", "lane3") var input_lane: String = "lane1"
 
 @export var show_debug_windows: bool = true
 
@@ -12,11 +15,15 @@ var overlapping_areas: Array[Area2D] = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	queue_redraw()
-
+	#$AnimationPlayer.seek(0.3, true)
+	#$AnimationPlayer.stop()
+	$AnimationPlayer.play("HitMark")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("lane1") or Input.is_action_just_pressed("lane2"):
+	if Input.is_action_just_pressed(input_lane):
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("HitMark")
 		check_hits()
 
 
@@ -73,14 +80,11 @@ func check_hits() -> void:
 		elif distance <= GOOD_WINDOW:
 			rating = "Good"
 
-		print("%s | relative_x=%.2f" % [rating, relative_x])
+		rating_broadcast.emit(rating)
 
 
 func _process_point_hit(point_node: Node) -> void:
-	var was_hit: bool = point_node.get("hit")
 	point_node.set("hit", true)
-	var is_hit_now: bool = point_node.get("hit")
-	print("was_hit=%s, is_hit_now=%s" % [was_hit, is_hit_now])
 
 
 func _on_hit_area_entered(area: Area2D) -> void:
@@ -118,4 +122,4 @@ func _on_fail_hit_area_entered(area: Area2D) -> void:
 		return
 
 	point_node.set("hit", true)
-	print("Fail")
+	rating_broadcast.emit("Fail")

@@ -2,14 +2,13 @@ shader_type canvas_item;
 render_mode unshaded;
 
 // Full-screen post-process: reads the already-rendered frame. :contentReference[oaicite:1]{index=1}
-uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
 // --- Color controls ---
 uniform float brightness : hint_range(0.0, 2.0) = 1.02;
 uniform float contrast   : hint_range(0.0, 2.0) = 1.08;
 uniform float saturation : hint_range(0.0, 2.0) = 1.10;
 uniform float gamma      : hint_range(0.2, 3.0) = 1.05;
-uniform float source_softness : hint_range(0.0, 2.0) = 0.35;
 
 // --- CRT geometry / lens ---
 uniform float curvature     : hint_range(0.0, 0.40) = 0.14;
@@ -91,7 +90,7 @@ vec3 triad_mask(vec2 frag_xy) {
 
 vec3 sample_screen(vec2 uv) {
 	// Use textureLod at LOD 0 like the docs show. :contentReference[oaicite:3]{index=3}
-	return textureLod(screen_texture, clamp(uv, vec2(0.0), vec2(1.0)), source_softness).rgb;
+	return textureLod(screen_texture, uv, 0.0).rgb;
 }
 
 void fragment() {
@@ -115,11 +114,11 @@ void fragment() {
 	float in_bounds = inside01(cuv);
 
 	// Rounded corners (soft clip)
-	vec2 d = abs(cuv - 0.5) * 2.0;      // 0 at center, ~1 at edges
-	float edge = max(d.x, d.y);
+vec2 d = abs(cuv - 0.5) * 2.0;      // 0 at center, ~1 at edges
+float edge = max(d.x, d.y);
 
-	// 1 in center, fades to 0 near edges
-	float corner_mask = 1.0 - smoothstep(1.0 - corner_soften, 1.0, edge);
+// 1 in center, fades to 0 near edges
+float corner_mask = 1.0 - smoothstep(1.0 - corner_soften, 1.0, edge);
 
 
 	// --- Chromatic aberration / VHS chroma shift ---

@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://b7jmlpusn5j51"]
 
-[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/point_spawner.gd" id="1_5cbcl"]
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Managers/point_spawner.gd" id="1_5cbcl"]
+[ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/point_manager.gd" id="1_r3bk5"]
 [ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Prefabs/Scenes/CRTAlt.gdshader" id="3_18gwp"]
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
 [ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/hit_line.gd" id="3_r3bk5"]
+[ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Conductor.gd" id="6_n4yq1"]
+[ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/melody1.tres" id="7_dcs3l"]
+[ext_resource type="AudioStream" uid="uid://nmllbcml3ygu" path="res://Music/AnotherMelodySynthTest.mp3" id="8_7vajh"]
 
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
@@ -11,24 +15,86 @@ glow_enabled = true
 glow_strength = 1.5
 glow_bloom = 0.1
 
+[sub_resource type="Animation" id="Animation_r3bk5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RatingLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(291, 70)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RatingLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_n4yq1"]
+resource_name = "RatingAnim"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RatingLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(312.28, 34.79), Vector2(312.28, 23.75)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RatingLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(3.2490087, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcs3l"]
+_data = {
+&"RESET": SubResource("Animation_r3bk5"),
+&"RatingAnim": SubResource("Animation_n4yq1")
+}
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
 shader = ExtResource("3_18gwp")
 shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.8400000399
 shader_parameter/saturation = 2.0
-shader_parameter/gamma = 1.10200004582523
-shader_parameter/curvature = 0.050000002375
+shader_parameter/gamma = 1.05200004345023
+shader_parameter/source_softness = 0.0
+shader_parameter/curvature = 0.030000001425
 shader_parameter/corner_soften = 0.0400000019
 shader_parameter/vignette = 0.0
 shader_parameter/scanline_strength = 0.0
 shader_parameter/scanline_density = 0.5
-shader_parameter/interlace_strength = 0.2
+shader_parameter/interlace_strength = 0.0
 shader_parameter/mask_strength = 0.0
 shader_parameter/mask_scale = 0.5
 shader_parameter/chroma_offset_px = 0.0
-shader_parameter/luma_smear_px = 2.2
+shader_parameter/luma_smear_px = 0.0
 shader_parameter/jitter_px = 0.0
-shader_parameter/wobble_px = 0.3450000163875
+shader_parameter/wobble_px = 0.0
 shader_parameter/tape_noise = 0.0
 shader_parameter/tape_lines = 0.0850000040375
 shader_parameter/roll_speed = 0.1
@@ -36,16 +102,80 @@ shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
 shader_parameter/glow_threshold = 0.65
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_64soo"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_cqqlt"]
+[sub_resource type="CanvasTexture" id="CanvasTexture_r3bk5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18gwp"]
 size = Vector2(7, 1)
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_7vajh"]
+
+[sub_resource type="Animation" id="Animation_7vajh"]
+resource_name = "HitMark"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitMark:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.4822746, 0.4822746, 0.4822746, 1), Color(0.4822746, 0.4822746, 0.4822746, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitMark:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_p87wn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitMark:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.4822746, 0.4822746, 0.4822746, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitMark:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_25417"]
+_data = {
+&"HitMark": SubResource("Animation_7vajh"),
+&"RESET": SubResource("Animation_p87wn")
+}
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_18gwp"]
 
-[node name="Node2D" type="Node2D" unique_id=253205913]
+[node name="DemoLevel" type="Node2D" unique_id=253205913]
+
+[node name="PointManager" type="Node" parent="." unique_id=1475372008]
+script = ExtResource("1_r3bk5")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
 environment = SubResource("Environment_cqqlt")
@@ -66,32 +196,83 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=669504614]
+[node name="ComboTag" type="ColorRect" parent="CanvasLayer/Control" unique_id=1055121295]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -103.0
-offset_top = 21.0
-offset_right = 103.0
-offset_bottom = 84.0
-grow_horizontal = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 45
-text = "85.3849%"
+offset_left = 222.0
+offset_top = 28.0
+offset_right = 278.0
+offset_bottom = 68.0
+color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control" unique_id=381179365]
+[node name="ComboTag2" type="ColorRect" parent="CanvasLayer/Control/ComboTag" unique_id=1339686072]
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 0.33850098
+offset_top = -8.0
+offset_right = 40.3385
+offset_bottom = 32.00006
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.7853982
+color = Color(0.99999994, 0.5682773, 0.26168016, 1)
+
+[node name="ComboLabel" type="Label" parent="CanvasLayer/Control/ComboTag" unique_id=1773942047]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 31
+text = "25"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control" unique_id=458059101]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -318.79004
+offset_bottom = 67.06
+grow_horizontal = 0
+color = Color(0.99999994, 0.5682773, 0.26168016, 1)
+
+[node name="AccuracyLabel" type="Label" parent="CanvasLayer/Control/ColorRect" unique_id=669504614]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 42
+text = "85.3849%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RatingLabel" type="Label" parent="CanvasLayer/Control" unique_id=381179365]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -285.0
 offset_top = 70.0
-offset_right = -79.0
-offset_bottom = 133.0
+offset_right = -78.99985
+offset_bottom = 132.97226
 grow_horizontal = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0.43219373, 0.8718465, 1, 1)
+theme_override_colors/font_color = Color(0.8472311, 0.6636825, 0.03876, 1)
 theme_override_font_sizes/font_size = 31
 text = "Dreamy!!"
 
@@ -105,7 +286,7 @@ offset_top = -50.824036
 offset_right = 204.68
 offset_bottom = -31.0
 grow_vertical = 0
-color = Color(0.1584723, 0.15847233, 0.1584723, 1)
+color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="SongLabel" type="Label" parent="CanvasLayer/Control/SongName" unique_id=1327533810]
 layout_mode = 1
@@ -130,7 +311,7 @@ offset_top = -91.0
 offset_bottom = -31.0
 grow_horizontal = 0
 grow_vertical = 0
-color = Color(0.1584723, 0.15847233, 0.1584723, 1)
+color = Color(0.28626168, 0.46248925, 0.99612087, 1)
 
 [node name="DetailLabel" type="Label" parent="CanvasLayer/Control/LevelDetail" unique_id=1977836251]
 layout_mode = 1
@@ -144,8 +325,11 @@ text = "Stage 5 - Level 10"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="RatingAnimPlayer" type="AnimationPlayer" parent="CanvasLayer/Control" unique_id=302687489]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_dcs3l")
+
 [node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
-visible = false
 material = SubResource("ShaderMaterial_bn5gq")
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,45 +338,125 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="PointSpawner" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
+[node name="Curve" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
 script = ExtResource("1_5cbcl")
 curve_line = NodePath("Line2D")
-handle_strength = 0.235
+handle_strength = 0.375
 bezier_steps_per_segment = 32
 
-[node name="Sprite2D" type="Sprite2D" parent="PointSpawner" unique_id=22899264]
-modulate = Color(1, 0.27058825, 0, 1)
-scale = Vector2(30, 30)
-texture = SubResource("CanvasTexture_64soo")
+[node name="Line2D" type="Line2D" parent="Curve" unique_id=1209914502]
+width = 3.5
+default_color = Color(0, 0.5843642, 0.5743159, 1)
 
-[node name="Line2D" type="Line2D" parent="PointSpawner" unique_id=1209914502]
-width = 2.705
-default_color = Color(0, 1, 0.98333335, 1)
+[node name="Hit Line" type="Sprite2D" parent="." unique_id=1147199316]
+position = Vector2(250, 324)
+scale = Vector2(10, 648)
+texture = SubResource("CanvasTexture_r3bk5")
 
-[node name="Hit Line" type="Sprite2D" parent="." unique_id=1702929659]
-position = Vector2(250, 325)
-scale = Vector2(10, 654.035)
-texture = SubResource("CanvasTexture_cqqlt")
+[node name="Hit Line Top" type="Sprite2D" parent="." unique_id=809933648]
+self_modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
+position = Vector2(250, 175)
+scale = Vector2(10, 141.99997)
 script = ExtResource("3_r3bk5")
 DREAMY_WINDOW = 20.0
 GREAT_WINDOW = 30.0
 GOOD_WINDOW = 40.0
 show_debug_windows = false
 
-[node name="Hit" type="Area2D" parent="Hit Line" unique_id=2000000993]
+[node name="Hit" type="Area2D" parent="Hit Line Top" unique_id=697181837]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line/Hit" unique_id=2034191431]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Top/Hit" unique_id=210682509]
 scale = Vector2(1.0000002, 1)
 shape = SubResource("RectangleShape2D_18gwp")
 debug_color = Color(1, 0.616379, 0, 0.42000002)
 
-[node name="FailHit" type="Area2D" parent="Hit Line" unique_id=2074568108]
+[node name="FailHit" type="Area2D" parent="Hit Line Top" unique_id=1889111428]
 position = Vector2(-28.5, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line/FailHit" unique_id=17518851]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Top/FailHit" unique_id=1969948358]
+position = Vector2(21.4, 0)
 scale = Vector2(1.0000002, 1)
 shape = SubResource("RectangleShape2D_18gwp")
 debug_color = Color(1, 0, 0, 0.42000002)
+
+[node name="HitMark" type="Sprite2D" parent="Hit Line Top" unique_id=1068159725]
+self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
+z_index = -1
+scale = Vector2(3, 1)
+texture = SubResource("CanvasTexture_7vajh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Top" unique_id=590070409]
+libraries/ = SubResource("AnimationLibrary_25417")
+
+[node name="Hit Line Mid" type="Sprite2D" parent="." unique_id=2129025600]
+position = Vector2(250, 325)
+scale = Vector2(10, 141.99997)
+script = ExtResource("3_r3bk5")
+DREAMY_WINDOW = 20.0
+GREAT_WINDOW = 30.0
+GOOD_WINDOW = 40.0
+input_lane = "lane2"
+show_debug_windows = false
+
+[node name="Hit" type="Area2D" parent="Hit Line Mid" unique_id=1499853021]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Mid/Hit" unique_id=561027308]
+scale = Vector2(1.0000002, 1)
+shape = SubResource("RectangleShape2D_18gwp")
+debug_color = Color(1, 0.616379, 0, 0.42000002)
+
+[node name="FailHit" type="Area2D" parent="Hit Line Mid" unique_id=1017587168]
+position = Vector2(-28.5, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Mid/FailHit" unique_id=1275627779]
+position = Vector2(21.4, 0)
+scale = Vector2(1.0000002, 1)
+shape = SubResource("RectangleShape2D_18gwp")
+debug_color = Color(1, 0, 0, 0.42000002)
+
+[node name="HitMark" type="Sprite2D" parent="Hit Line Mid" unique_id=607412973]
+self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
+z_index = -1
+scale = Vector2(3, 1)
+texture = SubResource("CanvasTexture_7vajh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Mid" unique_id=2136872612]
+libraries/ = SubResource("AnimationLibrary_25417")
+
+[node name="Hit Line Bottom" type="Sprite2D" parent="." unique_id=1292322369]
+position = Vector2(250, 475.00003)
+scale = Vector2(10, 141.99997)
+script = ExtResource("3_r3bk5")
+DREAMY_WINDOW = 20.0
+GREAT_WINDOW = 30.0
+GOOD_WINDOW = 40.0
+input_lane = "lane3"
+show_debug_windows = false
+
+[node name="Hit" type="Area2D" parent="Hit Line Bottom" unique_id=2123441056]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Bottom/Hit" unique_id=293245576]
+scale = Vector2(1.0000002, 1)
+shape = SubResource("RectangleShape2D_18gwp")
+debug_color = Color(1, 0.616379, 0, 0.42000002)
+
+[node name="FailHit" type="Area2D" parent="Hit Line Bottom" unique_id=84832229]
+position = Vector2(-28.5, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Bottom/FailHit" unique_id=958141413]
+position = Vector2(21.4, 0)
+scale = Vector2(1.0000002, 1)
+shape = SubResource("RectangleShape2D_18gwp")
+debug_color = Color(1, 0, 0, 0.42000002)
+
+[node name="HitMark" type="Sprite2D" parent="Hit Line Bottom" unique_id=801568233]
+self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
+z_index = -1
+scale = Vector2(3, 1)
+texture = SubResource("CanvasTexture_7vajh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Bottom" unique_id=1476210854]
+libraries/ = SubResource("AnimationLibrary_25417")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=549827527]
 visible = false
@@ -202,23 +466,54 @@ position = Vector2(576, 325)
 scale = Vector2(1152, 8.765)
 texture = SubResource("CanvasTexture_18gwp")
 
-[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=678003906]
-self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+[node name="RailTop2" type="Sprite2D" parent="." unique_id=630842441]
+self_modulate = Color(0.28626168, 0.46248925, 0.99612087, 1)
 z_index = -3
-position = Vector2(576, 400)
-scale = Vector2(1152, 8.765)
+position = Vector2(576, 100)
+scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
 
-[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=517595092]
+[node name="RailTop" type="Sprite2D" parent="." unique_id=517595092]
 self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
 z_index = -3
 position = Vector2(576, 250)
-scale = Vector2(1152, 8.765)
+scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
 
-[node name="Point" parent="." unique_id=1986590811 instance=ExtResource("3_bn5gq")]
-position = Vector2(476, 491)
+[node name="RailBottom" type="Sprite2D" parent="." unique_id=678003906]
+self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+z_index = -3
+position = Vector2(576, 400)
+scale = Vector2(1152, 6.36)
+texture = SubResource("CanvasTexture_18gwp")
 
-[connection signal="area_entered" from="Hit Line/Hit" to="Hit Line" method="_on_hit_area_entered"]
-[connection signal="area_exited" from="Hit Line/Hit" to="Hit Line" method="_on_hit_area_exited"]
-[connection signal="area_entered" from="Hit Line/FailHit" to="Hit Line" method="_on_fail_hit_area_entered"]
+[node name="RailBottom2" type="Sprite2D" parent="." unique_id=295560481]
+self_modulate = Color(0.7239193, 0.43837702, 0, 1)
+z_index = -3
+position = Vector2(576, 554)
+scale = Vector2(1152, 6.36)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
+position = Vector2(-20, -20)
+script = ExtResource("6_n4yq1")
+chart = ExtResource("7_dcs3l")
+note_scene = ExtResource("3_bn5gq")
+travel_time = 15.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1483877863]
+stream = ExtResource("8_7vajh")
+autoplay = true
+
+[connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
+[connection signal="area_entered" from="Hit Line Top/Hit" to="Hit Line Top" method="_on_hit_area_entered"]
+[connection signal="area_exited" from="Hit Line Top/Hit" to="Hit Line Top" method="_on_hit_area_exited"]
+[connection signal="area_entered" from="Hit Line Top/FailHit" to="Hit Line Top" method="_on_fail_hit_area_entered"]
+[connection signal="rating_broadcast" from="Hit Line Mid" to="PointManager" method="_on_hit_line_rating_broadcast"]
+[connection signal="area_entered" from="Hit Line Mid/Hit" to="Hit Line Mid" method="_on_hit_area_entered"]
+[connection signal="area_exited" from="Hit Line Mid/Hit" to="Hit Line Mid" method="_on_hit_area_exited"]
+[connection signal="area_entered" from="Hit Line Mid/FailHit" to="Hit Line Mid" method="_on_fail_hit_area_entered"]
+[connection signal="rating_broadcast" from="Hit Line Bottom" to="PointManager" method="_on_hit_line_rating_broadcast"]
+[connection signal="area_entered" from="Hit Line Bottom/Hit" to="Hit Line Bottom" method="_on_hit_area_entered"]
+[connection signal="area_exited" from="Hit Line Bottom/Hit" to="Hit Line Bottom" method="_on_hit_area_exited"]
+[connection signal="area_entered" from="Hit Line Bottom/FailHit" to="Hit Line Bottom" method="_on_fail_hit_area_entered"]
