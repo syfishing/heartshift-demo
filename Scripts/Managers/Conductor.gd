@@ -47,8 +47,11 @@ func spawn_note(data: NoteData):
 	
 	add_child(n)
 	active_notes.push_back(n)
+
+	#just syncs the curve sketcher to the active notes
 	$"../Curve".point_nodes = active_notes
 
 func remove_active_note(note: Node) -> void:
+	#just removes the note from the active notes and updates the curve sketcher
 	active_notes.erase(note)
 	$"../Curve".point_nodes = active_notes

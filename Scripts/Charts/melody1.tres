@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ChartData" format=3 uid="uid://dyq2jjd7qyfup"]
 
-[ext_resource type="Script" uid="uid://ctjk703l25fkk" path="res://Scripts/Points/pointdata.gd" id="1_f4teu"]
-[ext_resource type="Script" uid="uid://cntkrjpe8bu7j" path="res://Scripts/Points/chartdata.gd" id="2_rkuxm"]
+[ext_resource type="Script" uid="uid://ctjk703l25fkk" path="res://Scripts/DataElements/pointdata.gd" id="1_f4teu"]
+[ext_resource type="Script" uid="uid://cntkrjpe8bu7j" path="res://Scripts/DataElements/chartdata.gd" id="2_rkuxm"]
 
 [sub_resource type="Resource" id="Resource_f4teu"]
 script = ExtResource("1_f4teu")

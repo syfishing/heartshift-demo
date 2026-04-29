@@ -17,6 +17,7 @@ func _draw() -> void:
 	if point_nodes.size() < 2:
 		return
 
+	#Note: was suffering from bug where if a point was deleted, it might get read and cause an error
 	var valid_points: Array[Node2D] = []
 	var anchors: Array[Vector2] = []
 	for p in point_nodes:
@@ -41,7 +42,7 @@ func _draw() -> void:
 		var len_ratio: float = min(left_len, right_len) / max(max(left_len, right_len), 0.001)
 		tangent *= len_ratio
 
-		if i > 0 and i < anchors.size() - 1 and is_peaking(prev.y, curr.y, next.y):
+		if is_peaking(prev.y, curr.y, next.y):
 			tangent.y = 0.0
 
 		tangents.append(tangent)

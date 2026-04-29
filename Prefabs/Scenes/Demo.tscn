@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://b7jmlpusn5j51"]
 
-[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Managers/point_spawner.gd" id="1_5cbcl"]
-[ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/point_manager.gd" id="1_r3bk5"]
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="1_5cbcl"]
+[ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="1_r3bk5"]
 [ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Prefabs/Scenes/CRTAlt.gdshader" id="3_18gwp"]
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
-[ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/hit_line.gd" id="3_r3bk5"]
-[ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Conductor.gd" id="6_n4yq1"]
+[ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="3_r3bk5"]
+[ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/melody1.tres" id="7_dcs3l"]
 [ext_resource type="AudioStream" uid="uid://nmllbcml3ygu" path="res://Music/AnotherMelodySynthTest.mp3" id="8_7vajh"]
 
