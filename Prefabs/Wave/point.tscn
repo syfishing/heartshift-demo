@@ -1,29 +1,60 @@
 [gd_scene format=3 uid="uid://cf2fo3mo1rnvy"]
 
 [ext_resource type="Script" uid="uid://bas0eg74fb3od" path="res://Scripts/Points/point.gd" id="1_pmxfa"]
-[ext_resource type="Texture2D" uid="uid://53pkwh7xwimd" path="res://Assets/kenney_particle-pack/PNG (Transparent)/circle_01.png" id="2_pedl3"]
+[ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/circle.png" id="2_qqjss"]
+[ext_resource type="Texture2D" uid="uid://dkjnkdcfmyf8k" path="res://Assets/dottedline.png" id="4_or058"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_5cbcl"]
-
-[sub_resource type="Curve" id="Curve_qqjss"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.123595595), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_or058"]
-curve = SubResource("Curve_qqjss")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nmyua"]
-particle_flag_disable_z = true
-direction = Vector3(99.595, 0, 0)
-spread = 45.175
-gravity = Vector3(0, 0, 0)
-scale_curve = SubResource("CurveTexture_or058")
+diffuse_texture = ExtResource("2_qqjss")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qqjss"]
-radius = 12.5
+radius = 14.0
+
+[sub_resource type="Gradient" id="Gradient_qqjss"]
+offsets = PackedFloat32Array(0, 0.99019605)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_or058"]
+gradient = SubResource("Gradient_qqjss")
+
+[sub_resource type="Curve" id="Curve_nmyua"]
+_data = [Vector2(0.48695654, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_126pd"]
+curve = SubResource("Curve_nmyua")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qqjss"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 30.0
+initial_velocity_min = 250.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+scale_max = 12.0
+scale_curve = SubResource("CurveTexture_126pd")
+color_ramp = SubResource("GradientTexture1D_or058")
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qqjss"]
+gradient = SubResource("Gradient_qqjss")
+
+[sub_resource type="CurveTexture" id="CurveTexture_or058"]
+curve = SubResource("Curve_nmyua")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nmyua"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 30.0
+initial_velocity_min = 250.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+scale_max = 12.0
+scale_curve = SubResource("CurveTexture_or058")
+color_ramp = SubResource("GradientTexture1D_qqjss")
 
 [node name="Point" type="Node2D" unique_id=1986590811]
-visible = false
 top_level = true
 z_index = 1
 script = ExtResource("1_pmxfa")
@@ -31,27 +62,66 @@ script = ExtResource("1_pmxfa")
 [node name="DebugCenter" type="Sprite2D" parent="." unique_id=1883555523]
 visible = false
 self_modulate = Color(1, 0.039215688, 0, 1)
-z_index = -4
-scale = Vector2(4.625, 4.625)
+z_index = 1
+scale = Vector2(0.05, 0.05)
 texture = SubResource("CanvasTexture_5cbcl")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1661556869]
+[node name="PointHead" type="Sprite2D" parent="." unique_id=1661556869]
 self_modulate = Color(0, 18.892157, 17.99419, 1)
-scale = Vector2(25, 25)
+scale = Vector2(0.185, 0.185)
 texture = SubResource("CanvasTexture_5cbcl")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=817615608]
-visible = false
-self_modulate = Color(0, 18.892157, 18.892157, 1)
-position = Vector2(30, 6)
-amount = 6
-texture = ExtResource("2_pedl3")
-lifetime = 0.5
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_nmyua")
+[node name="PointBody" type="Line2D" parent="." unique_id=1727617767]
+self_modulate = Color(0, 18.892157, 17.994143, 0.296)
+z_index = -2
+texture_repeat = 2
+width = 6.015
+texture = ExtResource("4_or058")
+texture_mode = 1
+
+[node name="PointTail" type="Sprite2D" parent="." unique_id=507425528]
+self_modulate = Color(0, 18.892157, 17.99419, 1)
+z_index = -1
+scale = Vector2(0.185, 0.185)
+texture = SubResource("CanvasTexture_5cbcl")
+
+[node name="PointTailBlackBody" type="Sprite2D" parent="PointTail" unique_id=362515163]
+self_modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.77, 0.77)
+texture = SubResource("CanvasTexture_5cbcl")
+
+[node name="PointHeadBackground" type="Sprite2D" parent="." unique_id=1326195453]
+self_modulate = Color(0, 18.892157, 17.99419, 1)
+z_index = -1
+scale = Vector2(0.185, 0.185)
+texture = SubResource("CanvasTexture_5cbcl")
+
+[node name="PointTailBlackBody" type="Sprite2D" parent="PointHeadBackground" unique_id=1336813814]
+self_modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.77, 0.77)
+texture = SubResource("CanvasTexture_5cbcl")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=586878931]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=388372704]
 shape = SubResource("CircleShape2D_qqjss")
 debug_color = Color(1, 0, 0, 0.42000002)
+
+[node name="Spray" type="GPUParticles2D" parent="." unique_id=846592248]
+self_modulate = Color(0, 80.24026, 76.4346, 1)
+z_index = -3
+emitting = false
+amount = 15
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_qqjss")
+
+[node name="HoldSpray" type="GPUParticles2D" parent="." unique_id=424831950]
+self_modulate = Color(0, 80.24026, 76.4346, 1)
+top_level = true
+z_index = -3
+emitting = false
+amount = 30
+speed_scale = 2.0
+process_material = SubResource("ParticleProcessMaterial_nmyua")

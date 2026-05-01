@@ -1,6 +1,6 @@
 extends Sprite2D
 
-signal rating_broadcast(rating: String)
+signal rating_broadcast(rating: String, lane: String)
 
 @export var DREAMY_WINDOW: float = 6.0
 @export var GREAT_WINDOW: float = 14.0
@@ -10,7 +10,8 @@ signal rating_broadcast(rating: String)
 @export var show_debug_windows: bool = true
 
 var overlapping_areas: Array[Area2D] = []
-
+var active_hold: Node2D = null
+var hold_head_rating: String = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,11 +21,36 @@ func _ready() -> void:
 	$AnimationPlayer.play("HitMark")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(input_lane):
 		$AnimationPlayer.stop()
 		$AnimationPlayer.play("HitMark")
 		check_hits()
+
+	if active_hold != null and is_instance_valid(active_hold):
+		var song_time = active_hold.audio_player_ref.get_playback_position() + AudioServer.get_time_since_last_mix()
+		
+		if Input.is_action_just_released(input_lane):
+			if song_time >= active_hold.end_time:
+				active_hold.complete_hold()
+				rating_broadcast.emit(hold_head_rating, input_lane)
+
+			else:
+				active_hold.fail_note()
+				rating_broadcast.emit("Fail", input_lane)
+
+			active_hold = null
+			hold_head_rating = ""
+			
+		elif song_time >= active_hold.end_time:
+			active_hold.complete_hold()
+			rating_broadcast.emit(hold_head_rating, input_lane)
+			active_hold = null
+			hold_head_rating = ""
+
+	elif active_hold != null:
+		active_hold = null
+		hold_head_rating = ""
 
 
 func _draw() -> void:
@@ -66,6 +92,8 @@ func check_hits() -> void:
 
 		# Is Hit code
 		var point_node = area.get_parent()
+		if point_node.get("hit"):
+			continue
 		_process_point_hit(point_node)
 
 		# Ranking code(I'll move it to a separate function eventually...)
@@ -80,11 +108,15 @@ func check_hits() -> void:
 		elif distance <= GOOD_WINDOW:
 			rating = "Good"
 
-		rating_broadcast.emit(rating)
+		if point_node.is_hold_note():
+			active_hold = point_node
+			hold_head_rating = rating
+		else:
+			rating_broadcast.emit(rating, input_lane)
 
 
 func _process_point_hit(point_node: Node) -> void:
-	point_node.set("hit", true)
+	point_node.start_hit()
 
 
 func _on_hit_area_entered(area: Area2D) -> void:
@@ -121,5 +153,5 @@ func _on_fail_hit_area_entered(area: Area2D) -> void:
 	if was_hit:
 		return
 
-	point_node.set("hit", true)
-	rating_broadcast.emit("Fail")
+	point_node.fail_note()
+	rating_broadcast.emit("Fail", input_lane)

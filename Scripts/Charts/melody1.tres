@@ -6,11 +6,13 @@
 [sub_resource type="Resource" id="Resource_f4teu"]
 script = ExtResource("1_f4teu")
 hit_time = 3.428
+end_time = 4.071
 metadata/_custom_type_script = "uid://ctjk703l25fkk"
 
 [sub_resource type="Resource" id="Resource_rkuxm"]
 script = ExtResource("1_f4teu")
 hit_time = 4.071
+end_time = 6.0
 track = 1
 metadata/_custom_type_script = "uid://ctjk703l25fkk"
 

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="1_5cbcl"]
 [ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="1_r3bk5"]
+[ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="2_p87wn"]
 [ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Prefabs/Scenes/CRTAlt.gdshader" id="3_18gwp"]
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
 [ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="3_r3bk5"]
@@ -12,6 +13,7 @@
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
 glow_enabled = true
+glow_normalized = true
 glow_strength = 1.5
 glow_bloom = 0.1
 
@@ -81,7 +83,7 @@ shader = ExtResource("3_18gwp")
 shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.8400000399
 shader_parameter/saturation = 2.0
-shader_parameter/gamma = 1.05200004345023
+shader_parameter/gamma = 1.17200004915023
 shader_parameter/source_softness = 0.0
 shader_parameter/curvature = 0.030000001425
 shader_parameter/corner_soften = 0.0400000019
@@ -105,7 +107,7 @@ shader_parameter/glow_threshold = 0.65
 [sub_resource type="CanvasTexture" id="CanvasTexture_r3bk5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18gwp"]
-size = Vector2(7, 1)
+size = Vector2(13, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_7vajh"]
 
@@ -134,7 +136,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(3, 1), Vector2(1, 1)]
+"values": [Vector2(4, 1), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_p87wn"]
@@ -181,10 +183,12 @@ script = ExtResource("1_r3bk5")
 environment = SubResource("Environment_cqqlt")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1677109058]
+ignore_rotation = false
 limit_left = 0
 limit_top = 0
 limit_right = 1152
 limit_bottom = 648
+script = ExtResource("2_p87wn")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
 
@@ -371,7 +375,7 @@ shape = SubResource("RectangleShape2D_18gwp")
 debug_color = Color(1, 0.616379, 0, 0.42000002)
 
 [node name="FailHit" type="Area2D" parent="Hit Line Top" unique_id=1889111428]
-position = Vector2(-28.5, 0)
+position = Vector2(-34.41, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Top/FailHit" unique_id=1969948358]
 position = Vector2(21.4, 0)
@@ -390,6 +394,7 @@ libraries/ = SubResource("AnimationLibrary_25417")
 
 [node name="Hit Line Mid" type="Sprite2D" parent="." unique_id=2129025600]
 position = Vector2(250, 325)
+rotation = 0.008726646
 scale = Vector2(10, 141.99997)
 script = ExtResource("3_r3bk5")
 DREAMY_WINDOW = 20.0
@@ -406,7 +411,7 @@ shape = SubResource("RectangleShape2D_18gwp")
 debug_color = Color(1, 0.616379, 0, 0.42000002)
 
 [node name="FailHit" type="Area2D" parent="Hit Line Mid" unique_id=1017587168]
-position = Vector2(-28.5, 0)
+position = Vector2(-34.41, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Mid/FailHit" unique_id=1275627779]
 position = Vector2(21.4, 0)
@@ -441,7 +446,7 @@ shape = SubResource("RectangleShape2D_18gwp")
 debug_color = Color(1, 0.616379, 0, 0.42000002)
 
 [node name="FailHit" type="Area2D" parent="Hit Line Bottom" unique_id=84832229]
-position = Vector2(-28.5, 0)
+position = Vector2(-34.41, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Bottom/FailHit" unique_id=958141413]
 position = Vector2(21.4, 0)

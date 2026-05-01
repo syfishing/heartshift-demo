@@ -39,6 +39,7 @@ func spawn_note(data: NoteData):
 	
 
 	n.hit_time = data.hit_time
+	n.end_time = data.end_time
 	n.travel_time = travel_time / data.travel_time_multiplier
 	n.spawn_pos = spawn_position
 	n.hit_pos = Vector2(250, spawn_position.y)
