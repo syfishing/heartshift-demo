@@ -36,6 +36,7 @@ func start_hit() -> void:
 		$Spray.emitting = true
 		$HoldSpray.emitting = true
 		$HoldSpray.position = Vector2(250, global_position.y)
+		$HoldSpray/Dot.emitting = true
 		$PointHead.visible = false
 	else:
 		note_state = NoteState.COMPLETED
@@ -49,6 +50,7 @@ func complete_hold() -> void:
 
 	note_state = NoteState.COMPLETED
 	$HoldSpray.emitting = false
+	$HoldSpray/Dot.emitting = false
 
 func fail_note() -> void:
 	if note_state == NoteState.COMPLETED or note_state == NoteState.FAILED:
@@ -57,10 +59,11 @@ func fail_note() -> void:
 	hit = true
 	note_state = NoteState.FAILED
 	$HoldSpray.emitting = false
+	$HoldSpray/Dot.emitting = false
 
 func _remove_from_conductor() -> void:
 	if get_parent().has_method("remove_active_note"):
-		get_parent().remove_active_note(self )
+		get_parent().remove_active_note(self)
 
 
 func _ready() -> void:
