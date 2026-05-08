@@ -10,6 +10,7 @@
 [ext_resource type="Shader" uid="uid://oggacd4naabt" path="res://Prefabs/Scenes/CRTAltOld.gdshader" id="4_p87wn"]
 [ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/melody1.tres" id="7_dcs3l"]
+[ext_resource type="AudioStream" uid="uid://c8r6861xmn7dk" path="res://Audio/SFX/clack.wav" id="8_86r3q"]
 
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
@@ -506,6 +507,10 @@ texture = SubResource("CanvasTexture_7vajh")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Top" unique_id=590070409]
 libraries/ = SubResource("AnimationLibrary_25417")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Hit Line Top" unique_id=594145647]
+stream = ExtResource("8_86r3q")
+volume_db = -1.5
+
 [node name="Hit Line Mid" type="Sprite2D" parent="." unique_id=2129025600]
 position = Vector2(250, 325)
 rotation = 0.008726646
@@ -542,6 +547,10 @@ texture = SubResource("CanvasTexture_7vajh")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Mid" unique_id=2136872612]
 libraries/ = SubResource("AnimationLibrary_25417")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Hit Line Mid" unique_id=2006171169]
+stream = ExtResource("8_86r3q")
+volume_db = -1.5
+
 [node name="Hit Line Bottom" type="Sprite2D" parent="." unique_id=1292322369]
 position = Vector2(250, 475.00003)
 scale = Vector2(10, 141.99997)
@@ -577,12 +586,16 @@ texture = SubResource("CanvasTexture_7vajh")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Bottom" unique_id=1476210854]
 libraries/ = SubResource("AnimationLibrary_25417")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Hit Line Bottom" unique_id=369051028]
+stream = ExtResource("8_86r3q")
+volume_db = -1.5
+
 [node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
 position = Vector2(-20, -20)
 script = ExtResource("6_n4yq1")
 chart = ExtResource("7_dcs3l")
 note_scene = ExtResource("3_bn5gq")
-travel_time = 15.0
+travel_time = 10.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1483877863]
 stream = SubResource("AudioStreamMP3_7vajh")

@@ -95,18 +95,12 @@ func check_hits() -> void:
 		if point_node.get("hit"):
 			continue
 		_process_point_hit(point_node)
+		$AudioStreamPlayer.play()
 
-		# Ranking code(I'll move it to a separate function eventually...)
-		var relative_x: float = area.global_position.x - line_x
-		var distance: float = abs(relative_x)
-		var rating: String = "Pass"
+		# Ranking code
+		var distance: float = abs(area.global_position.x - line_x)
 
-		if distance <= DREAMY_WINDOW:
-			rating = "Dreamy"
-		elif distance <= GREAT_WINDOW:
-			rating = "Great"
-		elif distance <= GOOD_WINDOW:
-			rating = "Good"
+		var rating: String = get_rating(distance)
 
 		if point_node.is_hold_note():
 			active_hold = point_node
@@ -114,6 +108,15 @@ func check_hits() -> void:
 		else:
 			rating_broadcast.emit(rating, input_lane)
 
+func get_rating(distance: float) -> String:
+	if distance <= DREAMY_WINDOW:
+		return "Dreamy"
+	elif distance <= GREAT_WINDOW:
+		return "Great"
+	elif distance <= GOOD_WINDOW:
+		return "Good"
+	else:
+		return "Pass"
 
 func _process_point_hit(point_node: Node) -> void:
 	point_node.start_hit()

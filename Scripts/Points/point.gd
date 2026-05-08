@@ -82,9 +82,7 @@ func _process(_delta: float) -> void:
 	var song_time = audio_player_ref.get_playback_position() + AudioServer.get_time_since_last_mix()
 
 	if note_state == NoteState.HOLDING:
-		#position = hit_pos
 		$Area2D/CollisionShape2D.disabled = true
-		# return
 	
 	var progress = 1.0 - ((hit_time - song_time) / travel_time)
 	

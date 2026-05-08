@@ -17,6 +17,8 @@ func _on_hit_line_rating_broadcast(rating: String, _lane: String) -> void:
 	pass # Replace with function body.
 
 
+#redundant code but just in case anybody wants the camera to rotate on hits
+#Note: it looks horrible so don't even think about wasting another hour on it dumbass
 func camera_tilt(lane):
 	#if lane == "lane1":
 		#$"../Camera2D".rotation = -0.01
