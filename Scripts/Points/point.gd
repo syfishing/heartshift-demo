@@ -21,6 +21,7 @@ var hit = false
 var note_state: int = NoteState.PENDING
 
 var audio_player_ref: AudioStreamPlayer
+var _last_song_time: float = 0.0
 
 func is_hold_note() -> bool:
 	return end_time > 0.0
@@ -63,7 +64,7 @@ func fail_note() -> void:
 
 func _remove_from_conductor() -> void:
 	if get_parent().has_method("remove_active_note"):
-		get_parent().remove_active_note(self)
+		get_parent().remove_active_note(self )
 
 
 func _ready() -> void:
@@ -73,19 +74,22 @@ func _ready() -> void:
 		$PointTail.position.x = - (hit_pos.x - spawn_pos.x) * hold_duration / travel_time # Dumb ways to die while coding, FORGET THE MINUS SIGN
 		$PointBody.add_point(Vector2($PointTail.position.x, 0))
 		$PointBody.add_point(Vector2(0, 0))
-func _process(_delta: float) -> void:
+
+func _process(delta: float) -> void:
 	if not audio_player_ref:
 		return
 		
 	visible = true
-	
-	var song_time = audio_player_ref.get_playback_position() + AudioServer.get_time_since_last_mix()
+
+	if audio_player_ref.playing:
+		_last_song_time = audio_player_ref.get_playback_position() + AudioServer.get_time_since_last_mix()
+	else:
+		_last_song_time += delta
 
 	if note_state == NoteState.HOLDING:
 		$Area2D/CollisionShape2D.disabled = true
 	
-	var progress = 1.0 - ((hit_time - song_time) / travel_time)
-	
+	var progress = 1.0 - ((hit_time - _last_song_time) / travel_time)
 	position = lerp(spawn_pos, hit_pos, progress)
 	
 	if position.x < screen_center.x * -8:
