@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bas0eg74fb3od" path="res://Scripts/Points/point.gd" id="1_pmxfa"]
 [ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/circle.png" id="2_qqjss"]
+[ext_resource type="AudioStream" uid="uid://c8r6861xmn7dk" path="res://Audio/SFX/clack.wav" id="4_nmyua"]
 [ext_resource type="Texture2D" uid="uid://dkjnkdcfmyf8k" path="res://Assets/dottedline.png" id="4_or058"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_5cbcl"]
@@ -147,3 +148,6 @@ emitting = false
 texture = ExtResource("2_qqjss")
 lifetime = 0.3
 process_material = SubResource("ParticleProcessMaterial_126pd")
+
+[node name="HoldClack" type="AudioStreamPlayer" parent="." unique_id=1354543615]
+stream = ExtResource("4_nmyua")

@@ -3,7 +3,7 @@ extends Node2D
 @export var chart: ChartData
 @export var note_scene: PackedScene
 @export var dummy_note_scene: PackedScene
-@onready var audio_player = $"../AudioStreamPlayer"
+@onready var audio_player = $"../MusicPlayer"
 
 @onready var screen_center = get_viewport_rect().size
 
@@ -17,6 +17,10 @@ var time_since_last_dummy: float = 0.0
 
 var dummy_spawn_count: int = 0
 
+func _ready() -> void:
+	audio_player.stream = chart.audio
+	audio_player.playing = true
+	
 func _process(delta):
 	if not audio_player.playing: return
 	
@@ -70,7 +74,7 @@ func spawn_note(data: NoteData):
 	n.travel_time = travel_time / data.travel_time_multiplier
 	n.spawn_pos = spawn_position
 	n.hit_pos = Vector2(250, spawn_position.y)
-	
+	n.bpm = chart.bpm
 	n.audio_player_ref = audio_player
 	
 	add_child(n)

@@ -12,6 +12,7 @@ z_index = 1
 script = ExtResource("1_uomcp")
 
 [node name="DebugCenter" type="Sprite2D" parent="." unique_id=1883555523]
+visible = false
 self_modulate = Color(1, 0.039215688, 0, 1)
 z_index = 1
 scale = Vector2(0.05, 0.05)

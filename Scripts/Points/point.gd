@@ -13,6 +13,7 @@ var end_time: float = 0.0
 var travel_time: float = 2.0
 var spawn_pos: Vector2
 var hit_pos: Vector2
+var bpm: float
 
 @onready var screen_center = get_viewport_rect().size
 
@@ -22,6 +23,7 @@ var note_state: int = NoteState.PENDING
 
 var audio_player_ref: AudioStreamPlayer
 var _last_song_time: float = 0.0
+var _next_beat_time: float = -1.0
 
 func is_hold_note() -> bool:
 	return end_time > 0.0
@@ -33,6 +35,8 @@ func start_hit() -> void:
 	hit = true
 	if is_hold_note():
 		note_state = NoteState.HOLDING
+		var beat_duration = 60.0 / bpm
+		_next_beat_time = ceil(hit_time / beat_duration) * beat_duration
 		# position = hit_pos
 		$Spray.emitting = true
 		$HoldSpray.emitting = true
@@ -88,6 +92,10 @@ func _process(delta: float) -> void:
 
 	if note_state == NoteState.HOLDING:
 		$Area2D/CollisionShape2D.disabled = true
+		if _next_beat_time >= 0.0:
+			while _last_song_time >= _next_beat_time:
+				_on_beat()
+				_next_beat_time += 60.0 / bpm
 	
 	var progress = 1.0 - ((hit_time - _last_song_time) / travel_time)
 	position = lerp(spawn_pos, hit_pos, progress)
@@ -95,6 +103,10 @@ func _process(delta: float) -> void:
 	if position.x < screen_center.x * -8:
 		_remove_from_conductor()
 		queue_free()
+
+func _on_beat() -> void:
+	$HoldClack.playing = true
+	pass
 
 func _exit_tree() -> void:
 	_remove_from_conductor()
