@@ -18,8 +18,12 @@ var time_since_last_dummy: float = 0.0
 var dummy_spawn_count: int = 0
 
 func _ready() -> void:
+	#start audio
 	audio_player.stream = chart.audio
 	audio_player.playing = true
+	
+	%SongLabel.text = chart.name
+	%DetailLabel.text = chart.stage_level
 	
 func _process(delta):
 	if not audio_player.playing: return

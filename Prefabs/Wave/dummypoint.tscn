@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://mvlkyo5dglh5"]
 
 [ext_resource type="Script" uid="uid://b8fj50yromnn5" path="res://Scripts/Points/dummypoint.gd" id="1_uomcp"]
-[ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/circle.png" id="2_jt0y4"]
+[ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="2_jt0y4"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_5cbcl"]
 diffuse_texture = ExtResource("2_jt0y4")

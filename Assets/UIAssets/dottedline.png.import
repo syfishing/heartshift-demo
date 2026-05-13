@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddv0y3p33rdy5"
-path="res://.godot/imported/circle.png-c4157733c2ad3470a49e52db87e6ad2d.ctex"
+uid="uid://dkjnkdcfmyf8k"
+path="res://.godot/imported/dottedline.png-5e70b19f519e81b249634da4fa75cdbf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/circle.png"
-dest_files=["res://.godot/imported/circle.png-c4157733c2ad3470a49e52db87e6ad2d.ctex"]
+source_file="res://Assets/UIAssets/dottedline.png"
+dest_files=["res://.godot/imported/dottedline.png-5e70b19f519e81b249634da4fa75cdbf.ctex"]
 
 [params]
 

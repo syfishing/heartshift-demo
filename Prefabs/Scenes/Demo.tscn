@@ -3,11 +3,11 @@
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="1_5cbcl"]
 [ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="1_r3bk5"]
 [ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="2_p87wn"]
-[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Prefabs/Scenes/CRTAlt.gdshader" id="3_18gwp"]
-[ext_resource type="Shader" uid="uid://cck7lbigfqgqi" path="res://Prefabs/Scenes/VHS.gdshader" id="3_25417"]
+[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="3_18gwp"]
+[ext_resource type="Shader" uid="uid://cck7lbigfqgqi" path="res://Assets/Shaders/VHS.gdshader" id="3_25417"]
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
 [ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="3_r3bk5"]
-[ext_resource type="Shader" uid="uid://oggacd4naabt" path="res://Prefabs/Scenes/CRTAltOld.gdshader" id="4_p87wn"]
+[ext_resource type="Shader" uid="uid://oggacd4naabt" path="res://Assets/Shaders/CRTAltOld.gdshader" id="4_p87wn"]
 [ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/melody1.tres" id="7_dcs3l"]
 [ext_resource type="AudioStream" uid="uid://c8r6861xmn7dk" path="res://Audio/SFX/clack.wav" id="8_86r3q"]
@@ -113,7 +113,7 @@ shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.910000043225
 shader_parameter/saturation = 2.0
 shader_parameter/gamma = 1.17200004915023
-shader_parameter/source_softness = 0.0
+shader_parameter/source_softness = 0.250000011875
 shader_parameter/curvature = 0.030000001425
 shader_parameter/corner_soften = 0.0400000019
 shader_parameter/vignette = 0.0
@@ -294,7 +294,7 @@ text = "25"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control" unique_id=458059101]
+[node name="Accuracy" type="ColorRect" parent="CanvasLayer/Control" unique_id=458059101]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -304,7 +304,8 @@ offset_bottom = 67.06
 grow_horizontal = 0
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
-[node name="AccuracyLabel" type="Label" parent="CanvasLayer/Control/ColorRect" unique_id=669504614]
+[node name="AccuracyLabel" type="Label" parent="CanvasLayer/Control/Accuracy" unique_id=669504614]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -314,7 +315,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 42
-text = "85.3849%"
+text = "0.0000%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -332,7 +333,6 @@ grow_horizontal = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.8472311, 0.6636825, 0.03876, 1)
 theme_override_font_sizes/font_size = 31
-text = "Dreamy!!"
 
 [node name="SongName" type="ColorRect" parent="CanvasLayer/Control" unique_id=1050076660]
 layout_mode = 1
@@ -347,6 +347,7 @@ grow_vertical = 0
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="SongLabel" type="Label" parent="CanvasLayer/Control/SongName" unique_id=1327533810]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -372,6 +373,7 @@ grow_vertical = 0
 color = Color(0.28626168, 0.46248925, 0.99612087, 1)
 
 [node name="DetailLabel" type="Label" parent="CanvasLayer/Control/LevelDetail" unique_id=1977836251]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -474,9 +476,9 @@ self_modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
 position = Vector2(250, 175)
 scale = Vector2(10, 141.99997)
 script = ExtResource("3_r3bk5")
-DREAMY_WINDOW = 20.0
-GREAT_WINDOW = 30.0
-GOOD_WINDOW = 40.0
+DREAMY_WINDOW = 40.0
+GREAT_WINDOW = 50.0
+GOOD_WINDOW = 60.0
 show_debug_windows = false
 
 [node name="Hit" type="Area2D" parent="Hit Line Top" unique_id=697181837]
@@ -513,9 +515,9 @@ position = Vector2(250, 325)
 rotation = 0.008726646
 scale = Vector2(10, 141.99997)
 script = ExtResource("3_r3bk5")
-DREAMY_WINDOW = 20.0
-GREAT_WINDOW = 30.0
-GOOD_WINDOW = 40.0
+DREAMY_WINDOW = 40.0
+GREAT_WINDOW = 50.0
+GOOD_WINDOW = 60.0
 input_lane = "lane2"
 show_debug_windows = false
 
@@ -552,9 +554,9 @@ volume_db = -1.7
 position = Vector2(250, 475.00003)
 scale = Vector2(10, 141.99997)
 script = ExtResource("3_r3bk5")
-DREAMY_WINDOW = 20.0
-GREAT_WINDOW = 30.0
-GOOD_WINDOW = 40.0
+DREAMY_WINDOW = 40.0
+GREAT_WINDOW = 50.0
+GOOD_WINDOW = 60.0
 input_lane = "lane3"
 show_debug_windows = false
 
