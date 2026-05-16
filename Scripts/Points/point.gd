@@ -105,7 +105,7 @@ func _process(delta: float) -> void:
 		queue_free()
 
 func _on_beat() -> void:
-	$HoldClack.playing = true
+	AudioHub.play_note_sfx()
 	pass
 
 func _exit_tree() -> void:

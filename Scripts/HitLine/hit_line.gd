@@ -39,7 +39,7 @@ func _process(_delta: float) -> void:
 				active_hold.fail_note()
 				rating_broadcast.emit("Fail", input_lane)
 				$FailParticle.emitting = true
-				$FailAnimationPlayer.play("FailHit")
+
 
 			active_hold = null
 			hold_head_rating = ""
@@ -97,7 +97,7 @@ func check_hits() -> void:
 		if point_node.get("hit"):
 			continue
 		_process_point_hit(point_node)
-		$AudioStreamPlayer.play()
+		AudioHub.play_note_sfx()
 
 		# Ranking code
 		var distance: float = abs(area.global_position.x - line_x)
@@ -161,4 +161,3 @@ func _on_fail_hit_area_entered(area: Area2D) -> void:
 	point_node.fail_note()
 	rating_broadcast.emit("Fail", input_lane)
 	$FailParticle.emitting = true
-	$FailAnimationPlayer.play("FailHit")

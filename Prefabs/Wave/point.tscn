@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bas0eg74fb3od" path="res://Scripts/Points/point.gd" id="1_pmxfa"]
 [ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="2_qqjss"]
-[ext_resource type="AudioStream" uid="uid://c8r6861xmn7dk" path="res://Audio/SFX/clack.wav" id="4_nmyua"]
 [ext_resource type="Texture2D" uid="uid://dkjnkdcfmyf8k" path="res://Assets/UIAssets/dottedline.png" id="4_or058"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_5cbcl"]
+diffuse_texture = ExtResource("2_qqjss")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_or058"]
 diffuse_texture = ExtResource("2_qqjss")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qqjss"]
@@ -82,12 +84,12 @@ scale = Vector2(0.05, 0.05)
 texture = SubResource("CanvasTexture_5cbcl")
 
 [node name="PointHead" type="Sprite2D" parent="." unique_id=1661556869]
-self_modulate = Color(0, 18.892157, 17.99419, 1)
+self_modulate = Color(0.81120485, 0.5033541, 0.87381333, 1)
 scale = Vector2(0.185, 0.185)
 texture = SubResource("CanvasTexture_5cbcl")
 
 [node name="PointBody" type="Line2D" parent="." unique_id=1727617767]
-self_modulate = Color(0, 18.892157, 17.994143, 0.296)
+self_modulate = Color(0.510617, 0.36074692, 1, 0.60800004)
 z_index = -2
 texture_repeat = 2
 width = 6.015
@@ -95,10 +97,10 @@ texture = ExtResource("4_or058")
 texture_mode = 1
 
 [node name="PointTail" type="Sprite2D" parent="." unique_id=507425528]
-self_modulate = Color(0, 18.892157, 17.99419, 1)
+self_modulate = Color(0.81120485, 0.5033541, 0.87381333, 1)
 z_index = -1
 scale = Vector2(0.185, 0.185)
-texture = SubResource("CanvasTexture_5cbcl")
+texture = SubResource("CanvasTexture_or058")
 
 [node name="PointTailBlackBody" type="Sprite2D" parent="PointTail" unique_id=362515163]
 self_modulate = Color(0, 0, 0, 1)
@@ -106,7 +108,7 @@ scale = Vector2(0.77, 0.77)
 texture = SubResource("CanvasTexture_5cbcl")
 
 [node name="PointHeadBackground" type="Sprite2D" parent="." unique_id=1326195453]
-self_modulate = Color(0, 18.892157, 17.99419, 1)
+self_modulate = Color(0.81120485, 0.5033541, 0.87381333, 1)
 z_index = -1
 scale = Vector2(0.185, 0.185)
 texture = SubResource("CanvasTexture_5cbcl")
@@ -123,31 +125,29 @@ shape = SubResource("CircleShape2D_qqjss")
 debug_color = Color(1, 0, 0, 0.42000002)
 
 [node name="Spray" type="GPUParticles2D" parent="." unique_id=846592248]
-self_modulate = Color(0, 80.24026, 76.4346, 1)
+self_modulate = Color(1, 0.8472311, 0, 1)
 z_index = -3
 emitting = false
-amount = 15
+amount = 30
 one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_qqjss")
 
 [node name="HoldSpray" type="GPUParticles2D" parent="." unique_id=424831950]
-self_modulate = Color(0, 80.24026, 76.4346, 1)
+self_modulate = Color(1, 0.8472311, 0, 1)
 top_level = true
 z_index = -3
+position = Vector2(-1, 0)
 emitting = false
 amount = 30
 speed_scale = 2.0
 process_material = SubResource("ParticleProcessMaterial_nmyua")
 
 [node name="Dot" type="GPUParticles2D" parent="HoldSpray" unique_id=364997948]
-self_modulate = Color(0, 18.892157, 17.99419, 1)
+self_modulate = Color(0.81120485, 0.5033541, 0.87381333, 1)
 z_index = 5
 emitting = false
 texture = ExtResource("2_qqjss")
 lifetime = 0.3
 process_material = SubResource("ParticleProcessMaterial_126pd")
-
-[node name="HoldClack" type="AudioStreamPlayer" parent="." unique_id=1354543615]
-stream = ExtResource("4_nmyua")

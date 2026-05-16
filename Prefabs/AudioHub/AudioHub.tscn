@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dckbjmebxktl0"]
+
+[ext_resource type="Script" uid="uid://bg23m8os3yntm" path="res://Scripts/Managers/audiohub.gd" id="1_yrurv"]
+[ext_resource type="AudioStream" uid="uid://bfwm7lsaodop6" path="res://Audio/Music/Technicolor.wav" id="2_j50qe"]
+[ext_resource type="AudioStream" uid="uid://c8r6861xmn7dk" path="res://Audio/SFX/clack.wav" id="2_junpn"]
+
+[node name="AudioHub" type="Node" unique_id=521753189]
+script = ExtResource("1_yrurv")
+
+[node name="BGMusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2007754099]
+
+[node name="TrackStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1012044149]
+stream = ExtResource("2_j50qe")
+
+[node name="SFXStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=933479005]
+stream = ExtResource("2_junpn")

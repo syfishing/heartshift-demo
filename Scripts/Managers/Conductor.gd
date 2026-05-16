@@ -3,7 +3,7 @@ extends Node2D
 @export var chart: ChartData
 @export var note_scene: PackedScene
 @export var dummy_note_scene: PackedScene
-@onready var audio_player = $"../MusicPlayer"
+@onready var audio_player = AudioHub.musicplayer
 
 @onready var screen_center = get_viewport_rect().size
 
@@ -19,7 +19,7 @@ var dummy_spawn_count: int = 0
 
 func _ready() -> void:
 	#start audio
-	audio_player.stream = chart.audio
+	#audio_player.stream = chart.audio
 	audio_player.playing = true
 	
 	%SongLabel.text = chart.name

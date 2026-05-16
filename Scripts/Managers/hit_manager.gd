@@ -8,21 +8,26 @@ var rating_score: Dictionary = {"Dreamy": 1, "Great": 0.8, "Good": 0.6, "Pass": 
 
 func _on_hit_line_rating_broadcast(rating: String, _lane: String) -> void:
 	print(rating)
+	
 	%RatingLabel.text = rating+"!"
 	%RatingAnimPlayer.play("RatingAnim")
 
 	if rating == "Fail":
 		combo = 0
 	else:
+		#Combo
 		combo += 1
-		scorenum += rating_score[rating]
+		%ComboLabel.text = str(combo)
+		
+		if rating != "Hold":
+			scorenum += rating_score[rating]
+			return
 	
 	#Accuracy
 	var score = snapped((scorenum/chart_size)*100, 0.0001)
 	%AccuracyLabel.text = str(score) + "%"
 	
-	#Combo
-	%ComboLabel.text = str(combo)
+	
 	camera_tilt(_lane)
 	pass # Replace with function body.
 	
