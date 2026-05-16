@@ -59,6 +59,7 @@ func spawn_dummy_note() -> void:
 	active_notes.push_back(n)
 	$"../Curve".point_nodes = active_notes
 
+
 func spawn_note(data: NoteData):
 	var n = note_scene.instantiate()
 	var start_x = screen_center.x * 8

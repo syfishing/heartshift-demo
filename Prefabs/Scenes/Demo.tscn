@@ -167,6 +167,34 @@ size = Vector2(13, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_7vajh"]
 
+[sub_resource type="Animation" id="Animation_dsbte"]
+resource_name = "FailHit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FailMark:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(2.2973921, 1),
+"update": 0,
+"values": [Color(0.89827347, 0, 0.2400937, 0.58400005), Color(0.89827347, 0, 0.2400937, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FailMark:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(2.928171, 1),
+"update": 0,
+"values": [Vector2(0.446, 0.017), Vector2(0.446, 1e-05)]
+}
+
 [sub_resource type="Animation" id="Animation_7vajh"]
 resource_name = "HitMark"
 length = 0.3
@@ -195,8 +223,24 @@ tracks/1/keys = {
 "values": [Vector2(4, 1), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_p87wn"]
+[sub_resource type="Animation" id="Animation_np6qb"]
+resource_name = "Initialise"
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FailMark:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.89827347, 0, 0.2400937, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_p87wn"]
+length = 0.646
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -221,12 +265,94 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(3, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FailMark:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.8980392, 0, 0.23921569, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FailMark:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.446, 0.017)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_25417"]
 _data = {
+&"FailHit": SubResource("Animation_dsbte"),
 &"HitMark": SubResource("Animation_7vajh"),
+&"Initialise": SubResource("Animation_np6qb"),
 &"RESET": SubResource("Animation_p87wn")
 }
+
+[sub_resource type="Curve" id="Curve_np6qb"]
+_data = [Vector2(0.04782608, 1), 0.0, 0.0, 0, 0, Vector2(0.73913044, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_8r4qt"]
+curve = SubResource("Curve_np6qb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x0pjv"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 52.68, 1)
+direction = Vector3(9, 0, 0)
+spread = 0.0
+initial_velocity_min = 182.83
+initial_velocity_max = 209.87
+gravity = Vector3(0, 0, 0)
+damping_min = 88.157005
+damping_max = 88.157005
+scale_max = 9.8
+alpha_curve = SubResource("CurveTexture_8r4qt")
+
+[sub_resource type="Gradient" id="Gradient_dsbte"]
+colors = PackedColorArray(1, 1, 1, 0.56, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_np6qb"]
+gradient = SubResource("Gradient_dsbte")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8r4qt"]
+diffuse_texture = SubResource("GradientTexture2D_np6qb")
+
+[sub_resource type="CurveTexture" id="CurveTexture_57yhw"]
+curve = SubResource("Curve_np6qb")
+
+[sub_resource type="Curve" id="Curve_dsbte"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 3), 6.822472, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_np6qb"]
+curve = SubResource("Curve_dsbte")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dsbte"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 324, 1)
+direction = Vector3(-10, 0, 0)
+spread = 0.0
+initial_velocity_max = 276.12
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -14.930002
+linear_accel_max = 70.149994
+scale_max = 2.85
+scale_over_velocity_max = 174.9
+scale_over_velocity_curve = SubResource("CurveTexture_np6qb")
+alpha_curve = SubResource("CurveTexture_57yhw")
 
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
 
@@ -425,6 +551,7 @@ handle_strength = 0.375
 bezier_steps_per_segment = 32
 
 [node name="Line2D" type="Line2D" parent="Curve" unique_id=1209914502]
+z_index = -6
 width = 3.5
 default_color = Color(0, 0.5843642, 0.5743159, 1)
 
@@ -510,6 +637,30 @@ libraries/ = SubResource("AnimationLibrary_25417")
 stream = ExtResource("8_86r3q")
 volume_db = -1.7
 
+[node name="FailParticle" type="GPUParticles2D" parent="Hit Line Top" unique_id=1019062241]
+self_modulate = Color(1, 0.6940905, 0.65601605, 1)
+z_index = -5
+position = Vector2(-25, 0)
+rotation = -0.00061456824
+scale = Vector2(0.09999622, 0.007095851)
+skew = -0.1226784
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_x0pjv")
+
+[node name="FailMark" type="Sprite2D" parent="Hit Line Top" unique_id=592953865]
+self_modulate = Color(0.8980392, 0, 0.23921569, 1)
+z_index = -4
+position = Vector2(-14.000581, 0)
+scale = Vector2(0.446, 0.017)
+texture = SubResource("CanvasTexture_8r4qt")
+
+[node name="FailAnimationPlayer" type="AnimationPlayer" parent="Hit Line Top" unique_id=823633725]
+libraries/ = SubResource("AnimationLibrary_25417")
+autoplay = &"Initialise"
+
 [node name="Hit Line Mid" type="Sprite2D" parent="." unique_id=2129025600]
 position = Vector2(250, 325)
 rotation = 0.008726646
@@ -546,9 +697,33 @@ texture = SubResource("CanvasTexture_7vajh")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Mid" unique_id=2136872612]
 libraries/ = SubResource("AnimationLibrary_25417")
 
+[node name="FailAnimationPlayer" type="AnimationPlayer" parent="Hit Line Mid" unique_id=1752071048]
+libraries/ = SubResource("AnimationLibrary_25417")
+autoplay = &"Initialise"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Hit Line Mid" unique_id=2006171169]
 stream = ExtResource("8_86r3q")
 volume_db = -1.7
+
+[node name="FailParticle" type="GPUParticles2D" parent="Hit Line Mid" unique_id=678677448]
+self_modulate = Color(1, 0.6940905, 0.65601605, 1)
+z_index = -5
+position = Vector2(-25, 0)
+rotation = -0.00061456824
+scale = Vector2(0.09999622, 0.007095851)
+skew = -0.1226784
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_x0pjv")
+
+[node name="FailMark" type="Sprite2D" parent="Hit Line Mid" unique_id=1776280770]
+self_modulate = Color(0.8980392, 0, 0.23921569, 1)
+z_index = -4
+position = Vector2(-14.000581, 0)
+scale = Vector2(0.446, 0.017)
+texture = SubResource("CanvasTexture_8r4qt")
 
 [node name="Hit Line Bottom" type="Sprite2D" parent="." unique_id=1292322369]
 position = Vector2(250, 475.00003)
@@ -589,6 +764,30 @@ libraries/ = SubResource("AnimationLibrary_25417")
 stream = ExtResource("8_86r3q")
 volume_db = -1.7
 
+[node name="FailParticle" type="GPUParticles2D" parent="Hit Line Bottom" unique_id=235584845]
+self_modulate = Color(1, 0.6940905, 0.65601605, 1)
+z_index = -5
+position = Vector2(-25, 0)
+rotation = -0.00061456824
+scale = Vector2(0.09999622, 0.007095851)
+skew = -0.1226784
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_x0pjv")
+
+[node name="FailMark" type="Sprite2D" parent="Hit Line Bottom" unique_id=813652122]
+self_modulate = Color(0.8980392, 0, 0.23921569, 1)
+z_index = -4
+position = Vector2(-14.000581, 0)
+scale = Vector2(0.446, 0.017)
+texture = SubResource("CanvasTexture_8r4qt")
+
+[node name="FailAnimationPlayer" type="AnimationPlayer" parent="Hit Line Bottom" unique_id=1392873606]
+libraries/ = SubResource("AnimationLibrary_25417")
+autoplay = &"Initialise"
+
 [node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
 position = Vector2(-20, -20)
 script = ExtResource("6_n4yq1")
@@ -600,6 +799,14 @@ dummy_spawn_interval = 1.0
 sine_decay_rate = 0.2
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1483877863]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=218265872]
+self_modulate = Color(0.8729805, 1, 1, 1)
+z_index = -5
+position = Vector2(1252, 324)
+amount = 50
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_dsbte")
 
 [connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="area_entered" from="Hit Line Top/Hit" to="Hit Line Top" method="_on_hit_area_entered"]

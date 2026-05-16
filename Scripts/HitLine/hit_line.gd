@@ -38,6 +38,8 @@ func _process(_delta: float) -> void:
 			else:
 				active_hold.fail_note()
 				rating_broadcast.emit("Fail", input_lane)
+				$FailParticle.emitting = true
+				$FailAnimationPlayer.play("FailHit")
 
 			active_hold = null
 			hold_head_rating = ""
@@ -158,3 +160,5 @@ func _on_fail_hit_area_entered(area: Area2D) -> void:
 
 	point_node.fail_note()
 	rating_broadcast.emit("Fail", input_lane)
+	$FailParticle.emitting = true
+	$FailAnimationPlayer.play("FailHit")
