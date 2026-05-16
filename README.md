@@ -1,6 +1,13 @@
 # heartshift-demo
 The demo version for HEARTSHIFT- a rhythm-visual novel hybrid game about a dream machine.
 
+## Important note
+This is a team project performed by 4 people: Syfish, Haseeb, Jolly and Spooky.
+Jolly and Spooky haven't worked on the project yet however.
+This project is submitted to https://macondo.hackclub.com too, currently with separate projects for every team member until macondo has implemented team projects.
+
+## Story/writing note
+Syfish's writing of the story, lore, characters, worldbuilding etc is tracked with Hack Club's Hackatime but is put into the .gitignore file to prevent spoiling the entire future story as we plan to progressively release the story during our Early Access period on Steam after we release our demo (this repo!) on itch.io. We have permission for this from the organisers at Macondo after asking them! Dialogue in the demo will probably still be in the repo though as it will actually be inside the demo!
 
 ## Development Checklist
 
