@@ -2,6 +2,8 @@ extends Node2D
 
 var started: bool = false
 
+const menu_theme = preload("res://Audio/Music/dreamcatcher.wav")
+
 func _input(event: InputEvent) -> void:
 	if started:
 		return
@@ -24,3 +26,6 @@ func _input(event: InputEvent) -> void:
 func _start_game() -> void:
 	started = true
 	get_tree().change_scene_to_file("res://Prefabs/Scenes/MainMenu.tscn")
+
+func _ready() -> void:
+	AudioHub.play_menu_music(menu_theme, false)

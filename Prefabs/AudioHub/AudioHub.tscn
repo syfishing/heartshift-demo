@@ -14,3 +14,5 @@ stream = ExtResource("2_j50qe")
 
 [node name="SFXStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=933479005]
 stream = ExtResource("2_junpn")
+
+[node name="MainMenuMusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1078796805]
