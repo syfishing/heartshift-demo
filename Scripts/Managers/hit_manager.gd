@@ -14,6 +14,7 @@ func _on_hit_line_rating_broadcast(rating: String, _lane: String) -> void:
 
 	if rating == "Fail":
 		combo = 0
+		%ComboLabel.text = str(combo)
 	else:
 		#Combo
 		combo += 1
@@ -21,12 +22,11 @@ func _on_hit_line_rating_broadcast(rating: String, _lane: String) -> void:
 		
 		if rating != "Hold":
 			scorenum += rating_score[rating]
-			return
+			
 	
 	#Accuracy
 	var score = snapped((scorenum/chart_size)*100, 0.0001)
 	%AccuracyLabel.text = str(score) + "%"
-	
 	
 	camera_tilt(_lane)
 	pass # Replace with function body.
