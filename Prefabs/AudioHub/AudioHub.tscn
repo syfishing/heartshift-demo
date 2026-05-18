@@ -16,3 +16,4 @@ stream = ExtResource("2_j50qe")
 stream = ExtResource("2_junpn")
 
 [node name="MainMenuMusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1078796805]
+volume_db = -10.035

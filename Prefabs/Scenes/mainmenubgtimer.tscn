@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://brwv2y0qb5k7"]
+
+[ext_resource type="Script" uid="uid://ckavf2rei3vds" path="res://Scripts/UIscripts/mainmenutimer.gd" id="1_s4iv0"]
+[ext_resource type="VideoStream" uid="uid://0bhwq7bmdl0t" path="res://Assets/Backgrounds/wavymenubg2.ogv" id="2_t218x"]
+
+[node name="Mainmenubgtimer" type="Node2D" unique_id=148286302]
+script = ExtResource("1_s4iv0")
+current_stream = ExtResource("2_t218x")
+
+[node name="Timer" type="Timer" parent="." unique_id=438981993]
+wait_time = 12.799999999999999
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timeout"]
