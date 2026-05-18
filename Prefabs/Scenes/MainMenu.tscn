@@ -406,6 +406,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 
 [connection signal="pressed" from="CanvasLayer/Control/RhythmPlayButton" to="." method="_on_rhythm_play_button_pressed"]
