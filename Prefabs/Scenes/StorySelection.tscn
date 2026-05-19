@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://ggjj6ri5xnvc"]
 
 [ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="1_fjafb"]
+[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="1_lnqo4"]
+[ext_resource type="Shader" uid="uid://lxiku6t8q08k" path="res://Assets/Shaders/Wave.gdshader" id="1_syosp"]
+[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="2_4ru64"]
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="2_8lxbd"]
+[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="3_flsia"]
 [ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="3_mjy6n"]
 [ext_resource type="Texture2D" uid="uid://dkjnkdcfmyf8k" path="res://Assets/UIAssets/dottedline.png" id="4_1572c"]
 
@@ -11,6 +15,83 @@ glow_enabled = true
 glow_normalized = true
 glow_strength = 1.5
 glow_bloom = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sgtdn"]
+shader = ExtResource("1_syosp")
+shader_parameter/top_color = Color(0.7636256, 0.1680183, 1, 0)
+shader_parameter/bottom_color = Color(0, 0, 0, 0.39200002)
+shader_parameter/wave_amp = 0.5
+shader_parameter/wave_size = 2.4800000703
+shader_parameter/wave_time_mul = 0.10000000149012
+shader_parameter/total_phases = 23
+
+[sub_resource type="Shader" id="Shader_syosp"]
+code = "shader_type canvas_item;
+
+uniform vec4 top_color: source_color;
+uniform vec4 bottom_color: source_color;
+
+uniform float wave_amp: hint_range(0.0, 0.5);
+uniform float wave_size: hint_range(1.0, 10.0);
+uniform float wave_time_mul: hint_range(-2.0, 2.0);
+
+uniform int total_phases: hint_range(2, 600, 1);
+
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+
+float noise(float p){
+	float fl = floor(p);
+  float fc = fract(p);
+	return mix(rand(fl), rand(fl + 1.0), fc);
+}
+
+
+float fmod(float x, float y) {
+	return x - floor(x / y) * y;
+}
+
+
+vec4 lerp(vec4 a, vec4 b, float w) {
+	return a + w * (b - a);
+}
+
+
+void fragment() {
+	float t = float(total_phases);
+	float effective_wave_amp = min(wave_amp, 0.5 / t);
+	float d = fmod(UV.y, 1.0 / t);
+	float i = floor(UV.y * t);
+	float vi = floor(UV.y * t + t * effective_wave_amp);
+	float s = effective_wave_amp * sin((UV.x + TIME * max(1.0 / t, noise(vi)) * wave_time_mul * vi / t) * 2.0 * PI * wave_size);
+	
+	if (d < s) i--;
+	if (d > s + 1.0 / t) i++;
+	i = clamp(i, 0.0, t - 1.0);
+	
+	COLOR = lerp(top_color, bottom_color, i / (t - 1.0));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v1uep"]
+shader = SubResource("Shader_syosp")
+shader_parameter/top_color = Color(0.59824854, 0.16060856, 0.877902, 0.38500002)
+shader_parameter/bottom_color = Color(0, 0, 18.61297, 0)
+shader_parameter/wave_amp = 0.210000009975
+shader_parameter/wave_size = 2.8000000855
+shader_parameter/wave_time_mul = -0.289999918775
+shader_parameter/total_phases = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_syosp"]
+shader = ExtResource("1_syosp")
+shader_parameter/top_color = Color(0.12939176, 0.5061471, 0.84947944, 0)
+shader_parameter/bottom_color = Color(0.59824854, 0.16060856, 0.877902, 0.38500002)
+shader_parameter/wave_amp = 0.210000009975
+shader_parameter/wave_size = 2.8000000855
+shader_parameter/wave_time_mul = -0.289999918775
+shader_parameter/total_phases = 5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_flsia"]
 
 [sub_resource type="Shader" id="Shader_8lxbd"]
 code = "shader_type canvas_item;
@@ -235,12 +316,233 @@ shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
 shader_parameter/glow_threshold = 0.65
 
+[sub_resource type="Curve" id="Curve_flsia"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_syosp"]
+curve = SubResource("Curve_flsia")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_flsia"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 218.4
+spread = 180.0
+initial_velocity_min = 215.22
+initial_velocity_max = 215.22
+gravity = Vector3(0, 0, 0)
+damping_min = 13.924001
+damping_max = 13.924001
+attractor_interaction_enabled = false
+scale_min = 0.01
+scale_max = 0.099999994
+alpha_curve = SubResource("CurveTexture_syosp")
+
 [node name="StorySelection" type="Node2D" unique_id=1295335304]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1182171406]
 environment = SubResource("Environment_8lxbd")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1210477846]
+
+[node name="BG" type="ColorRect" parent="CanvasLayer" unique_id=1500265610]
+material = SubResource("ShaderMaterial_sgtdn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="TextureRect" parent="CanvasLayer" unique_id=241055417]
+self_modulate = Color(1, 0.49803922, 1, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -334.0
+offset_top = -223.0
+offset_right = 316.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lnqo4")
+expand_mode = 1
+
+[node name="InnerCard" type="TextureRect" parent="CanvasLayer/Card" unique_id=1676227214]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -334.1825
+offset_top = -153.47
+offset_right = 334.1825
+offset_bottom = 153.47
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.95, 0.95)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_lnqo4")
+expand_mode = 1
+
+[node name="SongCover" type="TextureRect" parent="CanvasLayer/Card" unique_id=839176810]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 25.0
+offset_right = 171.0
+offset_bottom = 165.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_4ru64")
+expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Card/SongCover" unique_id=211049512]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_v1uep")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = -3.9999924
+offset_right = 291.42
+offset_bottom = 20.000008
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Card/SongCover" unique_id=790508312]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_syosp")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -27.999992
+offset_right = 298.42
+offset_bottom = -3.9999924
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InfoContainer" type="TextureRect" parent="CanvasLayer/Card" unique_id=1641956994]
+self_modulate = Color(0.2592937, 0.2592937, 0.2592937, 1)
+layout_mode = 0
+offset_left = 300.0
+offset_top = 25.0
+offset_right = 600.0
+offset_bottom = 165.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_lnqo4")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Card/InfoContainer" unique_id=1738297356]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_top = 8.0
+offset_right = 73.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Alteration"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Card/InfoContainer" unique_id=1849177696]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -49.0
+offset_right = 107.0
+offset_bottom = -18.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 22
+text = "Stage 6"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Label3" type="Label" parent="CanvasLayer/Card/InfoContainer" unique_id=623758452]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -107.0
+offset_top = -49.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 22
+text = "Diff. 10"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Divider" type="TextureRect" parent="CanvasLayer/Card" unique_id=2036410996]
+self_modulate = Color(1, 0.49803922, 1, 1)
+layout_mode = 0
+offset_top = 194.0
+offset_right = 649.0
+offset_bottom = 204.0
+texture = SubResource("CanvasTexture_flsia")
+
+[node name="Label" type="Label" parent="CanvasLayer/Card" unique_id=1313630543]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -166.0
+offset_top = -76.0
+offset_right = 166.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 36
+text = "\"Lorem Ipsum Doloret\""
+
+[node name="RightButton" type="TextureButton" parent="CanvasLayer" unique_id=53784779]
+modulate = Color(1, 0.5573358, 1, 1)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -143.0
+offset_top = -113.0
+offset_right = -67.0
+offset_bottom = -29.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("3_flsia")
+stretch_mode = 0
+
+[node name="LeftButton" type="TextureButton" parent="CanvasLayer" unique_id=449560514]
+modulate = Color(1, 0.5573358, 1, 1)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1071.0
+offset_top = -113.0
+offset_right = -995.0
+offset_bottom = -29.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("3_flsia")
+stretch_mode = 0
+flip_h = true
 
 [node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=132932503]
 material = SubResource("ShaderMaterial_1572c")
@@ -250,48 +552,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1837027922]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -356.0
-offset_top = -253.0
-offset_right = 356.0
-offset_bottom = 89.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.7490196, 0.42352942, 1, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=640695158]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -143.0
-offset_top = -113.0
-offset_right = -73.0
-offset_bottom = -43.0
-grow_horizontal = 0
-grow_vertical = 2
-color = Color(0.7490196, 0.42352942, 1, 1)
-
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer" unique_id=499667675]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -1071.0
-offset_top = -113.0
-offset_right = -1001.0
-offset_bottom = -43.0
-grow_horizontal = 0
-grow_vertical = 2
-color = Color(0.7490196, 0.42352942, 1, 1)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=115334710]
 limit_left = 0
@@ -316,6 +576,14 @@ self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
 position = Vector2(576, 580)
 scale = Vector2(0.16, 0.16)
 texture = ExtResource("1_fjafb")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Roundeddiamond3" unique_id=170298991]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+z_index = -2
+amount = 32
+texture = ExtResource("3_mjy6n")
+lifetime = 3.8499999999999996
+process_material = SubResource("ParticleProcessMaterial_flsia")
 
 [node name="Roundeddiamond6" type="Sprite2D" parent="." unique_id=5060154]
 self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
