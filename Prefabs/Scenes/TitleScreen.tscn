@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://convtmgdk3j8o"]
 
 [ext_resource type="Script" uid="uid://betiak6k6g08o" path="res://Scripts/UIscripts/TitleScreen.gd" id="1_7hjq3"]
-[ext_resource type="VideoStream" uid="uid://bqghcssu5di2t" path="res://Assets/Backgrounds/wavymenubg1.ogv" id="2_y6e8o"]
+[ext_resource type="VideoStream" uid="uid://0bhwq7bmdl0t" path="res://Assets/Backgrounds/wavymenubg2.ogv" id="2_y6e8o"]
 [ext_resource type="Script" uid="uid://bik7j5uliwt3r" path="res://Scripts/UIscripts/wavybackground.gd" id="3_1l7ti"]
 [ext_resource type="Script" uid="uid://d23hump1yjioi" path="res://Scripts/UIscripts/titlescreenlabel.gd" id="4_y6e8o"]
 

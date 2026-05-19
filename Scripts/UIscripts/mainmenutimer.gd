@@ -2,7 +2,7 @@ extends Node2D
 
 @export var current_stream: VideoStream
 const wavybg1 = preload("res://Assets/Backgrounds/wavymenubg1.ogv")
-const wavybg2 = preload("res://Assets/Backgrounds/glitchymenubg1.ogv")
+const wavybg2 = preload("res://Assets/Backgrounds/wavymenubg2.ogv")
 var activateEffects = false
 
 func _on_timeout() -> void:
