@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="1_fjafb"]
 [ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="1_lnqo4"]
+[ext_resource type="Script" uid="uid://bokdomgusqpdn" path="res://Scripts/UIscripts/story_selection.gd" id="1_sgtdn"]
 [ext_resource type="Shader" uid="uid://lxiku6t8q08k" path="res://Assets/Shaders/Wave.gdshader" id="1_syosp"]
 [ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="2_4ru64"]
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="2_8lxbd"]
@@ -15,15 +16,6 @@ glow_enabled = true
 glow_normalized = true
 glow_strength = 1.5
 glow_bloom = 0.1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sgtdn"]
-shader = ExtResource("1_syosp")
-shader_parameter/top_color = Color(0.7636256, 0.1680183, 1, 0)
-shader_parameter/bottom_color = Color(0, 0, 0, 0.39200002)
-shader_parameter/wave_amp = 0.5
-shader_parameter/wave_size = 2.4800000703
-shader_parameter/wave_time_mul = 0.10000000149012
-shader_parameter/total_phases = 23
 
 [sub_resource type="Shader" id="Shader_syosp"]
 code = "shader_type canvas_item;
@@ -316,6 +308,31 @@ shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
 shader_parameter/glow_threshold = 0.65
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sgtdn"]
+shader = ExtResource("1_syosp")
+shader_parameter/top_color = Color(0.7636256, 0.1680183, 1, 0)
+shader_parameter/bottom_color = Color(0, 0, 0, 0.39200002)
+shader_parameter/wave_amp = 0.5
+shader_parameter/wave_size = 2.4800000703
+shader_parameter/wave_time_mul = 0.10000000149012
+shader_parameter/total_phases = 23
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sgtdn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1uep"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vkxt3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_np72h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1r7ws"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hfhdq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ntonj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2e7ft"]
+
 [sub_resource type="Curve" id="Curve_flsia"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -338,24 +355,124 @@ scale_min = 0.01
 scale_max = 0.099999994
 alpha_curve = SubResource("CurveTexture_syosp")
 
+[sub_resource type="Animation" id="Animation_sgtdn"]
+resource_name = "CircleAnim"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ConnectLine:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 0, 0), PackedVector2Array(0, 0, 0, -200)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.78939015, 0.58383155, 0.5420044, 0), Color(0.7892152, 0.5842356, 0.54154176, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CircleBack:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ConnectLine:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.510617, 0.36074692, 1, 0), Color(0.510617, 0.36074692, 1, 0.60800004)]
+}
+
+[sub_resource type="Animation" id="Animation_v1uep"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ConnectLine:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.7892152, 0.5842356, 0.54154176, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CircleBack:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ConnectLine:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.510617, 0.36074692, 1, 0.60800004)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vkxt3"]
+_data = {
+&"CircleAnim": SubResource("Animation_sgtdn"),
+&"RESET": SubResource("Animation_v1uep")
+}
+
 [node name="StorySelection" type="Node2D" unique_id=1295335304]
+script = ExtResource("1_sgtdn")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1182171406]
 environment = SubResource("Environment_8lxbd")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1210477846]
+[node name="Card Layer" type="CanvasLayer" parent="." unique_id=1092757595]
 
-[node name="BG" type="ColorRect" parent="CanvasLayer" unique_id=1500265610]
-material = SubResource("ShaderMaterial_sgtdn")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -48.0
-offset_bottom = -120.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Card" type="TextureRect" parent="CanvasLayer" unique_id=241055417]
+[node name="Card" type="TextureRect" parent="Card Layer" unique_id=1984983618]
 self_modulate = Color(1, 0.49803922, 1, 1)
 anchors_preset = 8
 anchor_left = 0.5
@@ -371,7 +488,7 @@ grow_vertical = 2
 texture = ExtResource("1_lnqo4")
 expand_mode = 1
 
-[node name="InnerCard" type="TextureRect" parent="CanvasLayer/Card" unique_id=1676227214]
+[node name="InnerCard" type="TextureRect" parent="Card Layer/Card" unique_id=1129080237]
 self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -390,7 +507,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("1_lnqo4")
 expand_mode = 1
 
-[node name="SongCover" type="TextureRect" parent="CanvasLayer/Card" unique_id=839176810]
+[node name="SongCover" type="TextureRect" parent="Card Layer/Card" unique_id=1711415403]
 layout_mode = 0
 offset_left = 31.0
 offset_top = 25.0
@@ -400,7 +517,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("2_4ru64")
 expand_mode = 1
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Card/SongCover" unique_id=211049512]
+[node name="ColorRect" type="ColorRect" parent="Card Layer/Card/SongCover" unique_id=1043798263]
 show_behind_parent = true
 material = SubResource("ShaderMaterial_v1uep")
 layout_mode = 1
@@ -416,7 +533,7 @@ offset_bottom = 20.000008
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Card/SongCover" unique_id=790508312]
+[node name="ColorRect2" type="ColorRect" parent="Card Layer/Card/SongCover" unique_id=1400767948]
 show_behind_parent = true
 material = SubResource("ShaderMaterial_syosp")
 layout_mode = 1
@@ -432,7 +549,7 @@ offset_bottom = -3.9999924
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="InfoContainer" type="TextureRect" parent="CanvasLayer/Card" unique_id=1641956994]
+[node name="InfoContainer" type="TextureRect" parent="Card Layer/Card" unique_id=1033615248]
 self_modulate = Color(0.2592937, 0.2592937, 0.2592937, 1)
 layout_mode = 0
 offset_left = 300.0
@@ -443,7 +560,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("1_lnqo4")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Card/InfoContainer" unique_id=1738297356]
+[node name="Label" type="Label" parent="Card Layer/Card/InfoContainer" unique_id=213040541]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -456,7 +573,7 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 30
 text = "Alteration"
 
-[node name="Label2" type="Label" parent="CanvasLayer/Card/InfoContainer" unique_id=1849177696]
+[node name="Label2" type="Label" parent="Card Layer/Card/InfoContainer" unique_id=702777200]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -470,7 +587,7 @@ text = "Stage 6"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Label3" type="Label" parent="CanvasLayer/Card/InfoContainer" unique_id=623758452]
+[node name="Label3" type="Label" parent="Card Layer/Card/InfoContainer" unique_id=1599875957]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -487,7 +604,7 @@ text = "Diff. 10"
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Divider" type="TextureRect" parent="CanvasLayer/Card" unique_id=2036410996]
+[node name="Divider" type="TextureRect" parent="Card Layer/Card" unique_id=1340447236]
 self_modulate = Color(1, 0.49803922, 1, 1)
 layout_mode = 0
 offset_top = 194.0
@@ -495,7 +612,7 @@ offset_right = 649.0
 offset_bottom = 204.0
 texture = SubResource("CanvasTexture_flsia")
 
-[node name="Label" type="Label" parent="CanvasLayer/Card" unique_id=1313630543]
+[node name="Label" type="Label" parent="Card Layer/Card" unique_id=161591525]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -511,7 +628,30 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 36
 text = "\"Lorem Ipsum Doloret\""
 
-[node name="RightButton" type="TextureButton" parent="CanvasLayer" unique_id=53784779]
+[node name="CRT" type="ColorRect" parent="Card Layer" unique_id=132932503]
+material = SubResource("ShaderMaterial_1572c")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1210477846]
+layer = -1
+
+[node name="BG" type="ColorRect" parent="CanvasLayer" unique_id=1500265610]
+z_as_relative = false
+material = SubResource("ShaderMaterial_sgtdn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RightButton" type="Button" parent="CanvasLayer" unique_id=1349503854]
 modulate = Color(1, 0.5573358, 1, 1)
 anchors_preset = 6
 anchor_left = 1.0
@@ -524,10 +664,16 @@ offset_right = -67.0
 offset_bottom = -29.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = ExtResource("3_flsia")
-stretch_mode = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.5649617, 0.5649616, 0.5649616, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_sgtdn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_v1uep")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vkxt3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_np72h")
+icon = ExtResource("3_flsia")
 
-[node name="LeftButton" type="TextureButton" parent="CanvasLayer" unique_id=449560514]
+[node name="LeftButton" type="Button" parent="CanvasLayer" unique_id=3458377]
 modulate = Color(1, 0.5573358, 1, 1)
 anchors_preset = 6
 anchor_left = 1.0
@@ -540,68 +686,23 @@ offset_right = -995.0
 offset_bottom = -29.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = ExtResource("3_flsia")
-stretch_mode = 0
-flip_h = true
-
-[node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=132932503]
-material = SubResource("ShaderMaterial_1572c")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
+rotation = 3.1415927
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/icon_pressed_color = Color(0.5649617, 0.5649616, 0.5649616, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1r7ws")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hfhdq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ntonj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2e7ft")
+icon = ExtResource("3_flsia")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=115334710]
+position = Vector2(576, 324)
+limit_enabled = false
 limit_left = 0
 limit_top = 0
 limit_right = 1152
 limit_bottom = 648
-
-[node name="Roundeddiamond" type="Sprite2D" parent="." unique_id=1242729561]
-self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
-position = Vector2(-24, 580)
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("1_fjafb")
-
-[node name="Roundeddiamond2" type="Sprite2D" parent="." unique_id=654891880]
-self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
-position = Vector2(276, 500)
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("1_fjafb")
-
-[node name="Roundeddiamond3" type="Sprite2D" parent="." unique_id=1770705722]
-self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
-position = Vector2(576, 580)
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("1_fjafb")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Roundeddiamond3" unique_id=170298991]
-self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
-z_index = -2
-amount = 32
-texture = ExtResource("3_mjy6n")
-lifetime = 3.8499999999999996
-process_material = SubResource("ParticleProcessMaterial_flsia")
-
-[node name="Roundeddiamond6" type="Sprite2D" parent="." unique_id=5060154]
-self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
-position = Vector2(576, 580)
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("1_fjafb")
-
-[node name="Roundeddiamond4" type="Sprite2D" parent="." unique_id=467543376]
-self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
-position = Vector2(876, 500)
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("1_fjafb")
-
-[node name="Roundeddiamond5" type="Sprite2D" parent="." unique_id=2109729561]
-self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
-position = Vector2(1176, 580)
-scale = Vector2(0.16, 0.16)
-texture = ExtResource("1_fjafb")
+position_smoothing_enabled = true
 
 [node name="MainStoryLine" type="Line2D" parent="." unique_id=376625226 node_paths=PackedStringArray("curve_line", "point_nodes")]
 z_index = -1
@@ -609,26 +710,80 @@ width = 3.835
 default_color = Color(0.51065123, 0.36099148, 1, 1)
 script = ExtResource("2_8lxbd")
 curve_line = NodePath(".")
-point_nodes = [NodePath("../Roundeddiamond"), NodePath("../Roundeddiamond2"), NodePath("../Roundeddiamond3"), NodePath("../Roundeddiamond4"), NodePath("../Roundeddiamond5")]
+point_nodes = [NodePath("../StoryPoints/Roundeddiamond"), NodePath("../StoryPoints/Roundeddiamond2"), NodePath("../StoryPoints/Roundeddiamond3"), NodePath("../StoryPoints/Roundeddiamond4"), NodePath("../StoryPoints/Roundeddiamond5")]
 handle_strength = 9.86
 
-[node name="Circle" type="Sprite2D" parent="." unique_id=697733191]
+[node name="StoryPointCursor" type="Node2D" parent="." unique_id=1071556934]
+
+[node name="Circle" type="Sprite2D" parent="StoryPointCursor" unique_id=697733191]
 self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
 z_index = -1
 position = Vector2(576, 580)
 scale = Vector2(0.57, 0.57)
 texture = ExtResource("3_mjy6n")
 
-[node name="Circle2" type="Sprite2D" parent="Circle" unique_id=840125673]
+[node name="CircleBack" type="Sprite2D" parent="StoryPointCursor/Circle" unique_id=840125673]
 self_modulate = Color(0, 0, 0, 1)
+z_index = 1
 scale = Vector2(0.82, 0.82)
 texture = ExtResource("3_mjy6n")
 
-[node name="PointBody" type="Line2D" parent="." unique_id=1085489812]
+[node name="ConnectLine" type="Line2D" parent="StoryPointCursor/Circle" unique_id=1085489812]
 self_modulate = Color(0.510617, 0.36074692, 1, 0.60800004)
 z_index = -2
 texture_repeat = 2
-points = PackedVector2Array(576, 580, 576, 325.3)
+scale = Vector2(1.754386, 1.754386)
+points = PackedVector2Array(0, 0, 0, 0)
 width = 6.015
 texture = ExtResource("4_1572c")
 texture_mode = 1
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="StoryPointCursor/Circle" unique_id=170298991]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+z_index = -2
+scale = Vector2(0.28070176, 0.28070176)
+amount = 32
+texture = ExtResource("3_mjy6n")
+lifetime = 3.85
+process_material = SubResource("ParticleProcessMaterial_flsia")
+
+[node name="CircleAnimationPlayer" type="AnimationPlayer" parent="StoryPointCursor" unique_id=2081394124]
+unique_name_in_owner = true
+root_node = NodePath("../Circle")
+libraries/ = SubResource("AnimationLibrary_vkxt3")
+autoplay = &"CircleAnim"
+
+[node name="StoryPoints" type="Node2D" parent="." unique_id=1024958020]
+
+[node name="Roundeddiamond" type="Sprite2D" parent="StoryPoints" unique_id=1242729561]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+position = Vector2(-24, 580)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_fjafb")
+
+[node name="Roundeddiamond2" type="Sprite2D" parent="StoryPoints" unique_id=654891880]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+position = Vector2(276, 500)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_fjafb")
+
+[node name="Roundeddiamond3" type="Sprite2D" parent="StoryPoints" unique_id=1770705722]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+position = Vector2(576, 580)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_fjafb")
+
+[node name="Roundeddiamond4" type="Sprite2D" parent="StoryPoints" unique_id=467543376]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+position = Vector2(876, 500)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_fjafb")
+
+[node name="Roundeddiamond5" type="Sprite2D" parent="StoryPoints" unique_id=2109729561]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+position = Vector2(1176, 580)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_fjafb")
+
+[connection signal="pressed" from="CanvasLayer/RightButton" to="." method="_on_right_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/LeftButton" to="." method="_on_left_button_pressed"]
