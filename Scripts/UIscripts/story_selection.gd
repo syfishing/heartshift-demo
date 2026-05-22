@@ -5,13 +5,9 @@ extends Node2D
 @onready var current_point: Node2D = $StoryPoints.get_child(storypointindex)
 var CoreStageScene: PackedScene = preload("res://Prefabs/Scenes/Demo.tscn") # change later!!
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
-	pass # Replace with function body.
+	change_selection() # just for making sure it updates the text at first
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#arrow keys or lane buttons
 	if Input.is_action_just_pressed("lane1"):
@@ -33,13 +29,13 @@ func _process(delta: float) -> void:
 
 func _on_right_button_pressed() -> void:
 	storypointindex += 1
-	select()
+	change_selection()
 	pass # Replace with function body.
 
 
 func _on_left_button_pressed() -> void:
 	storypointindex -= 1
-	select()
+	change_selection()
 	pass # Replace with function body.
 
 func change_selection():
@@ -47,15 +43,16 @@ func change_selection():
 	current_point = $StoryPoints.get_child(storypointindex)
 	$Camera2D.position.x = current_point.position.x
 	$StoryPointCursor/Circle.position = current_point.position
-	#$Circle/ConnectLine.points = [Vector2(0,0), Vector2(0,lerp())]
 	%CircleAnimationPlayer.stop()
 	%CircleAnimationPlayer.play("CircleAnim")
 	
-	
+	#Updating the Card
 	var current_chart = current_point.chart
 	if current_chart:
 		%SongName.text = current_chart.name
-	
+		%Stage.text = "Stage " + str(current_chart.stage)
+		%Difficulty.text = "Diff. " + str(current_chart.difficulty)
+		%Quote.text = '"' + current_point.story_quote + '"'
 
 func select():
 	

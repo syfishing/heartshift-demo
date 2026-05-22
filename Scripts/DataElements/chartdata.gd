@@ -7,4 +7,5 @@ class_name ChartData
 
 #Label Tags
 @export var name: String
-@export var stage_level: String
+@export var stage: int
+@export var difficulty: int

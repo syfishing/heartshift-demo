@@ -1,40 +1,42 @@
 [gd_resource type="Resource" script_class="ChartData" format=3 uid="uid://bimc017r6vabh"]
 
-[ext_resource type="Script" uid="uid://ctjk703l25fkk" path="res://Scripts/DataElements/pointdata.gd" id="1_155st"]
-[ext_resource type="Script" uid="uid://cntkrjpe8bu7j" path="res://Scripts/DataElements/chartdata.gd" id="2_7hh7v"]
+[ext_resource type="Script" uid="uid://ctjk703l25fkk" path="res://Scripts/DataElements/pointdata.gd" id="1_epiua"]
+[ext_resource type="Script" uid="uid://cntkrjpe8bu7j" path="res://Scripts/DataElements/chartdata.gd" id="2_ahsxy"]
 
 [sub_resource type="Resource" id="Resource_f4teu"]
-script = ExtResource("1_155st")
+script = ExtResource("1_epiua")
 hit_time = 3.428
 end_time = 4.071
 metadata/_custom_type_script = "uid://ctjk703l25fkk"
 
 [sub_resource type="Resource" id="Resource_rkuxm"]
-script = ExtResource("1_155st")
+script = ExtResource("1_epiua")
 hit_time = 4.071
 end_time = 6.0
 track = 1
 metadata/_custom_type_script = "uid://ctjk703l25fkk"
 
 [sub_resource type="Resource" id="Resource_pgik4"]
-script = ExtResource("1_155st")
+script = ExtResource("1_epiua")
 hit_time = 6.0
 metadata/_custom_type_script = "uid://ctjk703l25fkk"
 
 [sub_resource type="Resource" id="Resource_iwoh8"]
-script = ExtResource("1_155st")
+script = ExtResource("1_epiua")
 hit_time = 6.429
 track = 2
 metadata/_custom_type_script = "uid://ctjk703l25fkk"
 
 [sub_resource type="Resource" id="Resource_okbvd"]
-script = ExtResource("1_155st")
+script = ExtResource("1_epiua")
 hit_time = 6.857
 track = 1
 metadata/_custom_type_script = "uid://ctjk703l25fkk"
 
 [resource]
-script = ExtResource("2_7hh7v")
+script = ExtResource("2_ahsxy")
 bpm = 140
-notes = Array[ExtResource("1_155st")]([SubResource("Resource_f4teu"), SubResource("Resource_rkuxm"), SubResource("Resource_pgik4"), SubResource("Resource_iwoh8"), SubResource("Resource_okbvd")])
+notes = Array[ExtResource("1_epiua")]([SubResource("Resource_f4teu"), SubResource("Resource_rkuxm"), SubResource("Resource_pgik4"), SubResource("Resource_iwoh8"), SubResource("Resource_okbvd")])
+name = "HZee - Dream.On()"
+difficulty = 3
 metadata/_custom_type_script = "uid://cntkrjpe8bu7j"

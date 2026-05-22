@@ -23,7 +23,7 @@ func _ready() -> void:
 	audio_player.playing = true
 	
 	%SongLabel.text = chart.name
-	%DetailLabel.text = chart.stage_level
+	%DetailLabel.text = "Stage " + str(chart.stage) + " - Diff. " + str(chart.difficulty) 
 	
 func _process(delta):
 	if not audio_player.playing: return
