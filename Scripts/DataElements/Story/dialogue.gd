@@ -1,4 +1,4 @@
-extends StoryData
+extends StoryEvent
 class_name StoryDialogueEvent
 
 @export var character_id: String
