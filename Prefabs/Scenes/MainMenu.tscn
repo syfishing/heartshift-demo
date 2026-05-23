@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://cxnell0r46apm"]
 
 [ext_resource type="Script" uid="uid://2eguu3saukbv" path="res://Scripts/UIscripts/mainmenu.gd" id="1_fhk0w"]
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="2_h3krq"]
 [ext_resource type="VideoStream" uid="uid://0bhwq7bmdl0t" path="res://Assets/Backgrounds/wavymenubg2.ogv" id="2_mbil5"]
+[ext_resource type="PackedScene" uid="uid://b0uh3xflk5wk7" path="res://Prefabs/Wave/storypoint.tscn" id="2_t85qj"]
 [ext_resource type="Script" uid="uid://bik7j5uliwt3r" path="res://Scripts/UIscripts/wavybackground.gd" id="3_mbil5"]
+[ext_resource type="Shader" uid="uid://lxiku6t8q08k" path="res://Assets/Shaders/Wave.gdshader" id="4_e5mke"]
+[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="5_v1nnq"]
+[ext_resource type="Texture2D" uid="uid://qbnby4fedrr4" path="res://Assets/UIAssets/roundedrectmenubig.png" id="6_v1nnq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa311"]
 bg_color = Color(0.39607844, 0.9098039, 0.3254902, 0.56078434)
@@ -75,6 +80,31 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.93333334, 0.5372549, 0.16862746, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1nnq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h3krq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6yy7p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ww6l4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1bw3c"]
+
+[sub_resource type="SystemFont" id="SystemFont_h3krq"]
+font_names = PackedStringArray("Audiowide")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v1nnq"]
+load_path = "res://.godot/imported/roundedrectmenubig2.png-d77d642f92af63bb58bf12582f6e9b83.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6yy7p"]
+shader = ExtResource("4_e5mke")
+shader_parameter/top_color = Color(0.7636256, 0.1680183, 1, 0)
+shader_parameter/bottom_color = Color(0, 0, 0, 0.39200002)
+shader_parameter/wave_amp = 0.5
+shader_parameter/wave_size = 2.4800000703
+shader_parameter/wave_time_mul = 0.10000000149012
+shader_parameter/total_phases = 23
 
 [sub_resource type="Shader" id="Shader_fhk0w"]
 code = "shader_type canvas_item;
@@ -299,10 +329,44 @@ shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
 shader_parameter/glow_threshold = 0.65
 
+[sub_resource type="Curve" id="Curve_v1nnq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.24731183, 1), 0.0, 0.0, 0, 0, Vector2(0.73913044, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_h3krq"]
+curve = SubResource("Curve_v1nnq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1bw3c"]
+lifetime_randomness = 0.7
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(576, 324, 1)
+direction = Vector3(153.01, 0, 0)
+spread = 154.895
+initial_velocity_min = 83.509995
+initial_velocity_max = 83.509995
+gravity = Vector3(0, 11.475, 0)
+linear_accel_min = -14.930002
+linear_accel_max = 70.149994
+scale_min = 4.15
+scale_max = 6.25
+alpha_curve = SubResource("CurveTexture_h3krq")
+turbulence_enabled = true
+turbulence_influence_min = 0.0050000004
+turbulence_influence_max = 0.0050000004
+
+[sub_resource type="Environment" id="Environment_h3krq"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_strength = 1.5
+glow_bloom = 0.1
+
 [node name="MainMenu" type="Node2D" unique_id=926688556]
 script = ExtResource("1_fhk0w")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1126722528]
+follow_viewport_enabled = true
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=124277151]
 layout_mode = 3
@@ -313,6 +377,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control" unique_id=1158172040]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -321,21 +386,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.4, 0, 0.6666667, 0.4627451)
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control" unique_id=1734824366]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stream = ExtResource("2_mbil5")
-speed_scale = 1.523
-autoplay = true
-expand = true
-loop = true
-script = ExtResource("3_mbil5")
-
 [node name="StorySelectButton" type="Button" parent="CanvasLayer/Control" unique_id=1445295859]
+visible = false
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -352,6 +404,7 @@ text = "STORY
 SELECT"
 
 [node name="ShopButton" type="Button" parent="CanvasLayer/Control" unique_id=1753656702]
+visible = false
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -369,6 +422,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_6yy7p")
 text = "SHOP"
 
 [node name="RhythmPlayButton" type="Button" parent="CanvasLayer/Control" unique_id=590867605]
+visible = false
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -386,6 +440,7 @@ text = "RHYTHM
 PLAY"
 
 [node name="OptionsButton" type="Button" parent="CanvasLayer/Control" unique_id=190386074]
+visible = false
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -398,15 +453,231 @@ theme_override_colors/font_color = Color(1, 0.8745098, 0.20784314, 1)
 theme_override_font_sizes/font_size = 25
 text = "OPTIONS"
 
-[node name="CRT" type="ColorRect" parent="CanvasLayer/Control" unique_id=1429423416]
-material = SubResource("ShaderMaterial_yl2qu")
+[node name="Button" type="Button" parent="CanvasLayer/Control" unique_id=2052547365]
+self_modulate = Color(0.8784579, 0.38615766, 0.5878533, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 175.0
+offset_top = -76.0
+offset_right = 425.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3krq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6yy7p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ww6l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
+icon = ExtResource("5_v1nnq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Button" unique_id=1385447121]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -14.5
+offset_right = 78.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_h3krq")
+theme_override_font_sizes/font_size = 22
+text = "Story Select"
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control" unique_id=568289800]
+self_modulate = Color(0.8784579, 0.38615766, 0.5878533, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -425.0
+offset_top = 164.0
+offset_right = -175.0
+offset_bottom = 276.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3krq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6yy7p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ww6l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
+icon = SubResource("CompressedTexture2D_v1nnq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Button2" unique_id=1571382419]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -14.5
+offset_right = 78.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_h3krq")
+theme_override_font_sizes/font_size = 22
+text = "Rhythm Play"
+
+[node name="Button3" type="Button" parent="CanvasLayer/Control" unique_id=294804169]
+self_modulate = Color(0.8784579, 0.38615766, 0.5878533, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 175.0
+offset_top = 404.0
+offset_right = 425.0
+offset_bottom = 516.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3krq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6yy7p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ww6l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
+icon = SubResource("CompressedTexture2D_v1nnq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Button3" unique_id=1319548020]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -14.5
+offset_right = 78.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_h3krq")
+theme_override_font_sizes/font_size = 22
+text = "Options"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=1979464793]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_right = 220.0
+offset_bottom = 174.0
+grow_horizontal = 2
+texture = ExtResource("6_v1nnq")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/TextureRect" unique_id=328270755]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 31
+text = "HEARTSHIFT LOGO"
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control" unique_id=1734824366]
+visible = false
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+stream = ExtResource("2_mbil5")
+speed_scale = 1.523
+autoplay = true
+expand = true
+loop = true
+script = ExtResource("3_mbil5")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1661004672]
+
+[node name="BG" type="ColorRect" parent="CanvasLayer2" unique_id=1000264455]
+z_as_relative = false
+material = SubResource("ShaderMaterial_6yy7p")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer2" unique_id=1429423416]
+top_level = true
+material = SubResource("ShaderMaterial_yl2qu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+
+[node name="MainStoryLine" type="Line2D" parent="." unique_id=979877624 node_paths=PackedStringArray("curve_line", "point_nodes")]
+z_index = -1
+width = 3.835
+default_color = Color(0.51065123, 0.36099148, 1, 1)
+script = ExtResource("2_h3krq")
+curve_line = NodePath(".")
+point_nodes = [NodePath("../StoryPoint"), NodePath("../StoryPoint2"), NodePath("../StoryPoint3"), NodePath("../StoryPoint4")]
+handle_strength = 1.725
+max_handle_ratio_per_segment = 0.44
+bezier_steps_per_segment = 30
+
+[node name="StoryPoint" parent="." unique_id=1986590811 instance=ExtResource("2_t85qj")]
+position = Vector2(710, 304)
+
+[node name="StoryPoint2" parent="." unique_id=1819456020 instance=ExtResource("2_t85qj")]
+position = Vector2(435, 546)
+
+[node name="StoryPoint3" parent="." unique_id=655466935 instance=ExtResource("2_t85qj")]
+position = Vector2(719, 786)
+
+[node name="StoryPoint4" parent="." unique_id=316692250 instance=ExtResource("2_t85qj")]
+position = Vector2(420, 1026)
+
+[node name="Stars" type="GPUParticles2D" parent="." unique_id=1342511936]
+self_modulate = Color(0.9518127, 0.60063285, 1, 1)
+z_index = -15
+position = Vector2(576, 324)
+amount = 50
+lifetime = 10.0
+process_material = SubResource("ParticleProcessMaterial_1bw3c")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1145804415]
+position = Vector2(576, 324)
+limit_top = 0
+position_smoothing_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1696600868]
+environment = SubResource("Environment_h3krq")
 
 [connection signal="pressed" from="CanvasLayer/Control/StorySelectButton" to="." method="_on_story_select_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/RhythmPlayButton" to="." method="_on_rhythm_play_button_pressed"]
