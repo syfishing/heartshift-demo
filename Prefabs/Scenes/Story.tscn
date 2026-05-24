@@ -1,5 +1,46 @@
 [gd_scene format=3 uid="uid://c16dq5r6hiybv"]
 
+[ext_resource type="Script" uid="uid://bs3plsrjgdgq6" path="res://Scripts/UIscripts/story.gd" id="1_6ijvs"]
+[ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_kk788"]
+[ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="2_wcnqx"]
+[ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="3_wcnqx"]
+[ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="4_f3lw0"]
+[ext_resource type="Script" uid="uid://30jsstye3dlf" path="res://Scripts/DataElements/Story/move.gd" id="5_3ine8"]
+
+[sub_resource type="Gradient" id="Gradient_wcnqx"]
+colors = PackedColorArray(0.2901961, 0.2784314, 0.2784314, 1, 0.47, 0.23969999, 0.23969999, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f3lw0"]
+gradient = SubResource("Gradient_wcnqx")
+width = 200
+height = 500
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Resource" id="Resource_wcnqx"]
+script = ExtResource("2_wcnqx")
+id = "someone"
+name = "Someone"
+color = Color(0, 1, 0, 1)
+sprite = SubResource("GradientTexture2D_f3lw0")
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_yunxr"]
+script = ExtResource("5_3ine8")
+character_id = "someone"
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
+[sub_resource type="Resource" id="Resource_3ine8"]
+script = ExtResource("4_f3lw0")
+character_id = "someone"
+text = "Lorem ipsum [wave]dolor sit amet[/wave], consectetur adipiscing elit. Etiam lacinia risus non velit scelerisque, quis molestie neque finibus. Nulla pulvinar sem at tellus ullamcorper, eu malesuada lectus luctus. Nam ullamcorper at lectus ut auctor. Suspendisse varius lorem ac orci viverra consectetur. Phasellus volutpat metus tempor commodo pharetra."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_f3lw0"]
+script = ExtResource("3_wcnqx")
+events = Array[ExtResource("2_kk788")]([SubResource("Resource_yunxr"), SubResource("Resource_3ine8")])
+characters = Array[ExtResource("2_wcnqx")]([SubResource("Resource_wcnqx")])
+metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
+
 [sub_resource type="Gradient" id="Gradient_lgay8"]
 colors = PackedColorArray(1, 0.5686275, 0.2627451, 1, 0.19215687, 0.36078432, 0.99215686, 1)
 
@@ -7,28 +48,14 @@ colors = PackedColorArray(1, 0.5686275, 0.2627451, 1, 0.19215687, 0.36078432, 0.
 gradient = SubResource("Gradient_lgay8")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_icxbx"]
-offsets = PackedFloat32Array(0, 0.2, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.73333335, 0, 0, 0, 0.8666667)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_kk788"]
-gradient = SubResource("Gradient_icxbx")
-fill_to = Vector2(0, 1)
-
-[sub_resource type="Gradient" id="Gradient_6ijvs"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0, 0, 0, 0.36862746)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_icxbx"]
-gradient = SubResource("Gradient_6ijvs")
-height = 40
-fill_to = Vector2(0, 1)
-
 [node name="Story" type="Node2D" unique_id=1874266194]
+script = ExtResource("1_6ijvs")
+story = SubResource("Resource_f3lw0")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=167864694]
+[node name="BGLayer" type="CanvasLayer" parent="." unique_id=1344694391]
+layer = -1
 
-[node name="Background" type="TextureRect" parent="CanvasLayer" unique_id=779292132]
+[node name="Background" type="TextureRect" parent="BGLayer" unique_id=779292132]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,24 +64,64 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_6ijvs")
 
-[node name="Dialogue" type="TextureRect" parent="CanvasLayer" unique_id=2134024157]
-custom_minimum_size = Vector2(0, 200)
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=167864694]
+layer = 2
+
+[node name="Dialogue" type="Control" parent="CanvasLayer" unique_id=289329162]
+layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -200.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = SubResource("GradientTexture2D_kk788")
 
-[node name="ColorRect" type="TextureRect" parent="CanvasLayer" unique_id=48101985]
+[node name="TextBox" type="ColorRect" parent="CanvasLayer/Dialogue" unique_id=249737461]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.73333335)
+
+[node name="TextLabel" type="RichTextLabel" parent="CanvasLayer/Dialogue/TextBox" unique_id=651614719]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 20.0
+offset_right = -40.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "Lorem ipsum [wave]dolor sit amet[/wave], consectetur adipiscing elit. Etiam lacinia risus non velit scelerisque, quis molestie neque finibus. Nulla pulvinar sem at tellus ullamcorper, eu malesuada lectus luctus. Nam ullamcorper at lectus ut auctor. Suspendisse varius lorem ac orci viverra consectetur. Phasellus volutpat metus tempor commodo pharetra."
+
+[node name="Speaker" type="ColorRect" parent="CanvasLayer/Dialogue" unique_id=1412280415]
+layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 97.0
-offset_top = -159.0
-offset_right = 249.0
-offset_bottom = -119.0
+offset_left = 64.0
+offset_top = -240.0
+offset_right = 230.0
+offset_bottom = -200.0
 grow_vertical = 0
-texture = SubResource("GradientTexture2D_icxbx")
+color = Color(0, 0, 0, 0.73333335)
+
+[node name="SpeakerLabel" type="Label" parent="CanvasLayer/Dialogue/Speaker" unique_id=1600383496]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Someone"
+horizontal_alignment = 1
+vertical_alignment = 1
