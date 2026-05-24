@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://2eguu3saukbv" path="res://Scripts/UIscripts/mainmenu.gd" id="1_fhk0w"]
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="2_h3krq"]
 [ext_resource type="VideoStream" uid="uid://0bhwq7bmdl0t" path="res://Assets/Backgrounds/wavymenubg2.ogv" id="2_mbil5"]
+[ext_resource type="PackedScene" uid="uid://b0uh3xflk5wk7" path="res://Prefabs/Wave/storypoint.tscn" id="2_t85qj"]
 [ext_resource type="Script" uid="uid://bik7j5uliwt3r" path="res://Scripts/UIscripts/wavybackground.gd" id="3_mbil5"]
 [ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="5_v1nnq"]
-[ext_resource type="PackedScene" uid="uid://cp4530dglvy3d" path="res://Prefabs/Wave/menupoint.tscn" id="6_h3krq"]
 [ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="8_ww6l4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa311"]
@@ -102,8 +102,8 @@ fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
 metadata/_snap_enabled = true
 
-[sub_resource type="Animation" id="Animation_h3krq"]
-resource_name = "Deselected"
+[sub_resource type="Animation" id="Animation_1bw3c"]
+resource_name = "Deselect"
 length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -112,10 +112,10 @@ tracks/0/path = NodePath("TextureRect2/Floater:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.20000005),
+"times": PackedFloat32Array(0.03333333, 0.23333335),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.6328071, 0.34182665, 1, 1), Color(0.93478036, 0.62131935, 0, 0)]
+"values": [Color(0.9347982, 0.6216847, 0, 1), Color(0.93478036, 0.62131935, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -124,10 +124,10 @@ tracks/1/path = NodePath("TextureRect2/Back:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.0333333, 0.20000005),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.110948406, 0.070667304, 0.17749631, 1), Color(0.53412783, 0.3623615, 0.20285092, 0)]
+"values": [Color(0.53387755, 0.36231995, 0.20288813, 1), Color(0.53412783, 0.3623615, 0.20285092, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -136,22 +136,10 @@ tracks/2/path = NodePath("TextureRect2/Label:self_modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.0333333, 0.20000005),
+"times": PackedFloat32Array(0.03333333, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TextureRect2:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.16666663),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.42352942, 0.3372549, 0.95686275, 1), Color(0.22408237, 0.17376636, 0.53512686, 1)]
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_sdu7k"]
@@ -191,7 +179,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(0, 0, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_6yy7p"]
@@ -232,18 +220,6 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TextureRect2:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.42352942, 0.3372549, 0.95686275, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_ww6l4"]
 resource_name = "Selected"
@@ -258,7 +234,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.19999999),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.93478036, 0.62131935, 0, 0), Color(0.6328071, 0.34182665, 1, 1)]
+"values": [Color(0.93478036, 0.62131935, 0, 0), Color(0.9347982, 0.6216847, 0, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -270,7 +246,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.19999999),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.53412783, 0.3623615, 0.20285092, 0), Color(0.110948406, 0.070667304, 0.17749631, 1)]
+"values": [Color(0.53412783, 0.3623615, 0.20285092, 0), Color(0.53387755, 0.36231995, 0.20288813, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -282,28 +258,19 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("TextureRect2:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.22408237, 0.17376636, 0.53512686, 1), Color(0.42352942, 0.3372549, 0.95686275, 1)]
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1bw3c"]
 _data = {
-&"Deselected": SubResource("Animation_h3krq"),
+&"Deselect": SubResource("Animation_1bw3c"),
 &"InitialSelect": SubResource("Animation_sdu7k"),
 &"RESET": SubResource("Animation_6yy7p"),
 &"Selected": SubResource("Animation_ww6l4")
 }
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v1nnq"]
+load_path = "res://.godot/imported/roundedrectmenubig2.png-d77d642f92af63bb58bf12582f6e9b83.ctex"
 
 [sub_resource type="SystemFont" id="SystemFont_6yy7p"]
 font_names = PackedStringArray("Audiowide")
@@ -603,7 +570,7 @@ shader_parameter/scanline_density = 0.5
 shader_parameter/interlace_strength = 0.0
 shader_parameter/mask_strength = 0.0850000040375
 shader_parameter/mask_scale = 0.5
-shader_parameter/chroma_offset_px = 0.0
+shader_parameter/chroma_offset_px = 0.8570000407075
 shader_parameter/luma_smear_px = 0.0
 shader_parameter/jitter_px = 0.0
 shader_parameter/wobble_px = 0.78000003705
@@ -618,8 +585,8 @@ shader_parameter/glow_threshold = 0.65
 background_mode = 3
 glow_enabled = true
 glow_normalized = true
-glow_intensity = 0.2
-glow_bloom = 0.6
+glow_strength = 1.5
+glow_bloom = 0.25
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ww6l4"]
 load_path = "res://.godot/imported/circle.png-e096a3894aa1ebe2dc1c377bdc4587f4.ctex"
@@ -660,7 +627,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PointerLine:points")
+tracks/0/path = NodePath("ConnectLine:points")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -696,7 +663,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PointerLine:self_modulate")
+tracks/3/path = NodePath("ConnectLine:self_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -711,7 +678,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PointerLine:points")
+tracks/0/path = NodePath("ConnectLine:points")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -747,7 +714,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PointerLine:self_modulate")
+tracks/3/path = NodePath("ConnectLine:self_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -863,10 +830,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 224.0
-offset_top = -80.0
-offset_right = 524.0
-offset_bottom = 32.0
+offset_left = 225.14502
+offset_top = -75.524994
+offset_right = 525.145
+offset_bottom = 36.475006
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
@@ -878,7 +845,7 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/Button" unique_id=1254465105]
-self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
+self_modulate = Color(1, 0.6704099, 0.5573358, 1)
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -930,8 +897,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 48.0
-offset_right = -15.777283
-offset_bottom = 63.524994
+offset_right = -15.11853
+offset_bottom = 56.00006
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.055, 1)
@@ -950,10 +917,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -524.0
-offset_top = 170.0
-offset_right = -224.0
-offset_bottom = 282.0
+offset_left = -496.0
+offset_top = 164.0
+offset_right = -196.0
+offset_bottom = 276.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
@@ -964,20 +931,8 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
 icon_alignment = 1
 expand_icon = true
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/Button2" unique_id=2009620638]
-self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_v1nnq")
-expand_mode = 1
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=1120937748]
-z_index = 1
+[node name="Label" type="Label" parent="CanvasLayer/Control/Button2" unique_id=1571382419]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -993,66 +948,25 @@ grow_vertical = 2
 theme_override_fonts/font = SubResource("SystemFont_h3krq")
 theme_override_font_sizes/font_size = 29
 text = "Rhythm Play"
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Back" type="TextureRect" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=1940633351]
-self_modulate = Color(0.53387755, 0.36231995, 0.20288813, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.915, 0.78)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("5_v1nnq")
-expand_mode = 1
-
-[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=1854956653]
-self_modulate = Color(0.9347982, 0.6216847, 0, 1)
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Button2" unique_id=1709294714]
+visible = false
+self_modulate = Color(0.08896009, 9.283219e-06, 0.09409823, 1)
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 48.0
-offset_right = -15.777283
-offset_bottom = 63.524994
+offset_right = -13.398132
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.055, 1)
-texture = SubResource("GradientTexture2D_ww6l4")
+texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Button2" unique_id=387726993]
-libraries/ = SubResource("AnimationLibrary_1bw3c")
-autoplay = &"InitialSelect"
-
-[node name="Button3" type="Button" parent="CanvasLayer/Control" unique_id=294804169]
-self_modulate = Color(0.8784579, 0.38615766, 0.5878533, 1)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 224.0
-offset_top = 420.0
-offset_right = 524.0
-offset_bottom = 532.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3krq")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6yy7p")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_ww6l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
-icon_alignment = 1
-expand_icon = true
-
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/Button3" unique_id=1219472919]
-self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/Button2" unique_id=361239615]
+self_modulate = Color(1, 0.6704099, 0.5573358, 1)
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -1063,7 +977,7 @@ grow_vertical = 2
 texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Button3/TextureRect2" unique_id=626645463]
+[node name="Label" type="Label" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=634784523]
 z_index = 1
 layout_mode = 1
 anchors_preset = 8
@@ -1078,12 +992,13 @@ offset_bottom = 14.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = SubResource("SystemFont_h3krq")
-theme_override_font_sizes/font_size = 29
-text = "Options"
+theme_override_font_sizes/font_size = 22
+text = "Rythm Play"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Back" type="TextureRect" parent="CanvasLayer/Control/Button3/TextureRect2" unique_id=2096847945]
+[node name="Back" type="TextureRect" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=1806976468]
+visible = false
 self_modulate = Color(0.53387755, 0.36231995, 0.20288813, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -1096,7 +1011,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/Button3/TextureRect2" unique_id=1604272122]
+[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=641449196]
 self_modulate = Color(0.9347982, 0.6216847, 0, 1)
 show_behind_parent = true
 layout_mode = 1
@@ -1104,17 +1019,54 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 48.0
-offset_right = -15.777283
-offset_bottom = 63.524994
+offset_right = -15.11853
+offset_bottom = 56.00006
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.055, 1)
 texture = SubResource("GradientTexture2D_ww6l4")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Button3" unique_id=346478142]
-libraries/ = SubResource("AnimationLibrary_1bw3c")
-autoplay = &"InitialSelect"
+[node name="Button3" type="Button" parent="CanvasLayer/Control" unique_id=294804169]
+self_modulate = Color(0.8784579, 0.38615766, 0.5878533, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 175.0
+offset_top = 404.0
+offset_right = 425.0
+offset_bottom = 516.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3krq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6yy7p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ww6l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
+icon = SubResource("CompressedTexture2D_v1nnq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Button3" unique_id=1319548020]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -14.5
+offset_right = 78.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_h3krq")
+theme_override_font_sizes/font_size = 22
+text = "Options"
+horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=328270755]
 layout_mode = 1
@@ -1188,27 +1140,24 @@ width = 3.835
 default_color = Color(0.51065123, 0.36099148, 1, 1)
 script = ExtResource("2_h3krq")
 curve_line = NodePath(".")
-point_nodes = [NodePath("../MenuPoints/MenuPoint"), NodePath("../MenuPoints/MenuPoint2"), NodePath("../MenuPoints/MenuPoint3"), NodePath("../MenuPoints/MenuPoint4")]
+point_nodes = [NodePath("../StoryPoints/StoryPoint"), NodePath("../StoryPoints/StoryPoint2"), NodePath("../StoryPoints/StoryPoint3"), NodePath("../StoryPoints/StoryPoint4")]
 handle_strength = 1.725
 max_handle_ratio_per_segment = 0.44
 bezier_steps_per_segment = 30
 
-[node name="MenuPoints" type="Node2D" parent="." unique_id=1900611447]
+[node name="StoryPoints" type="Node2D" parent="." unique_id=1900611447]
 
-[node name="MenuPoint" parent="MenuPoints" unique_id=1986590811 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_h3krq")]
-position = Vector2(700, 300)
-buttonanimate = NodePath("../../CanvasLayer/Control/Button/AnimationPlayer")
+[node name="StoryPoint" parent="StoryPoints" unique_id=1986590811 instance=ExtResource("2_t85qj")]
+position = Vector2(710, 304)
 
-[node name="MenuPoint2" parent="MenuPoints" unique_id=1305082 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_h3krq")]
-position = Vector2(452, 550)
-buttonanimate = NodePath("../../CanvasLayer/Control/Button2/AnimationPlayer")
+[node name="StoryPoint2" parent="StoryPoints" unique_id=1819456020 instance=ExtResource("2_t85qj")]
+position = Vector2(435, 546)
 
-[node name="MenuPoint3" parent="MenuPoints" unique_id=934079637 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_h3krq")]
-position = Vector2(700, 800)
-buttonanimate = NodePath("../../CanvasLayer/Control/Button3/AnimationPlayer")
+[node name="StoryPoint3" parent="StoryPoints" unique_id=655466935 instance=ExtResource("2_t85qj")]
+position = Vector2(719, 786)
 
-[node name="MenuPoint4" parent="MenuPoints" unique_id=1764760480 instance=ExtResource("6_h3krq")]
-position = Vector2(452, 1030)
+[node name="StoryPoint4" parent="StoryPoints" unique_id=316692250 instance=ExtResource("2_t85qj")]
+position = Vector2(420, 1026)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1145804415]
 position = Vector2(576, 324)
@@ -1222,10 +1171,9 @@ environment = SubResource("Environment_h3krq")
 [node name="StoryPointCursor" type="Node2D" parent="." unique_id=2140909396]
 
 [node name="Circle" type="Sprite2D" parent="StoryPointCursor" unique_id=988109049]
-unique_name_in_owner = true
 self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
 z_index = -1
-position = Vector2(700, 300)
+position = Vector2(710, 303.99997)
 scale = Vector2(0.57, 0.57)
 texture = ExtResource("8_ww6l4")
 
@@ -1262,7 +1210,7 @@ z_index = 1
 scale = Vector2(0.82, 0.82)
 texture = ExtResource("8_ww6l4")
 
-[node name="PointerLine" type="Line2D" parent="StoryPointCursor/Circle" unique_id=264582938]
+[node name="ConnectLine" type="Line2D" parent="StoryPointCursor/Circle" unique_id=264582938]
 self_modulate = Color(0.510617, 0.36074692, 1, 0.60800004)
 z_index = -2
 texture_repeat = 2

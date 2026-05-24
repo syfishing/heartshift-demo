@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cp4530dglvy3d"]
+
+[ext_resource type="Script" uid="uid://cotc5pvdoevqs" path="res://Scripts/Points/menupoint.gd" id="1_wb08e"]
+[ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="2_r5eqv"]
+[ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="3_yl8cy"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5cbcl"]
+diffuse_texture = ExtResource("2_r5eqv")
+
+[node name="MenuPoint" type="Node2D" unique_id=1986590811]
+top_level = true
+z_index = 1
+script = ExtResource("1_wb08e")
+
+[node name="DebugCenter" type="Sprite2D" parent="." unique_id=1883555523]
+visible = false
+self_modulate = Color(1, 0.039215688, 0, 1)
+z_index = 1
+scale = Vector2(0.05, 0.05)
+texture = SubResource("CanvasTexture_5cbcl")
+
+[node name="Roundeddiamond" type="Sprite2D" parent="." unique_id=2110981746]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("3_yl8cy")
