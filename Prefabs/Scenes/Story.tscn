@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://c16dq5r6hiybv"]
+
+[sub_resource type="Gradient" id="Gradient_lgay8"]
+colors = PackedColorArray(1, 0.5686275, 0.2627451, 1, 0.19215687, 0.36078432, 0.99215686, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6ijvs"]
+gradient = SubResource("Gradient_lgay8")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_icxbx"]
+offsets = PackedFloat32Array(0, 0.2, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.73333335, 0, 0, 0, 0.8666667)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kk788"]
+gradient = SubResource("Gradient_icxbx")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_6ijvs"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0.36862746)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_icxbx"]
+gradient = SubResource("Gradient_6ijvs")
+height = 40
+fill_to = Vector2(0, 1)
+
+[node name="Story" type="Node2D" unique_id=1874266194]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=167864694]
+
+[node name="Background" type="TextureRect" parent="CanvasLayer" unique_id=779292132]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_6ijvs")
+
+[node name="Dialogue" type="TextureRect" parent="CanvasLayer" unique_id=2134024157]
+custom_minimum_size = Vector2(0, 200)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -200.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_kk788")
+
+[node name="ColorRect" type="TextureRect" parent="CanvasLayer" unique_id=48101985]
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 97.0
+offset_top = -159.0
+offset_right = 249.0
+offset_bottom = -119.0
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_icxbx")
