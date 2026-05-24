@@ -1,5 +1,5 @@
 extends StoryEvent
-class_name MoveCharacterEvent
+class_name StoryMoveEvent
 
 @export var character_id: String
 @export var x_pos: float
