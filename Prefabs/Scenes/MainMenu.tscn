@@ -8,78 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cp4530dglvy3d" path="res://Prefabs/Wave/menupoint.tscn" id="6_h3krq"]
 [ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="8_ww6l4"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa311"]
-bg_color = Color(0.39607844, 0.9098039, 0.3254902, 0.56078434)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.6509804, 1, 0.5411765, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl2qu"]
-bg_color = Color(0.39607844, 0.9098039, 0.3254902, 0.6156863)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.6509804, 1, 0.5411765, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mbil5"]
-bg_color = Color(0.39607844, 0.9098039, 0.3254902, 0.4745098)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.6509804, 1, 0.5411765, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v1nnq"]
-bg_color = Color(1, 1, 0.18039216, 0.56078434)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(1, 1, 0.23529412, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h3krq"]
-bg_color = Color(1, 1, 0.18039216, 0.6156863)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(1, 1, 0.23529412, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yy7p"]
-bg_color = Color(1, 1, 0.18039216, 0.4745098)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(1, 1, 0.23529412, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhk0w"]
-bg_color = Color(0.84705883, 0.40392157, 0.30980393, 0.56078434)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.93333334, 0.5372549, 0.16862746, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5mke"]
-bg_color = Color(0.84705883, 0.40392157, 0.30980393, 0.6156863)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.93333334, 0.5372549, 0.16862746, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t85qj"]
-bg_color = Color(0.84705883, 0.40392157, 0.30980393, 0.4745098)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.93333334, 0.5372549, 0.16862746, 1)
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1nnq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h3krq"]
@@ -788,74 +716,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.4, 0, 0.6666667, 0.4627451)
 
-[node name="StorySelectButton" type="Button" parent="CanvasLayer/Control" unique_id=1445295859]
-visible = false
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 228.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.34509805, 0.8745098, 0.41568628, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_oa311")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_yl2qu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_mbil5")
-text = "STORY
-SELECT"
-
-[node name="ShopButton" type="Button" parent="CanvasLayer/Control" unique_id=1753656702]
-visible = false
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_left = 456.0
-offset_top = 528.0
-offset_right = 687.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.8745098, 0.41568628, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_v1nnq")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_h3krq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6yy7p")
-text = "SHOP"
-
-[node name="RhythmPlayButton" type="Button" parent="CanvasLayer/Control" unique_id=590867605]
-visible = false
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_left = 228.0
-offset_right = 456.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.8509804, 0.4392157, 0.23529412, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_fhk0w")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_e5mke")
-theme_override_styles/hover = SubResource("StyleBoxFlat_t85qj")
-text = "RHYTHM
-PLAY"
-
-[node name="OptionsButton" type="Button" parent="CanvasLayer/Control" unique_id=190386074]
-visible = false
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_left = 998.0
-offset_top = -1.0
-offset_right = 1153.0
-offset_bottom = -581.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.8745098, 0.20784314, 1)
-theme_override_font_sizes/font_size = 25
-text = "OPTIONS"
-
-[node name="Button" type="Button" parent="CanvasLayer/Control" unique_id=2052547365]
+[node name="StorySelectButton" type="Button" parent="CanvasLayer/Control" unique_id=2052547365]
+unique_name_in_owner = true
 self_modulate = Color(0.14849174, 0.14307478, 0.45659333, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -877,7 +739,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
 icon_alignment = 1
 expand_icon = true
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/Button" unique_id=1254465105]
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/StorySelectButton" unique_id=1254465105]
 self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
 z_index = -1
 layout_mode = 1
@@ -889,7 +751,7 @@ grow_vertical = 2
 texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Button/TextureRect2" unique_id=1385447121]
+[node name="Label" type="Label" parent="CanvasLayer/Control/StorySelectButton/TextureRect2" unique_id=1385447121]
 z_index = 1
 layout_mode = 1
 anchors_preset = 8
@@ -909,7 +771,7 @@ text = "Story Select"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Back" type="TextureRect" parent="CanvasLayer/Control/Button/TextureRect2" unique_id=1413005892]
+[node name="Back" type="TextureRect" parent="CanvasLayer/Control/StorySelectButton/TextureRect2" unique_id=1413005892]
 self_modulate = Color(0.53387755, 0.36231995, 0.20288813, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -922,7 +784,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/Button/TextureRect2" unique_id=662017090]
+[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/StorySelectButton/TextureRect2" unique_id=662017090]
 self_modulate = Color(0.9347982, 0.6216847, 0, 1)
 show_behind_parent = true
 layout_mode = 1
@@ -938,11 +800,12 @@ scale = Vector2(1.055, 1)
 texture = SubResource("GradientTexture2D_ww6l4")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Button" unique_id=1682447598]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/StorySelectButton" unique_id=1682447598]
 libraries/ = SubResource("AnimationLibrary_1bw3c")
 autoplay = &"InitialSelect"
 
-[node name="Button2" type="Button" parent="CanvasLayer/Control" unique_id=568289800]
+[node name="RhythmPlayButton" type="Button" parent="CanvasLayer/Control" unique_id=568289800]
+unique_name_in_owner = true
 self_modulate = Color(0.26097435, 0.0005012096, 0.39421222, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -964,7 +827,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
 icon_alignment = 1
 expand_icon = true
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/Button2" unique_id=2009620638]
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/RhythmPlayButton" unique_id=2009620638]
 self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
 z_index = -1
 layout_mode = 1
@@ -976,7 +839,7 @@ grow_vertical = 2
 texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=1120937748]
+[node name="Label" type="Label" parent="CanvasLayer/Control/RhythmPlayButton/TextureRect2" unique_id=1120937748]
 z_index = 1
 layout_mode = 1
 anchors_preset = 8
@@ -996,7 +859,7 @@ text = "Rhythm Play"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Back" type="TextureRect" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=1940633351]
+[node name="Back" type="TextureRect" parent="CanvasLayer/Control/RhythmPlayButton/TextureRect2" unique_id=1940633351]
 self_modulate = Color(0.53387755, 0.36231995, 0.20288813, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -1009,7 +872,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/Button2/TextureRect2" unique_id=1854956653]
+[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/RhythmPlayButton/TextureRect2" unique_id=1854956653]
 self_modulate = Color(0.9347982, 0.6216847, 0, 1)
 show_behind_parent = true
 layout_mode = 1
@@ -1025,11 +888,12 @@ scale = Vector2(1.055, 1)
 texture = SubResource("GradientTexture2D_ww6l4")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Button2" unique_id=387726993]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/RhythmPlayButton" unique_id=387726993]
 libraries/ = SubResource("AnimationLibrary_1bw3c")
 autoplay = &"InitialSelect"
 
-[node name="Button3" type="Button" parent="CanvasLayer/Control" unique_id=294804169]
+[node name="OptionsButton" type="Button" parent="CanvasLayer/Control" unique_id=294804169]
+unique_name_in_owner = true
 self_modulate = Color(0.8784579, 0.38615766, 0.5878533, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -1051,7 +915,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
 icon_alignment = 1
 expand_icon = true
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/Button3" unique_id=1219472919]
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/OptionsButton" unique_id=1219472919]
 self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
 z_index = -1
 layout_mode = 1
@@ -1063,7 +927,7 @@ grow_vertical = 2
 texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/Button3/TextureRect2" unique_id=626645463]
+[node name="Label" type="Label" parent="CanvasLayer/Control/OptionsButton/TextureRect2" unique_id=626645463]
 z_index = 1
 layout_mode = 1
 anchors_preset = 8
@@ -1083,7 +947,7 @@ text = "Options"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Back" type="TextureRect" parent="CanvasLayer/Control/Button3/TextureRect2" unique_id=2096847945]
+[node name="Back" type="TextureRect" parent="CanvasLayer/Control/OptionsButton/TextureRect2" unique_id=2096847945]
 self_modulate = Color(0.53387755, 0.36231995, 0.20288813, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -1096,7 +960,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_v1nnq")
 expand_mode = 1
 
-[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/Button3/TextureRect2" unique_id=1604272122]
+[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/OptionsButton/TextureRect2" unique_id=1604272122]
 self_modulate = Color(0.9347982, 0.6216847, 0, 1)
 show_behind_parent = true
 layout_mode = 1
@@ -1112,11 +976,11 @@ scale = Vector2(1.055, 1)
 texture = SubResource("GradientTexture2D_ww6l4")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Button3" unique_id=346478142]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/OptionsButton" unique_id=346478142]
 libraries/ = SubResource("AnimationLibrary_1bw3c")
 autoplay = &"InitialSelect"
 
-[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=328270755]
+[node name="PlaceholderTitle" type="Label" parent="CanvasLayer/Control" unique_id=328270755]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1197,15 +1061,15 @@ bezier_steps_per_segment = 30
 
 [node name="MenuPoint" parent="MenuPoints" unique_id=1986590811 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_h3krq")]
 position = Vector2(700, 300)
-buttonanimate = NodePath("../../CanvasLayer/Control/Button/AnimationPlayer")
+buttonanimate = NodePath("../../CanvasLayer/Control/StorySelectButton/AnimationPlayer")
 
 [node name="MenuPoint2" parent="MenuPoints" unique_id=1305082 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_h3krq")]
 position = Vector2(452, 550)
-buttonanimate = NodePath("../../CanvasLayer/Control/Button2/AnimationPlayer")
+buttonanimate = NodePath("../../CanvasLayer/Control/RhythmPlayButton/AnimationPlayer")
 
 [node name="MenuPoint3" parent="MenuPoints" unique_id=934079637 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_h3krq")]
 position = Vector2(700, 800)
-buttonanimate = NodePath("../../CanvasLayer/Control/Button3/AnimationPlayer")
+buttonanimate = NodePath("../../CanvasLayer/Control/OptionsButton/AnimationPlayer")
 
 [node name="MenuPoint4" parent="MenuPoints" unique_id=1764760480 instance=ExtResource("6_h3krq")]
 position = Vector2(452, 1030)
