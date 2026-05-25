@@ -18,6 +18,9 @@ func _process(delta: float) -> void:
 		change_selection()
 	elif Input.is_action_just_pressed("Select"):
 		select()
+		
+	if (Input.is_action_just_released("Exit")):
+		get_tree().change_scene_to_file("res://Prefabs/Scenes/MainMenu.tscn")
 	
 
 	#storypointindex = clamp(storypointindex,0,storypointcount-1)
