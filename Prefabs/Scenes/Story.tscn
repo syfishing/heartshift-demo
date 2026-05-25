@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://sor5vrd66ykx" path="res://Scripts/DataElements/Story/music.gd" id="5_ijre4"]
 [ext_resource type="Script" uid="uid://brfsujgtv47v4" path="res://Scripts/DataElements/Story/delay.gd" id="6_yunxr"]
 [ext_resource type="AudioStream" uid="uid://c6waairljacn" path="res://Audio/Music/dreamcatcher.wav" id="8_ijre4"]
+[ext_resource type="Script" uid="uid://cfhlk8gx4pq4t" path="res://Scripts/DataElements/Story/cutscene.gd" id="9_lqf37"]
+[ext_resource type="VideoStream" uid="uid://bqghcssu5di2t" path="res://Assets/Backgrounds/wavymenubg1.ogv" id="10_ntf3o"]
 
 [sub_resource type="Gradient" id="Gradient_wcnqx"]
 colors = PackedColorArray(0.2901961, 0.2784314, 0.2784314, 1, 0.47, 0.23969999, 0.23969999, 1)
@@ -57,6 +59,11 @@ script = ExtResource("5_ijre4")
 audio = ExtResource("8_ijre4")
 metadata/_custom_type_script = "uid://sor5vrd66ykx"
 
+[sub_resource type="Resource" id="Resource_lyobt"]
+script = ExtResource("9_lqf37")
+video = ExtResource("10_ntf3o")
+metadata/_custom_type_script = "uid://cfhlk8gx4pq4t"
+
 [sub_resource type="Resource" id="Resource_vr2bo"]
 script = ExtResource("4_f3lw0")
 character_id = "someone"
@@ -79,7 +86,7 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_f3lw0"]
 script = ExtResource("3_wcnqx")
-events = Array[ExtResource("2_kk788")]([SubResource("Resource_lqf37"), SubResource("Resource_yunxr"), SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_ntf3o"), SubResource("Resource_vr2bo"), SubResource("Resource_ijre4"), SubResource("Resource_u2tva")])
+events = Array[ExtResource("2_kk788")]([SubResource("Resource_lqf37"), SubResource("Resource_yunxr"), SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_vr2bo"), SubResource("Resource_ijre4"), SubResource("Resource_u2tva")])
 characters = Array[ExtResource("2_wcnqx")]([SubResource("Resource_wcnqx")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
 
@@ -105,6 +112,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_6ijvs")
+
+[node name="BackgroundV" type="VideoStreamPlayer" parent="BGLayer" unique_id=1630654324]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=167864694]
 layer = 2

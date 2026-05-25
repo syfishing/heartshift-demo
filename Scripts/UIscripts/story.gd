@@ -62,6 +62,7 @@ func _play_event() -> void:
 		var c = _find_character(event.character_id)
 		
 		%Dialogue.show()
+		%TextLabel.visible_ratio = 0.0
 		%TextLabel.text = event.text
 		%SpeakerLabel.text = c.name
 		%SpeakerLabel.add_theme_color_override("font_color", c.color)
@@ -75,7 +76,21 @@ func _play_event() -> void:
 			_key_pressed.connect(func(): _finish_typing(event.auto_advance), CONNECT_ONE_SHOT)
 	elif event is StoryBGEvent:
 		%Background.texture = event.background
+		%Background.show()
+		%BackgroundV.stop()
+		%BackgroundV.hide()
 		_next_event()
+	elif event is StoryCutsceneEvent:
+		%BackgroundV.stream = event.video
+		%BackgroundV.loop = event.repeat
+		%BackgroundV.volume = 0.0 if event.mute else 1.0
+		%BackgroundV.show()
+		%BackgroundV.play()
+		%Background.hide()
+		if event.wait_until_finish:
+			%BackgroundV.finished.connect(_next_event, CONNECT_ONE_SHOT)
+		else:
+			_next_event()
 	elif event is StoryMoveEvent:
 		var node := _character_nodes[event.character_id]
 		if node:
