@@ -11,34 +11,23 @@
 [ext_resource type="Script" uid="uid://cfhlk8gx4pq4t" path="res://Scripts/DataElements/Story/cutscene.gd" id="9_lqf37"]
 [ext_resource type="VideoStream" uid="uid://bqghcssu5di2t" path="res://Assets/Backgrounds/wavymenubg1.ogv" id="10_ntf3o"]
 
-[sub_resource type="Gradient" id="Gradient_lqf37"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.62352943, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_ijre4"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.014925373, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.49411765, 0.49411765, 0.49411765, 0, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ntf3o"]
-gradient = SubResource("Gradient_lqf37")
-width = 200
-height = 500
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u2tva"]
+gradient = SubResource("Gradient_ijre4")
 
-[sub_resource type="Gradient" id="Gradient_wcnqx"]
-colors = PackedColorArray(0.2901961, 0.2784314, 0.2784314, 1, 0.47, 0.23969999, 0.23969999, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_lqf37"]
-gradient = SubResource("Gradient_wcnqx")
-width = 200
-height = 500
-fill_to = Vector2(1, 1)
-
-[sub_resource type="Resource" id="Resource_wcnqx"]
+[sub_resource type="Resource" id="Resource_ijre4"]
 script = ExtResource("2_wcnqx")
-id = "someone"
-name = "Someone"
-color = Color(0, 1, 0, 1)
+id = "???"
+name = "???"
+color = Color(1, 1, 1, 1)
 poses = Dictionary[String, Texture2D]({
-"angy": SubResource("GradientTexture2D_ntf3o"),
-"default": SubResource("GradientTexture2D_lqf37")
+"invisible": SubResource("GradientTexture2D_u2tva")
 })
-default_pose = "default"
+default_pose = "invisible"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
 [sub_resource type="Resource" id="Resource_lqf37"]
@@ -46,40 +35,70 @@ script = ExtResource("5_ijre4")
 audio = ExtResource("4_vr2bo")
 metadata/_custom_type_script = "uid://sor5vrd66ykx"
 
+[sub_resource type="Resource" id="Resource_lyobt"]
+script = ExtResource("9_lqf37")
+video = ExtResource("10_ntf3o")
+repeat = true
+metadata/_custom_type_script = "uid://cfhlk8gx4pq4t"
+
 [sub_resource type="Resource" id="Resource_3ine8"]
 script = ExtResource("4_f3lw0")
 character_id = "???"
 text = "..."
-typing_speed = 0.1
+typing_speed = 0.5
 uninterruptible = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
-
-[sub_resource type="Resource" id="Resource_ijre4"]
-script = ExtResource("6_yunxr")
-metadata/_custom_type_script = "uid://brfsujgtv47v4"
 
 [sub_resource type="Resource" id="Resource_u2tva"]
 script = ExtResource("4_f3lw0")
 character_id = "???"
 text = "...?"
-typing_speed = 0.1
+typing_speed = 0.5
 uninterruptible = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
-[sub_resource type="Resource" id="Resource_ntf3o"]
+[sub_resource type="Resource" id="Resource_1g5uw"]
+script = ExtResource("4_f3lw0")
+character_id = "???"
+text = "Welcome."
+typing_speed = 0.5
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_e2agj"]
+script = ExtResource("4_f3lw0")
+character_id = "???"
+text = "You have arrived at the beginning of it all, and so have i."
+typing_speed = 0.5
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ov53a"]
+script = ExtResource("4_f3lw0")
+character_id = "???"
+text = "Soon, they will awaken, however..."
+typing_speed = 0.5
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ljurw"]
 script = ExtResource("6_yunxr")
 metadata/_custom_type_script = "uid://brfsujgtv47v4"
 
-[sub_resource type="Resource" id="Resource_lyobt"]
-script = ExtResource("9_lqf37")
-video = ExtResource("10_ntf3o")
-wait_until_finish = true
-metadata/_custom_type_script = "uid://cfhlk8gx4pq4t"
+[sub_resource type="Resource" id="Resource_2f7h2"]
+script = ExtResource("4_f3lw0")
+character_id = "???"
+text = "I need you to give me your best, alright?"
+typing_speed = 0.8
+uninterruptible = true
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_g7oej"]
+script = ExtResource("6_yunxr")
+time_seconds = 2.0
+metadata/_custom_type_script = "uid://brfsujgtv47v4"
 
 [sub_resource type="Resource" id="Resource_f3lw0"]
 script = ExtResource("3_wcnqx")
-events = Array[ExtResource("2_kk788")]([SubResource("Resource_lqf37"), SubResource("Resource_3ine8"), SubResource("Resource_ijre4"), SubResource("Resource_u2tva"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt")])
-characters = Array[ExtResource("2_wcnqx")]([SubResource("Resource_wcnqx")])
+events = Array[ExtResource("2_kk788")]([SubResource("Resource_lqf37"), SubResource("Resource_lyobt"), SubResource("Resource_3ine8"), SubResource("Resource_u2tva"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_g7oej")])
+characters = Array[ExtResource("2_wcnqx")]([SubResource("Resource_ijre4")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
 
 [sub_resource type="Gradient" id="Gradient_lgay8"]
