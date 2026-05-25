@@ -5,9 +5,6 @@ var started: bool = false
 const menu_theme = preload("res://Audio/Music/dreamcatcher.wav")
 
 func _input(event: InputEvent) -> void:
-	if started:
-		return
-
 	# Keyboard
 	if event is InputEventKey and event.pressed and not event.echo:
 		if (event.is_action_pressed("Exit")):
@@ -24,7 +21,6 @@ func _input(event: InputEvent) -> void:
 		_start_game()
 		
 func _start_game() -> void:
-	started = true
 	get_tree().change_scene_to_file("res://Prefabs/Scenes/MainMenu.tscn")
 
 func _ready() -> void:
