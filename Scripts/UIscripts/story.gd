@@ -61,6 +61,7 @@ func _play_event() -> void:
 	if event is StoryDialogueEvent:
 		var c = _find_character(event.character_id)
 		
+		%Dialogue.show()
 		%TextLabel.text = event.text
 		%SpeakerLabel.text = c.name
 		%SpeakerLabel.add_theme_color_override("font_color", c.color)
@@ -87,6 +88,9 @@ func _play_event() -> void:
 		_next_event()
 	elif event is StoryDelayEvent:
 		get_tree().create_timer(event.time_seconds).timeout.connect(_next_event)
+	elif event is StoryMusicEvent:
+		AudioHub.play_music(event.audio)
+		_next_event()
 
 
 func _next_event() -> void:

@@ -5,8 +5,11 @@
 [ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="2_wcnqx"]
 [ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="3_wcnqx"]
 [ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="4_f3lw0"]
+[ext_resource type="AudioStream" uid="uid://bfwm7lsaodop6" path="res://Audio/Music/Technicolor.wav" id="4_vr2bo"]
 [ext_resource type="Script" uid="uid://30jsstye3dlf" path="res://Scripts/DataElements/Story/move.gd" id="5_3ine8"]
+[ext_resource type="Script" uid="uid://sor5vrd66ykx" path="res://Scripts/DataElements/Story/music.gd" id="5_ijre4"]
 [ext_resource type="Script" uid="uid://brfsujgtv47v4" path="res://Scripts/DataElements/Story/delay.gd" id="6_yunxr"]
+[ext_resource type="AudioStream" uid="uid://c6waairljacn" path="res://Audio/Music/dreamcatcher.wav" id="8_ijre4"]
 
 [sub_resource type="Gradient" id="Gradient_wcnqx"]
 colors = PackedColorArray(0.2901961, 0.2784314, 0.2784314, 1, 0.47, 0.23969999, 0.23969999, 1)
@@ -24,6 +27,11 @@ name = "Someone"
 color = Color(0, 1, 0, 1)
 sprite = SubResource("GradientTexture2D_f3lw0")
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_lqf37"]
+script = ExtResource("5_ijre4")
+audio = ExtResource("4_vr2bo")
+metadata/_custom_type_script = "uid://sor5vrd66ykx"
 
 [sub_resource type="Resource" id="Resource_yunxr"]
 script = ExtResource("5_3ine8")
@@ -43,6 +51,11 @@ character_id = "someone"
 x_pos = 400.0
 is_flipped = true
 metadata/_custom_type_script = "uid://30jsstye3dlf"
+
+[sub_resource type="Resource" id="Resource_ntf3o"]
+script = ExtResource("5_ijre4")
+audio = ExtResource("8_ijre4")
+metadata/_custom_type_script = "uid://sor5vrd66ykx"
 
 [sub_resource type="Resource" id="Resource_vr2bo"]
 script = ExtResource("4_f3lw0")
@@ -66,7 +79,7 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_f3lw0"]
 script = ExtResource("3_wcnqx")
-events = Array[ExtResource("2_kk788")]([SubResource("Resource_yunxr"), SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_vr2bo"), SubResource("Resource_ijre4"), SubResource("Resource_u2tva")])
+events = Array[ExtResource("2_kk788")]([SubResource("Resource_lqf37"), SubResource("Resource_yunxr"), SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_ntf3o"), SubResource("Resource_vr2bo"), SubResource("Resource_ijre4"), SubResource("Resource_u2tva")])
 characters = Array[ExtResource("2_wcnqx")]([SubResource("Resource_wcnqx")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
 
@@ -97,6 +110,8 @@ texture = SubResource("GradientTexture2D_6ijvs")
 layer = 2
 
 [node name="Dialogue" type="Control" parent="CanvasLayer" unique_id=289329162]
+unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -129,7 +144,7 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
-text = "Lorem ipsum [wave]dolor sit amet[/wave], consectetur adipiscing elit. Etiam lacinia risus non velit scelerisque, quis molestie neque finibus. Nulla pulvinar sem at tellus ullamcorper, eu malesuada lectus luctus. Nam ullamcorper at lectus ut auctor. Suspendisse varius lorem ac orci viverra consectetur. Phasellus volutpat metus tempor commodo pharetra."
+text = "Text text text 123"
 
 [node name="Speaker" type="ColorRect" parent="CanvasLayer/Dialogue" unique_id=1412280415]
 layout_mode = 1
