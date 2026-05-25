@@ -3,10 +3,12 @@ extends Node
 @onready var musicplayer = $TrackStreamPlayer
 
 func play_track(audio: AudioStream):
-	$TrackStreamPlayer.play(audio)
+	$TrackStreamPlayer.stream = audio
+	$TrackStreamPlayer.play()
 	
 func play_music(audio: AudioStream):
-	$BGMusicStreamPlayer.play(audio)
+	$BGMusicStreamPlayer.stream = audio
+	$BGMusicStreamPlayer.play()
 
 func play_menu_music(audio: AudioStream, stopping: bool):
 	if $MainMenuMusicStreamPlayer.stream == audio && stopping == false:
