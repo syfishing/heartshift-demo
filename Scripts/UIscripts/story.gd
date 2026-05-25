@@ -69,32 +69,44 @@ func _play_event() -> void:
 		var typing_time = event.text.length() / 40.0 / event.typing_speed
 		_dialogue_tween = create_tween()
 		_dialogue_tween.tween_property(%TextLabel, "visible_ratio", 1.0, typing_time).from(0.0)
-		_dialogue_tween.finished.connect(_finish_typing)
-		_key_pressed.connect(_finish_typing, CONNECT_ONE_SHOT)
+		_dialogue_tween.finished.connect(func(): _finish_typing(event.auto_advance))
+		if not event.uninterruptible:
+			_key_pressed.connect(func(): _finish_typing(event.auto_advance), CONNECT_ONE_SHOT)
 	elif event is StoryBGEvent:
 		%Background.texture = event.background
 		_next_event()
 	elif event is StoryMoveEvent:
 		var node := _character_nodes[event.character_id]
 		if node:
-			node.position.x = event.x_pos
 			node.flip_h = event.is_flipped
+			if node.position.x >= 9999:
+				node.position.x = event.x_pos
+			else:
+				var tween = create_tween().set_trans(Tween.TRANS_CUBIC)
+				tween.tween_property(node, "position:x", event.x_pos, event.duration)
 		_next_event()
+	elif event is StoryDelayEvent:
+		get_tree().create_timer(event.time_seconds).timeout.connect(_next_event)
 
 
 func _next_event() -> void:
+	if _key_pressed.is_connected(_next_event):
+		_key_pressed.disconnect(_next_event)
 	_event_idx += 1
 	call_deferred("_play_event")
 
 
 ## call to show all text and wait for user input before continue
-func _finish_typing() -> void:
+func _finish_typing(auto_advance: bool) -> void:
 	if _key_pressed.is_connected(_finish_typing):
 		_key_pressed.disconnect(_finish_typing)
 	if _dialogue_tween:
 		_dialogue_tween.stop()
 	%TextLabel.visible_ratio = 1.0
-	_key_pressed.connect(_next_event, CONNECT_ONE_SHOT)
+	if auto_advance:
+		_next_event()
+	else:
+		_key_pressed.connect(_next_event, CONNECT_ONE_SHOT)
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
