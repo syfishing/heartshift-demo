@@ -13,6 +13,8 @@ var _character_nodes: Dictionary[String, Sprite2D] = {}
 
 var _dialogue_tween: Tween
 
+signal _key_pressed
+
 
 func _find_character(id: String) -> CharacterData:
 	for c in story.characters:
@@ -67,7 +69,8 @@ func _play_event() -> void:
 		var typing_time = event.text.length() / 40.0 / event.typing_speed
 		_dialogue_tween = create_tween()
 		_dialogue_tween.tween_property(%TextLabel, "visible_ratio", 1.0, typing_time).from(0.0)
-		_dialogue_tween.finished.connect(_next_event)
+		_dialogue_tween.finished.connect(_finish_typing)
+		_key_pressed.connect(_finish_typing, CONNECT_ONE_SHOT)
 	elif event is StoryBGEvent:
 		%Background.texture = event.background
 		_next_event()
@@ -82,3 +85,18 @@ func _play_event() -> void:
 func _next_event() -> void:
 	_event_idx += 1
 	call_deferred("_play_event")
+
+
+## call to show all text and wait for user input before continue
+func _finish_typing() -> void:
+	if _key_pressed.is_connected(_finish_typing):
+		_key_pressed.disconnect(_finish_typing)
+	if _dialogue_tween:
+		_dialogue_tween.stop()
+	%TextLabel.visible_ratio = 1.0
+	_key_pressed.connect(_next_event, CONNECT_ONE_SHOT)
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event.is_pressed():
+		_key_pressed.emit()
