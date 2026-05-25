@@ -40,9 +40,10 @@ func _setup_story() -> void:
 	
 	for c in story.characters:
 		var node = Sprite2D.new()
-		node.texture = c.sprite
+		var sprite := c.poses[c.default_pose]
+		node.texture = sprite
 		node.centered = false
-		node.offset = Vector2(0, -c.sprite.get_height())
+		node.offset = Vector2(0, -sprite.get_height())
 		node.position = Vector2(10000, height)
 		add_child(node)
 		_character_nodes[c.id] = node
@@ -105,6 +106,14 @@ func _play_event() -> void:
 		get_tree().create_timer(event.time_seconds).timeout.connect(_next_event)
 	elif event is StoryMusicEvent:
 		AudioHub.play_music(event.audio)
+		_next_event()
+	elif event is StoryPoseEvent:
+		var ch := _find_character(event.character_id)
+		if ch:
+			var sprite := ch.poses[event.pose]
+			var node := _character_nodes[event.character_id]
+			node.texture = sprite
+			node.offset = Vector2(0, -sprite.get_height())
 		_next_event()
 
 
