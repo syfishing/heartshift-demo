@@ -1,79 +1,7 @@
 [gd_scene format=3 uid="uid://dctx1rfjgt7i4"]
 
 [ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="1_fb61i"]
-[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="2_43kdc"]
-[ext_resource type="Shader" uid="uid://lxiku6t8q08k" path="res://Assets/Shaders/Wave.gdshader" id="3_kjqc2"]
-
-[sub_resource type="Shader" id="Shader_syosp"]
-code = "shader_type canvas_item;
-
-uniform vec4 top_color: source_color;
-uniform vec4 bottom_color: source_color;
-
-uniform float wave_amp: hint_range(0.0, 0.5);
-uniform float wave_size: hint_range(1.0, 10.0);
-uniform float wave_time_mul: hint_range(-2.0, 2.0);
-
-uniform int total_phases: hint_range(2, 600, 1);
-
-
-float rand(float n){return fract(sin(n) * 43758.5453123);}
-
-
-float noise(float p){
-	float fl = floor(p);
-  float fc = fract(p);
-	return mix(rand(fl), rand(fl + 1.0), fc);
-}
-
-
-float fmod(float x, float y) {
-	return x - floor(x / y) * y;
-}
-
-
-vec4 lerp(vec4 a, vec4 b, float w) {
-	return a + w * (b - a);
-}
-
-
-void fragment() {
-	float t = float(total_phases);
-	float effective_wave_amp = min(wave_amp, 0.5 / t);
-	float d = fmod(UV.y, 1.0 / t);
-	float i = floor(UV.y * t);
-	float vi = floor(UV.y * t + t * effective_wave_amp);
-	float s = effective_wave_amp * sin((UV.x + TIME * max(1.0 / t, noise(vi)) * wave_time_mul * vi / t) * 2.0 * PI * wave_size);
-	
-	if (d < s) i--;
-	if (d > s + 1.0 / t) i++;
-	i = clamp(i, 0.0, t - 1.0);
-	
-	COLOR = lerp(top_color, bottom_color, i / (t - 1.0));
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcp02"]
-shader = SubResource("Shader_syosp")
-shader_parameter/top_color = Color(0.59824854, 0.16060856, 0.877902, 0.38500002)
-shader_parameter/bottom_color = Color(0, 0, 18.61297, 0)
-shader_parameter/wave_amp = 0.210000009975
-shader_parameter/wave_size = 2.8000000855
-shader_parameter/wave_time_mul = -0.289999918775
-shader_parameter/total_phases = 5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f72t2"]
-shader = ExtResource("3_kjqc2")
-shader_parameter/top_color = Color(0.12939176, 0.5061471, 0.84947944, 0)
-shader_parameter/bottom_color = Color(0.59824854, 0.16060856, 0.877902, 0.38500002)
-shader_parameter/wave_amp = 0.210000009975
-shader_parameter/wave_size = 2.8000000855
-shader_parameter/wave_time_mul = -0.289999918775
-shader_parameter/total_phases = 5
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uhd87"]
-load_path = "res://.godot/imported/roundedrectmenubig2.png-d77d642f92af63bb58bf12582f6e9b83.ctex"
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_ekrlx"]
+[ext_resource type="Script" uid="uid://bnyw0wruhdhva" path="res://Scripts/UIscripts/songcarousel.gd" id="2_g7hi4"]
 
 [sub_resource type="Shader" id="Shader_8lxbd"]
 code = "shader_type canvas_item;
@@ -304,17 +232,17 @@ shader_parameter/glow_threshold = 0.65
 
 [node name="Card" type="TextureRect" parent="Card Layer" unique_id=1198360513]
 self_modulate = Color(1, 0.49803922, 1, 1)
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -334.0
-offset_top = -223.0
-offset_right = 316.0
-offset_bottom = 77.0
+anchor_top = 0.148
+anchor_right = 0.94400007
+anchor_bottom = 0.61700004
+offset_top = 66.096
+offset_right = 0.5119629
+offset_bottom = 62.18396
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("1_fb61i")
 expand_mode = 1
 
@@ -326,165 +254,253 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -334.1825
-offset_top = -153.47
-offset_right = 334.1825
-offset_bottom = 153.47
+offset_left = -261.0526
+offset_top = -146.36842
+offset_right = 261.05267
+offset_bottom = 148.36841
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.95, 0.95)
+scale = Vector2(0.93, 0.95)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("1_fb61i")
 expand_mode = 1
-
-[node name="SongCover" type="TextureRect" parent="Card Layer/Card" unique_id=857989378]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 25.0
-offset_right = 171.0
-offset_bottom = 165.0
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("2_43kdc")
-expand_mode = 1
-
-[node name="WaveTop" type="ColorRect" parent="Card Layer/Card/SongCover" unique_id=46517291]
-show_behind_parent = true
-material = SubResource("ShaderMaterial_hcp02")
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 2.0
-offset_top = -3.9999924
-offset_right = 291.42
-offset_bottom = 20.000008
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="WaveBottom" type="ColorRect" parent="Card Layer/Card/SongCover" unique_id=1890399016]
-show_behind_parent = true
-material = SubResource("ShaderMaterial_f72t2")
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 9.0
-offset_top = -27.999992
-offset_right = 298.42
-offset_bottom = -3.9999924
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="InfoContainer" type="TextureRect" parent="Card Layer/Card" unique_id=1871984933]
-self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
-layout_mode = 0
-offset_left = 300.0
-offset_top = 25.0
-offset_right = 600.0
-offset_bottom = 165.0
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("1_fb61i")
-expand_mode = 1
-
-[node name="InfoContainerBack" type="TextureRect" parent="Card Layer/Card/InfoContainer" unique_id=711026651]
-self_modulate = Color(0.8823829, 0.5199774, 0.56294864, 1)
-show_behind_parent = true
-layout_mode = 0
-offset_right = 300.0
-offset_bottom = 140.0
-scale = Vector2(1.06, 1.1)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = SubResource("CompressedTexture2D_uhd87")
-expand_mode = 1
-
-[node name="SongName" type="Label" parent="Card Layer/Card/InfoContainer" unique_id=2105170422]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -72.0
-offset_top = 8.0
-offset_right = 73.0
-offset_bottom = 50.0
-grow_horizontal = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 25
-text = "Alteration"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Stage" type="Label" parent="Card Layer/Card/InfoContainer" unique_id=1678851908]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -49.0
-offset_right = 150.0
-offset_bottom = -18.0
-grow_vertical = 0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 22
-text = "Stage 6"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="Difficulty" type="Label" parent="Card Layer/Card/InfoContainer" unique_id=601552202]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = 21.0
-offset_bottom = 52.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 22
-text = "Diff. 10"
-horizontal_alignment = 1
-uppercase = true
-
-[node name="Divider" type="TextureRect" parent="Card Layer/Card" unique_id=1897015441]
-self_modulate = Color(1, 0.49803922, 1, 1)
-layout_mode = 0
-offset_top = 194.0
-offset_right = 649.0
-offset_bottom = 204.0
-texture = SubResource("CanvasTexture_ekrlx")
-
-[node name="Quote" type="Label" parent="Card Layer/Card" unique_id=1446234661]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -166.0
-offset_top = -76.0
-offset_right = 166.0
-offset_bottom = -26.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 36
-text = "\"Lorem Ipsum Doloret\""
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="CRT" type="ColorRect" parent="Card Layer" unique_id=1689443216]
 material = SubResource("ShaderMaterial_dqfgh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2045728073]
+layer = 5
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=2039445429]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 384.0
+offset_bottom = 648.0
+
+[node name="SongCarousel" type="Control" parent="CanvasLayer/Control" unique_id=995810760 node_paths=PackedStringArray("position_offset_node")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_g7hi4")
+opacity_strength = 0.465
+selected_index = -1
+position_offset_node = NodePath("CarouselOffset")
+
+[node name="CarouselOffset" type="Control" parent="CanvasLayer/Control/SongCarousel" unique_id=1102467072]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 192.0
+offset_top = 278.43994
+offset_right = 192.00012
+offset_bottom = 278.43994
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1072397327]
+modulate = Color(1, 1, 1, 0.9999999)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -324.0
+offset_right = -192.00012
+offset_bottom = -232.88
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9999999, 0.9999999)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=499183147]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=636088039]
+modulate = Color(1, 1, 1, 0.5350001)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -207.88
+offset_right = -192.00012
+offset_bottom = -116.76001
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7500001, 0.7500001)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=1943138654]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button3" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=181127137]
+modulate = Color(1, 1, 1, 0.070000015)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -91.76001
+offset_right = -192.00012
+offset_bottom = -0.6400757
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5000001, 0.5000001)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=1345362757]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button4" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1887906282]
+modulate = Color(1, 1, 1, 3.1263514e-10)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = 24.359924
+offset_right = -192.00012
+offset_bottom = 115.47992
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25000006, 0.25000006)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=1010561434]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button5" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=304861766]
+modulate = Color(1, 1, 1, 7.8722764e-11)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = 140.47992
+offset_right = -192.00012
+offset_bottom = 231.59985
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.10000002, 0.10000002)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=332443568]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button6" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1815236450]
+modulate = Color(1, 1, 1, 1.9847644e-11)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = 256.59985
+offset_right = -192.00012
+offset_bottom = 347.7201
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.10000002, 0.10000002)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=1167453035]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button7" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1630923136]
+modulate = Color(1, 1, 1, 5.0654897e-12)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = 372.7201
+offset_right = -192.00012
+offset_bottom = 463.8401
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.10000002, 0.10000002)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button7" unique_id=1931864445]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button8" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=395394467]
+modulate = Color(1, 1, 1, 1.2993299e-12)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = 488.8401
+offset_right = -192.00012
+offset_bottom = 579.9601
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.10000001, 0.10000001)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button8" unique_id=2078817489]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
