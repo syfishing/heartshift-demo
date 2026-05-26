@@ -6,7 +6,7 @@ const menu_theme = preload("res://Audio/Music/dreamcatcher.wav")
 
 func _input(event: InputEvent) -> void:
 	# Keyboard
-	if event is InputEventKey and event.pressed and not event.echo:
+	if event is InputEventKey and event.is_pressed() and not event.is_echo():
 		if (event.is_action_pressed("Exit")):
 			get_tree().quit()
 		else:

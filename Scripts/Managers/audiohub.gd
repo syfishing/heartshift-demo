@@ -1,6 +1,6 @@
 extends Node
 
-@onready var musicplayer = $TrackStreamPlayer
+@onready var trackmusicplayer = $TrackStreamPlayer
 
 func play_track(audio: AudioStream):
 	$TrackStreamPlayer.stream = audio
@@ -9,6 +9,9 @@ func play_track(audio: AudioStream):
 func play_music(audio: AudioStream):
 	$BGMusicStreamPlayer.stream = audio
 	$BGMusicStreamPlayer.play()
+
+func stop_music():
+	$BGMusicStreamPlayer.stop()
 
 func play_menu_music(audio: AudioStream, stopping: bool):
 	if $MainMenuMusicStreamPlayer.stream == audio && stopping == false:
