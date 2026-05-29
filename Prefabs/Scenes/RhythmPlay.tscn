@@ -2,6 +2,79 @@
 
 [ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="1_fb61i"]
 [ext_resource type="Script" uid="uid://bnyw0wruhdhva" path="res://Scripts/UIscripts/songcarousel.gd" id="2_g7hi4"]
+[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="2_kjqc2"]
+[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="3_43kdc"]
+
+[sub_resource type="Shader" id="Shader_jahwt"]
+code = "shader_type canvas_item;
+
+
+uniform vec2 resolution;
+uniform vec2 mouse_pos;
+uniform float speed_multiplier = 1.0;
+uniform bool enable_background = true;
+uniform vec4 background_color = vec4(0.0, 0.0, 0.0, 1.0); 
+
+
+float No(float x, vec2 T){
+	return fract(9667.5 * sin(7983.75 * (x + T.x) + 297. + T.y));
+}
+vec4 Rancol(vec2 x, vec2 T){
+	return vec4(No(x.x + x.y, T), No(x.x*x.x + x.y, T), No(x.x*x.x + x.y*x.y, T), 1.0);
+}
+vec4 grid(vec2 uv, float t, vec2 T){
+	vec4 C1 = vec4(0.0);
+	vec4 C2 = vec4(0.0);
+	uv *= 20.0;
+	vec2 id = vec2(floor(uv.x), floor(uv.y));
+	uv.y += (5.0 * No(id.x * id.x, T) + 1.0) * t * 0.04;
+	uv.y += No(id.x, T);
+	id = vec2(floor(uv.x), floor(uv.y));
+	uv = fract(uv) - 0.5;
+	float d = length(uv);
+	float t_local = t * (1.0 * No(id.x + id.y, T));
+	float r = 0.1 * sin(t_local + sin(t_local) * 0.5) + 0.3;
+	float r1 = 0.07 * sin(2.0 * t_local + sin(2.0 * t_local) * 0.5) + 0.1 * No(id.x + id.y, T);
+	if (d < r && d > r - 0.1) {
+		C2 = 0.5 * Rancol(id + vec2(1.0), T) + vec4(0.5);
+		C2 *= smoothstep(r - 0.12, r, d);
+		C2 *= 1.0 - smoothstep(r - 0.05, r + 0.12, d);
+	}
+	if (d < r1) {
+		C2 = 0.5 * Rancol(id + vec2(1.0), T) + vec4(0.5);
+	}
+	return C2 + C1;
+}
+
+
+void fragment() {
+	vec2 uv = FRAGCOORD.xy / resolution.xy;
+	uv.y *= resolution.y / resolution.x;
+	float t = TIME * speed_multiplier;
+    vec2 T = mouse_pos / resolution;
+	vec4 final_color = grid(uv, t, T);
+
+    if (enable_background) {
+        final_color += background_color;
+    }
+
+    COLOR = final_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pjow"]
+shader = SubResource("Shader_jahwt")
+shader_parameter/resolution = Vector2(700, 200)
+shader_parameter/mouse_pos = Vector2(0, 0)
+shader_parameter/speed_multiplier = 1.0
+shader_parameter/enable_background = false
+shader_parameter/background_color = Vector4(0, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_fb61i"]
+font_names = PackedStringArray("Fira Code")
+
+[sub_resource type="SystemFont" id="SystemFont_43kdc"]
+font_names = PackedStringArray("Fira Code")
+font_stretch = 200
 
 [sub_resource type="Shader" id="Shader_8lxbd"]
 code = "shader_type canvas_item;
@@ -226,27 +299,896 @@ shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
 shader_parameter/glow_threshold = 0.65
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fb61i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_43kdc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kjqc2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hcp02"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f72t2"]
+
+[sub_resource type="Shader" id="Shader_hcp02"]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/waveforms
+This shader is under CC0 license. Feel free to use, improve and 
+change this shader according to your needs and consider sharing 
+the modified result to godotshaders.com.
+*/
+shader_type canvas_item;
+render_mode blend_premul_alpha;
+uniform int lines = 80; // Amount of lines the waveform is build up of
+uniform float amplitude : hint_range(0.0, 1.0) = 0.9; // Height of the wave
+uniform float frequency : hint_range(0.0, 0.5) = 0.1; // Set a lower value for a smoother wave
+uniform float intensity : hint_range(0.0, 1.0) = 0.75; // Lower values creates gaps in the wave while higher make the wave more solid
+uniform float line_sharpness : hint_range(0.0, 1.0) = 0.5; // Fuzzy edges on each line
+uniform float line_size : hint_range(0.0, 1.0) = 0.8; // Thickness of the lines
+uniform float fade : hint_range(0.0, 0.5) = 0.1; // Blurres the top and bottom of the lines
+uniform float rest_size : hint_range(-2., 2.) = -0.2; // The size of the lines when the line is not animating, i.e at value 0. Tweak if Fade is used.
+uniform float edge : hint_range(0.0, 0.5) = 0.05; // How close to the edges should the animation beginn
+uniform float speed = 0.5; // Speed of wave animation
+uniform vec4 color : source_color = vec4(.8, 0.25, 0.5, 1.0); // Color of wave
+uniform bool dot_matrix = false; 
+uniform int dot_matriz_size = 80;
+uniform bool speech_sim = true; // Toggle to simulate speach. Will create a more erratic movement in the wave
+uniform float speech_intensity : hint_range(0.0, 2.0) = 0.8; // How fast will the speech movement be
+uniform float progress : hint_range(0.0, 1.0) = 1.0; // Use to turn the animation on and off from outside the shader. 0 - off, 1 - on. Can animate values between which will shrink the wave.
+float random(vec2 uv) {
+	return fract(sin(dot(uv.xy,
+	vec2(12.9898,78.233))) * 43758.5453123);
+}
+float noise(vec2 uv) {
+	vec2 uv_index = floor(uv);
+	vec2 uv_fract = fract(uv);
+	// Four corners in 2D of a tile
+	float a = random(uv_index);
+	float b = random(uv_index + vec2(1.0, 0.0));
+	float c = random(uv_index + vec2(0.0, 1.0));
+	float d = random(uv_index + vec2(1.0, 1.0));
+	vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+	return mix(a, b, blur.x) +
+				(c - a) * blur.y * (1.0 - blur.x) +
+				(d - b) * blur.x * blur.y;
+}
+float fbm(vec2 uv) {
+	int octaves = 4;
+	float amp = 0.5;
+	float freq = 4.;
+	float value = 0.0;
+	
+	for(int i = 0; i < octaves; i++) {
+		value += amp * noise(freq * uv - 0.5);
+		amp *= 0.6;
+		freq *= 2.;
+	}
+	return value;
+}
+void fragment()
+{
+	// Some initialising
+	float time = TIME;
+	vec4 c = vec4(vec3(0.0), 1.0);
+	float f_columns = float(lines);
+	
+	// Make some distance to the edges before the animation starts
+	float cutoff = smoothstep(0.0, edge, (round ((UV.x) * (f_columns) ) / f_columns) );
+	cutoff *= 1. - smoothstep(1.-edge, 1.0, (round ((UV.x) * (f_columns) ) / f_columns) );
+	// Speech simulation setup
+	float ss = 1.0;
+	if (speech_sim == true){
+		ss = fbm(vec2(1.0, time * speed * 1.3) * speech_intensity) * 1.5;
+	}
+	
+	// Create the noise that controlls the animation
+	float noise = fbm(vec2( round( (UV.x) * f_columns ) * frequency, time * speed) ) * ss * progress;
+	noise *= cutoff; // Apply edge cutoff
+	
+	// Make wave values based on the noise
+	float wave = smoothstep(1.-intensity, 1.0, noise) * amplitude;
+	wave = wave + (rest_size * 0.2);
+	
+	// Create the lines
+	float line = abs( sin(( f_columns * 3.1416 * UV.x) + 1.5) );
+	line = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), line);
+	
+	// Simulate dot_matrix
+	if (dot_matrix){
+		float dm = abs( sin(( float(dot_matriz_size) * 3.1416 * UV.y) + 1.5) );
+		dm = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), dm);
+		line *= dm;
+	}
+	
+	// Duplicate mask on top an bottom and apply to line
+	float mask = 1.0 - smoothstep(wave, wave + fade, abs(UV.y - 0.5) * 2.);
+	line *= mask;
+	
+	c = vec4(line) * color;
+	
+	// Respect the node's vertex/modulate alpha (premultiplied)
+	c *= COLOR.a;
+	
+	COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uhd87"]
+shader = SubResource("Shader_hcp02")
+shader_parameter/lines = 36
+shader_parameter/amplitude = 1.0
+shader_parameter/frequency = 0.5
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 1.0
+shader_parameter/line_size = 1.0
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = 2.0
+shader_parameter/edge = 0.0
+shader_parameter/speed = 0.46
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
+[sub_resource type="Shader" id="Shader_kjqc2"]
+code = "shader_type canvas_item;
+
+uniform int columns = 80;        // match waveform's \"lines\"
+uniform int rows = 80;           // match waveform's \"dot_matriz_size\"
+uniform float line_width : hint_range(0.0, 0.5) = 0.05; // fraction of a cell
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true; // draw the 0.0 and 1.0 edges too
+
+void fragment() {
+	vec2 cell = vec2(float(columns), float(rows));
+
+	// Position within each cell, 0..1
+	vec2 grid_uv = fract(UV * cell +0.5);
+
+	// Distance to nearest cell edge (0 at edge, 0.5 at center), per axis
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+
+	// A pixel is on a line if it's within half the line width of an edge
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	// fract() drops the line exactly at UV 1.0; optionally restore outer border
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f72t2"]
+shader = SubResource("Shader_kjqc2")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.71, 0.48516667, 0, 0.5176471)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="SystemFont" id="SystemFont_g7hi4"]
+font_names = PackedStringArray("Cascadia Code")
+
+[sub_resource type="Shader" id="Shader_43kdc"]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/waveforms
+
+This shader is under CC0 license. Feel free to use, improve and 
+change this shader according to your needs and consider sharing 
+the modified result to godotshaders.com.
+*/
+
+shader_type canvas_item;
+render_mode blend_premul_alpha;
+
+uniform int lines = 80; // Amount of lines the waveform is build up of
+uniform float amplitude : hint_range(0.0, 1.0) = 0.9; // Height of the wave
+uniform float frequency : hint_range(0.0, 0.5) = 0.1; // Set a lower value for a smoother wave
+uniform float intensity : hint_range(0.0, 1.0) = 0.75; // Lower values creates gaps in the wave while higher make the wave more solid
+uniform float line_sharpness : hint_range(0.0, 1.0) = 0.5; // Fuzzy edges on each line
+uniform float line_size : hint_range(0.0, 1.0) = 0.8; // Thickness of the lines
+uniform float fade : hint_range(0.0, 0.5) = 0.1; // Blurres the top and bottom of the lines
+uniform float rest_size : hint_range(-2., 2.) = -0.2; // The size of the lines when the line is not animating, i.e at value 0. Tweak if Fade is used.
+uniform float edge : hint_range(0.0, 0.5) = 0.05; // How close to the edges should the animation beginn
+uniform float speed = 0.5; // Speed of wave animation
+uniform vec4 color : source_color = vec4(.8, 0.25, 0.5, 1.0); // Color of wave
+uniform bool dot_matrix = false; 
+uniform int dot_matriz_size = 80;
+
+uniform bool speech_sim = true; // Toggle to simulate speach. Will create a more erratic movement in the wave
+uniform float speech_intensity : hint_range(0.0, 2.0) = 0.8; // How fast will the speech movement be
+uniform float progress : hint_range(0.0, 1.0) = 1.0; // Use to turn the animation on and off from outside the shader. 0 - off, 1 - on. Can animate values between which will shrink the wave.
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv.xy,
+	vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+float noise(vec2 uv) {
+	vec2 uv_index = floor(uv);
+	vec2 uv_fract = fract(uv);
+
+	// Four corners in 2D of a tile
+	float a = random(uv_index);
+	float b = random(uv_index + vec2(1.0, 0.0));
+	float c = random(uv_index + vec2(0.0, 1.0));
+	float d = random(uv_index + vec2(1.0, 1.0));
+
+	vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+
+	return mix(a, b, blur.x) +
+				(c - a) * blur.y * (1.0 - blur.x) +
+				(d - b) * blur.x * blur.y;
+}
+
+float fbm(vec2 uv) {
+	int octaves = 4;
+	float amp = 0.5;
+	float freq = 4.;
+	float value = 0.0;
+	
+	for(int i = 0; i < octaves; i++) {
+		value += amp * noise(freq * uv - 0.5);
+		amp *= 0.6;
+		freq *= 2.;
+	}
+	return value;
+}
+
+
+void fragment()
+{
+	// Some initialising
+	float time = TIME;
+	vec4 c = vec4(vec3(0.0), 1.0);
+	float f_columns = float(lines);
+	
+	// Make some distance to the edges before the animation starts
+	float cutoff = smoothstep(0.0, edge, (round ((UV.x) * (f_columns) ) / f_columns) );
+	cutoff *= 1. - smoothstep(1.-edge, 1.0, (round ((UV.x) * (f_columns) ) / f_columns) );
+
+	// Speech simulation setup
+	float ss = 1.0;
+	if (speech_sim == true){
+		ss = fbm(vec2(1.0, time * speed * 1.3) * speech_intensity) * 1.5;
+	}
+	
+	// Create the noise that controlls the animation
+	float noise = fbm(vec2( round( (UV.x) * f_columns ) * frequency, time * speed) ) * ss * progress;
+	noise *= cutoff; // Apply edge cutoff
+	
+	// Make wave values based on the noise
+	float wave = smoothstep(1.-intensity, 1.0, noise) * amplitude;
+	wave = wave + (rest_size * 0.2);
+	
+	// Create the lines
+	float line = abs( sin(( f_columns * 3.1416 * UV.x) + 1.5) );
+	line = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), line);
+	
+	// Simulate dot_matrix
+	if (dot_matrix){
+		float dm = abs( sin(( float(dot_matriz_size) * 3.1416 * UV.y) + 1.5) );
+		dm = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), dm);
+		line *= dm;
+	}
+	
+	// Duplicate mask on top an bottom and apply to line
+	float mask = 1.0 - smoothstep(wave, wave + fade, abs(UV.y - 0.5) * 2.);
+	line *= mask;
+	
+	c = vec4(line) * color;
+	
+	COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcp02"]
+shader = SubResource("Shader_43kdc")
+shader_parameter/lines = 36
+shader_parameter/amplitude = 1.0
+shader_parameter/frequency = 0.1
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 1.0
+shader_parameter/line_size = 1.0
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = 2.0
+shader_parameter/edge = 0.0
+shader_parameter/speed = 0.46
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
+[sub_resource type="Shader" id="Shader_f72t2"]
+code = "shader_type canvas_item;
+
+uniform int columns = 80;        // match waveform's \"lines\"
+uniform int rows = 80;           // match waveform's \"dot_matriz_size\"
+uniform float line_width : hint_range(0.0, 0.5) = 0.05; // fraction of a cell
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true; // draw the 0.0 and 1.0 edges too
+
+void fragment() {
+	vec2 cell = vec2(float(columns), float(rows));
+
+	// Position within each cell, 0..1
+	vec2 grid_uv = fract(UV * cell +0.5);
+
+	// Distance to nearest cell edge (0 at edge, 0.5 at center), per axis
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+
+	// A pixel is on a line if it's within half the line width of an edge
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	// fract() drops the line exactly at UV 1.0; optionally restore outer border
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fb61i"]
+shader = SubResource("Shader_f72t2")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.12225223, 0.12225223, 0.12225223, 1)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="Shader" id="Shader_fb61i"]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/waveforms
+This shader is under CC0 license. Feel free to use, improve and 
+change this shader according to your needs and consider sharing 
+the modified result to godotshaders.com.
+*/
+shader_type canvas_item;
+render_mode blend_premul_alpha;
+uniform int lines = 80; // Amount of lines the waveform is build up of
+uniform float amplitude : hint_range(0.0, 1.0) = 0.9; // Height of the wave
+uniform float frequency : hint_range(0.0, 0.5) = 0.1; // Set a lower value for a smoother wave
+uniform float intensity : hint_range(0.0, 1.0) = 0.75; // Lower values creates gaps in the wave while higher make the wave more solid
+uniform float line_sharpness : hint_range(0.0, 1.0) = 0.5; // Fuzzy edges on each line
+uniform float line_size : hint_range(0.0, 1.0) = 0.8; // Thickness of the lines
+uniform float fade : hint_range(0.0, 0.5) = 0.1; // Blurres the top and bottom of the lines
+uniform float rest_size : hint_range(-2., 2.) = -0.2; // The size of the lines when the line is not animating, i.e at value 0. Tweak if Fade is used.
+uniform float edge : hint_range(0.0, 0.5) = 0.05; // How close to the edges should the animation beginn
+uniform float speed = 0.5; // Speed of wave animation
+uniform vec4 color : source_color = vec4(.8, 0.25, 0.5, 1.0); // Color of wave
+uniform bool dot_matrix = false; 
+uniform int dot_matriz_size = 80;
+uniform bool speech_sim = true; // Toggle to simulate speach. Will create a more erratic movement in the wave
+uniform float speech_intensity : hint_range(0.0, 2.0) = 0.8; // How fast will the speech movement be
+uniform float progress : hint_range(0.0, 1.0) = 1.0; // Use to turn the animation on and off from outside the shader. 0 - off, 1 - on. Can animate values between which will shrink the wave.
+float random(vec2 uv) {
+	return fract(sin(dot(uv.xy,
+	vec2(12.9898,78.233))) * 43758.5453123);
+}
+float noise(vec2 uv) {
+	vec2 uv_index = floor(uv);
+	vec2 uv_fract = fract(uv);
+	// Four corners in 2D of a tile
+	float a = random(uv_index);
+	float b = random(uv_index + vec2(1.0, 0.0));
+	float c = random(uv_index + vec2(0.0, 1.0));
+	float d = random(uv_index + vec2(1.0, 1.0));
+	vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+	return mix(a, b, blur.x) +
+				(c - a) * blur.y * (1.0 - blur.x) +
+				(d - b) * blur.x * blur.y;
+}
+float fbm(vec2 uv) {
+	int octaves = 4;
+	float amp = 0.5;
+	float freq = 4.;
+	float value = 0.0;
+	
+	for(int i = 0; i < octaves; i++) {
+		value += amp * noise(freq * uv - 0.5);
+		amp *= 0.6;
+		freq *= 2.;
+	}
+	return value;
+}
+void fragment()
+{
+	// Some initialising
+	float time = TIME;
+	vec4 c = vec4(vec3(0.0), 1.0);
+	float f_columns = float(lines);
+	
+	// Make some distance to the edges before the animation starts
+	float cutoff = smoothstep(0.0, edge, (round ((UV.x) * (f_columns) ) / f_columns) );
+	cutoff *= 1. - smoothstep(1.-edge, 1.0, (round ((UV.x) * (f_columns) ) / f_columns) );
+	// Speech simulation setup
+	float ss = 1.0;
+	if (speech_sim == true){
+		ss = fbm(vec2(1.0, time * speed * 1.3) * speech_intensity) * 1.5;
+	}
+	
+	// Create the noise that controlls the animation
+	float noise = fbm(vec2( round( (UV.x) * f_columns ) * frequency, time * speed) ) * ss * progress;
+	noise *= cutoff; // Apply edge cutoff
+	
+	// Make wave values based on the noise
+	float wave = smoothstep(1.-intensity, 1.0, noise) * amplitude;
+	wave = wave + (rest_size * 0.2);
+	
+	// Create the lines
+	float line = abs( sin(( f_columns * 3.1416 * UV.x) + 1.5) );
+	line = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), line);
+	
+	// Simulate dot_matrix
+	if (dot_matrix){
+		float dm = abs( sin(( float(dot_matriz_size) * 3.1416 * UV.y) + 1.5) );
+		dm = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), dm);
+		line *= dm;
+	}
+	
+	// Duplicate mask on top an bottom and apply to line
+	float mask = 1.0 - smoothstep(wave, wave + fade, abs(UV.y - 0.5) * 2.);
+	line *= mask;
+	
+	c = vec4(line) * color;
+	
+	// Respect the node's full modulate (RGB tint + alpha), premultiplied
+	c *= COLOR;
+	
+	COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kjqc2"]
+shader = SubResource("Shader_fb61i")
+shader_parameter/lines = 36
+shader_parameter/amplitude = 1.0
+shader_parameter/frequency = 0.1
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 1.0
+shader_parameter/line_size = 1.0
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = 2.0
+shader_parameter/edge = 0.0
+shader_parameter/speed = 0.46
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
+[sub_resource type="Shader" id="Shader_uhd87"]
+code = "shader_type canvas_item;
+
+uniform int columns = 80;        // match waveform's \"lines\"
+uniform int rows = 80;           // match waveform's \"dot_matriz_size\"
+uniform float line_width : hint_range(0.0, 0.5) = 0.05; // fraction of a cell
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true; // draw the 0.0 and 1.0 edges too
+
+void fragment() {
+	vec2 cell = vec2(float(columns), float(rows));
+
+	// Position within each cell, 0..1
+	vec2 grid_uv = fract(UV * cell +0.5);
+
+	// Distance to nearest cell edge (0 at edge, 0.5 at center), per axis
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+
+	// A pixel is on a line if it's within half the line width of an edge
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	// fract() drops the line exactly at UV 1.0; optionally restore outer border
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ekrlx"]
+shader = SubResource("Shader_uhd87")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.10447662, 0.0077999923, 0.26, 0.74509805)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="Shader" id="Shader_ekrlx"]
+code = "shader_type canvas_item;
+
+uniform int columns = 80;        // match waveform's \"lines\"
+uniform int rows = 80;           // match waveform's \"dot_matriz_size\"
+uniform float line_width : hint_range(0.0, 0.5) = 0.05; // fraction of a cell
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true; // draw the 0.0 and 1.0 edges too
+
+void fragment() {
+	vec2 cell = vec2(float(columns), float(rows));
+
+	// Position within each cell, 0..1
+	vec2 grid_uv = fract(UV * cell +0.5);
+
+	// Distance to nearest cell edge (0 at edge, 0.5 at center), per axis
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+
+	// A pixel is on a line if it's within half the line width of an edge
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	// fract() drops the line exactly at UV 1.0; optionally restore outer border
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_27b1o"]
+shader = SubResource("Shader_ekrlx")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.2378, 0.31194332, 0.58, 0.5764706)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="Shader" id="Shader_dqfgh"]
+code = "shader_type canvas_item;
+
+uniform int columns = 80;        // match waveform's \"lines\"
+uniform int rows = 80;           // match waveform's \"dot_matriz_size\"
+uniform float line_width : hint_range(0.0, 0.5) = 0.05; // fraction of a cell
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true; // draw the 0.0 and 1.0 edges too
+
+void fragment() {
+	vec2 cell = vec2(float(columns), float(rows));
+
+	// Position within each cell, 0..1
+	vec2 grid_uv = fract(UV * cell +0.5);
+
+	// Distance to nearest cell edge (0 at edge, 0.5 at center), per axis
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+
+	// A pixel is on a line if it's within half the line width of an edge
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	// fract() drops the line exactly at UV 1.0; optionally restore outer border
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hbsud"]
+shader = SubResource("Shader_dqfgh")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.85, 0.40630004, 0.35700002, 0.3137255)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="Shader" id="Shader_hbsud"]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/waveforms
+This shader is under CC0 license. Feel free to use, improve and 
+change this shader according to your needs and consider sharing 
+the modified result to godotshaders.com.
+*/
+shader_type canvas_item;
+render_mode blend_premul_alpha;
+uniform int lines = 80; // Amount of lines the waveform is build up of
+uniform float amplitude : hint_range(0.0, 1.0) = 0.9; // Height of the wave
+uniform float frequency : hint_range(0.0, 0.5) = 0.1; // Set a lower value for a smoother wave
+uniform float intensity : hint_range(0.0, 1.0) = 0.75; // Lower values creates gaps in the wave while higher make the wave more solid
+uniform float line_sharpness : hint_range(0.0, 1.0) = 0.5; // Fuzzy edges on each line
+uniform float line_size : hint_range(0.0, 1.0) = 0.8; // Thickness of the lines
+uniform float fade : hint_range(0.0, 0.5) = 0.1; // Blurres the top and bottom of the lines
+uniform float rest_size : hint_range(-2., 2.) = -0.2; // The size of the lines when the line is not animating, i.e at value 0. Tweak if Fade is used.
+uniform float edge : hint_range(0.0, 0.5) = 0.05; // How close to the edges should the animation beginn
+uniform float speed = 0.5; // Speed of wave animation
+uniform vec4 color : source_color = vec4(.8, 0.25, 0.5, 1.0); // Color of wave
+uniform bool dot_matrix = false; 
+uniform int dot_matriz_size = 80;
+uniform bool speech_sim = true; // Toggle to simulate speach. Will create a more erratic movement in the wave
+uniform float speech_intensity : hint_range(0.0, 2.0) = 0.8; // How fast will the speech movement be
+uniform float progress : hint_range(0.0, 1.0) = 1.0; // Use to turn the animation on and off from outside the shader. 0 - off, 1 - on. Can animate values between which will shrink the wave.
+float random(vec2 uv) {
+	return fract(sin(dot(uv.xy,
+	vec2(12.9898,78.233))) * 43758.5453123);
+}
+float noise(vec2 uv) {
+	vec2 uv_index = floor(uv);
+	vec2 uv_fract = fract(uv);
+	// Four corners in 2D of a tile
+	float a = random(uv_index);
+	float b = random(uv_index + vec2(1.0, 0.0));
+	float c = random(uv_index + vec2(0.0, 1.0));
+	float d = random(uv_index + vec2(1.0, 1.0));
+	vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+	return mix(a, b, blur.x) +
+				(c - a) * blur.y * (1.0 - blur.x) +
+				(d - b) * blur.x * blur.y;
+}
+float fbm(vec2 uv) {
+	int octaves = 4;
+	float amp = 0.5;
+	float freq = 4.;
+	float value = 0.0;
+	
+	for(int i = 0; i < octaves; i++) {
+		value += amp * noise(freq * uv - 0.5);
+		amp *= 0.6;
+		freq *= 2.;
+	}
+	return value;
+}
+void fragment()
+{
+	// Some initialising
+	float time = TIME;
+	vec4 c = vec4(vec3(0.0), 1.0);
+	float f_columns = float(lines);
+	
+	// Make some distance to the edges before the animation starts
+	float cutoff = smoothstep(0.0, edge, (round ((UV.x) * (f_columns) ) / f_columns) );
+	cutoff *= 1. - smoothstep(1.-edge, 1.0, (round ((UV.x) * (f_columns) ) / f_columns) );
+	// Speech simulation setup
+	float ss = 1.0;
+	if (speech_sim == true){
+		ss = fbm(vec2(1.0, time * speed * 1.3) * speech_intensity) * 1.5;
+	}
+	
+	// Create the noise that controlls the animation
+	float noise = fbm(vec2( round( (UV.x) * f_columns ) * frequency, time * speed) ) * ss * progress;
+	noise *= cutoff; // Apply edge cutoff
+	
+	// Make wave values based on the noise
+	float wave = smoothstep(1.-intensity, 1.0, noise) * amplitude;
+	wave = wave + (rest_size * 0.2);
+	
+	// Create the lines
+	float line = abs( sin(( f_columns * 3.1416 * UV.x) + 1.5) );
+	line = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), line);
+	
+	// Simulate dot_matrix
+	if (dot_matrix){
+		float dm = abs( sin(( float(dot_matriz_size) * 3.1416 * UV.y) + 1.5) );
+		dm = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), dm);
+		line *= dm;
+	}
+	
+	// Duplicate mask on top an bottom and apply to line
+	float mask = 1.0 - smoothstep(wave, wave + fade, abs(UV.y - 0.5) * 2.);
+	line *= mask;
+	
+	c = vec4(line) * color;
+	
+	// Respect the node's full modulate (RGB tint + alpha), premultiplied
+	c *= COLOR;
+	
+	COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1hkt"]
+shader = SubResource("Shader_hbsud")
+shader_parameter/lines = 36
+shader_parameter/amplitude = 1.0
+shader_parameter/frequency = 0.1
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 1.0
+shader_parameter/line_size = 1.0
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = 2.0
+shader_parameter/edge = 0.0
+shader_parameter/speed = 0.46
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
+[sub_resource type="Shader" id="Shader_27b1o"]
+code = "shader_type canvas_item;
+
+uniform int columns = 80;        // match waveform's \"lines\"
+uniform int rows = 80;           // match waveform's \"dot_matriz_size\"
+uniform float line_width : hint_range(0.0, 0.5) = 0.05; // fraction of a cell
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true; // draw the 0.0 and 1.0 edges too
+
+void fragment() {
+	vec2 cell = vec2(float(columns), float(rows));
+
+	// Position within each cell, 0..1
+	vec2 grid_uv = fract(UV * cell +0.5);
+
+	// Distance to nearest cell edge (0 at edge, 0.5 at center), per axis
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+
+	// A pixel is on a line if it's within half the line width of an edge
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	// fract() drops the line exactly at UV 1.0; optionally restore outer border
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jahwt"]
+shader = SubResource("Shader_27b1o")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.0817, 0.43, 0.17457998, 0.5568628)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="Shader" id="Shader_xxws0"]
+code = "shader_type canvas_item;
+
+uniform vec4 bottom_color: source_color;
+uniform vec4 top_color: source_color;
+
+uniform float beam_distance: hint_range(0.0, 0.3);
+uniform float beam_height: hint_range(0.0, 0.1);
+uniform float beam_width: hint_range(0.0, 0.5);
+uniform int total_phases: hint_range(2, 20, 1);
+
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+
+float noise(float p){
+	float fl = floor(p);
+  float fc = fract(p);
+	return mix(rand(fl), rand(fl + 1.0), fc);
+}
+
+
+float fmod(float x, float y) {
+	return x - floor(x / y) * y;
+}
+
+
+vec4 lerp(vec4 a, vec4 b, float w) {
+	return a + w * (b - a);
+}
+
+
+void fragment() {
+	float t = float(total_phases);
+	float s = 1.0 / t;
+	float d = fmod(UV.y, s);
+	float i = floor(UV.y * t);
+	float ci = i + 1.0;
+	float cit = ci / t;
+	float beam_pos = s - d - beam_distance;
+	float effective_beam_width = beam_width * cit + sqrt(pow(beam_height / 2.0, 2.0) - pow(beam_pos - beam_height / 2.0, 2.0));
+	float beam_x = fmod(TIME * noise(ci) * cit, 1.0);
+	float best_distance = min(abs(beam_x - UV.x), 1.0 - abs(beam_x - UV.x));
+	
+	if (beam_pos >= 0.0 && beam_pos <= beam_height && 
+		best_distance <= effective_beam_width) i++;
+	
+	
+	i = clamp(i, 0.0, t - 1.0);
+	
+	COLOR = lerp(top_color, bottom_color, i / (t - 1.0));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_43kdc"]
+shader = SubResource("Shader_xxws0")
+shader_parameter/bottom_color = Color(0.1653012, 0.05625923, 0.35178638, 1)
+shader_parameter/top_color = Color(0.0058667595, 4.182863e-06, 0.04411248, 1)
+shader_parameter/beam_distance = 0.0790000037525
+shader_parameter/beam_height = 0.0350000016625
+shader_parameter/beam_width = 0.2350000111625
+shader_parameter/total_phases = 5
+
+[sub_resource type="Environment" id="Environment_g7hi4"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 0.05
+glow_bloom = 0.6
+
 [node name="RhythmPlay" type="Node2D" unique_id=1697891486]
 
 [node name="Card Layer" type="CanvasLayer" parent="." unique_id=1661027227]
+layer = -1
 
-[node name="Card" type="TextureRect" parent="Card Layer" unique_id=1198360513]
-self_modulate = Color(1, 0.49803922, 1, 1)
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.148
-anchor_right = 0.94400007
-anchor_bottom = 0.61700004
-offset_top = 66.096
-offset_right = 0.5119629
-offset_bottom = 62.18396
-grow_horizontal = 2
+[node name="Cursor" type="TextureRect" parent="Card Layer" unique_id=1175217883]
+z_index = 5
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 282.0
+offset_right = -24.0
+offset_bottom = 302.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_43kdc")
+expand_mode = 1
+
+[node name="Card" type="TextureRect" parent="Card Layer" unique_id=1759489968]
+self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -591.0
+offset_top = -192.0
+offset_right = -85.964966
+offset_bottom = 180.41501
+grow_horizontal = 0
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("1_fb61i")
 expand_mode = 1
 
-[node name="InnerCard" type="TextureRect" parent="Card Layer/Card" unique_id=1783633529]
+[node name="InnerCard" type="TextureRect" parent="Card Layer/Card" unique_id=1789848145]
 self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -254,16 +1196,205 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -261.0526
-offset_top = -146.36842
-offset_right = 261.05267
-offset_bottom = 148.36841
+offset_left = -256.0
+offset_top = -192.3175
+offset_right = 256.0
+offset_bottom = 192.3175
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.93, 0.95)
+scale = Vector2(0.94, 0.92)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("1_fb61i")
 expand_mode = 1
+
+[node name="OuterCard" type="TextureRect" parent="Card Layer/Card" unique_id=1940762476]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -192.3175
+offset_right = 256.0
+offset_bottom = 192.3175
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.06, 1.07)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="SongCoverBG" type="ColorRect" parent="Card Layer/Card" unique_id=1962782437]
+material = SubResource("ShaderMaterial_4pjow")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 15.0
+offset_top = 9.0
+offset_right = -17.0
+offset_bottom = 180.0
+grow_horizontal = 2
+color = Color(1, 0.13999999, 0.13999999, 1)
+
+[node name="SongCoverBG2" type="ColorRect" parent="Card Layer/Card/SongCoverBG" unique_id=848913783]
+self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = 171.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongCoverBG" type="ColorRect" parent="Card Layer/Card/SongCoverBG" unique_id=808033835]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.067032486, 0.01012502, 0.18055853, 1)
+
+[node name="SongCover" type="TextureRect" parent="Card Layer/Card" unique_id=12259877]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_top = 27.0
+offset_right = 70.0
+offset_bottom = 167.0
+grow_horizontal = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_kjqc2")
+expand_mode = 1
+
+[node name="Level Difficulty Container" type="ColorRect" parent="Card Layer/Card" unique_id=851627186]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.51752
+offset_top = -176.41501
+offset_right = 240.48248
+offset_bottom = -128.41501
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.09411765, 0.2, 1)
+
+[node name="Label" type="Label" parent="Card Layer/Card/Level Difficulty Container" unique_id=1172279398]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_fb61i")
+theme_override_font_sizes/font_size = 22
+text = "Level Difficulty"
+vertical_alignment = 1
+
+[node name="LevelDifficultyLabel" type="Label" parent="Card Layer/Card/Level Difficulty Container" unique_id=928526499]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_43kdc")
+theme_override_font_sizes/font_size = 22
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Note Speed Container" type="ColorRect" parent="Card Layer/Card" unique_id=2034165641]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.51752
+offset_top = -120.41501
+offset_right = 240.48248
+offset_bottom = -72.41501
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.094000004, 0.2, 0)
+
+[node name="ColorRect" type="TextureRect" parent="Card Layer/Card/Note Speed Container" unique_id=1799107652]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 411.0
+offset_right = 481.0
+offset_bottom = 48.0
+texture = ExtResource("2_kjqc2")
+expand_mode = 1
+
+[node name="LevelDifficultyLabel" type="Label" parent="Card Layer/Card/Note Speed Container/ColorRect" unique_id=655268756]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -13.5
+offset_top = -14.0
+offset_right = 13.5
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_43kdc")
+theme_override_font_sizes/font_size = 22
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Note Speed Label" type="ColorRect" parent="Card Layer/Card/Note Speed Container" unique_id=1339052373]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.5
+offset_top = -48.0
+offset_right = -45.5
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.09411765, 0.2, 1)
+
+[node name="Label" type="Label" parent="Card Layer/Card/Note Speed Container/Note Speed Label" unique_id=2138113840]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_fb61i")
+theme_override_font_sizes/font_size = 22
+text = "Note Speed"
+vertical_alignment = 1
 
 [node name="CRT" type="ColorRect" parent="Card Layer" unique_id=1689443216]
 material = SubResource("ShaderMaterial_dqfgh")
@@ -275,7 +1406,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2045728073]
-layer = 5
+layer = -2
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=2039445429]
 layout_mode = 3
@@ -288,11 +1419,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 90.0
+offset_right = 90.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_g7hi4")
-opacity_strength = 0.465
-selected_index = -1
+opacity_strength = 0.33
+spacing = 38.64
+selected_index = 3
 position_offset_node = NodePath("CarouselOffset")
 
 [node name="CarouselOffset" type="Control" parent="CanvasLayer/Control/SongCarousel" unique_id=1102467072]
@@ -301,15 +1435,15 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 192.0
-offset_top = 278.43994
+offset_top = -110.83969
 offset_right = 192.00012
-offset_bottom = 278.43994
+offset_bottom = -110.83972
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0, 0.5)
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1072397327]
-modulate = Color(1, 1, 1, 0.9999999)
+[node name="Button" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1369886402]
+modulate = Color(1, 1, 1, 0.01)
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -321,189 +1455,517 @@ offset_right = -192.00012
 offset_bottom = -232.88
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.9999999, 0.9999999)
+scale = Vector2(0.25, 0.25)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=499183147]
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=1648630020]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
 
-[node name="Button2" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=636088039]
-modulate = Color(1, 1, 1, 0.5350001)
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=1145884050]
+self_modulate = Color(0.8124023, 0.5293587, 0.3377531, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=1065194998]
+material = SubResource("ShaderMaterial_uhd87")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=1798685154]
+material = SubResource("ShaderMaterial_f72t2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=1522787081]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1309163587]
+modulate = Color(1, 1, 1, 0.34)
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -192.0
-offset_top = -207.88
+offset_top = -194.24
 offset_right = -192.00012
-offset_bottom = -116.76001
+offset_bottom = -103.12013
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.7500001, 0.7500001)
+scale = Vector2(0.5, 0.5)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=1943138654]
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=1448476128]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
 
-[node name="Button3" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=181127137]
-modulate = Color(1, 1, 1, 0.070000015)
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=2033799108]
+self_modulate = Color(0.12225223, 0.12225223, 0.12225223, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=553186670]
+material = SubResource("ShaderMaterial_hcp02")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=1137427142]
+material = SubResource("ShaderMaterial_fb61i")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=2039198216]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1712112975]
+modulate = Color(1, 1, 1, 0.67)
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -192.0
-offset_top = -91.76001
+offset_top = -64.48013
 offset_right = -192.00012
-offset_bottom = -0.6400757
+offset_bottom = 26.63974
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.5000001, 0.5000001)
+scale = Vector2(0.75, 0.75)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=1345362757]
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=697514902]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
 
-[node name="Button4" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1887906282]
-modulate = Color(1, 1, 1, 3.1263514e-10)
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=819095531]
+self_modulate = Color(0.10274462, 0.007731394, 0.25652745, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=1139827166]
+material = SubResource("ShaderMaterial_kjqc2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=738389193]
+material = SubResource("ShaderMaterial_ekrlx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=612706384]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1165216147]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -192.0
-offset_top = 24.359924
+offset_top = 65.279755
 offset_right = -192.00012
-offset_bottom = 115.47992
+offset_bottom = 156.39963
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.25000006, 0.25000006)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=1010561434]
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=525014697]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
 
-[node name="Button5" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=304861766]
-modulate = Color(1, 1, 1, 7.8722764e-11)
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=1238340733]
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=1583672273]
+material = SubResource("ShaderMaterial_kjqc2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=131900699]
+material = SubResource("ShaderMaterial_27b1o")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=94043886]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button5" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1399859]
+modulate = Color(1, 1, 1, 0.67)
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -192.0
-offset_top = 140.47992
+offset_top = 195.03961
 offset_right = -192.00012
-offset_bottom = 231.59985
+offset_bottom = 286.1595
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.10000002, 0.10000002)
+scale = Vector2(0.75, 0.75)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=332443568]
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=101973564]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
 
-[node name="Button6" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1815236450]
-modulate = Color(1, 1, 1, 1.9847644e-11)
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=1019335577]
+self_modulate = Color(0.8492183, 0.40953684, 0.3606833, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=445170327]
+material = SubResource("ShaderMaterial_kjqc2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=344257060]
+material = SubResource("ShaderMaterial_hbsud")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=1213138769]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button6" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1038834826]
+modulate = Color(1, 1, 1, 0.34)
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -192.0
-offset_top = 256.59985
+offset_top = 324.7995
 offset_right = -192.00012
-offset_bottom = 347.7201
+offset_bottom = 415.91937
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.10000002, 0.10000002)
+scale = Vector2(0.5, 0.5)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=1167453035]
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=1268613994]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-
-[node name="Button7" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1630923136]
-modulate = Color(1, 1, 1, 5.0654897e-12)
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -192.0
-offset_top = 372.7201
-offset_right = -192.00012
-offset_bottom = 463.8401
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.10000002, 0.10000002)
+scale = Vector2(1.05, 1.3)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button7" unique_id=1931864445]
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=1204611423]
+self_modulate = Color(0, 0.42405528, 0.31185877, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
 
-[node name="Button8" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=395394467]
-modulate = Color(1, 1, 1, 1.2993299e-12)
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=1570367039]
+material = SubResource("ShaderMaterial_y1hkt")
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -192.0
-offset_top = 488.8401
-offset_right = -192.00012
-offset_bottom = 579.9601
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.10000001, 0.10000001)
-pivot_offset_ratio = Vector2(0.5, 0.5)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button8" unique_id=2078817489]
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=412791658]
+material = SubResource("ShaderMaterial_jahwt")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=283829765]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=780756017]
+layer = -3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2" unique_id=1775689252]
+material = SubResource("ShaderMaterial_43kdc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1252043456]
+environment = SubResource("Environment_g7hi4")
