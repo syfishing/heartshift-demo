@@ -30,7 +30,7 @@ movie_writer/movie_file="C:/Users/Haseeb/Active Projects/heartshift-demo/Recordi
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg", "res://addons/richtext2/plugin.cfg")
 
 [input]
 
@@ -73,3 +73,7 @@ rendering_device/driver.windows="d3d12"
 textures/vram_compression/import_etc2_astc=true
 anti_aliasing/quality/msaa_2d=1
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+
+[richer_text_label]
+
+fonts={}

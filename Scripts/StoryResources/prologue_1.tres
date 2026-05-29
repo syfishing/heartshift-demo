@@ -1,0 +1,125 @@
+[gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://coud6c7s687hj"]
+
+[ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="1_3q5ma"]
+[ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_o440j"]
+[ext_resource type="AudioStream" uid="uid://epyjnyvbck2i" path="res://Audio/Ambient/wavyambient_1.wav" id="3_o440j"]
+[ext_resource type="AudioStream" uid="uid://c8r6861xmn7dk" path="res://Audio/SFX/clack.wav" id="3_qnqkv"]
+[ext_resource type="Script" uid="uid://sor5vrd66ykx" path="res://Scripts/DataElements/Story/music.gd" id="4_miifq"]
+[ext_resource type="Script" uid="uid://cfhlk8gx4pq4t" path="res://Scripts/DataElements/Story/cutscene.gd" id="5_0xxu5"]
+[ext_resource type="VideoStream" uid="uid://bqghcssu5di2t" path="res://Assets/Backgrounds/wavymenubg1.ogv" id="6_6xd5o"]
+[ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="7_dnpw8"]
+[ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="9_ddhgx"]
+
+[sub_resource type="Gradient" id="Gradient_ijre4"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.014925373, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.49411765, 0.49411765, 0.49411765, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u2tva"]
+gradient = SubResource("Gradient_ijre4")
+
+[sub_resource type="Resource" id="Resource_ijre4"]
+script = ExtResource("1_3q5ma")
+id = "???"
+name = "???"
+color = Color(1, 1, 1, 1)
+poses = Dictionary[String, Texture2D]({
+"invisible": SubResource("GradientTexture2D_u2tva")
+})
+default_pose = "invisible"
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_lqf37"]
+script = ExtResource("4_miifq")
+audio = ExtResource("3_o440j")
+metadata/_custom_type_script = "uid://sor5vrd66ykx"
+
+[sub_resource type="Resource" id="Resource_lyobt"]
+script = ExtResource("5_0xxu5")
+video = ExtResource("6_6xd5o")
+repeat = true
+metadata/_custom_type_script = "uid://cfhlk8gx4pq4t"
+
+[sub_resource type="Resource" id="Resource_3ine8"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "..."
+typing_speed = 0.8
+uninterruptible = true
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_u2tva"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "...?"
+uninterruptible = true
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_1g5uw"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "Welcome."
+typing_speed = 0.5
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_e2agj"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "You have arrived at the beginning of this reality, and so have i."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_xw1pu"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "...Though i know a lot about this place, i do not know everything that awaits us."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_o6uit"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "Me and you both are observers of this reality and it's narrative. You are [wave]'The Audience of One'[/wave], yet my name remains unknown at this point of the story."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_jlhv0"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "..."
+typing_speed = 0.8
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_cvj6d"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "...It is your task to stabilize this dreamy reality to prevent a Nightmare-state from occurring."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ov53a"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "It won't be long until the narrative begins, however..."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_2f7h2"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "[wave]I need you to give me your best, alright?[/wave]"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ntf3o"]
+script = ExtResource("7_dnpw8")
+character_id = "???"
+text = "Dream on."
+typing_speed = 1.2
+uninterruptible = true
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_mun78"]
+script = ExtResource("4_miifq")
+audio = ExtResource("3_qnqkv")
+metadata/_custom_type_script = "uid://sor5vrd66ykx"
+
+[resource]
+script = ExtResource("9_ddhgx")
+events = Array[ExtResource("2_o440j")]([SubResource("Resource_lqf37"), SubResource("Resource_lyobt"), SubResource("Resource_3ine8"), SubResource("Resource_u2tva"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_jlhv0"), SubResource("Resource_cvj6d"), SubResource("Resource_ov53a"), SubResource("Resource_2f7h2"), SubResource("Resource_ntf3o"), SubResource("Resource_mun78")])
+characters = Array[ExtResource("1_3q5ma")]([SubResource("Resource_ijre4")])
+metadata/_custom_type_script = "uid://b6hjkup5kcs0g"

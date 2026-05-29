@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://ue1tfqe3fxfc"]
+
+[ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="1_ixk1a"]
+[ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_3nus8"]
+[ext_resource type="Script" uid="uid://cfhlk8gx4pq4t" path="res://Scripts/DataElements/Story/cutscene.gd" id="3_1l3fi"]
+[ext_resource type="VideoStream" uid="uid://bqghcssu5di2t" path="res://Assets/Backgrounds/wavymenubg1.ogv" id="4_vncb0"]
+[ext_resource type="AudioStream" uid="uid://epyjnyvbck2i" path="res://Audio/Ambient/wavyambient_1.wav" id="5_ldyjt"]
+[ext_resource type="Script" uid="uid://sor5vrd66ykx" path="res://Scripts/DataElements/Story/music.gd" id="6_ioyua"]
+[ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="7_46udu"]
+[ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="9_bgaal"]
+
+[sub_resource type="Gradient" id="Gradient_6l2hg"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.0074626864, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vr2bo"]
+gradient = SubResource("Gradient_6l2hg")
+
+[sub_resource type="Resource" id="Resource_ijre4"]
+script = ExtResource("1_ixk1a")
+id = "???"
+name = "???"
+color = Color(1, 1, 1, 1)
+poses = Dictionary[String, Texture2D]({
+"invisible": SubResource("GradientTexture2D_vr2bo")
+})
+default_pose = "invisible"
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_1g5uw"]
+script = ExtResource("3_1l3fi")
+video = ExtResource("4_vncb0")
+repeat = true
+metadata/_custom_type_script = "uid://cfhlk8gx4pq4t"
+
+[sub_resource type="Resource" id="Resource_u2tva"]
+script = ExtResource("6_ioyua")
+audio = ExtResource("5_ldyjt")
+metadata/_custom_type_script = "uid://sor5vrd66ykx"
+
+[sub_resource type="Resource" id="Resource_lqf37"]
+script = ExtResource("7_46udu")
+character_id = "???"
+text = "..."
+typing_speed = 0.8
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_vr2bo"]
+script = ExtResource("7_46udu")
+character_id = "???"
+text = "You successfully stabilized our reality- for now at least."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_lyobt"]
+script = ExtResource("7_46udu")
+character_id = "???"
+text = "From here on out the narrative begins... or has it already begun?"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_e2agj"]
+script = ExtResource("7_46udu")
+character_id = "???"
+text = "I suppose you are ready to face what might lay ahead."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ljurw"]
+script = ExtResource("7_46udu")
+character_id = "???"
+text = "But is she?"
+typing_speed = 0.7
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[resource]
+script = ExtResource("9_bgaal")
+events = Array[ExtResource("2_3nus8")]([SubResource("Resource_1g5uw"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_vr2bo"), SubResource("Resource_lyobt"), SubResource("Resource_e2agj"), SubResource("Resource_ljurw")])
+characters = Array[ExtResource("1_ixk1a")]([SubResource("Resource_ijre4")])
+metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
