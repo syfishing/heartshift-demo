@@ -30,7 +30,7 @@ movie_writer/movie_file="C:/Users/Haseeb/Active Projects/heartshift-demo/Recordi
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg", "res://addons/richtext2/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
 [input]
 

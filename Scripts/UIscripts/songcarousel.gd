@@ -41,7 +41,8 @@ func _process(delta: float) -> void:
 		child.scale = lerp(child.scale, Vector2.ONE * target_scale, smoothing_speed * delta)
 		
 		#opacity based on dist
-		var target_opacity: float = 1.0 - (opacity_strength * abs(distance))
+		var target_opacity: float = 1.0 - (opacity_strength * abs(distance**2))
+		
 		target_opacity = clamp(target_opacity, 0.0, 1.0)
 		child.modulate.a = lerp(child.modulate.a, target_opacity, smoothing_speed * delta)
 		
@@ -54,8 +55,12 @@ func _process(delta: float) -> void:
 	
 	#position_offset_node.position.x = lerp(position_offset_node.position.x, target_x, smoothing_speed * delta)
 	position_offset_node.position.y = lerp(position_offset_node.position.y, target_y, smoothing_speed * delta)
-	
-	
-	
 
-	pass
+func _on_up_button_pressed() -> void:
+	selected_index -= 1
+	pass # Replace with function body.
+
+
+func _on_down_button_pressed() -> void:
+	selected_index += 1
+	pass # Replace with function body.
