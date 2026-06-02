@@ -3,7 +3,7 @@ The demo version for HEARTSHIFT- a rhythm-visual novel hybrid game about a dream
 
 ## Important note
 This is a team project performed by 4 people: Syfish, Haseeb, Jolly and Spooky.
-Jolly and Spooky haven't worked on the project yet however.
+Spooky has not worked on the project yet however.
 This project is submitted to https://macondo.hackclub.com too, currently with separate projects for every team member until macondo has implemented team projects.
 
 ## Story/writing note
