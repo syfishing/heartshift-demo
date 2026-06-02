@@ -1,0 +1,1766 @@
+[gd_scene format=3 uid="uid://dctx1rfjgt7i4"]
+
+[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="1_fb61i"]
+[ext_resource type="Script" uid="uid://bnyw0wruhdhva" path="res://Scripts/UIscripts/songcarousel.gd" id="2_g7hi4"]
+[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="2_kjqc2"]
+[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="3_43kdc"]
+[ext_resource type="Texture2D" uid="uid://dspben6w88v6d" path="res://Assets/UIAssets/SongCovers/pixel-cover-240x240.png" id="4_kjqc2"]
+[ext_resource type="Script" uid="uid://b2fo7dpaqhluj" path="res://Prefabs/Scenes/carouselitem.gd" id="6_hcp02"]
+
+[sub_resource type="Shader" id="Shader_8lxbd"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+// Full-screen post-process: reads the already-rendered frame. :contentReference[oaicite:1]{index=1}
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;
+
+// --- Color controls ---
+uniform float brightness : hint_range(0.0, 2.0) = 1.02;
+uniform float contrast   : hint_range(0.0, 2.0) = 1.08;
+uniform float saturation : hint_range(0.0, 2.0) = 1.10;
+uniform float gamma      : hint_range(0.2, 3.0) = 1.05;
+uniform float source_softness : hint_range(0.0, 2.0) = 0.35;
+
+// --- CRT geometry / lens ---
+uniform float curvature     : hint_range(0.0, 0.40) = 0.14;
+uniform float corner_soften : hint_range(0.0, 0.20) = 0.06;
+uniform float vignette      : hint_range(0.0, 1.00) = 0.38;
+
+// --- Scanlines / phosphor ---
+uniform float scanline_strength : hint_range(0.0, 2.0) = 0.95;
+uniform float scanline_density  : hint_range(0.5, 3.0) = 1.15; // 1.0 = native-ish
+uniform float interlace_strength: hint_range(0.0, 1.0) = 0.20;
+
+// Shadow mask (RGB triads). Turn down if you hate the “screen door”.
+uniform float mask_strength : hint_range(0.0, 1.0) = 0.22;
+uniform float mask_scale    : hint_range(0.5, 4.0) = 1.0; // bigger = chunkier triads
+
+// --- VHS/VCR artifacts ---
+uniform float chroma_offset_px : hint_range(0.0, 6.0) = 1.6; // RGB split in pixels
+uniform float luma_smear_px    : hint_range(0.0, 8.0) = 2.2; // horizontal smear
+uniform float jitter_px        : hint_range(0.0, 8.0) = 1.8; // per-line horizontal jitter
+uniform float wobble_px        : hint_range(0.0, 10.0) = 1.5; // slow wave wobble
+
+uniform float tape_noise       : hint_range(0.0, 1.0) = 0.22; // grain + specks
+uniform float tape_lines       : hint_range(0.0, 1.0) = 0.35; // horizontal “tracking” lines
+
+uniform float roll_speed       : hint_range(0.0, 1.5) = 0.10; // vertical roll bar speed
+uniform float roll_strength    : hint_range(0.0, 0.6) = 0.15; // roll bar intensity
+
+// --- Bloom-ish glow (cheap) ---
+uniform float glow_strength  : hint_range(0.0, 2.0) = 0.25;
+uniform float glow_threshold : hint_range(0.0, 1.0) = 0.65;
+
+// TIME is a built-in global in CanvasItem shaders. :contentReference[oaicite:2]{index=2}
+float hash11(float n) {
+	return fract(sin(n) * 43758.5453123);
+}
+
+float hash12(vec2 p) {
+	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+vec2 crt_curve(vec2 uv, float k) {
+	// Barrel distortion style curve.
+	vec2 cc = uv * 2.0 - 1.0;
+	vec2 d  = cc * cc;
+	cc *= 1.0 + k * vec2(d.y, d.x);
+	return cc * 0.5 + 0.5;
+}
+
+float inside01(vec2 uv) {
+	// 1.0 if uv in [0..1], else 0.0
+	return step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+}
+
+vec3 apply_color_controls(vec3 c) {
+	// brightness
+	c *= brightness;
+
+	// contrast around 0.5
+	c = mix(vec3(0.5), c, contrast);
+
+	// saturation
+	float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+	c = mix(vec3(l), c, saturation);
+
+	// gamma-ish
+	c = pow(max(c, vec3(0.0)), vec3(1.0 / max(gamma, 0.0001)));
+	return c;
+}
+
+vec3 triad_mask(vec2 frag_xy) {
+	// Simple RGB triad mask across X.
+	float x = floor(frag_xy.x / max(mask_scale, 0.0001));
+	float m = mod(x, 3.0);
+	// Slightly tinted triads
+	if (m < 1.0) return vec3(1.10, 0.85, 0.85);
+	if (m < 2.0) return vec3(0.85, 1.10, 0.85);
+	return vec3(0.85, 0.85, 1.10);
+}
+
+vec3 sample_screen(vec2 uv) {
+	// Use textureLod at LOD 0 like the docs show. :contentReference[oaicite:3]{index=3}
+	return textureLod(screen_texture, clamp(uv, vec2(0.0), vec2(1.0)), source_softness).rgb;
+}
+
+void fragment() {
+	vec2 px   = SCREEN_PIXEL_SIZE;
+	vec2 res  = 1.0 / px;
+	float t   = TIME;
+
+	// Start from screen UV
+	vec2 uv = SCREEN_UV;
+
+	// --- VHS line jitter (per scanline) ---
+	float y_line = floor(uv.y * res.y);
+	float jitter = (hash11(y_line + floor(t * 15.0) * 37.0) - 0.5) * 2.0;
+	uv.x += jitter * (jitter_px * px.x);
+
+	// Slow wobble
+	uv.x += sin(uv.y * 8.0 + t * 1.2) * (wobble_px * px.x);
+
+	// CRT curve
+	vec2 cuv = crt_curve(uv, curvature);
+	float in_bounds = inside01(cuv);
+
+	// Rounded corners (soft clip)
+	vec2 d = abs(cuv - 0.5) * 2.0;      // 0 at center, ~1 at edges
+	float edge = max(d.x, d.y);
+
+	// 1 in center, fades to 0 near edges
+	float corner_mask = 1.0 - smoothstep(1.0 - corner_soften, 1.0, edge);
+
+
+	// --- Chromatic aberration / VHS chroma shift ---
+	vec2 chroma = vec2(chroma_offset_px * px.x, 0.0);
+	float r = sample_screen(cuv + chroma).r;
+	float g = sample_screen(cuv).g;
+	float b = sample_screen(cuv - chroma).b;
+	vec3 col = vec3(r, g, b);
+
+	// --- Luma smear (horizontal) ---
+	float smear = luma_smear_px * px.x;
+	vec3 s1 = sample_screen(cuv + vec2(smear, 0.0));
+	vec3 s2 = sample_screen(cuv - vec2(smear, 0.0));
+	col = mix(col, (col + s1 + s2) / 3.0, 0.35);
+
+	// --- Scanlines ---
+	float scan = sin((cuv.y * res.y) * 3.14159 * scanline_density);
+	float scan_mul = 1.0 - scanline_strength * (0.5 - 0.5 * scan); // darker troughs
+	col *= scan_mul;
+
+	// --- Interlacing (alternate rows “flicker”) ---
+	float field = mod(floor(FRAGCOORD.y) + floor(t * 60.0), 2.0);
+	col *= 1.0 - interlace_strength * field * 0.10;
+
+	// --- Rolling tracking bar ---
+	float roll_y = fract(t * max(roll_speed, 0.0001));
+	float dist = abs(cuv.y - roll_y);
+	float bar = smoothstep(0.20, 0.0, dist); // wide soft bar
+	col += bar * roll_strength * vec3(0.12, 0.12, 0.12);
+
+	// --- Tape lines (random horizontal streaks) ---
+	float line_n = hash11(y_line * 0.7 + floor(t * 12.0) * 11.0);
+	float line = smoothstep(0.985, 1.0, line_n) * tape_lines;
+	col += line * vec3(0.18, 0.18, 0.18);
+
+	// --- Grain / specks ---
+	float n = hash12(FRAGCOORD.xy + vec2(t * 120.0, t * 90.0));
+	float grain = (n - 0.5) * 2.0;
+	col += grain * (tape_noise * 0.06);
+
+	// Occasional white specks
+	float speck = smoothstep(0.995, 1.0, hash12(FRAGCOORD.xy * 0.73 + t * 40.0));
+	col += speck * (tape_noise * 0.25);
+
+	// --- Cheap glow (cross blur on brights) ---
+	vec3 c0 = col;
+	vec3 cx1 = sample_screen(cuv + vec2(px.x, 0.0));
+	vec3 cx2 = sample_screen(cuv - vec2(px.x, 0.0));
+	vec3 cy1 = sample_screen(cuv + vec2(0.0, px.y));
+	vec3 cy2 = sample_screen(cuv - vec2(0.0, px.y));
+	vec3 blur = (c0 + cx1 + cx2 + cy1 + cy2) / 5.0;
+	float br = dot(blur, vec3(0.2126, 0.7152, 0.0722));
+	vec3 glow = max(blur - vec3(glow_threshold), vec3(0.0));
+	col += glow * glow_strength * (0.5 + 0.5 * br);
+
+	// --- Vignette ---
+	vec2 v = cuv - 0.5;
+	float vig = smoothstep(0.9, 0.2, dot(v, v) * 2.2);
+	col *= mix(1.0 - vignette, 1.0, vig);
+
+	// --- Shadow mask triads ---
+	vec3 mask = triad_mask(FRAGCOORD.xy);
+	col *= mix(vec3(1.0), mask, mask_strength);
+
+	// Color grading last
+	col = apply_color_controls(col);
+
+	// Apply bounds + rounded corners (outside = black)
+	col *= in_bounds * corner_mask;
+
+	COLOR = vec4(col, 1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqfgh"]
+shader = SubResource("Shader_8lxbd")
+shader_parameter/brightness = 1.4950000710125
+shader_parameter/contrast = 0.910000043225
+shader_parameter/saturation = 2.0
+shader_parameter/gamma = 1.17200004915023
+shader_parameter/source_softness = 0.250000011875
+shader_parameter/curvature = 0.030000001425
+shader_parameter/corner_soften = 0.0400000019
+shader_parameter/vignette = 0.0
+shader_parameter/scanline_strength = 0.0
+shader_parameter/scanline_density = 0.5
+shader_parameter/interlace_strength = 0.0
+shader_parameter/mask_strength = 0.0850000040375
+shader_parameter/mask_scale = 0.5
+shader_parameter/chroma_offset_px = 1.0000000475
+shader_parameter/luma_smear_px = 0.0
+shader_parameter/jitter_px = 0.0
+shader_parameter/wobble_px = 0.78000003705
+shader_parameter/tape_noise = 0.22
+shader_parameter/tape_lines = 0.1050000049875
+shader_parameter/roll_speed = 0.1
+shader_parameter/roll_strength = 0.15
+shader_parameter/glow_strength = 0.25
+shader_parameter/glow_threshold = 0.65
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jahwt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y1hkt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xxws0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uabde"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4pjow"]
+
+[sub_resource type="Shader" id="Shader_jahwt"]
+code = "shader_type canvas_item;
+
+
+uniform vec2 resolution;
+uniform vec2 mouse_pos;
+uniform float speed_multiplier = 1.0;
+uniform bool enable_background = true;
+uniform vec4 background_color = vec4(0.0, 0.0, 0.0, 1.0); 
+
+
+float No(float x, vec2 T){
+	return fract(9667.5 * sin(7983.75 * (x + T.x) + 297. + T.y));
+}
+vec4 Rancol(vec2 x, vec2 T){
+	return vec4(No(x.x + x.y, T), No(x.x*x.x + x.y, T), No(x.x*x.x + x.y*x.y, T), 1.0);
+}
+vec4 grid(vec2 uv, float t, vec2 T){
+	vec4 C1 = vec4(0.0);
+	vec4 C2 = vec4(0.0);
+	uv *= 20.0;
+	vec2 id = vec2(floor(uv.x), floor(uv.y));
+	uv.y += (5.0 * No(id.x * id.x, T) + 1.0) * t * 0.04;
+	uv.y += No(id.x, T);
+	id = vec2(floor(uv.x), floor(uv.y));
+	uv = fract(uv) - 0.5;
+	float d = length(uv);
+	float t_local = t * (1.0 * No(id.x + id.y, T));
+	float r = 0.1 * sin(t_local + sin(t_local) * 0.5) + 0.3;
+	float r1 = 0.07 * sin(2.0 * t_local + sin(2.0 * t_local) * 0.5) + 0.1 * No(id.x + id.y, T);
+	if (d < r && d > r - 0.1) {
+		C2 = 0.5 * Rancol(id + vec2(1.0), T) + vec4(0.5);
+		C2 *= smoothstep(r - 0.12, r, d);
+		C2 *= 1.0 - smoothstep(r - 0.05, r + 0.12, d);
+	}
+	if (d < r1) {
+		C2 = 0.5 * Rancol(id + vec2(1.0), T) + vec4(0.5);
+	}
+	return C2 + C1;
+}
+
+
+void fragment() {
+	vec2 uv = FRAGCOORD.xy / resolution.xy;
+	uv.y *= resolution.y / resolution.x;
+	float t = TIME * speed_multiplier;
+    vec2 T = mouse_pos / resolution;
+	vec4 final_color = grid(uv, t, T);
+
+    if (enable_background) {
+        final_color += background_color;
+    }
+
+    COLOR = final_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pjow"]
+shader = SubResource("Shader_jahwt")
+shader_parameter/resolution = Vector2(700, 200)
+shader_parameter/mouse_pos = Vector2(0, 0)
+shader_parameter/speed_multiplier = 1.0
+shader_parameter/enable_background = false
+shader_parameter/background_color = Vector4(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_hcp02"]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+uniform vec2 mask_scale = vec2(1.0, 1.0);
+uniform vec2 mask_offset = vec2(0.0, 0.0);
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+
+    vec2 mask_uv = (UV - 0.5) / mask_scale + 0.5 + mask_offset;
+    float mask = texture(mask_texture, mask_uv).a;
+
+    // Zero the mask anywhere we've sampled outside the texture.
+    vec2 inside = step(vec2(0.0), mask_uv) * step(mask_uv, vec2(1.0));
+    mask *= inside.x * inside.y;
+
+    color.a *= mask;
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uhd87"]
+shader = SubResource("Shader_hcp02")
+shader_parameter/mask_texture = ExtResource("2_kjqc2")
+shader_parameter/mask_scale = Vector2(1, 1)
+shader_parameter/mask_offset = Vector2(0, 0)
+
+[sub_resource type="SystemFont" id="SystemFont_fb61i"]
+font_names = PackedStringArray("Fira Code")
+
+[sub_resource type="SystemFont" id="SystemFont_43kdc"]
+font_names = PackedStringArray("Fira Code")
+font_stretch = 200
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uhd87"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ekrlx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dqfgh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_27b1o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hbsud"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fb61i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_43kdc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kjqc2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hcp02"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f72t2"]
+
+[sub_resource type="Shader" id="Shader_f72t2"]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/waveforms
+This shader is under CC0 license. Feel free to use, improve and 
+change this shader according to your needs and consider sharing 
+the modified result to godotshaders.com.
+*/
+shader_type canvas_item;
+render_mode blend_premul_alpha;
+uniform int lines = 80; // Amount of lines the waveform is build up of
+uniform float amplitude : hint_range(0.0, 1.0) = 0.9; // Height of the wave
+uniform float frequency : hint_range(0.0, 0.5) = 0.1; // Set a lower value for a smoother wave
+uniform float intensity : hint_range(0.0, 1.0) = 0.75; // Lower values creates gaps in the wave while higher make the wave more solid
+uniform float line_sharpness : hint_range(0.0, 1.0) = 0.5; // Fuzzy edges on each line
+uniform float line_size : hint_range(0.0, 1.0) = 0.8; // Thickness of the lines
+uniform float fade : hint_range(0.0, 0.5) = 0.1; // Blurres the top and bottom of the lines
+uniform float rest_size : hint_range(-5., 5.) = -0.2; // The size of the lines when the line is not animating, i.e at value 0. Tweak if Fade is used.
+uniform float edge : hint_range(0.0, 0.5) = 0.05; // How close to the edges should the animation beginn
+uniform float speed = 0.5; // Speed of wave animation
+uniform vec4 color : source_color = vec4(.8, 0.25, 0.5, 1.0); // Color of wave
+uniform bool dot_matrix = false; 
+uniform int dot_matriz_size = 80;
+uniform bool speech_sim = true; // Toggle to simulate speach. Will create a more erratic movement in the wave
+uniform float speech_intensity : hint_range(0.0, 2.0) = 0.8; // How fast will the speech movement be
+uniform float progress : hint_range(0.0, 1.0) = 1.0; // Use to turn the animation on and off from outside the shader. 0 - off, 1 - on. Can animate values between which will shrink the wave.
+float random(vec2 uv) {
+	return fract(sin(dot(uv.xy,
+	vec2(12.9898,78.233))) * 43758.5453123);
+}
+float noise(vec2 uv) {
+	vec2 uv_index = floor(uv);
+	vec2 uv_fract = fract(uv);
+	// Four corners in 2D of a tile
+	float a = random(uv_index);
+	float b = random(uv_index + vec2(1.0, 0.0));
+	float c = random(uv_index + vec2(0.0, 1.0));
+	float d = random(uv_index + vec2(1.0, 1.0));
+	vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+	return mix(a, b, blur.x) +
+				(c - a) * blur.y * (1.0 - blur.x) +
+				(d - b) * blur.x * blur.y;
+}
+float fbm(vec2 uv) {
+	int octaves = 4;
+	float amp = 0.5;
+	float freq = 4.;
+	float value = 0.0;
+	
+	for(int i = 0; i < octaves; i++) {
+		value += amp * noise(freq * uv - 0.5);
+		amp *= 0.6;
+		freq *= 2.;
+	}
+	return value;
+}
+void fragment()
+{
+	// Some initialising
+	float time = TIME;
+	vec4 c = vec4(vec3(0.0), 1.0);
+	float f_columns = float(lines);
+	
+	// Make some distance to the edges before the animation starts
+	float cutoff = smoothstep(0.0, edge, (round ((UV.x) * (f_columns) ) / f_columns) );
+	cutoff *= 1. - smoothstep(1.-edge, 1.0, (round ((UV.x) * (f_columns) ) / f_columns) );
+	// Speech simulation setup
+	float ss = 1.0;
+	if (speech_sim == true){
+		ss = fbm(vec2(1.0, time * speed * 1.3) * speech_intensity) * 1.5;
+	}
+	
+	// Create the noise that controlls the animation
+	float noise = fbm(vec2( round( (UV.x) * f_columns ) * frequency, time * speed) ) * ss * progress;
+	noise *= cutoff; // Apply edge cutoff
+	
+	// Make wave values based on the noise
+	float wave = smoothstep(1.-intensity, 1.0, noise) * amplitude;
+	wave = wave + (rest_size * 0.2);
+	
+	// Create the lines
+	float line = abs( sin(( f_columns * 3.1416 * UV.x) + 1.5) );
+	line = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), line);
+	
+	// Simulate dot_matrix
+	if (dot_matrix){
+		float dm = abs( sin(( float(dot_matriz_size) * 3.1416 * UV.y) + 1.5) );
+		dm = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), dm);
+		line *= dm;
+	}
+	
+	// Duplicate mask on top an bottom and apply to line
+	float mask = 1.0 - smoothstep(wave, wave + fade, abs(UV.y - 0.5) * 2.);
+	line *= mask;
+	
+	c = vec4(line) * color;
+	
+	// Respect the node's full modulate (RGB tint + alpha), premultiplied
+	c *= COLOR;
+	
+	COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ekrlx"]
+shader = SubResource("Shader_f72t2")
+shader_parameter/lines = 36
+shader_parameter/amplitude = 1.0
+shader_parameter/frequency = 0.1
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 1.0
+shader_parameter/line_size = 1.0
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = 2.0000003325
+shader_parameter/edge = 0.0
+shader_parameter/speed = 0.46
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
+[sub_resource type="Shader" id="Shader_dqfgh"]
+code = "shader_type canvas_item;
+uniform int columns = 80;
+uniform int rows = 80;
+uniform float line_width : hint_range(0.0, 0.5) = 0.05;
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true;
+
+void fragment() {
+	vec4 modulate = COLOR; // node modulate/self_modulate (incl. inherited parent modulate)
+
+	vec2 cell = vec2(float(columns), float(rows));
+	vec2 grid_uv = fract(UV * cell + 0.5);
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+		COLOR.a *= modulate.a;   // fade the lines with the node's opacity
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hbsud"]
+shader = SubResource("Shader_dqfgh")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.2378, 0.31194332, 0.58, 0.5764706)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="SystemFont" id="SystemFont_g7hi4"]
+font_names = PackedStringArray("Cascadia Code")
+
+[sub_resource type="Animation" id="Animation_jahwt"]
+resource_name = "Activate"
+
+[sub_resource type="Animation" id="Animation_y1hkt"]
+resource_name = "Deactivate"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Wave:material:shader_parameter/rest_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0000003325, 5.0]
+}
+
+[sub_resource type="Animation" id="Animation_hcp02"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Wave:material:shader_parameter/rest_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0000003325]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xxws0"]
+_data = {
+&"Activate": SubResource("Animation_jahwt"),
+&"Deactivate": SubResource("Animation_y1hkt"),
+&"RESET": SubResource("Animation_hcp02")
+}
+
+[sub_resource type="Shader" id="Shader_fb61i"]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/waveforms
+This shader is under CC0 license. Feel free to use, improve and 
+change this shader according to your needs and consider sharing 
+the modified result to godotshaders.com.
+*/
+shader_type canvas_item;
+render_mode blend_premul_alpha;
+uniform int lines = 80; // Amount of lines the waveform is build up of
+uniform float amplitude : hint_range(0.0, 1.0) = 0.9; // Height of the wave
+uniform float frequency : hint_range(0.0, 0.5) = 0.1; // Set a lower value for a smoother wave
+uniform float intensity : hint_range(0.0, 1.0) = 0.75; // Lower values creates gaps in the wave while higher make the wave more solid
+uniform float line_sharpness : hint_range(0.0, 1.0) = 0.5; // Fuzzy edges on each line
+uniform float line_size : hint_range(0.0, 1.0) = 0.8; // Thickness of the lines
+uniform float fade : hint_range(0.0, 0.5) = 0.1; // Blurres the top and bottom of the lines
+uniform float rest_size : hint_range(-2., 2.) = -0.2; // The size of the lines when the line is not animating, i.e at value 0. Tweak if Fade is used.
+uniform float edge : hint_range(0.0, 0.5) = 0.05; // How close to the edges should the animation beginn
+uniform float speed = 0.5; // Speed of wave animation
+uniform vec4 color : source_color = vec4(.8, 0.25, 0.5, 1.0); // Color of wave
+uniform bool dot_matrix = false; 
+uniform int dot_matriz_size = 80;
+uniform bool speech_sim = true; // Toggle to simulate speach. Will create a more erratic movement in the wave
+uniform float speech_intensity : hint_range(0.0, 2.0) = 0.8; // How fast will the speech movement be
+uniform float progress : hint_range(0.0, 1.0) = 1.0; // Use to turn the animation on and off from outside the shader. 0 - off, 1 - on. Can animate values between which will shrink the wave.
+float random(vec2 uv) {
+	return fract(sin(dot(uv.xy,
+	vec2(12.9898,78.233))) * 43758.5453123);
+}
+float noise(vec2 uv) {
+	vec2 uv_index = floor(uv);
+	vec2 uv_fract = fract(uv);
+	// Four corners in 2D of a tile
+	float a = random(uv_index);
+	float b = random(uv_index + vec2(1.0, 0.0));
+	float c = random(uv_index + vec2(0.0, 1.0));
+	float d = random(uv_index + vec2(1.0, 1.0));
+	vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+	return mix(a, b, blur.x) +
+				(c - a) * blur.y * (1.0 - blur.x) +
+				(d - b) * blur.x * blur.y;
+}
+float fbm(vec2 uv) {
+	int octaves = 4;
+	float amp = 0.5;
+	float freq = 4.;
+	float value = 0.0;
+	
+	for(int i = 0; i < octaves; i++) {
+		value += amp * noise(freq * uv - 0.5);
+		amp *= 0.6;
+		freq *= 2.;
+	}
+	return value;
+}
+void fragment()
+{
+	// Some initialising
+	float time = TIME;
+	vec4 c = vec4(vec3(0.0), 1.0);
+	float f_columns = float(lines);
+	
+	// Make some distance to the edges before the animation starts
+	float cutoff = smoothstep(0.0, edge, (round ((UV.x) * (f_columns) ) / f_columns) );
+	cutoff *= 1. - smoothstep(1.-edge, 1.0, (round ((UV.x) * (f_columns) ) / f_columns) );
+	// Speech simulation setup
+	float ss = 1.0;
+	if (speech_sim == true){
+		ss = fbm(vec2(1.0, time * speed * 1.3) * speech_intensity) * 1.5;
+	}
+	
+	// Create the noise that controlls the animation
+	float noise = fbm(vec2( round( (UV.x) * f_columns ) * frequency, time * speed) ) * ss * progress;
+	noise *= cutoff; // Apply edge cutoff
+	
+	// Make wave values based on the noise
+	float wave = smoothstep(1.-intensity, 1.0, noise) * amplitude;
+	wave = wave + (rest_size * 0.2);
+	
+	// Create the lines
+	float line = abs( sin(( f_columns * 3.1416 * UV.x) + 1.5) );
+	line = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), line);
+	
+	// Simulate dot_matrix
+	if (dot_matrix){
+		float dm = abs( sin(( float(dot_matriz_size) * 3.1416 * UV.y) + 1.5) );
+		dm = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), dm);
+		line *= dm;
+	}
+	
+	// Duplicate mask on top an bottom and apply to line
+	float mask = 1.0 - smoothstep(wave, wave + fade, abs(UV.y - 0.5) * 2.);
+	line *= mask;
+	
+	c = vec4(line) * color;
+	
+	// Respect the node's full modulate (RGB tint + alpha), premultiplied
+	c *= COLOR;
+	
+	COLOR = c;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kjqc2"]
+shader = SubResource("Shader_fb61i")
+shader_parameter/lines = 36
+shader_parameter/amplitude = 1.0
+shader_parameter/frequency = 0.1
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 1.0
+shader_parameter/line_size = 1.0
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = 2.0
+shader_parameter/edge = 0.0
+shader_parameter/speed = 0.46
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
+[sub_resource type="Shader" id="Shader_uhd87"]
+code = "shader_type canvas_item;
+uniform int columns = 80;
+uniform int rows = 80;
+uniform float line_width : hint_range(0.0, 0.5) = 0.05;
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true;
+
+void fragment() {
+	vec4 modulate = COLOR; // node modulate/self_modulate (incl. inherited parent modulate)
+
+	vec2 cell = vec2(float(columns), float(rows));
+	vec2 grid_uv = fract(UV * cell + 0.5);
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+		COLOR.a *= modulate.a;   // fade the lines with the node's opacity
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jahwt"]
+shader = SubResource("Shader_uhd87")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.2378, 0.31194332, 0.58, 0.5764706)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="Shader" id="Shader_ekrlx"]
+code = "shader_type canvas_item;
+uniform int columns = 80;
+uniform int rows = 80;
+uniform float line_width : hint_range(0.0, 0.5) = 0.05;
+uniform vec4 line_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform bool draw_outer_border = true;
+
+void fragment() {
+	vec4 modulate = COLOR; // node modulate/self_modulate (incl. inherited parent modulate)
+
+	vec2 cell = vec2(float(columns), float(rows));
+	vec2 grid_uv = fract(UV * cell + 0.5);
+	vec2 dist = min(grid_uv, 1.0 - grid_uv);
+	float half_w = line_width * 0.5;
+	bool on_line = (dist.x < half_w) || (dist.y < half_w);
+
+	if (draw_outer_border) {
+		if (UV.x >= 1.0 - half_w || UV.x <= half_w ||
+			UV.y >= 1.0 - half_w || UV.y <= half_w) {
+			on_line = true;
+		}
+	}
+
+	if (on_line) {
+		COLOR = line_color;
+		COLOR.a *= modulate.a;   // fade the lines with the node's opacity
+	} else {
+		discard;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_27b1o"]
+shader = SubResource("Shader_ekrlx")
+shader_parameter/columns = 36
+shader_parameter/rows = 8
+shader_parameter/line_width = 0.1350000064125
+shader_parameter/line_color = Color(0.2378, 0.31194332, 0.58, 0.5764706)
+shader_parameter/draw_outer_border = false
+
+[sub_resource type="Shader" id="Shader_xxws0"]
+code = "shader_type canvas_item;
+
+uniform vec4 bottom_color: source_color;
+uniform vec4 top_color: source_color;
+
+uniform float beam_distance: hint_range(0.0, 0.3);
+uniform float beam_height: hint_range(0.0, 0.1);
+uniform float beam_width: hint_range(0.0, 0.5);
+uniform int total_phases: hint_range(2, 20, 1);
+
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+
+float noise(float p){
+	float fl = floor(p);
+  float fc = fract(p);
+	return mix(rand(fl), rand(fl + 1.0), fc);
+}
+
+
+float fmod(float x, float y) {
+	return x - floor(x / y) * y;
+}
+
+
+vec4 lerp(vec4 a, vec4 b, float w) {
+	return a + w * (b - a);
+}
+
+
+void fragment() {
+	float t = float(total_phases);
+	float s = 1.0 / t;
+	float d = fmod(UV.y, s);
+	float i = floor(UV.y * t);
+	float ci = i + 1.0;
+	float cit = ci / t;
+	float beam_pos = s - d - beam_distance;
+	float effective_beam_width = beam_width * cit + sqrt(pow(beam_height / 2.0, 2.0) - pow(beam_pos - beam_height / 2.0, 2.0));
+	float beam_x = fmod(TIME * noise(ci) * cit, 1.0);
+	float best_distance = min(abs(beam_x - UV.x), 1.0 - abs(beam_x - UV.x));
+	
+	if (beam_pos >= 0.0 && beam_pos <= beam_height && 
+		best_distance <= effective_beam_width) i++;
+	
+	
+	i = clamp(i, 0.0, t - 1.0);
+	
+	COLOR = lerp(top_color, bottom_color, i / (t - 1.0));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_43kdc"]
+shader = SubResource("Shader_xxws0")
+shader_parameter/bottom_color = Color(0.1653012, 0.05625923, 0.35178638, 1)
+shader_parameter/top_color = Color(0.0058667595, 4.182863e-06, 0.04411248, 1)
+shader_parameter/beam_distance = 0.0790000037525
+shader_parameter/beam_height = 0.0350000016625
+shader_parameter/beam_width = 0.2350000111625
+shader_parameter/total_phases = 5
+
+[sub_resource type="Environment" id="Environment_g7hi4"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 1.0
+glow_strength = 0.55
+glow_bloom = 1.0
+
+[node name="RhythmPlay" type="Node2D" unique_id=1697891486]
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=2128619459]
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer3" unique_id=1533181033]
+material = SubResource("ShaderMaterial_dqfgh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="UpButton" type="Button" parent="CanvasLayer3/CRT" unique_id=1435086624]
+self_modulate = Color(1, 0.5573358, 1, 1)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 248.00003
+offset_top = 10.000008
+offset_right = 332.00003
+offset_bottom = 102.00001
+rotation = -1.5707964
+scale = Vector2(0.5, 0.5)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.5649617, 0.5649616, 0.5649616, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jahwt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_y1hkt")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xxws0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_uabde")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4pjow")
+icon = ExtResource("3_43kdc")
+expand_icon = true
+
+[node name="DownButton" type="Button" parent="CanvasLayer3/CRT" unique_id=1020322984]
+self_modulate = Color(1, 0.5573358, 1, 1)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 248.0
+offset_top = 544.0
+offset_right = 332.0
+offset_bottom = 636.0
+rotation = 1.5707964
+scale = Vector2(0.5, 0.5)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.5649617, 0.5649616, 0.5649616, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jahwt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_y1hkt")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xxws0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_uabde")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4pjow")
+icon = ExtResource("3_43kdc")
+expand_icon = true
+
+[node name="Card Layer" type="CanvasLayer" parent="." unique_id=1661027227]
+layer = 0
+
+[node name="Cursor" type="TextureRect" parent="Card Layer" unique_id=1175217883]
+z_index = 5
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 282.0
+offset_right = -24.0
+offset_bottom = 302.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_43kdc")
+expand_mode = 1
+
+[node name="Card" type="TextureRect" parent="Card Layer" unique_id=1759489968]
+self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -568.0
+offset_top = -191.0
+offset_right = -62.964966
+offset_bottom = 181.41501
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="InnerCard" type="TextureRect" parent="Card Layer/Card" unique_id=1789848145]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -192.3175
+offset_right = 256.0
+offset_bottom = 192.3175
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.94, 0.92)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="OuterCard" type="TextureRect" parent="Card Layer/Card" unique_id=1940762476]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -254.34773
+offset_top = -192.3175
+offset_right = 251.31274
+offset_bottom = 192.31752
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.06, 1.07)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="SongCoverBG" type="ColorRect" parent="Card Layer/Card" unique_id=1962782437]
+material = SubResource("ShaderMaterial_4pjow")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 15.0
+offset_top = 9.0
+offset_right = -17.0
+offset_bottom = 180.0
+grow_horizontal = 2
+color = Color(1, 0.13999999, 0.13999999, 1)
+
+[node name="SongCoverBG2" type="ColorRect" parent="Card Layer/Card/SongCoverBG" unique_id=848913783]
+self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = 171.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongCoverBG" type="ColorRect" parent="Card Layer/Card/SongCoverBG" unique_id=808033835]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.067032486, 0.01012502, 0.18055853, 1)
+
+[node name="SongCover" type="TextureRect" parent="Card Layer/Card/SongCoverBG" unique_id=12259877]
+self_modulate = Color(0.9019608, 0.65882355, 0.99607843, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.999985
+offset_top = -70.0
+offset_right = 70.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.09, 1.09)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_kjqc2")
+expand_mode = 1
+
+[node name="SongCover2" type="TextureRect" parent="Card Layer/Card/SongCoverBG" unique_id=2059081815]
+material = SubResource("ShaderMaterial_uhd87")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -70.0
+offset_right = 70.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("4_kjqc2")
+expand_mode = 1
+
+[node name="SongCover3" type="TextureRect" parent="Card Layer/Card/SongCoverBG" unique_id=2022044378]
+self_modulate = Color(0, 0, 0, 0.28235295)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -70.0
+offset_right = 70.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_kjqc2")
+expand_mode = 1
+
+[node name="Level Difficulty Container" type="ColorRect" parent="Card Layer/Card" unique_id=851627186]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.51752
+offset_top = -176.41501
+offset_right = 240.48248
+offset_bottom = -128.41501
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.09411765, 0.2, 1)
+
+[node name="Label" type="Label" parent="Card Layer/Card/Level Difficulty Container" unique_id=1172279398]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_fb61i")
+theme_override_font_sizes/font_size = 22
+text = "Level Difficulty"
+vertical_alignment = 1
+
+[node name="LevelDifficultyLabel" type="Label" parent="Card Layer/Card/Level Difficulty Container" unique_id=928526499]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_43kdc")
+theme_override_font_sizes/font_size = 22
+text = "10"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Length Container" type="ColorRect" parent="Card Layer/Card" unique_id=1033622644]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.51752
+offset_top = -120.41501
+offset_right = 240.48248
+offset_bottom = -72.41501
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.09411765, 0.2, 1)
+
+[node name="Label" type="Label" parent="Card Layer/Card/Length Container" unique_id=1325749319]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_fb61i")
+theme_override_font_sizes/font_size = 22
+text = "Length"
+vertical_alignment = 1
+
+[node name="LevelDifficultyLabel" type="Label" parent="Card Layer/Card/Length Container" unique_id=102068348]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_43kdc")
+theme_override_font_sizes/font_size = 22
+text = "2:06"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="LevelPlayButton" type="Button" parent="Card Layer/Card" unique_id=138483498]
+self_modulate = Color(0.39151296, 0.30933294, 0.81932133, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -47.99951
+offset_top = -48.0
+offset_right = 48.00049
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.45275962, 0.17751217, 0.36619493, 1)
+theme_override_colors/icon_hover_color = Color(0.783128, 0.39588153, 0.65496695, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uhd87")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ekrlx")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_dqfgh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_27b1o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hbsud")
+icon = ExtResource("2_kjqc2")
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Card Layer/Card/LevelPlayButton" unique_id=341333993]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_43kdc")
+expand_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2045728073]
+layer = -2
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=2039445429]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 384.0
+offset_bottom = 648.0
+
+[node name="SongCarousel" type="Control" parent="CanvasLayer/Control" unique_id=995810760 node_paths=PackedStringArray("position_offset_node")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 128.0
+offset_right = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_g7hi4")
+spacing = 46.975
+position_offset_node = NodePath("CarouselOffset")
+
+[node name="CarouselOffset" type="Control" parent="CanvasLayer/Control/SongCarousel" unique_id=1102467072]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 163.0
+offset_top = 278.43994
+offset_right = 163.00012
+offset_bottom = 278.43994
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1165216147]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -181.095
+offset_top = -324.0
+offset_right = -202.90512
+offset_bottom = -232.87991
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
+script = ExtResource("6_hcp02")
+item_colour = Color(0.12156863, 0.12156863, 0.12156863, 1)
+
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=525014697]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=1238340733]
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=1583672273]
+material = SubResource("ShaderMaterial_ekrlx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=131900699]
+material = SubResource("ShaderMaterial_hbsud")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=94043886]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button" unique_id=505311638]
+libraries/ = SubResource("AnimationLibrary_xxws0")
+autoplay = &"Deactivate"
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1416052629]
+modulate = Color(1, 1, 1, 0.65)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -181.095
+offset_top = -185.9049
+offset_right = -202.90512
+offset_bottom = -94.78482
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
+
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=1213034521]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=1635420509]
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=2014256827]
+material = SubResource("ShaderMaterial_kjqc2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=1231842663]
+material = SubResource("ShaderMaterial_jahwt")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button2" unique_id=668958786]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=38521446]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -181.095
+offset_top = -47.809814
+offset_right = -202.90512
+offset_bottom = 43.310272
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
+
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=855208336]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=2085962392]
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=9927679]
+material = SubResource("ShaderMaterial_kjqc2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=896207628]
+material = SubResource("ShaderMaterial_27b1o")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button3" unique_id=1708610847]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1578317065]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -181.095
+offset_top = 90.28528
+offset_right = -202.90512
+offset_bottom = 181.40536
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
+
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=699685322]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=1741333426]
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=161962037]
+material = SubResource("ShaderMaterial_kjqc2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=1778384054]
+material = SubResource("ShaderMaterial_27b1o")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button4" unique_id=1892898841]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button5" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1285864777]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -181.095
+offset_top = 228.38037
+offset_right = -202.90512
+offset_bottom = 319.5005
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
+
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=803764535]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=1000413115]
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=478406442]
+material = SubResource("ShaderMaterial_kjqc2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=1711260586]
+material = SubResource("ShaderMaterial_27b1o")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button5" unique_id=957898775]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button6" type="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1574945395]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -181.095
+offset_top = 366.47546
+offset_right = -202.90512
+offset_bottom = 457.59558
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_fb61i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_43kdc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
+
+[node name="OuterBorder" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=2012405113]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05, 1.3)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="WaveBG" type="TextureRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=1719972139]
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_fb61i")
+expand_mode = 1
+
+[node name="Wave" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=2147451491]
+material = SubResource("ShaderMaterial_kjqc2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridBG" type="ColorRect" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=1976596459]
+material = SubResource("ShaderMaterial_27b1o")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 9.559998
+offset_right = -13.0
+offset_bottom = -9.559998
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongName" type="Label" parent="CanvasLayer/Control/SongCarousel/CarouselOffset/Button6" unique_id=918711652]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_g7hi4")
+theme_override_font_sizes/font_size = 27
+text = "Dreamcatcher - HZEE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=780756017]
+layer = -3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2" unique_id=1775689252]
+material = SubResource("ShaderMaterial_43kdc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1252043456]
+environment = SubResource("Environment_g7hi4")
+
+[connection signal="pressed" from="CanvasLayer3/CRT/UpButton" to="CanvasLayer/Control/SongCarousel" method="_on_up_button_pressed"]
+[connection signal="pressed" from="CanvasLayer3/CRT/DownButton" to="CanvasLayer/Control/SongCarousel" method="_on_down_button_pressed"]

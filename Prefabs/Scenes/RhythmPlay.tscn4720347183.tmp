@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="3_43kdc"]
 [ext_resource type="Texture2D" uid="uid://cwhsshv0irukc" path="res://Assets/UIAssets/SongCovers/pixel-cover-816x816.png" id="4_hcp02"]
 [ext_resource type="PackedScene" uid="uid://dy1bboofkc51q" path="res://Prefabs/menuitem.tscn" id="6_hcp02"]
-[ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="7_f72t2"]
 
 [sub_resource type="Shader" id="Shader_8lxbd"]
 code = "shader_type canvas_item;
@@ -825,7 +824,6 @@ offset_top = 0.0
 offset_bottom = 90.0
 grow_horizontal = 1
 grow_vertical = 1
-chart = ExtResource("7_f72t2")
 
 [node name="Button2" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=595033799 instance=ExtResource("6_hcp02")]
 modulate = Color(1, 1, 1, 0.65)
