@@ -8,10 +8,9 @@ class_name CarouselContainer
 @export var smoothing_speed: float = 6.5
 @export var spacing: float = 25.0
 
+@export var position_offset_node: Control
 @export var selected_index: int = 0
 
-
-@export var position_offset_node: Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -83,13 +82,15 @@ func update_card():
 	%SongCover.texture = selected_element.chart.cover
 	%LevelDifficultyLabel.text = str(selected_element.chart.difficulty)
 	%LengthLabel.text = get_audio_length_formatted(selected_element.chart.audio)
-	
+	AudioHub.play_music(selected_element.chart.audio)
 
-func get_audio_length_formatted(stream: AudioStream) -> String:
+func get_audio_length_formatted(stream: AudioStream):
+	if !stream: return "NaN"
+	
 	var length_seconds: float = stream.get_length()
 	
 	if length_seconds <= 0:
-		return "need to put this in WAV format!!"
+		return "need to put this song in WAV format!!"
 
 	var minutes: int = int(length_seconds) / 60
 	var seconds: int = int(length_seconds) % 60

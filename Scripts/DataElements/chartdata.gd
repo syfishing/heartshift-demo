@@ -5,6 +5,7 @@ class_name ChartData
 @export var notes: Array[NoteData] = []
 @export var audio: AudioStream
 @export var cover: Texture2D
+@export var song_colour: Color
 
 #Label Tags
 @export var name: String

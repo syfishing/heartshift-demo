@@ -1,6 +1,6 @@
 extends Button
 
-@export var item_colour: Color
+@onready var item_colour: Color
 @export var chart: ChartData
 
 @onready var grid_mat: Material = $GridBG.material.duplicate()
@@ -11,6 +11,9 @@ var active: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if chart:
+		item_colour = chart.song_colour
+		$SongName.text = chart.name
 	initial_item_colour = item_colour
 	item_colour = Color("1f1f1f")
 	

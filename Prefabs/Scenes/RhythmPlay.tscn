@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cwhsshv0irukc" path="res://Assets/UIAssets/SongCovers/pixel-cover-816x816.png" id="4_hcp02"]
 [ext_resource type="PackedScene" uid="uid://dy1bboofkc51q" path="res://Prefabs/menuitem.tscn" id="6_hcp02"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="7_f72t2"]
+[ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="8_uhd87"]
+[ext_resource type="Resource" uid="uid://co31nfscdxhmx" path="res://Scripts/Charts/BellBound.tres" id="9_ekrlx"]
 
 [sub_resource type="Shader" id="Shader_8lxbd"]
 code = "shader_type canvas_item;
@@ -840,6 +842,7 @@ offset_bottom = 228.0951
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.75, 0.75)
+chart = ExtResource("8_uhd87")
 
 [node name="Button3" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1527943070 instance=ExtResource("6_hcp02")]
 modulate = Color(1, 1, 1, 0)
@@ -854,6 +857,7 @@ offset_bottom = 366.1902
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.5, 0.5)
+chart = ExtResource("9_ekrlx")
 
 [node name="Button4" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=651300743 instance=ExtResource("6_hcp02")]
 modulate = Color(1, 1, 1, 0)
