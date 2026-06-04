@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="3_flsia"]
 [ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="3_mjy6n"]
 [ext_resource type="Texture2D" uid="uid://dkjnkdcfmyf8k" path="res://Assets/UIAssets/dottedline.png" id="4_1572c"]
+[ext_resource type="Texture2D" uid="uid://dspben6w88v6d" path="res://Assets/UIAssets/SongCovers/pixel-cover-240x240.png" id="5_1r7ws"]
 [ext_resource type="PackedScene" uid="uid://b0uh3xflk5wk7" path="res://Prefabs/Wave/storypoint.tscn" id="9_sgtdn"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="10_v1uep"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="10_vkxt3"]
@@ -84,6 +85,35 @@ shader_parameter/wave_amp = 0.210000009975
 shader_parameter/wave_size = 2.8000000855
 shader_parameter/wave_time_mul = -0.289999918775
 shader_parameter/total_phases = 5
+
+[sub_resource type="Shader" id="Shader_hfhdq"]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+uniform vec2 mask_scale = vec2(1.0, 1.0);
+uniform vec2 mask_offset = vec2(0.0, 0.0);
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV) * COLOR;
+
+    vec2 mask_uv = (UV - 0.5) / mask_scale + 0.5 + mask_offset;
+    float mask = texture(mask_texture, mask_uv).a;
+	
+    vec2 inside = step(vec2(0.0), mask_uv) * step(mask_uv, vec2(1.0));
+    mask *= inside.x * inside.y;
+
+    color.a *= mask;
+    COLOR = color;
+}"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ntonj"]
+load_path = "res://.godot/imported/roundedrect.png-546c6fd7b9616b1388628124dfdb78c3.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2e7ft"]
+shader = SubResource("Shader_hfhdq")
+shader_parameter/mask_texture = SubResource("CompressedTexture2D_ntonj")
+shader_parameter/mask_scale = Vector2(1, 1)
+shader_parameter/mask_offset = Vector2(0, 0)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vkxt3"]
 load_path = "res://.godot/imported/roundedrectmenubig2.png-d77d642f92af63bb58bf12582f6e9b83.ctex"
@@ -514,11 +544,12 @@ texture = ExtResource("1_lnqo4")
 expand_mode = 1
 
 [node name="SongCover" type="TextureRect" parent="Card Layer/Card" unique_id=1711415403]
+self_modulate = Color(0.46692407, 0.33480248, 0.9852893, 1)
 layout_mode = 0
-offset_left = 31.0
-offset_top = 25.0
-offset_right = 171.0
-offset_bottom = 165.0
+offset_left = 30.0
+offset_top = 19.0
+offset_right = 182.0
+offset_bottom = 171.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("2_4ru64")
 expand_mode = 1
@@ -554,6 +585,20 @@ offset_right = 298.42
 offset_bottom = -3.9999924
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="SongCoverImage" type="TextureRect" parent="Card Layer/Card/SongCover" unique_id=353008324]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_2e7ft")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.92, 0.92)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("5_1r7ws")
+expand_mode = 1
 
 [node name="InfoContainer" type="TextureRect" parent="Card Layer/Card" unique_id=1033615248]
 self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)

@@ -82,6 +82,10 @@ func update_card():
 	%SongCover.texture = selected_element.chart.cover
 	%LevelDifficultyLabel.text = str(selected_element.chart.difficulty)
 	%LengthLabel.text = get_audio_length_formatted(selected_element.chart.audio)
+	
+	var tween = create_tween()
+	tween.tween_property(%GradientBG, "self_modulate", selected_element.chart.song_colour, 0.25)
+	#%GradientBG.self_modulate = selected_element.chart.song_colour
 	AudioHub.play_music(selected_element.chart.audio)
 
 func get_audio_length_formatted(stream: AudioStream):

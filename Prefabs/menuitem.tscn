@@ -198,6 +198,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_kjqc2")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_hcp02")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_f72t2")
 script = ExtResource("1_fb5ld")
+item_colour = Color(0.23509473, 0.30687487, 0.5750075, 1)
 
 [node name="OuterBorder" type="TextureRect" parent="." unique_id=686242170]
 self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)

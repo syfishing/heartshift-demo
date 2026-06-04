@@ -1,6 +1,6 @@
 extends Button
 
-@onready var item_colour: Color
+@export var item_colour: Color
 @export var chart: ChartData
 
 @onready var grid_mat: Material = $GridBG.material.duplicate()

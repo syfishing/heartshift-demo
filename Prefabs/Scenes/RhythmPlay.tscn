@@ -243,6 +243,38 @@ shader_parameter/glow_threshold = 0.65
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4pjow"]
 
+[sub_resource type="Shader" id="Shader_ekrlx"]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+uniform vec2 mask_scale = vec2(1.0, 1.0);
+uniform vec2 mask_offset = vec2(0.0, 0.0);
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV) * COLOR;
+
+    vec2 mask_uv = (UV - 0.5) / mask_scale + 0.5 + mask_offset;
+    float mask = texture(mask_texture, mask_uv).a;
+	
+    vec2 inside = step(vec2(0.0), mask_uv) * step(mask_uv, vec2(1.0));
+    mask *= inside.x * inside.y;
+
+    color.a *= mask;
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_27b1o"]
+shader = SubResource("Shader_ekrlx")
+shader_parameter/mask_texture = ExtResource("1_fb61i")
+shader_parameter/mask_scale = Vector2(1, 1)
+shader_parameter/mask_offset = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_hbsud"]
+colors = PackedColorArray(1, 1, 1, 0.4509804, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jahwt"]
+gradient = SubResource("Gradient_hbsud")
+
 [sub_resource type="Shader" id="Shader_jahwt"]
 code = "shader_type canvas_item;
 
@@ -315,7 +347,7 @@ uniform vec2 mask_scale = vec2(1.0, 1.0);
 uniform vec2 mask_offset = vec2(0.0, 0.0);
 
 void fragment() {
-    vec4 color = texture(TEXTURE, UV);
+    vec4 color = texture(TEXTURE, UV) * COLOR;
 
     vec2 mask_uv = (UV - 0.5) / mask_scale + 0.5 + mask_offset;
     float mask = texture(mask_texture, mask_uv).a;
@@ -328,9 +360,12 @@ void fragment() {
     COLOR = color;
 }"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y1hkt"]
+load_path = "res://.godot/imported/roundedrect.png-546c6fd7b9616b1388628124dfdb78c3.ctex"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uhd87"]
 shader = SubResource("Shader_hcp02")
-shader_parameter/mask_texture = ExtResource("2_kjqc2")
+shader_parameter/mask_texture = SubResource("CompressedTexture2D_y1hkt")
 shader_parameter/mask_scale = Vector2(1, 1)
 shader_parameter/mask_offset = Vector2(0, 0)
 
@@ -532,6 +567,18 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("1_fb61i")
 expand_mode = 1
 
+[node name="GradientBG" type="TextureRect" parent="Card Layer/Card/InnerCard" unique_id=1064040004]
+unique_name_in_owner = true
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+material = SubResource("ShaderMaterial_27b1o")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_jahwt")
+
 [node name="OuterCard" type="TextureRect" parent="Card Layer/Card" unique_id=1940762476]
 self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 show_behind_parent = true
@@ -562,7 +609,6 @@ offset_top = 9.0
 offset_right = -17.0
 offset_bottom = 180.0
 grow_horizontal = 2
-color = Color(1, 0.13999999, 0.13999999, 1)
 
 [node name="SongCoverBG2" type="ColorRect" parent="Card Layer/Card/SongCoverBG" unique_id=848913783]
 self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
@@ -576,17 +622,6 @@ offset_right = 8.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="SongCoverBG" type="ColorRect" parent="Card Layer/Card/SongCoverBG" unique_id=808033835]
-visible = false
-show_behind_parent = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.067032486, 0.01012502, 0.18055853, 1)
 
 [node name="SongCoverFrame" type="TextureRect" parent="Card Layer/Card/SongCoverBG" unique_id=12259877]
 self_modulate = Color(0.9019608, 0.65882355, 0.99607843, 1)
@@ -609,6 +644,7 @@ expand_mode = 1
 
 [node name="SongCover" type="TextureRect" parent="Card Layer/Card/SongCoverBG" unique_id=2059081815]
 unique_name_in_owner = true
+self_modulate = Color(0.8217887, 0.82178867, 0.82178867, 1)
 material = SubResource("ShaderMaterial_uhd87")
 layout_mode = 1
 anchors_preset = 8
@@ -624,24 +660,6 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("4_hcp02")
-expand_mode = 1
-
-[node name="SongDimLayer" type="TextureRect" parent="Card Layer/Card/SongCoverBG" unique_id=2022044378]
-self_modulate = Color(0, 0, 0, 0.28235295)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -70.0
-offset_top = -70.0
-offset_right = 70.0
-offset_bottom = 70.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("2_kjqc2")
 expand_mode = 1
 
 [node name="Level Difficulty Container" type="ColorRect" parent="Card Layer/Card" unique_id=851627186]

@@ -56,6 +56,8 @@ func change_selection():
 		%Stage.text = "Stage " + str(current_chart.stage)
 		%Difficulty.text = "Diff. " + str(current_chart.difficulty)
 		%Quote.text = '"' + current_point.story_quote + '"'
+		
+		%SongCoverImage.texture = current_chart.cover
 
 func select():
 	
