@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dctx1rfjgt7i4"]
 
+[ext_resource type="Script" uid="uid://csxonnla0irtm" path="res://Scripts/UIscripts/rhythm_play.gd" id="1_dqfgh"]
 [ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="1_fb61i"]
 [ext_resource type="Script" uid="uid://bnyw0wruhdhva" path="res://Scripts/UIscripts/songcarousel.gd" id="2_g7hi4"]
 [ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="2_kjqc2"]
@@ -213,7 +214,7 @@ shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.910000043225
 shader_parameter/saturation = 2.0
 shader_parameter/gamma = 1.17200004915023
-shader_parameter/source_softness = 0.250000011875
+shader_parameter/source_softness = 0.0
 shader_parameter/curvature = 0.030000001425
 shader_parameter/corner_soften = 0.0400000019
 shader_parameter/vignette = 0.0
@@ -222,7 +223,7 @@ shader_parameter/scanline_density = 0.5
 shader_parameter/interlace_strength = 0.0
 shader_parameter/mask_strength = 0.0850000040375
 shader_parameter/mask_scale = 0.5
-shader_parameter/chroma_offset_px = 1.0000000475
+shader_parameter/chroma_offset_px = 0.0
 shader_parameter/luma_smear_px = 0.0
 shader_parameter/jitter_px = 0.0
 shader_parameter/wobble_px = 0.78000003705
@@ -457,6 +458,7 @@ glow_strength = 0.55
 glow_bloom = 1.0
 
 [node name="RhythmPlay" type="Node2D" unique_id=1697891486]
+script = ExtResource("1_dqfgh")
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=2128619459]
 
@@ -470,6 +472,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="UpButton" type="Button" parent="CanvasLayer3/CRT" unique_id=1435086624]
+unique_name_in_owner = true
 self_modulate = Color(1, 0.5573358, 1, 1)
 show_behind_parent = true
 layout_mode = 0
@@ -480,6 +483,7 @@ offset_bottom = 102.00001
 rotation = -1.5707964
 scale = Vector2(0.5, 0.5)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_pressed_color = Color(0.5649617, 0.5649616, 0.5649616, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jahwt")
@@ -491,6 +495,7 @@ icon = ExtResource("3_43kdc")
 expand_icon = true
 
 [node name="DownButton" type="Button" parent="CanvasLayer3/CRT" unique_id=1020322984]
+unique_name_in_owner = true
 self_modulate = Color(1, 0.5573358, 1, 1)
 show_behind_parent = true
 layout_mode = 0
@@ -501,6 +506,53 @@ offset_bottom = 636.0
 rotation = 1.5707964
 scale = Vector2(0.5, 0.5)
 pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.5649617, 0.5649616, 0.5649616, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jahwt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_y1hkt")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xxws0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_uabde")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4pjow")
+icon = ExtResource("3_43kdc")
+expand_icon = true
+
+[node name="UpButton2" type="Button" parent="CanvasLayer3/CRT" unique_id=18102300]
+unique_name_in_owner = true
+self_modulate = Color(1, 0.5573358, 1, 1)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 248.00003
+offset_top = 10.000008
+offset_right = 332.00003
+offset_bottom = 102.00001
+rotation = -1.5707964
+scale = Vector2(0.5, 0.5)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+focus_behavior_recursive = 1
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.5649617, 0.5649616, 0.5649616, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jahwt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_y1hkt")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xxws0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_uabde")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4pjow")
+icon = ExtResource("3_43kdc")
+expand_icon = true
+
+[node name="DownButton2" type="Button" parent="CanvasLayer3/CRT" unique_id=1044774141]
+unique_name_in_owner = true
+self_modulate = Color(1, 0.5573358, 1, 1)
+show_behind_parent = true
+layout_mode = 0
+offset_left = 248.0
+offset_top = 544.0
+offset_right = 332.0
+offset_bottom = 636.0
+rotation = 1.5707964
+scale = Vector2(0.5, 0.5)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+focus_behavior_recursive = 1
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_pressed_color = Color(0.5649617, 0.5649616, 0.5649616, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jahwt")
@@ -513,23 +565,6 @@ expand_icon = true
 
 [node name="Card Layer" type="CanvasLayer" parent="." unique_id=1661027227]
 layer = 0
-
-[node name="Cursor" type="TextureRect" parent="Card Layer" unique_id=1175217883]
-z_index = 5
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = 282.0
-offset_right = -24.0
-offset_bottom = 302.0
-grow_horizontal = 0
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("3_43kdc")
-expand_mode = 1
 
 [node name="Card" type="TextureRect" parent="Card Layer" unique_id=1759489968]
 self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
@@ -757,6 +792,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="LevelPlayButton" type="Button" parent="Card Layer/Card" unique_id=138483498]
+unique_name_in_owner = true
 self_modulate = Color(0.39151296, 0.30933294, 0.81932133, 1)
 layout_mode = 1
 anchors_preset = 7
@@ -800,7 +836,7 @@ texture = ExtResource("3_43kdc")
 expand_mode = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2045728073]
-layer = -2
+layer = -1
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=2039445429]
 layout_mode = 3
@@ -907,3 +943,5 @@ environment = SubResource("Environment_g7hi4")
 
 [connection signal="pressed" from="CanvasLayer3/CRT/UpButton" to="CanvasLayer/Control/SongCarousel" method="_on_up_button_pressed"]
 [connection signal="pressed" from="CanvasLayer3/CRT/DownButton" to="CanvasLayer/Control/SongCarousel" method="_on_down_button_pressed"]
+[connection signal="pressed" from="CanvasLayer3/CRT/UpButton2" to="CanvasLayer/Control/SongCarousel" method="_on_up_button_pressed"]
+[connection signal="pressed" from="CanvasLayer3/CRT/DownButton2" to="CanvasLayer/Control/SongCarousel" method="_on_down_button_pressed"]

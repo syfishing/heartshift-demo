@@ -5,10 +5,10 @@
 [ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="1_r3bk5"]
 [ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="2_p87wn"]
 [ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="3_18gwp"]
-[ext_resource type="Shader" uid="uid://cck7lbigfqgqi" path="res://Assets/Shaders/VHS.gdshader" id="3_25417"]
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
 [ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="3_r3bk5"]
-[ext_resource type="Shader" uid="uid://oggacd4naabt" path="res://Assets/Shaders/CRTAltOld.gdshader" id="4_p87wn"]
+[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_86r3q"]
+[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_dsbte"]
 [ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="7_dcs3l"]
 [ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="12_dsbte"]
@@ -81,32 +81,6 @@ _data = {
 &"RatingAnim": SubResource("Animation_n4yq1")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_86r3q"]
-shader = ExtResource("3_25417")
-shader_parameter/pixel_size = 2.0
-shader_parameter/lod_blur = 0.0
-shader_parameter/chroma_offset_px = 1.14000005415
-shader_parameter/saturation = 2.0
-shader_parameter/contrast = 0.9
-shader_parameter/shadow_lift = 0.0
-shader_parameter/scanline_strength = 0.04
-shader_parameter/vignette_strength = 0.1
-shader_parameter/noise_strength = 0.025
-shader_parameter/noise_speed = 18.0
-shader_parameter/base_jitter_px = 0.08
-shader_parameter/base_jitter_speed = 12.0
-shader_parameter/glitchiness = 0.18
-shader_parameter/glitch_rate = 6.0
-shader_parameter/glitch_shift_px = 1.8
-shader_parameter/glitch_window_min = 0.03
-shader_parameter/glitch_window_max = 0.1
-shader_parameter/blue_band_start_y = 0.45
-shader_parameter/blue_band_speed = 0.06
-shader_parameter/blue_band_width = 0.20000000298023
-shader_parameter/blue_band_strength = 0.1
-shader_parameter/blue_band_glitch = 0.25
-shader_parameter/blue_band_distort_px = 1.2
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
 shader = ExtResource("3_18gwp")
 shader_parameter/brightness = 1.4950000710125
@@ -128,31 +102,6 @@ shader_parameter/jitter_px = 0.0
 shader_parameter/wobble_px = 0.78000003705
 shader_parameter/tape_noise = 0.22
 shader_parameter/tape_lines = 0.1050000049875
-shader_parameter/roll_speed = 0.1
-shader_parameter/roll_strength = 0.15
-shader_parameter/glow_strength = 0.25
-shader_parameter/glow_threshold = 0.65
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7vajh"]
-shader = ExtResource("4_p87wn")
-shader_parameter/brightness = 1.4950000710125
-shader_parameter/contrast = 0.8400000399
-shader_parameter/saturation = 2.0
-shader_parameter/gamma = 1.17200004915023
-shader_parameter/curvature = 0.030000001425
-shader_parameter/corner_soften = 0.0400000019
-shader_parameter/vignette = 0.0
-shader_parameter/scanline_strength = 0.10000000475
-shader_parameter/scanline_density = 0.6150000054625
-shader_parameter/interlace_strength = 0.0
-shader_parameter/mask_strength = 0.0
-shader_parameter/mask_scale = 0.5
-shader_parameter/chroma_offset_px = 2.400000114
-shader_parameter/luma_smear_px = 4.2000001995
-shader_parameter/jitter_px = 0.0
-shader_parameter/wobble_px = 0.0
-shader_parameter/tape_noise = 0.22
-shader_parameter/tape_lines = 0.0850000040375
 shader_parameter/roll_speed = 0.1
 shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
@@ -303,6 +252,21 @@ limit_right = 1152
 limit_bottom = 648
 script = ExtResource("2_p87wn")
 
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=103199223]
+
+[node name="TextureRect" type="TextureRect" parent="PauseMenu" unique_id=455672928]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=1967918697]
@@ -312,6 +276,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=806142077]
+self_modulate = Color(0.179842, 0.22810352, 0.7026473, 1)
+layout_mode = 0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 88.0
+offset_bottom = 80.0
+texture = ExtResource("5_86r3q")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/TextureRect" unique_id=299460268]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_dsbte")
+expand_mode = 1
 
 [node name="ComboTag" type="ColorRect" parent="CanvasLayer/Control" unique_id=1055121295]
 layout_mode = 1
@@ -454,28 +444,8 @@ vertical_alignment = 1
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_dcs3l")
 
-[node name="VHS" type="ColorRect" parent="CanvasLayer" unique_id=1907680122]
-visible = false
-material = SubResource("ShaderMaterial_86r3q")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-
 [node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
 material = SubResource("ShaderMaterial_bn5gq")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="CRT2" type="ColorRect" parent="CanvasLayer" unique_id=1312605042]
-visible = false
-material = SubResource("ShaderMaterial_7vajh")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

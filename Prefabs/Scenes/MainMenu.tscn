@@ -262,6 +262,49 @@ turbulence_enabled = true
 turbulence_influence_min = 0.0050000004
 turbulence_influence_max = 0.0050000004
 
+[sub_resource type="Curve" id="Curve_h3krq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.24731183, 1), 0.0, 0.0, 0, 0, Vector2(0.73913044, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_6yy7p"]
+curve = SubResource("Curve_h3krq")
+
+[sub_resource type="Curve" id="Curve_1bw3c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_v0vp6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_3wi5v"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_51kqp"]
+curve_x = SubResource("Curve_1bw3c")
+curve_y = SubResource("Curve_v0vp6")
+curve_z = SubResource("Curve_3wi5v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ww6l4"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(0, 486, 1)
+direction = Vector3(-500, 0, 0)
+spread = 0.0
+initial_velocity_min = 0.61
+initial_velocity_max = 0.61
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 17.249998
+linear_accel_max = 17.249998
+attractor_interaction_enabled = false
+scale_min = 0.099999994
+scale_max = 0.19999999
+scale_curve = SubResource("CurveXYZTexture_51kqp")
+alpha_curve = SubResource("CurveTexture_6yy7p")
+turbulence_influence_min = 0.0050000004
+turbulence_influence_max = 0.0050000004
+
 [sub_resource type="Shader" id="Shader_h3krq"]
 code = "shader_type canvas_item;
 
@@ -1022,6 +1065,17 @@ amount = 80
 lifetime = 10.0
 visibility_rect = Rect2(-100, -100, 200, 653.49)
 process_material = SubResource("ParticleProcessMaterial_1bw3c")
+
+[node name="Stars2" type="GPUParticles2D" parent="CanvasLayer" unique_id=1023950407]
+self_modulate = Color(0.95333326, 0.6, 1, 0.015686275)
+show_behind_parent = true
+z_index = -15
+position = Vector2(1312, 486)
+amount = 10
+texture = ExtResource("5_v1nnq")
+lifetime = 20.0
+visibility_rect = Rect2(-300, -100, 200, 653.49)
+process_material = SubResource("ParticleProcessMaterial_ww6l4")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1661004672]
 

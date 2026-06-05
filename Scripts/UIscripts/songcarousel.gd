@@ -11,11 +11,14 @@ class_name CarouselContainer
 @export var position_offset_node: Control
 @export var selected_index: int = 0
 
+var current_chart: ChartData
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$CarouselOffset.get_child(selected_index).toggle()
 	update_card()
+	
 	pass # Replace with function body.
 
 
@@ -79,6 +82,7 @@ func update_card():
 	var selected_element = $CarouselOffset.get_child(selected_index)
 	
 	if !selected_element.chart: return
+	current_chart = selected_element.chart
 	%SongCover.texture = selected_element.chart.cover
 	%LevelDifficultyLabel.text = str(selected_element.chart.difficulty)
 	%LengthLabel.text = get_audio_length_formatted(selected_element.chart.audio)
@@ -87,6 +91,7 @@ func update_card():
 	tween.tween_property(%GradientBG, "self_modulate", selected_element.chart.song_colour, 0.25)
 	#%GradientBG.self_modulate = selected_element.chart.song_colour
 	AudioHub.play_music(selected_element.chart.audio)
+	
 
 func get_audio_length_formatted(stream: AudioStream):
 	if !stream: return "NaN"
