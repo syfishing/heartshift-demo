@@ -27,5 +27,6 @@ func _ready() -> void:
 	AudioHub.play_menu_music(menu_theme, false)
 
 func _enter_tree() -> void:
+	AudioHub.stop_music()
 	if AudioHub.get_node("MainMenuMusicStreamPlayer").playing == false:
 		AudioHub.play_menu_music(menu_theme, false)
