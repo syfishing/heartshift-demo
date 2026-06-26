@@ -1,0 +1,1208 @@
+[gd_scene format=3 uid="uid://cxnell0r46apm"]
+
+[ext_resource type="Script" uid="uid://dq0xylg5buhws" path="res://Scripts/UIscripts/newmainmenu.gd" id="1_7ari6"]
+[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="2_x261j"]
+[ext_resource type="VideoStream" uid="uid://0bhwq7bmdl0t" path="res://Assets/Backgrounds/wavymenubg2.ogv" id="3_3up73"]
+[ext_resource type="Script" uid="uid://bik7j5uliwt3r" path="res://Scripts/UIscripts/wavybackground.gd" id="4_vvgem"]
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="5_o0j4h"]
+[ext_resource type="PackedScene" uid="uid://cp4530dglvy3d" path="res://Prefabs/Wave/menupoint.tscn" id="6_mt555"]
+[ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="7_kn6l2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1nnq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h3krq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6yy7p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ww6l4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1bw3c"]
+
+[sub_resource type="SystemFont" id="SystemFont_h3krq"]
+font_names = PackedStringArray("Audiowide")
+
+[sub_resource type="Gradient" id="Gradient_6yy7p"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ww6l4"]
+gradient = SubResource("Gradient_6yy7p")
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Animation" id="Animation_h3krq"]
+resource_name = "Deselected"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect2/Floater:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.20000005),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.6328071, 0.34182665, 1, 1), Color(0.93478036, 0.62131935, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2/Back:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 0.20000005),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.110948406, 0.070667304, 0.17749631, 1), Color(0.53412783, 0.3623615, 0.20285092, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2/Label:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0333333, 0.20000005),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureRect2:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.42352942, 0.3372549, 0.95686275, 1), Color(0.22408237, 0.17376636, 0.53512686, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sdu7k"]
+resource_name = "InitialSelect"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect2/Floater:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.93478036, 0.62131935, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2/Back:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.53412783, 0.3623615, 0.20285092, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2/Label:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6yy7p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect2/Floater:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.9347982, 0.6216847, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2/Back:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.53387755, 0.36231995, 0.20288813, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2/Label:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureRect2:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.42352942, 0.3372549, 0.95686275, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ww6l4"]
+resource_name = "Selected"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect2/Floater:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.93478036, 0.62131935, 0, 0), Color(0.6328071, 0.34182665, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2/Back:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.19999999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.53412783, 0.3623615, 0.20285092, 0), Color(0.110948406, 0.070667304, 0.17749631, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2/Label:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureRect2:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.22408237, 0.17376636, 0.53512686, 1), Color(0.42352942, 0.3372549, 0.95686275, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1bw3c"]
+_data = {
+&"Deselected": SubResource("Animation_h3krq"),
+&"InitialSelect": SubResource("Animation_sdu7k"),
+&"RESET": SubResource("Animation_6yy7p"),
+&"Selected": SubResource("Animation_ww6l4")
+}
+
+[sub_resource type="SystemFont" id="SystemFont_6yy7p"]
+font_names = PackedStringArray("Audiowide")
+
+[sub_resource type="Curve" id="Curve_v1nnq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.24731183, 1), 0.0, 0.0, 0, 0, Vector2(0.73913044, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_h3krq"]
+curve = SubResource("Curve_v1nnq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1bw3c"]
+lifetime_randomness = 0.7
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(576, 486, 1)
+direction = Vector3(153.01, 0, 0)
+spread = 154.895
+initial_velocity_min = 83.509995
+initial_velocity_max = 83.509995
+gravity = Vector3(0, 11.475, 0)
+linear_accel_min = -14.930002
+linear_accel_max = 70.149994
+scale_min = 4.15
+scale_max = 6.25
+alpha_curve = SubResource("CurveTexture_h3krq")
+turbulence_enabled = true
+turbulence_influence_min = 0.0050000004
+turbulence_influence_max = 0.0050000004
+
+[sub_resource type="Curve" id="Curve_h3krq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.24731183, 1), 0.0, 0.0, 0, 0, Vector2(0.73913044, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_6yy7p"]
+curve = SubResource("Curve_h3krq")
+
+[sub_resource type="Curve" id="Curve_1bw3c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_v0vp6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_3wi5v"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_51kqp"]
+curve_x = SubResource("Curve_1bw3c")
+curve_y = SubResource("Curve_v0vp6")
+curve_z = SubResource("Curve_3wi5v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ww6l4"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(0, 486, 1)
+direction = Vector3(-500, 0, 0)
+spread = 0.0
+initial_velocity_min = 0.61
+initial_velocity_max = 0.61
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 17.249998
+linear_accel_max = 17.249998
+attractor_interaction_enabled = false
+scale_min = 0.099999994
+scale_max = 0.19999999
+scale_curve = SubResource("CurveXYZTexture_51kqp")
+alpha_curve = SubResource("CurveTexture_6yy7p")
+turbulence_influence_min = 0.0050000004
+turbulence_influence_max = 0.0050000004
+
+[sub_resource type="Shader" id="Shader_h3krq"]
+code = "shader_type canvas_item;
+
+uniform vec4 top_color: source_color;
+uniform vec4 bottom_color: source_color;
+
+uniform float wave_amp: hint_range(0.0, 0.5);
+uniform float wave_size: hint_range(1.0, 10.0);
+uniform float wave_time_mul: hint_range(-2.0, 2.0);
+
+uniform int total_phases: hint_range(2, 600, 1);
+
+
+float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+
+float noise(float p){
+	float fl = floor(p);
+  float fc = fract(p);
+	return mix(rand(fl), rand(fl + 1.0), fc);
+}
+
+
+float fmod(float x, float y) {
+	return x - floor(x / y) * y;
+}
+
+
+vec4 lerp(vec4 a, vec4 b, float w) {
+	return a + w * (b - a);
+}
+
+
+void fragment() {
+	float t = float(total_phases);
+	float effective_wave_amp = min(wave_amp, 0.5 / t);
+	float d = fmod(UV.y, 1.0 / t);
+	float i = floor(UV.y * t);
+	float vi = floor(UV.y * t + t * effective_wave_amp);
+	float s = effective_wave_amp * sin((UV.x + TIME * max(1.0 / t, noise(vi)) * wave_time_mul * vi / t) * 2.0 * PI * wave_size);
+	
+	if (d < s) i--;
+	if (d > s + 1.0 / t) i++;
+	i = clamp(i, 0.0, t - 1.0);
+	
+	COLOR = lerp(top_color, bottom_color, i / (t - 1.0));
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6yy7p"]
+shader = SubResource("Shader_h3krq")
+shader_parameter/top_color = Color(0.7636256, 0.1680183, 1, 0)
+shader_parameter/bottom_color = Color(0, 0, 0, 0.39200002)
+shader_parameter/wave_amp = 0.5
+shader_parameter/wave_size = 2.4800000703
+shader_parameter/wave_time_mul = 0.400000114
+shader_parameter/total_phases = 23
+
+[sub_resource type="Shader" id="Shader_fhk0w"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+// Full-screen post-process: reads the already-rendered frame. :contentReference[oaicite:1]{index=1}
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;
+
+// --- Color controls ---
+uniform float brightness : hint_range(0.0, 2.0) = 1.02;
+uniform float contrast   : hint_range(0.0, 2.0) = 1.08;
+uniform float saturation : hint_range(0.0, 2.0) = 1.10;
+uniform float gamma      : hint_range(0.2, 3.0) = 1.05;
+uniform float source_softness : hint_range(0.0, 2.0) = 0.35;
+
+// --- CRT geometry / lens ---
+uniform float curvature     : hint_range(0.0, 0.40) = 0.14;
+uniform float corner_soften : hint_range(0.0, 0.20) = 0.06;
+uniform float vignette      : hint_range(0.0, 1.00) = 0.38;
+
+// --- Scanlines / phosphor ---
+uniform float scanline_strength : hint_range(0.0, 2.0) = 0.95;
+uniform float scanline_density  : hint_range(0.5, 3.0) = 1.15; // 1.0 = native-ish
+uniform float interlace_strength: hint_range(0.0, 1.0) = 0.20;
+
+// Shadow mask (RGB triads). Turn down if you hate the “screen door”.
+uniform float mask_strength : hint_range(0.0, 1.0) = 0.22;
+uniform float mask_scale    : hint_range(0.5, 4.0) = 1.0; // bigger = chunkier triads
+
+// --- VHS/VCR artifacts ---
+uniform float chroma_offset_px : hint_range(0.0, 6.0) = 1.6; // RGB split in pixels
+uniform float luma_smear_px    : hint_range(0.0, 8.0) = 2.2; // horizontal smear
+uniform float jitter_px        : hint_range(0.0, 8.0) = 1.8; // per-line horizontal jitter
+uniform float wobble_px        : hint_range(0.0, 10.0) = 1.5; // slow wave wobble
+
+uniform float tape_noise       : hint_range(0.0, 1.0) = 0.22; // grain + specks
+uniform float tape_lines       : hint_range(0.0, 1.0) = 0.35; // horizontal “tracking” lines
+
+uniform float roll_speed       : hint_range(0.0, 1.5) = 0.10; // vertical roll bar speed
+uniform float roll_strength    : hint_range(0.0, 0.6) = 0.15; // roll bar intensity
+
+// --- Bloom-ish glow (cheap) ---
+uniform float glow_strength  : hint_range(0.0, 2.0) = 0.25;
+uniform float glow_threshold : hint_range(0.0, 1.0) = 0.65;
+
+// TIME is a built-in global in CanvasItem shaders. :contentReference[oaicite:2]{index=2}
+float hash11(float n) {
+	return fract(sin(n) * 43758.5453123);
+}
+
+float hash12(vec2 p) {
+	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+vec2 crt_curve(vec2 uv, float k) {
+	// Barrel distortion style curve.
+	vec2 cc = uv * 2.0 - 1.0;
+	vec2 d  = cc * cc;
+	cc *= 1.0 + k * vec2(d.y, d.x);
+	return cc * 0.5 + 0.5;
+}
+
+float inside01(vec2 uv) {
+	// 1.0 if uv in [0..1], else 0.0
+	return step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+}
+
+vec3 apply_color_controls(vec3 c) {
+	// brightness
+	c *= brightness;
+
+	// contrast around 0.5
+	c = mix(vec3(0.5), c, contrast);
+
+	// saturation
+	float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+	c = mix(vec3(l), c, saturation);
+
+	// gamma-ish
+	c = pow(max(c, vec3(0.0)), vec3(1.0 / max(gamma, 0.0001)));
+	return c;
+}
+
+vec3 triad_mask(vec2 frag_xy) {
+	// Simple RGB triad mask across X.
+	float x = floor(frag_xy.x / max(mask_scale, 0.0001));
+	float m = mod(x, 3.0);
+	// Slightly tinted triads
+	if (m < 1.0) return vec3(1.10, 0.85, 0.85);
+	if (m < 2.0) return vec3(0.85, 1.10, 0.85);
+	return vec3(0.85, 0.85, 1.10);
+}
+
+vec3 sample_screen(vec2 uv) {
+	// Use textureLod at LOD 0 like the docs show. :contentReference[oaicite:3]{index=3}
+	return textureLod(screen_texture, clamp(uv, vec2(0.0), vec2(1.0)), source_softness).rgb;
+}
+
+void fragment() {
+	vec2 px   = SCREEN_PIXEL_SIZE;
+	vec2 res  = 1.0 / px;
+	float t   = TIME;
+
+	// Start from screen UV
+	vec2 uv = SCREEN_UV;
+
+	// --- VHS line jitter (per scanline) ---
+	float y_line = floor(uv.y * res.y);
+	float jitter = (hash11(y_line + floor(t * 15.0) * 37.0) - 0.5) * 2.0;
+	uv.x += jitter * (jitter_px * px.x);
+
+	// Slow wobble
+	uv.x += sin(uv.y * 8.0 + t * 1.2) * (wobble_px * px.x);
+
+	// CRT curve
+	vec2 cuv = crt_curve(uv, curvature);
+	float in_bounds = inside01(cuv);
+
+	// Rounded corners (soft clip)
+	vec2 d = abs(cuv - 0.5) * 2.0;      // 0 at center, ~1 at edges
+	float edge = max(d.x, d.y);
+
+	// 1 in center, fades to 0 near edges
+	float corner_mask = 1.0 - smoothstep(1.0 - corner_soften, 1.0, edge);
+
+
+	// --- Chromatic aberration / VHS chroma shift ---
+	vec2 chroma = vec2(chroma_offset_px * px.x, 0.0);
+	float r = sample_screen(cuv + chroma).r;
+	float g = sample_screen(cuv).g;
+	float b = sample_screen(cuv - chroma).b;
+	vec3 col = vec3(r, g, b);
+
+	// --- Luma smear (horizontal) ---
+	float smear = luma_smear_px * px.x;
+	vec3 s1 = sample_screen(cuv + vec2(smear, 0.0));
+	vec3 s2 = sample_screen(cuv - vec2(smear, 0.0));
+	col = mix(col, (col + s1 + s2) / 3.0, 0.35);
+
+	// --- Scanlines ---
+	float scan = sin((cuv.y * res.y) * 3.14159 * scanline_density);
+	float scan_mul = 1.0 - scanline_strength * (0.5 - 0.5 * scan); // darker troughs
+	col *= scan_mul;
+
+	// --- Interlacing (alternate rows “flicker”) ---
+	float field = mod(floor(FRAGCOORD.y) + floor(t * 60.0), 2.0);
+	col *= 1.0 - interlace_strength * field * 0.10;
+
+	// --- Rolling tracking bar ---
+	float roll_y = fract(t * max(roll_speed, 0.0001));
+	float dist = abs(cuv.y - roll_y);
+	float bar = smoothstep(0.20, 0.0, dist); // wide soft bar
+	col += bar * roll_strength * vec3(0.12, 0.12, 0.12);
+
+	// --- Tape lines (random horizontal streaks) ---
+	float line_n = hash11(y_line * 0.7 + floor(t * 12.0) * 11.0);
+	float line = smoothstep(0.985, 1.0, line_n) * tape_lines;
+	col += line * vec3(0.18, 0.18, 0.18);
+
+	// --- Grain / specks ---
+	float n = hash12(FRAGCOORD.xy + vec2(t * 120.0, t * 90.0));
+	float grain = (n - 0.5) * 2.0;
+	col += grain * (tape_noise * 0.06);
+
+	// Occasional white specks
+	float speck = smoothstep(0.995, 1.0, hash12(FRAGCOORD.xy * 0.73 + t * 40.0));
+	col += speck * (tape_noise * 0.25);
+
+	// --- Cheap glow (cross blur on brights) ---
+	vec3 c0 = col;
+	vec3 cx1 = sample_screen(cuv + vec2(px.x, 0.0));
+	vec3 cx2 = sample_screen(cuv - vec2(px.x, 0.0));
+	vec3 cy1 = sample_screen(cuv + vec2(0.0, px.y));
+	vec3 cy2 = sample_screen(cuv - vec2(0.0, px.y));
+	vec3 blur = (c0 + cx1 + cx2 + cy1 + cy2) / 5.0;
+	float br = dot(blur, vec3(0.2126, 0.7152, 0.0722));
+	vec3 glow = max(blur - vec3(glow_threshold), vec3(0.0));
+	col += glow * glow_strength * (0.5 + 0.5 * br);
+
+	// --- Vignette ---
+	vec2 v = cuv - 0.5;
+	float vig = smoothstep(0.9, 0.2, dot(v, v) * 2.2);
+	col *= mix(1.0 - vignette, 1.0, vig);
+
+	// --- Shadow mask triads ---
+	vec3 mask = triad_mask(FRAGCOORD.xy);
+	col *= mix(vec3(1.0), mask, mask_strength);
+
+	// Color grading last
+	col = apply_color_controls(col);
+
+	// Apply bounds + rounded corners (outside = black)
+	col *= in_bounds * corner_mask;
+
+	COLOR = vec4(col, 1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yl2qu"]
+shader = SubResource("Shader_fhk0w")
+shader_parameter/brightness = 1.4950000710125
+shader_parameter/contrast = 0.910000043225
+shader_parameter/saturation = 2.0
+shader_parameter/gamma = 1.17200004915023
+shader_parameter/source_softness = 0.250000011875
+shader_parameter/curvature = 0.030000001425
+shader_parameter/corner_soften = 0.0400000019
+shader_parameter/vignette = 0.0
+shader_parameter/scanline_strength = 0.0
+shader_parameter/scanline_density = 0.5
+shader_parameter/interlace_strength = 0.0
+shader_parameter/mask_strength = 0.0850000040375
+shader_parameter/mask_scale = 0.5
+shader_parameter/chroma_offset_px = 0.0
+shader_parameter/luma_smear_px = 0.0
+shader_parameter/jitter_px = 0.0
+shader_parameter/wobble_px = 0.78000003705
+shader_parameter/tape_noise = 0.22
+shader_parameter/tape_lines = 0.1050000049875
+shader_parameter/roll_speed = 0.1
+shader_parameter/roll_strength = 0.15
+shader_parameter/glow_strength = 0.25
+shader_parameter/glow_threshold = 0.65
+
+[sub_resource type="Environment" id="Environment_h3krq"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 0.2
+glow_bloom = 0.6
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ww6l4"]
+load_path = "res://.godot/imported/circle.png-e096a3894aa1ebe2dc1c377bdc4587f4.ctex"
+
+[sub_resource type="Curve" id="Curve_ww6l4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.6013482, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_6yy7p"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.7046297, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_sdu7k"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_syosp"]
+curve = SubResource("Curve_sdu7k")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v0vp6"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 218.4
+spread = 180.0
+initial_velocity_min = 215.22
+initial_velocity_max = 215.22
+gravity = Vector3(0, 0, 0)
+damping_min = 13.924001
+damping_max = 13.924001
+attractor_interaction_enabled = false
+scale_min = 0.01
+scale_max = 0.099999994
+alpha_curve = SubResource("CurveTexture_syosp")
+
+[sub_resource type="Animation" id="Animation_sgtdn"]
+resource_name = "CircleAnim"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointerLine:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1.6245055, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 0, 0), PackedVector2Array(0, 0, 79.215, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.78939015, 0.58383155, 0.5420044, 0), Color(0.7892152, 0.5842356, 0.54154176, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CircleBack:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PointerLine:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.510617, 0.36074692, 1, 0), Color(0.7892152, 0.5842356, 0.54154176, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_v1uep"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointerLine:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.7892152, 0.5842356, 0.54154176, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CircleBack:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PointerLine:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.510617, 0.36074692, 1, 0.60800004)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3wi5v"]
+_data = {
+&"CircleAnim": SubResource("Animation_sgtdn"),
+&"RESET": SubResource("Animation_v1uep")
+}
+
+[node name="MainMenu" type="Node2D" unique_id=926688556]
+script = ExtResource("1_7ari6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1126722528]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=124277151]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control" unique_id=1158172040]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.4, 0, 0.6666667, 0.4627451)
+
+[node name="StorySelectButton" type="Button" parent="CanvasLayer/Control" unique_id=2052547365]
+unique_name_in_owner = true
+self_modulate = Color(0.14849174, 0.14307478, 0.45659333, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 224.0
+offset_top = -80.0
+offset_right = 524.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3krq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6yy7p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ww6l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/StorySelectButton" unique_id=1254465105]
+self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_x261j")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/StorySelectButton/TextureRect2" unique_id=1385447121]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -14.5
+offset_right = 78.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_h3krq")
+theme_override_font_sizes/font_size = 29
+text = "Story Select"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="TextureRect" parent="CanvasLayer/Control/StorySelectButton/TextureRect2" unique_id=1413005892]
+self_modulate = Color(0.53387755, 0.36231995, 0.20288813, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.915, 0.78)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_x261j")
+expand_mode = 1
+
+[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/StorySelectButton/TextureRect2" unique_id=662017090]
+self_modulate = Color(0.9347982, 0.6216847, 0, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 48.0
+offset_right = -15.777283
+offset_bottom = 63.524994
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.055, 1)
+texture = SubResource("GradientTexture2D_ww6l4")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/StorySelectButton" unique_id=1682447598]
+libraries/ = SubResource("AnimationLibrary_1bw3c")
+autoplay = &"InitialSelect"
+
+[node name="RhythmPlayButton" type="Button" parent="CanvasLayer/Control" unique_id=568289800]
+unique_name_in_owner = true
+self_modulate = Color(0.26097435, 0.0005012096, 0.39421222, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -524.0
+offset_top = 170.0
+offset_right = -224.0
+offset_bottom = 282.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3krq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6yy7p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ww6l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/RhythmPlayButton" unique_id=2009620638]
+self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_x261j")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/RhythmPlayButton/TextureRect2" unique_id=1120937748]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -14.5
+offset_right = 78.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_h3krq")
+theme_override_font_sizes/font_size = 29
+text = "Rhythm Play"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="TextureRect" parent="CanvasLayer/Control/RhythmPlayButton/TextureRect2" unique_id=1940633351]
+self_modulate = Color(0.53387755, 0.36231995, 0.20288813, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.915, 0.78)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_x261j")
+expand_mode = 1
+
+[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/RhythmPlayButton/TextureRect2" unique_id=1854956653]
+self_modulate = Color(0.9347982, 0.6216847, 0, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 48.0
+offset_right = -15.777283
+offset_bottom = 63.524994
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.055, 1)
+texture = SubResource("GradientTexture2D_ww6l4")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/RhythmPlayButton" unique_id=387726993]
+libraries/ = SubResource("AnimationLibrary_1bw3c")
+autoplay = &"InitialSelect"
+
+[node name="OptionsButton" type="Button" parent="CanvasLayer/Control" unique_id=294804169]
+unique_name_in_owner = true
+self_modulate = Color(0.8784579, 0.38615766, 0.5878533, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 224.0
+offset_top = 420.0
+offset_right = 524.0
+offset_bottom = 532.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1nnq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3krq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6yy7p")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ww6l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1bw3c")
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/OptionsButton" unique_id=1219472919]
+self_modulate = Color(0.42352942, 0.3372549, 0.95686275, 1)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_x261j")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/OptionsButton/TextureRect2" unique_id=626645463]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -14.5
+offset_right = 78.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_h3krq")
+theme_override_font_sizes/font_size = 29
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="TextureRect" parent="CanvasLayer/Control/OptionsButton/TextureRect2" unique_id=2096847945]
+self_modulate = Color(0.53387755, 0.36231995, 0.20288813, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.915, 0.78)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_x261j")
+expand_mode = 1
+
+[node name="Floater" type="TextureRect" parent="CanvasLayer/Control/OptionsButton/TextureRect2" unique_id=1604272122]
+self_modulate = Color(0.9347982, 0.6216847, 0, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 48.0
+offset_right = -15.777283
+offset_bottom = 63.524994
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.055, 1)
+texture = SubResource("GradientTexture2D_ww6l4")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/OptionsButton" unique_id=346478142]
+libraries/ = SubResource("AnimationLibrary_1bw3c")
+autoplay = &"InitialSelect"
+
+[node name="PlaceholderTitle" type="Label" parent="CanvasLayer/Control" unique_id=328270755]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -139.0
+offset_top = -259.0
+offset_right = 139.0
+offset_bottom = -215.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_6yy7p")
+theme_override_font_sizes/font_size = 56
+text = "HEARTSHIFT"
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control" unique_id=1734824366]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_3up73")
+speed_scale = 1.523
+autoplay = true
+expand = true
+loop = true
+script = ExtResource("4_vvgem")
+
+[node name="Stars" type="GPUParticles2D" parent="CanvasLayer" unique_id=1342511936]
+self_modulate = Color(0.9518127, 0.60063285, 1, 1)
+show_behind_parent = true
+z_index = -15
+position = Vector2(576, 486)
+amount = 80
+lifetime = 10.0
+visibility_rect = Rect2(-100, -100, 200, 653.49)
+process_material = SubResource("ParticleProcessMaterial_1bw3c")
+
+[node name="Stars2" type="GPUParticles2D" parent="CanvasLayer" unique_id=1023950407]
+self_modulate = Color(0.95333326, 0.6, 1, 0.015686275)
+show_behind_parent = true
+z_index = -15
+position = Vector2(1312, 486)
+amount = 10
+texture = ExtResource("2_x261j")
+lifetime = 20.0
+visibility_rect = Rect2(-300, -100, 200, 653.49)
+process_material = SubResource("ParticleProcessMaterial_ww6l4")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1661004672]
+
+[node name="BG" type="ColorRect" parent="CanvasLayer2" unique_id=1000264455]
+z_as_relative = false
+material = SubResource("ShaderMaterial_6yy7p")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer2" unique_id=1429423416]
+top_level = true
+material = SubResource("ShaderMaterial_yl2qu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainStoryLine" type="Line2D" parent="." unique_id=979877624 node_paths=PackedStringArray("curve_line", "point_nodes")]
+z_index = -1
+width = 3.835
+default_color = Color(0.51065123, 0.36099148, 1, 1)
+script = ExtResource("5_o0j4h")
+curve_line = NodePath(".")
+point_nodes = [NodePath("../MenuPoints/MenuPoint"), NodePath("../MenuPoints/MenuPoint2"), NodePath("../MenuPoints/MenuPoint3"), NodePath("../MenuPoints/MenuPoint4")]
+handle_strength = 1.725
+max_handle_ratio_per_segment = 0.44
+bezier_steps_per_segment = 30
+
+[node name="MenuPoints" type="Node2D" parent="." unique_id=1900611447]
+
+[node name="MenuPoint" parent="MenuPoints" unique_id=1986590811 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_mt555")]
+position = Vector2(700, 300)
+buttonanimate = NodePath("../../CanvasLayer/Control/StorySelectButton/AnimationPlayer")
+
+[node name="MenuPoint2" parent="MenuPoints" unique_id=1305082 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_mt555")]
+position = Vector2(452, 550)
+buttonanimate = NodePath("../../CanvasLayer/Control/RhythmPlayButton/AnimationPlayer")
+
+[node name="MenuPoint3" parent="MenuPoints" unique_id=934079637 node_paths=PackedStringArray("buttonanimate") instance=ExtResource("6_mt555")]
+position = Vector2(700, 800)
+buttonanimate = NodePath("../../CanvasLayer/Control/OptionsButton/AnimationPlayer")
+
+[node name="MenuPoint4" parent="MenuPoints" unique_id=1764760480 instance=ExtResource("6_mt555")]
+position = Vector2(452, 1030)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1145804415]
+position = Vector2(576, 324)
+limit_top = 0
+limit_smoothed = true
+position_smoothing_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1696600868]
+environment = SubResource("Environment_h3krq")
+
+[node name="StoryPointCursor" type="Node2D" parent="." unique_id=2140909396]
+
+[node name="Circle" type="Sprite2D" parent="StoryPointCursor" unique_id=988109049]
+unique_name_in_owner = true
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+z_index = -1
+position = Vector2(700, 300)
+scale = Vector2(0.57, 0.57)
+texture = ExtResource("7_kn6l2")
+
+[node name="CircleBack2" type="Sprite2D" parent="StoryPointCursor/Circle" unique_id=1792077306]
+visible = false
+self_modulate = Color(0.2929487, 0.369099, 1, 1)
+z_index = 1
+position = Vector2(429.82452, 5.3539607e-05)
+scale = Vector2(0.572, 0.572)
+texture = SubResource("CompressedTexture2D_ww6l4")
+
+[node name="CircleBack3" type="Sprite2D" parent="StoryPointCursor/Circle/CircleBack2" unique_id=1047238049]
+visible = false
+self_modulate = Color(0.031390574, 2.587028e-06, 0.28568122, 1)
+z_index = 2
+scale = Vector2(0.705, 0.705)
+texture = SubResource("CompressedTexture2D_ww6l4")
+
+[node name="ConnectLine2" type="Line2D" parent="StoryPointCursor/Circle/CircleBack2" unique_id=812014325]
+visible = false
+self_modulate = Color(0.7076778, 0.67263305, 1, 1)
+z_index = -2
+texture_repeat = 2
+scale = Vector2(3.0671082, 3.0671082)
+points = PackedVector2Array(0, 0, 0, 55.035)
+width = 26.835
+width_curve = SubResource("Curve_ww6l4")
+default_color = Color(0.3555643, 0.48489058, 0.5672295, 1)
+texture_mode = 1
+
+[node name="CircleBack" type="Sprite2D" parent="StoryPointCursor/Circle" unique_id=153708417]
+self_modulate = Color(0, 0, 0, 1)
+z_index = 1
+scale = Vector2(0.82, 0.82)
+texture = ExtResource("7_kn6l2")
+
+[node name="PointerLine" type="Line2D" parent="StoryPointCursor/Circle" unique_id=264582938]
+self_modulate = Color(0.510617, 0.36074692, 1, 0.60800004)
+z_index = -2
+texture_repeat = 2
+scale = Vector2(1.754386, 1.754386)
+points = PackedVector2Array(0, 0, 0, 0)
+width = 29.88
+width_curve = SubResource("Curve_6yy7p")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="StoryPointCursor/Circle" unique_id=1418794939]
+self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
+z_index = -2
+scale = Vector2(0.28070176, 0.28070176)
+amount = 32
+texture = ExtResource("7_kn6l2")
+lifetime = 3.85
+process_material = SubResource("ParticleProcessMaterial_v0vp6")
+
+[node name="CircleAnimationPlayer" type="AnimationPlayer" parent="StoryPointCursor" unique_id=2003836742]
+unique_name_in_owner = true
+root_node = NodePath("../Circle")
+libraries/ = SubResource("AnimationLibrary_3wi5v")
+autoplay = &"CircleAnim"
+
+[connection signal="pressed" from="CanvasLayer/Control/StorySelectButton" to="." method="_on_story_select_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/RhythmPlayButton" to="." method="_on_rhythm_play_button_pressed"]

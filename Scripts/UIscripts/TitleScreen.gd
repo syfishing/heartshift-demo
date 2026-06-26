@@ -25,3 +25,7 @@ func _start_game() -> void:
 
 func _ready() -> void:
 	AudioHub.play_menu_music(menu_theme, false)
+
+func _enter_tree() -> void:
+	if AudioHub.get_node("MainMenuMusicStreamPlayer").playing == false:
+		AudioHub.play_menu_music(menu_theme, false)

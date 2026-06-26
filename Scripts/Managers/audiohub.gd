@@ -14,7 +14,7 @@ func stop_music():
 	$BGMusicStreamPlayer.stop()
 
 func play_menu_music(audio: AudioStream, stopping: bool):
-	if $MainMenuMusicStreamPlayer.stream == audio && stopping == false:
+	if $MainMenuMusicStreamPlayer.stream == audio && $MainMenuMusicStreamPlayer.playing == true && stopping == false:
 		return
 	if stopping == false:
 		$MainMenuMusicStreamPlayer.stream = audio

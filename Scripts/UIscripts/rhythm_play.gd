@@ -17,6 +17,7 @@ func _process(delta: float) -> void:
 
 
 	if (Input.is_action_just_released("Exit")):
+		AudioHub.stop_music()
 		get_tree().change_scene_to_file("res://Prefabs/Scenes/MainMenu.tscn")
 	elif Input.is_action_just_pressed("Select"):
 		%LevelPlayButton.pressed.emit()

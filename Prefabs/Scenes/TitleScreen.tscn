@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://betiak6k6g08o" path="res://Scripts/UIscripts/TitleScreen.gd" id="1_7hjq3"]
 [ext_resource type="VideoStream" uid="uid://0bhwq7bmdl0t" path="res://Assets/Backgrounds/wavymenubg2.ogv" id="2_y6e8o"]
 [ext_resource type="Script" uid="uid://bik7j5uliwt3r" path="res://Scripts/UIscripts/wavybackground.gd" id="3_1l7ti"]
-[ext_resource type="Script" path="res://Scripts/UIscripts/titlescreenlabel.gd" id="4_y6e8o"]
+[ext_resource type="Script" uid="uid://d23hump1yjioi" path="res://Scripts/UIscripts/titlescreenlabel.gd" id="4_y6e8o"]
 
-[sub_resource type="Shader" id="Shader_8lxbd"]
+[sub_resource type="Shader" id="Shader_y6e8o"]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
@@ -203,7 +203,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o40hn"]
-shader = SubResource("Shader_8lxbd")
+shader = SubResource("Shader_y6e8o")
 shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.910000043225
 shader_parameter/saturation = 2.0
@@ -281,16 +281,6 @@ theme_override_font_sizes/font_size = 30
 text = "Press any key to start"
 horizontal_alignment = 1
 
-[node name="CRT" type="ColorRect" parent="CanvasLayer/Control" unique_id=1914674928]
-material = SubResource("ShaderMaterial_o40hn")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-
 [node name="TitleLabel" type="RichTextLabel" parent="CanvasLayer/Control" unique_id=1370432582]
 layout_mode = 0
 offset_left = 298.0
@@ -310,3 +300,13 @@ script = ExtResource("4_y6e8o")
 
 [node name="Timer" type="Timer" parent="CanvasLayer/Control/TitleLabel" unique_id=45049479]
 wait_time = 12.8
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer/Control" unique_id=1914674928]
+material = SubResource("ShaderMaterial_o40hn")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
