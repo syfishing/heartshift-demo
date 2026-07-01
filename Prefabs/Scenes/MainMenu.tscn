@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://estipjnm577d"]
+[gd_scene format=3 uid="uid://cxnell0r46apm"]
 
 [ext_resource type="Script" uid="uid://dq0xylg5buhws" path="res://Scripts/UIscripts/newmainmenu.gd" id="1_h3krq"]
 [ext_resource type="VideoStream" uid="uid://0bhwq7bmdl0t" path="res://Assets/Backgrounds/wavymenubg2.ogv" id="2_mbil5"]

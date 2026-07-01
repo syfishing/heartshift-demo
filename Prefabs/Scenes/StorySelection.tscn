@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="3_mjy6n"]
 [ext_resource type="Texture2D" uid="uid://dkjnkdcfmyf8k" path="res://Assets/UIAssets/dottedline.png" id="4_1572c"]
 [ext_resource type="Texture2D" uid="uid://dspben6w88v6d" path="res://Assets/UIAssets/SongCovers/pixel-cover-240x240.png" id="5_1r7ws"]
+[ext_resource type="Shader" uid="uid://bt23e3padhsoj" path="res://Assets/Shaders/bgtransition.gdshader" id="7_hfhdq"]
+[ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="8_ntonj"]
 [ext_resource type="PackedScene" uid="uid://b0uh3xflk5wk7" path="res://Prefabs/Wave/storypoint.tscn" id="9_sgtdn"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="10_v1uep"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="10_vkxt3"]
@@ -368,6 +370,21 @@ shader_parameter/total_phases = 23
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2e7ft"]
 
+[sub_resource type="Gradient" id="Gradient_2e7ft"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_np72h"]
+gradient = SubResource("Gradient_2e7ft")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ntonj"]
+shader = ExtResource("7_hfhdq")
+shader_parameter/progress = 0.0
+shader_parameter/width = 0.5
+shader_parameter/tile_texture = ExtResource("8_ntonj")
+shader_parameter/tile_pixel_size = 32.0
+shader_parameter/tile_grown_scale = 2.0
+shader_parameter/transition_texture = SubResource("GradientTexture2D_np72h")
+
 [sub_resource type="Curve" id="Curve_flsia"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -499,6 +516,115 @@ _data = {
 &"RESET": SubResource("Animation_v1uep")
 }
 
+[sub_resource type="Animation" id="Animation_ntonj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer2/ColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer2/ColorRect:mouse_filter")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card Layer/Card:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(242, 101)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Card Layer/Card:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2e7ft"]
+resource_name = "SceneChange"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer2/ColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer2/ColorRect:mouse_filter")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card Layer/Card:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.307786, 1),
+"update": 0,
+"values": [Vector2(242, 101), Vector2(242, 150)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Card Layer/Card:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.5, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_np72h"]
+_data = {
+&"RESET": SubResource("Animation_ntonj"),
+&"SceneChange": SubResource("Animation_2e7ft")
+}
+
 [node name="StorySelection" type="Node2D" unique_id=1295335304]
 script = ExtResource("1_sgtdn")
 storypointindex = 0
@@ -507,6 +633,7 @@ storypointindex = 0
 environment = SubResource("Environment_8lxbd")
 
 [node name="Card Layer" type="CanvasLayer" parent="." unique_id=1092757595]
+layer = 2
 
 [node name="Card" type="TextureRect" parent="Card Layer" unique_id=1984983618]
 self_modulate = Color(1, 0.49803922, 1, 1)
@@ -771,17 +898,24 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_ntonj")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2e7ft")
 icon = ExtResource("3_flsia")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=115334710]
-position = Vector2(576, 324)
-limit_enabled = false
-limit_left = 0
-limit_top = 0
-limit_right = 1152
-limit_bottom = 648
-position_smoothing_enabled = true
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1759130695]
 
-[node name="MainStoryLine" type="Line2D" parent="." unique_id=376625226 node_paths=PackedStringArray("curve_line", "point_nodes")]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2" unique_id=1474603475]
+self_modulate = Color(0.013116701, 0.008744758, 0.021860596, 1)
+material = SubResource("ShaderMaterial_ntonj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="2DStuff" type="Node2D" parent="." unique_id=1810348734]
+position = Vector2(576, 324)
+
+[node name="MainStoryLine" type="Line2D" parent="2DStuff" unique_id=376625226 node_paths=PackedStringArray("curve_line", "point_nodes")]
 z_index = -1
+position = Vector2(-576, -324)
 width = 3.835
 default_color = Color(0.51065123, 0.36099148, 1, 1)
 script = ExtResource("2_8lxbd")
@@ -789,22 +923,23 @@ curve_line = NodePath(".")
 point_nodes = [NodePath("../StoryPoints/StoryPoint"), NodePath("../StoryPoints/StoryPoint2"), NodePath("../StoryPoints/StoryPoint3"), NodePath("../StoryPoints/StoryPoint4"), NodePath("../StoryPoints/StoryPoint5")]
 handle_strength = 9.86
 
-[node name="StoryPointCursor" type="Node2D" parent="." unique_id=1071556934]
+[node name="StoryPointCursor" type="Node2D" parent="2DStuff" unique_id=1071556934]
+position = Vector2(-576, -324)
 
-[node name="Circle" type="Sprite2D" parent="StoryPointCursor" unique_id=697733191]
+[node name="Circle" type="Sprite2D" parent="2DStuff/StoryPointCursor" unique_id=697733191]
 self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
 z_index = -1
 position = Vector2(576, 576)
 scale = Vector2(0.57, 0.57)
 texture = ExtResource("3_mjy6n")
 
-[node name="CircleBack" type="Sprite2D" parent="StoryPointCursor/Circle" unique_id=840125673]
+[node name="CircleBack" type="Sprite2D" parent="2DStuff/StoryPointCursor/Circle" unique_id=840125673]
 self_modulate = Color(0, 0, 0, 1)
 z_index = 1
 scale = Vector2(0.82, 0.82)
 texture = ExtResource("3_mjy6n")
 
-[node name="ConnectLine" type="Line2D" parent="StoryPointCursor/Circle" unique_id=1085489812]
+[node name="ConnectLine" type="Line2D" parent="2DStuff/StoryPointCursor/Circle" unique_id=1085489812]
 self_modulate = Color(0.510617, 0.36074692, 1, 0.60800004)
 z_index = -2
 texture_repeat = 2
@@ -814,7 +949,7 @@ width = 6.015
 texture = ExtResource("4_1572c")
 texture_mode = 1
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="StoryPointCursor/Circle" unique_id=170298991]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="2DStuff/StoryPointCursor/Circle" unique_id=170298991]
 self_modulate = Color(0.7892152, 0.5842356, 0.54154176, 1)
 z_index = -2
 scale = Vector2(0.28070176, 0.28070176)
@@ -823,32 +958,46 @@ texture = ExtResource("3_mjy6n")
 lifetime = 3.85
 process_material = SubResource("ParticleProcessMaterial_flsia")
 
-[node name="CircleAnimationPlayer" type="AnimationPlayer" parent="StoryPointCursor" unique_id=2081394124]
+[node name="CircleAnimationPlayer" type="AnimationPlayer" parent="2DStuff/StoryPointCursor" unique_id=2081394124]
 unique_name_in_owner = true
 root_node = NodePath("../Circle")
 libraries/ = SubResource("AnimationLibrary_vkxt3")
 autoplay = &"CircleAnim"
 
-[node name="StoryPoints" type="Node2D" parent="." unique_id=1024958020]
+[node name="StoryPoints" type="Node2D" parent="2DStuff" unique_id=1024958020]
+position = Vector2(-576, -324)
 
-[node name="StoryPoint" parent="StoryPoints" unique_id=1986590811 instance=ExtResource("9_sgtdn")]
+[node name="StoryPoint" parent="2DStuff/StoryPoints" unique_id=1986590811 instance=ExtResource("9_sgtdn")]
 position = Vector2(576, 576)
 chart = ExtResource("10_vkxt3")
 story_quote = "Prologue"
 
-[node name="StoryPoint2" parent="StoryPoints" unique_id=974619855 instance=ExtResource("9_sgtdn")]
+[node name="StoryPoint2" parent="2DStuff/StoryPoints" unique_id=974619855 instance=ExtResource("9_sgtdn")]
 position = Vector2(876, 496)
 chart = ExtResource("10_v1uep")
 story_quote = "Arrival"
 
-[node name="StoryPoint3" parent="StoryPoints" unique_id=1834699676 instance=ExtResource("9_sgtdn")]
+[node name="StoryPoint3" parent="2DStuff/StoryPoints" unique_id=1834699676 instance=ExtResource("9_sgtdn")]
 position = Vector2(1176, 576)
 
-[node name="StoryPoint4" parent="StoryPoints" unique_id=2026919033 instance=ExtResource("9_sgtdn")]
+[node name="StoryPoint4" parent="2DStuff/StoryPoints" unique_id=2026919033 instance=ExtResource("9_sgtdn")]
 position = Vector2(1476, 496)
 
-[node name="StoryPoint5" parent="StoryPoints" unique_id=1150236573 instance=ExtResource("9_sgtdn")]
+[node name="StoryPoint5" parent="2DStuff/StoryPoints" unique_id=1150236573 instance=ExtResource("9_sgtdn")]
 position = Vector2(1776, 576)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=115334710]
+position = Vector2(576, 324)
+limit_enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+position_smoothing_enabled = true
+
+[node name="LeavePlayer" type="AnimationPlayer" parent="." unique_id=1044254872]
+libraries/ = SubResource("AnimationLibrary_np72h")
 
 [connection signal="pressed" from="CanvasLayer/RightButton" to="." method="_on_right_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="animation_finished" from="LeavePlayer" to="." method="_on_leave_player_animation_finished"]

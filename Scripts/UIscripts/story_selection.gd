@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var storypointindex: int = 2
-@onready var storypointcount: int = $StoryPoints.get_child_count(storypointindex)
-@onready var current_point: Node2D = $StoryPoints.get_child(storypointindex)
+@onready var storypointcount: int = $"2DStuff"/StoryPoints.get_child_count(storypointindex)
+@onready var current_point: Node2D = $"2DStuff"/StoryPoints.get_child(storypointindex)
 var CoreStageScene: PackedScene = preload("res://Prefabs/Scenes/Demo.tscn") # change later!!
 
 func _ready() -> void:
@@ -43,9 +43,9 @@ func _on_left_button_pressed() -> void:
 
 func change_selection():
 	storypointindex = clamp(storypointindex,0,storypointcount-1)
-	current_point = $StoryPoints.get_child(storypointindex)
+	current_point = $"2DStuff"/StoryPoints.get_child(storypointindex)
 	$Camera2D.position.x = current_point.position.x
-	$StoryPointCursor/Circle.position = current_point.position
+	$"2DStuff"/StoryPointCursor/Circle.position = current_point.position
 	%CircleAnimationPlayer.stop()
 	%CircleAnimationPlayer.play("CircleAnim")
 	
@@ -61,5 +61,10 @@ func change_selection():
 
 func select():
 	
-	get_tree().change_scene_to_packed(CoreStageScene)
 	
+	$LeavePlayer.play("SceneChange")
+
+
+func _on_leave_player_animation_finished(anim_name: StringName) -> void:
+	get_tree().change_scene_to_packed(CoreStageScene)
+	pass # Replace with function body.

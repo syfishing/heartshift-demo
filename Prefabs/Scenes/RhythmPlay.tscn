@@ -945,3 +945,4 @@ environment = SubResource("Environment_g7hi4")
 [connection signal="pressed" from="CanvasLayer3/CRT/DownButton" to="CanvasLayer/Control/SongCarousel" method="_on_down_button_pressed"]
 [connection signal="pressed" from="CanvasLayer3/CRT/UpButton2" to="CanvasLayer/Control/SongCarousel" method="_on_up_button_pressed"]
 [connection signal="pressed" from="CanvasLayer3/CRT/DownButton2" to="CanvasLayer/Control/SongCarousel" method="_on_down_button_pressed"]
+[connection signal="pressed" from="Card Layer/Card/LevelPlayButton" to="CanvasLayer/Control/SongCarousel" method="_on_level_play_button_pressed"]
