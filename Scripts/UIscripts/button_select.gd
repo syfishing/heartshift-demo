@@ -11,3 +11,5 @@ func on_button_focused(button):
 		#if child is Button and child != button:
 			#child.highlight.visible = false
 	pass
+
+#I was dumb and made this script, it is redundant :D
