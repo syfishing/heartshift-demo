@@ -1,0 +1,196 @@
+[gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://dh8o14qc86n37"]
+
+[ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="1_rd7qi"]
+[ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_mcdll"]
+[ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="3_fvw0v"]
+[ext_resource type="Script" uid="uid://30jsstye3dlf" path="res://Scripts/DataElements/Story/move.gd" id="4_1uo5j"]
+[ext_resource type="Script" uid="uid://brfsujgtv47v4" path="res://Scripts/DataElements/Story/delay.gd" id="5_31duc"]
+[ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="6_57g3v"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wcnqx"]
+load_path = "res://.godot/imported/lilyfingerportrait.png-d72cfd8008de6fe37b225339a0459e4c.ctex"
+
+[sub_resource type="Resource" id="Resource_f3lw0"]
+script = ExtResource("1_rd7qi")
+id = "Lily"
+name = "Lily"
+color = Color(0.7137255, 0.2627451, 0.40392157, 1)
+poses = Dictionary[String, Texture2D]({
+"lilyfinger": SubResource("CompressedTexture2D_wcnqx")
+})
+default_pose = "lilyfinger"
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Gradient" id="Gradient_3ine8"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ine8"]
+gradient = SubResource("Gradient_3ine8")
+
+[sub_resource type="Resource" id="Resource_yunxr"]
+script = ExtResource("1_rd7qi")
+id = "Teller"
+name = ""
+poses = Dictionary[String, Texture2D]({
+"invisible": SubResource("GradientTexture1D_3ine8")
+})
+default_pose = "invisible"
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6l2hg"]
+gradient = SubResource("Gradient_3ine8")
+
+[sub_resource type="Resource" id="Resource_vr2bo"]
+script = ExtResource("1_rd7qi")
+id = "Clover"
+name = "Clover"
+color = Color(0.9728525, 0.6835202, 0, 1)
+poses = Dictionary[String, Texture2D]({
+"invisible": SubResource("GradientTexture1D_6l2hg")
+})
+default_pose = "invisible"
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_3ine8"]
+script = ExtResource("3_fvw0v")
+character_id = "Teller"
+text = "..."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_6l2hg"]
+script = ExtResource("3_fvw0v")
+character_id = "Teller"
+text = "The train has arrived at it's destination."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_u2tva"]
+script = ExtResource("3_fvw0v")
+character_id = "Teller"
+text = "Lily and Clover step off the train and get on their way to the art fair venue."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_g7oej"]
+script = ExtResource("4_1uo5j")
+character_id = "Lily"
+x_pos = 300.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
+[sub_resource type="Resource" id="Resource_lqf37"]
+script = ExtResource("3_fvw0v")
+character_id = "Lily"
+text = "So, now that we're walking- I wonder if we'll be there on time before the opening."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ntf3o"]
+script = ExtResource("3_fvw0v")
+character_id = "Clover"
+text = "Oh, how much time do we have left then?"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_lyobt"]
+script = ExtResource("3_fvw0v")
+character_id = "Lily"
+text = "Eh, let me check..."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_1g5uw"]
+script = ExtResource("3_fvw0v")
+character_id = "Lily"
+text = "..."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_e2agj"]
+script = ExtResource("3_fvw0v")
+character_id = "Clover"
+text = "..?"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ov53a"]
+script = ExtResource("3_fvw0v")
+character_id = "Lily"
+text = "10 MINUTES??!"
+typing_speed = 2.0
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ljurw"]
+script = ExtResource("3_fvw0v")
+character_id = "Lily"
+text = "WE NEED TO RUN."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_2f7h2"]
+script = ExtResource("3_fvw0v")
+character_id = "Clover"
+text = "WOAH WOAH WAIT FOR ME!!"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_xw1pu"]
+script = ExtResource("5_31duc")
+metadata/_custom_type_script = "uid://brfsujgtv47v4"
+
+[sub_resource type="Resource" id="Resource_o6uit"]
+script = ExtResource("3_fvw0v")
+character_id = "Teller"
+text = "They arrive at the venue, luckily just in time for the opening."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_mun78"]
+script = ExtResource("3_fvw0v")
+character_id = "Lily"
+text = "Those are a lot of booths!"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_jlhv0"]
+script = ExtResource("3_fvw0v")
+character_id = "Clover"
+text = "More than i expected, that's for sure."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_vh6uw"]
+script = ExtResource("3_fvw0v")
+character_id = "Clover"
+text = "For a 'small art fair' this seems unusual, y'know."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_cvj6d"]
+script = ExtResource("3_fvw0v")
+character_id = "Lily"
+text = "Well it's a good thing, no?"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ckh3w"]
+script = ExtResource("3_fvw0v")
+character_id = "Clover"
+text = "Eh, i suppose."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_8ajhl"]
+script = ExtResource("3_fvw0v")
+character_id = "Teller"
+text = "Lily wanders around looking at booths, admiring the creations of the artists standing at their booths."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_0od15"]
+script = ExtResource("3_fvw0v")
+character_id = "Teller"
+text = "Clover follows along, starting to also enjoy the art around him."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ishqp"]
+script = ExtResource("3_fvw0v")
+character_id = "Teller"
+text = "Then, yells are heard."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_rjk7c"]
+script = ExtResource("3_fvw0v")
+character_id = "Teller"
+text = "There seems to be commotion at a booth in the distance."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[resource]
+script = ExtResource("6_57g3v")
+events = Array[ExtResource("2_mcdll")]([SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_u2tva"), SubResource("Resource_g7oej"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_ishqp"), SubResource("Resource_rjk7c")])
+characters = Array[ExtResource("1_rd7qi")]([SubResource("Resource_f3lw0"), SubResource("Resource_yunxr"), SubResource("Resource_vr2bo")])
+metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
