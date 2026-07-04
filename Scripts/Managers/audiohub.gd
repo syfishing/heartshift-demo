@@ -1,6 +1,7 @@
 extends Node
 
 @onready var trackmusicplayer = $TrackStreamPlayer
+@onready var menumusicplayer = $MainMenuMusicStreamPlayer
 
 func play_track(audio: AudioStream):
 	$TrackStreamPlayer.stream = audio
@@ -22,8 +23,17 @@ func play_menu_music(audio: AudioStream, stopping: bool):
 	else:
 		$MainMenuMusicStreamPlayer.stop()
 
+func stop_menu_music() -> void:
+	$MainMenuMusicStreamPlayer.stop()
+
 func play_note_sfx() -> void:
 	$SFXStreamPlayer.play()
 	
 func change_note_sfx(audio: AudioStream) -> void:
 	$SFXStreamPlayer.stream = audio
+	
+func start_typing() -> void:
+	$TypingPlayer.play()
+
+func stop_typing() -> void:
+	$TypingPlayer.stop()

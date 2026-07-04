@@ -67,6 +67,7 @@ func _play_event() -> void:
 		%TextLabel.text = event.text
 		%SpeakerLabel.text = c.name
 		%SpeakerLabel.add_theme_color_override("font_color", c.color)
+		AudioHub.start_typing()
 		
 		# TODO: filter out bbcode etc for better timing
 		var typing_time = event.text.length() / 40.0 / event.typing_speed
@@ -126,6 +127,7 @@ func _next_event() -> void:
 
 ## call to show all text and wait for user input before continue
 func _finish_typing(auto_advance: bool) -> void:
+	AudioHub.stop_typing()
 	if _key_pressed.is_connected(_finish_typing):
 		_key_pressed.disconnect(_finish_typing)
 	if _dialogue_tween:

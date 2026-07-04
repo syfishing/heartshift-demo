@@ -5,6 +5,7 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	AudioHub.stop_music()
+	AudioHub.stop_menu_music()
 	AudioHub.play_track(chart.audio)
 	$Conductor.chart = chart
 	%SongLabel.text = chart.name

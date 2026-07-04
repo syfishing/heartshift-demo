@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://cxnell0r46apm"]
 
 [ext_resource type="Script" uid="uid://dq0xylg5buhws" path="res://Scripts/UIscripts/newmainmenu.gd" id="1_h3krq"]
-[ext_resource type="VideoStream" uid="uid://0bhwq7bmdl0t" path="res://Assets/Backgrounds/wavymenubg2.ogv" id="2_mbil5"]
-[ext_resource type="Script" uid="uid://bik7j5uliwt3r" path="res://Scripts/UIscripts/wavybackground.gd" id="3_mbil5"]
 [ext_resource type="VideoStream" uid="uid://dg1n05msw3vdx" path="res://Assets/Portraits/syecoinflip.ogv" id="4_e5mke"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0v4xf"]
@@ -318,20 +316,6 @@ layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0.4, 0, 0.6666667, 0.4627451)
-
-[node name="backgroundvideo" type="VideoStreamPlayer" parent="CanvasLayer/Control" unique_id=963349244]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stream = ExtResource("2_mbil5")
-speed_scale = 1.523
-autoplay = true
-expand = true
-loop = true
-script = ExtResource("3_mbil5")
 
 [node name="titletext" type="RichTextLabel" parent="CanvasLayer/Control" unique_id=1962952791]
 layout_mode = 0
