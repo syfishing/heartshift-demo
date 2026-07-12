@@ -27,8 +27,7 @@ func _find_character(id: String) -> CharacterData:
 
 
 func _ready() -> void:
-	if story:
-		_setup_story()
+	pass
 
 
 func _setup_story() -> void:
@@ -142,3 +141,9 @@ func _finish_typing(auto_advance: bool) -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_pressed():
 		_key_pressed.emit()
+
+
+func _on_transition_player_animation_finished(anim_name: StringName) -> void:
+	if story:
+		_setup_story()
+	pass # Replace with function body.

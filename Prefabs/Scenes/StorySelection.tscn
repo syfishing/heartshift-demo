@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://b0uh3xflk5wk7" path="res://Prefabs/Wave/storypoint.tscn" id="9_sgtdn"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="10_v1uep"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="10_vkxt3"]
+[ext_resource type="Resource" uid="uid://coud6c7s687hj" path="res://Scripts/StoryResources/prologue_1.tres" id="14_2e7ft"]
+[ext_resource type="Resource" uid="uid://ue1tfqe3fxfc" path="res://Scripts/StoryResources/prologue_2.tres" id="16_np72h"]
 
 [sub_resource type="Environment" id="Environment_8lxbd"]
 background_mode = 3
@@ -113,7 +115,7 @@ load_path = "res://.godot/imported/roundedrectmenubig2.png-d77d642f92af63bb58bf1
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_flsia"]
 
-[sub_resource type="Shader" id="Shader_8lxbd"]
+[sub_resource type="Shader" id="Shader_np72h"]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
@@ -311,7 +313,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1572c"]
-shader = SubResource("Shader_8lxbd")
+shader = SubResource("Shader_np72h")
 shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.910000043225
 shader_parameter/saturation = 2.0
@@ -512,7 +514,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer2/ColorRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("Transition/ColorRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -524,7 +526,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer2/ColorRect:mouse_filter")
+tracks/1/path = NodePath("Transition/ColorRect:mouse_filter")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -560,11 +562,11 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_2e7ft"]
 resource_name = "SceneChange"
-length = 2.0
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer2/ColorRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("Transition/ColorRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -576,7 +578,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer2/ColorRect:mouse_filter")
+tracks/1/path = NodePath("Transition/ColorRect:mouse_filter")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -889,9 +891,9 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_ntonj")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2e7ft")
 icon = ExtResource("3_flsia")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1759130695]
+[node name="Transition" type="CanvasLayer" parent="." unique_id=1759130695]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer2" unique_id=1474603475]
+[node name="ColorRect" type="ColorRect" parent="Transition" unique_id=1474603475]
 self_modulate = Color(0.013116701, 0.008744758, 0.021860596, 1)
 material = SubResource("ShaderMaterial_ntonj")
 anchors_preset = 15
@@ -961,11 +963,13 @@ position = Vector2(-576, -324)
 [node name="StoryPoint" parent="2DStuff/StoryPoints" unique_id=1986590811 instance=ExtResource("9_sgtdn")]
 position = Vector2(576, 576)
 chart = ExtResource("10_vkxt3")
+story = ExtResource("14_2e7ft")
 story_quote = "Prologue"
 
 [node name="StoryPoint2" parent="2DStuff/StoryPoints" unique_id=974619855 instance=ExtResource("9_sgtdn")]
 position = Vector2(876, 496)
 chart = ExtResource("10_v1uep")
+story = ExtResource("16_np72h")
 story_quote = "Arrival"
 
 [node name="StoryPoint3" parent="2DStuff/StoryPoints" unique_id=1834699676 instance=ExtResource("9_sgtdn")]

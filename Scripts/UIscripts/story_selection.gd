@@ -3,7 +3,8 @@ extends Node2D
 @export var storypointindex: int = 2
 @onready var storypointcount: int = $"2DStuff"/StoryPoints.get_child_count(storypointindex)
 @onready var current_point: Node2D = $"2DStuff"/StoryPoints.get_child(storypointindex)
-var CoreStageScene: PackedScene = preload("res://Prefabs/Scenes/Demo.tscn") # change later!!
+var CoreStageScene: PackedScene = preload("res://Prefabs/Scenes/Story.tscn") # change later!!
+
 
 func _ready() -> void:
 	change_selection() # just for making sure it updates the text at first
@@ -66,5 +67,19 @@ func select():
 
 
 func _on_leave_player_animation_finished(anim_name: StringName) -> void:
-	get_tree().change_scene_to_packed(CoreStageScene)
-	pass # Replace with function body.
+	var inst = CoreStageScene.instantiate()
+	inst.story = current_point.story
+
+	# Defer the swap to the next frame
+	call_deferred("_replace_scene", inst)
+
+
+
+func _replace_scene(new_scene):
+	await get_tree().process_frame  # wait one frame so the scene unlocks
+
+	var tree := get_tree()
+
+	tree.current_scene.free()
+	tree.root.add_child(new_scene)
+	tree.current_scene = new_scene
