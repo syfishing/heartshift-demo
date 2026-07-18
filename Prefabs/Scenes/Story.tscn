@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c16dq5r6hiybv"]
 
 [ext_resource type="Script" uid="uid://bs3plsrjgdgq6" path="res://Scripts/UIscripts/story.gd" id="1_6ijvs"]
-[ext_resource type="Resource" uid="uid://b3unrkw1b3ots" path="res://Scripts/StoryResources/stage_4.tres" id="2_icxbx"]
+[ext_resource type="Resource" uid="uid://ue1tfqe3fxfc" path="res://Scripts/StoryResources/prologue_2.tres" id="2_wcnqx"]
 [ext_resource type="Shader" uid="uid://bt23e3padhsoj" path="res://Assets/Shaders/bgtransition.gdshader" id="3_wcnqx"]
 [ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="4_f3lw0"]
 
@@ -16,7 +16,8 @@ fill_to = Vector2(0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_np72h"]
 gradient = SubResource("Gradient_3ine8")
-fill_to = Vector2(1, 1)
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yunxr"]
 shader = ExtResource("3_wcnqx")
@@ -250,12 +251,39 @@ shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
 shader_parameter/glow_threshold = 0.65
 
+[sub_resource type="Animation" id="Animation_wcnqx"]
+resource_name = "Exit_Transition"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Transition/TransitionRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Transition/TransitionRect:material:shader_parameter/transition_texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("GradientTexture2D_np72h")]
+}
+
 [sub_resource type="Animation" id="Animation_6l2hg"]
 resource_name = "Intro_Transition"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Transition/ColorRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("Transition/TransitionRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -264,13 +292,25 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.0, 0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Transition/TransitionRect:material:shader_parameter/transition_texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("GradientTexture2D_np72h")]
+}
 
 [sub_resource type="Animation" id="Animation_vr2bo"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Transition/ColorRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("Transition/TransitionRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -279,16 +319,29 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Transition/TransitionRect:material:shader_parameter/transition_texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("GradientTexture2D_np72h")]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ijre4"]
 _data = {
+&"Exit_Transition": SubResource("Animation_wcnqx"),
 &"Intro_Transition": SubResource("Animation_6l2hg"),
 &"RESET": SubResource("Animation_vr2bo")
 }
 
 [node name="Story" type="Node2D" unique_id=1874266194]
 script = ExtResource("1_6ijvs")
-story = ExtResource("2_icxbx")
+story = ExtResource("2_wcnqx")
 
 [node name="BGLayer" type="CanvasLayer" parent="." unique_id=1344694391]
 layer = -1
@@ -379,7 +432,7 @@ vertical_alignment = 1
 [node name="Transition" type="CanvasLayer" parent="." unique_id=2081132424]
 layer = 3
 
-[node name="ColorRect" type="ColorRect" parent="Transition" unique_id=208644980]
+[node name="TransitionRect" type="ColorRect" parent="Transition" unique_id=208644980]
 self_modulate = Color(0.013116701, 0.008744758, 0.021860596, 1)
 material = SubResource("ShaderMaterial_yunxr")
 anchors_preset = 15

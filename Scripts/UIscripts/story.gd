@@ -27,6 +27,8 @@ func _find_character(id: String) -> CharacterData:
 
 
 func _ready() -> void:
+	if story:
+		_setup_story()
 	pass
 
 
@@ -54,7 +56,8 @@ func _play_event() -> void:
 	print("playing event ", _event_idx)
 	
 	if _event_idx >= story.events.size():
-		get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
+		#get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
+		$TransitionPlayer.play("Exit_Transition")
 		return
 	
 	var event := story.events[_event_idx]
@@ -144,6 +147,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func _on_transition_player_animation_finished(anim_name: StringName) -> void:
-	if story:
-		_setup_story()
+	if anim_name == "Exit_Transition":
+		get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
+
+	
 	pass # Replace with function body.

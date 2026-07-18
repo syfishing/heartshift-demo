@@ -11,6 +11,7 @@ metadata/_custom_type_script = "uid://ctjk703l25fkk"
 [sub_resource type="Resource" id="Resource_w0gfx"]
 script = ExtResource("1_44uyf")
 hit_time = 2.0
+track = 2
 metadata/_custom_type_script = "uid://ctjk703l25fkk"
 
 [resource]

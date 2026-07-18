@@ -1,0 +1,454 @@
+[gd_scene format=3 uid="uid://cxnell0r46apm"]
+
+[ext_resource type="Script" uid="uid://dq0xylg5buhws" path="res://Scripts/UIscripts/newmainmenu.gd" id="1_h3krq"]
+[ext_resource type="VideoStream" uid="uid://dg1n05msw3vdx" path="res://Assets/Portraits/syecoinflip.ogv" id="4_e5mke"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0v4xf"]
+bg_color = Color(0.40661916, 0.6700575, 0.4858169, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.054303862, 0.162501, 0.09808423, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_adw2r"]
+bg_color = Color(0.05490196, 0.16078432, 0.09803922, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.05490196, 0.16078432, 0.09803922, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dpxu1"]
+bg_color = Color(0.24355966, 0.43560582, 0.3025543, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.054303862, 0.162501, 0.09808423, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwhnx"]
+bg_color = Color(0.9479869, 0.26673168, 0.81426764, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21209079, 0.0032006106, 0.17460558, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a4cru"]
+bg_color = Color(0.21176471, 0.003921569, 0.1764706, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21209079, 0.0032006106, 0.17460558, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xh28q"]
+bg_color = Color(0.6394613, 0.041387275, 0.54217416, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21209079, 0.0032006106, 0.17460558, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hlomp"]
+bg_color = Color(0.48701227, 0.65894973, 0.7766682, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.04051219, 0.08694986, 0.11784219, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gt037"]
+bg_color = Color(0.039215688, 0.08627451, 0.11764706, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.04051219, 0.08694986, 0.11784219, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdf43"]
+bg_color = Color(0.23573807, 0.3696345, 0.4587435, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.04051219, 0.08694986, 0.11784219, 1)
+
+[sub_resource type="Shader" id="Shader_8lxbd"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+// Full-screen post-process: reads the already-rendered frame. :contentReference[oaicite:1]{index=1}
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;
+
+// --- Color controls ---
+uniform float brightness : hint_range(0.0, 2.0) = 1.02;
+uniform float contrast   : hint_range(0.0, 2.0) = 1.08;
+uniform float saturation : hint_range(0.0, 2.0) = 1.10;
+uniform float gamma      : hint_range(0.2, 3.0) = 1.05;
+uniform float source_softness : hint_range(0.0, 2.0) = 0.35;
+
+// --- CRT geometry / lens ---
+uniform float curvature     : hint_range(0.0, 0.40) = 0.14;
+uniform float corner_soften : hint_range(0.0, 0.20) = 0.06;
+uniform float vignette      : hint_range(0.0, 1.00) = 0.38;
+
+// --- Scanlines / phosphor ---
+uniform float scanline_strength : hint_range(0.0, 2.0) = 0.95;
+uniform float scanline_density  : hint_range(0.5, 3.0) = 1.15; // 1.0 = native-ish
+uniform float interlace_strength: hint_range(0.0, 1.0) = 0.20;
+
+// Shadow mask (RGB triads). Turn down if you hate the “screen door”.
+uniform float mask_strength : hint_range(0.0, 1.0) = 0.22;
+uniform float mask_scale    : hint_range(0.5, 4.0) = 1.0; // bigger = chunkier triads
+
+// --- VHS/VCR artifacts ---
+uniform float chroma_offset_px : hint_range(0.0, 6.0) = 1.6; // RGB split in pixels
+uniform float luma_smear_px    : hint_range(0.0, 8.0) = 2.2; // horizontal smear
+uniform float jitter_px        : hint_range(0.0, 8.0) = 1.8; // per-line horizontal jitter
+uniform float wobble_px        : hint_range(0.0, 10.0) = 1.5; // slow wave wobble
+
+uniform float tape_noise       : hint_range(0.0, 1.0) = 0.22; // grain + specks
+uniform float tape_lines       : hint_range(0.0, 1.0) = 0.35; // horizontal “tracking” lines
+
+uniform float roll_speed       : hint_range(0.0, 1.5) = 0.10; // vertical roll bar speed
+uniform float roll_strength    : hint_range(0.0, 0.6) = 0.15; // roll bar intensity
+
+// --- Bloom-ish glow (cheap) ---
+uniform float glow_strength  : hint_range(0.0, 2.0) = 0.25;
+uniform float glow_threshold : hint_range(0.0, 1.0) = 0.65;
+
+// TIME is a built-in global in CanvasItem shaders. :contentReference[oaicite:2]{index=2}
+float hash11(float n) {
+	return fract(sin(n) * 43758.5453123);
+}
+
+float hash12(vec2 p) {
+	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+vec2 crt_curve(vec2 uv, float k) {
+	// Barrel distortion style curve.
+	vec2 cc = uv * 2.0 - 1.0;
+	vec2 d  = cc * cc;
+	cc *= 1.0 + k * vec2(d.y, d.x);
+	return cc * 0.5 + 0.5;
+}
+
+float inside01(vec2 uv) {
+	// 1.0 if uv in [0..1], else 0.0
+	return step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+}
+
+vec3 apply_color_controls(vec3 c) {
+	// brightness
+	c *= brightness;
+
+	// contrast around 0.5
+	c = mix(vec3(0.5), c, contrast);
+
+	// saturation
+	float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+	c = mix(vec3(l), c, saturation);
+
+	// gamma-ish
+	c = pow(max(c, vec3(0.0)), vec3(1.0 / max(gamma, 0.0001)));
+	return c;
+}
+
+vec3 triad_mask(vec2 frag_xy) {
+	// Simple RGB triad mask across X.
+	float x = floor(frag_xy.x / max(mask_scale, 0.0001));
+	float m = mod(x, 3.0);
+	// Slightly tinted triads
+	if (m < 1.0) return vec3(1.10, 0.85, 0.85);
+	if (m < 2.0) return vec3(0.85, 1.10, 0.85);
+	return vec3(0.85, 0.85, 1.10);
+}
+
+vec3 sample_screen(vec2 uv) {
+	// Use textureLod at LOD 0 like the docs show. :contentReference[oaicite:3]{index=3}
+	return textureLod(screen_texture, clamp(uv, vec2(0.0), vec2(1.0)), source_softness).rgb;
+}
+
+void fragment() {
+	vec2 px   = SCREEN_PIXEL_SIZE;
+	vec2 res  = 1.0 / px;
+	float t   = TIME;
+
+	// Start from screen UV
+	vec2 uv = SCREEN_UV;
+
+	// --- VHS line jitter (per scanline) ---
+	float y_line = floor(uv.y * res.y);
+	float jitter = (hash11(y_line + floor(t * 15.0) * 37.0) - 0.5) * 2.0;
+	uv.x += jitter * (jitter_px * px.x);
+
+	// Slow wobble
+	uv.x += sin(uv.y * 8.0 + t * 1.2) * (wobble_px * px.x);
+
+	// CRT curve
+	vec2 cuv = crt_curve(uv, curvature);
+	float in_bounds = inside01(cuv);
+
+	// Rounded corners (soft clip)
+	vec2 d = abs(cuv - 0.5) * 2.0;      // 0 at center, ~1 at edges
+	float edge = max(d.x, d.y);
+
+	// 1 in center, fades to 0 near edges
+	float corner_mask = 1.0 - smoothstep(1.0 - corner_soften, 1.0, edge);
+
+
+	// --- Chromatic aberration / VHS chroma shift ---
+	vec2 chroma = vec2(chroma_offset_px * px.x, 0.0);
+	float r = sample_screen(cuv + chroma).r;
+	float g = sample_screen(cuv).g;
+	float b = sample_screen(cuv - chroma).b;
+	vec3 col = vec3(r, g, b);
+
+	// --- Luma smear (horizontal) ---
+	float smear = luma_smear_px * px.x;
+	vec3 s1 = sample_screen(cuv + vec2(smear, 0.0));
+	vec3 s2 = sample_screen(cuv - vec2(smear, 0.0));
+	col = mix(col, (col + s1 + s2) / 3.0, 0.35);
+
+	// --- Scanlines ---
+	float scan = sin((cuv.y * res.y) * 3.14159 * scanline_density);
+	float scan_mul = 1.0 - scanline_strength * (0.5 - 0.5 * scan); // darker troughs
+	col *= scan_mul;
+
+	// --- Interlacing (alternate rows “flicker”) ---
+	float field = mod(floor(FRAGCOORD.y) + floor(t * 60.0), 2.0);
+	col *= 1.0 - interlace_strength * field * 0.10;
+
+	// --- Rolling tracking bar ---
+	float roll_y = fract(t * max(roll_speed, 0.0001));
+	float dist = abs(cuv.y - roll_y);
+	float bar = smoothstep(0.20, 0.0, dist); // wide soft bar
+	col += bar * roll_strength * vec3(0.12, 0.12, 0.12);
+
+	// --- Tape lines (random horizontal streaks) ---
+	float line_n = hash11(y_line * 0.7 + floor(t * 12.0) * 11.0);
+	float line = smoothstep(0.985, 1.0, line_n) * tape_lines;
+	col += line * vec3(0.18, 0.18, 0.18);
+
+	// --- Grain / specks ---
+	float n = hash12(FRAGCOORD.xy + vec2(t * 120.0, t * 90.0));
+	float grain = (n - 0.5) * 2.0;
+	col += grain * (tape_noise * 0.06);
+
+	// Occasional white specks
+	float speck = smoothstep(0.995, 1.0, hash12(FRAGCOORD.xy * 0.73 + t * 40.0));
+	col += speck * (tape_noise * 0.25);
+
+	// --- Cheap glow (cross blur on brights) ---
+	vec3 c0 = col;
+	vec3 cx1 = sample_screen(cuv + vec2(px.x, 0.0));
+	vec3 cx2 = sample_screen(cuv - vec2(px.x, 0.0));
+	vec3 cy1 = sample_screen(cuv + vec2(0.0, px.y));
+	vec3 cy2 = sample_screen(cuv - vec2(0.0, px.y));
+	vec3 blur = (c0 + cx1 + cx2 + cy1 + cy2) / 5.0;
+	float br = dot(blur, vec3(0.2126, 0.7152, 0.0722));
+	vec3 glow = max(blur - vec3(glow_threshold), vec3(0.0));
+	col += glow * glow_strength * (0.5 + 0.5 * br);
+
+	// --- Vignette ---
+	vec2 v = cuv - 0.5;
+	float vig = smoothstep(0.9, 0.2, dot(v, v) * 2.2);
+	col *= mix(1.0 - vignette, 1.0, vig);
+
+	// --- Shadow mask triads ---
+	vec3 mask = triad_mask(FRAGCOORD.xy);
+	col *= mix(vec3(1.0), mask, mask_strength);
+
+	// Color grading last
+	col = apply_color_controls(col);
+
+	// Apply bounds + rounded corners (outside = black)
+	col *= in_bounds * corner_mask;
+
+	COLOR = vec4(col, 1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwhnx"]
+shader = SubResource("Shader_8lxbd")
+shader_parameter/brightness = 1.4950000710125
+shader_parameter/contrast = 0.910000043225
+shader_parameter/saturation = 2.0
+shader_parameter/gamma = 1.17200004915023
+shader_parameter/source_softness = 0.250000011875
+shader_parameter/curvature = 0.030000001425
+shader_parameter/corner_soften = 0.0400000019
+shader_parameter/vignette = 0.0
+shader_parameter/scanline_strength = 0.0
+shader_parameter/scanline_density = 0.5
+shader_parameter/interlace_strength = 0.0
+shader_parameter/mask_strength = 0.0850000040375
+shader_parameter/mask_scale = 0.5
+shader_parameter/chroma_offset_px = 0.8570000407075
+shader_parameter/luma_smear_px = 0.0
+shader_parameter/jitter_px = 0.0
+shader_parameter/wobble_px = 0.78000003705
+shader_parameter/tape_noise = 0.22
+shader_parameter/tape_lines = 0.1050000049875
+shader_parameter/roll_speed = 0.1
+shader_parameter/roll_strength = 0.15
+shader_parameter/glow_strength = 0.25
+shader_parameter/glow_threshold = 0.65
+
+[node name="MainMenu" type="Node2D" unique_id=952538441]
+script = ExtResource("1_h3krq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=639460580]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=643819292]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="backgroundrect" type="ColorRect" parent="CanvasLayer/Control" unique_id=902767793]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.4, 0, 0.6666667, 0.4627451)
+
+[node name="titletext" type="RichTextLabel" parent="CanvasLayer/Control" unique_id=1962952791]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 13.0
+offset_right = 564.0
+offset_bottom = 113.0
+theme_override_colors/default_color = Color(1, 0, 0.31764707, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0.5176471, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/italics_font_size = 70
+bbcode_enabled = true
+text = "[wave][i]HEARTSHIFT //[/i][/wave]"
+vertical_alignment = 1
+
+[node name="storybutton" type="Button" parent="CanvasLayer/Control" unique_id=1393589108]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 159.0
+offset_right = 473.0
+offset_bottom = 259.0
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_0v4xf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_adw2r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dpxu1")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/storybutton" unique_id=636748080]
+layout_mode = 0
+offset_right = 450.0
+offset_bottom = 100.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/normal_font_size = 45
+theme_override_font_sizes/italics_font_size = 45
+bbcode_enabled = true
+text = "[wave][i]STORY[/i][/wave]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="rhythmbutton" type="Button" parent="CanvasLayer/Control" unique_id=423646695]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 299.0
+offset_right = 473.0
+offset_bottom = 399.0
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_qwhnx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a4cru")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xh28q")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/rhythmbutton" unique_id=675480193]
+layout_mode = 0
+offset_right = 450.0
+offset_bottom = 100.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/normal_font_size = 45
+theme_override_font_sizes/italics_font_size = 45
+bbcode_enabled = true
+text = "[wave][i]RHYTHM[/i][/wave]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="optionsbutton" type="Button" parent="CanvasLayer/Control" unique_id=1100310742]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 439.0
+offset_right = 317.0
+offset_bottom = 539.0
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_hlomp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gt037")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cdf43")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/optionsbutton" unique_id=232576682]
+layout_mode = 0
+offset_right = 291.0
+offset_bottom = 100.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/normal_font_size = 45
+theme_override_font_sizes/italics_font_size = 45
+bbcode_enabled = true
+text = "[wave][i]OPTIONS[/i][/wave]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="characterportrait" type="VideoStreamPlayer" parent="CanvasLayer/Control" unique_id=966385080]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 150.0
+offset_right = 1100.0
+offset_bottom = 650.0
+stream = ExtResource("4_e5mke")
+autoplay = true
+expand = true
+loop = true
+
+[node name="version" type="RichTextLabel" parent="CanvasLayer/Control" unique_id=2085680471]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 589.0
+offset_right = 481.0
+offset_bottom = 635.0
+mouse_filter = 1
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+bbcode_enabled = true
+text = "[i]~$dreamscaper-v0.1 //[/i]"
+vertical_alignment = 1
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer/Control" unique_id=1807989640]
+material = SubResource("ShaderMaterial_qwhnx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="CanvasLayer/Control/storybutton" to="." method="_on_story_select_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/rhythmbutton" to="." method="_on_rhythm_play_button_pressed"]

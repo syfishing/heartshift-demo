@@ -69,7 +69,7 @@ func select():
 func _on_leave_player_animation_finished(anim_name: StringName) -> void:
 	var inst = CoreStageScene.instantiate()
 	inst.story = current_point.story
-
+	AudioHub.stop_menu_music()
 	# Defer the swap to the next frame
 	call_deferred("_replace_scene", inst)
 
