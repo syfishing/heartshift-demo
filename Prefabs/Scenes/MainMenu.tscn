@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://2eguu3saukbv" path="res://Scripts/UIscripts/mainmenu.gd" id="1_cdf43"]
 [ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="2_qgnro"]
-[ext_resource type="Texture2D" uid="uid://c453y6bsvakm4" path="res://Assets/UIAssets/characterplaceholder.png" id="3_ltqyq"]
+[ext_resource type="Texture2D" uid="uid://ca54yysfm1krx" path="res://Assets/UIAssets/lily.png" id="3_v0vp6"]
 [ext_resource type="Script" uid="uid://c6701asi1c2x4" path="res://Scripts/UIscripts/button_select.gd" id="4_2uwgl"]
 [ext_resource type="Script" uid="uid://b0mpekyu727g3" path="res://Scripts/UIscripts/mainmenubutton.gd" id="5_xbj4g"]
 [ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="6_d42rl"]
@@ -361,9 +361,10 @@ script = ExtResource("2_qgnro")
 follow_viewport_enabled = true
 
 [node name="Characterplaceholder" type="Sprite2D" parent="CanvasLayer" unique_id=1842887231]
+self_modulate = Color(0.80049086, 0.80049074, 0.80049074, 1)
 position = Vector2(878, 373)
-scale = Vector2(0.81, 0.81)
-texture = ExtResource("3_ltqyq")
+scale = Vector2(0.295, 0.295)
+texture = ExtResource("3_v0vp6")
 
 [node name="Transition" type="ColorRect" parent="CanvasLayer" unique_id=759965071]
 unique_name_in_owner = true

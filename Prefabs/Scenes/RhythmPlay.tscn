@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="7_f72t2"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="8_uhd87"]
 [ext_resource type="Resource" uid="uid://co31nfscdxhmx" path="res://Scripts/Charts/BellBound.tres" id="9_ekrlx"]
+[ext_resource type="Resource" uid="uid://bpqe83raxiwak" path="res://Scripts/Charts/Last Pulse.tres" id="11_27b1o"]
 
 [sub_resource type="Shader" id="Shader_8lxbd"]
 code = "shader_type canvas_item;
@@ -926,6 +927,7 @@ offset_bottom = 504.28528
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.25, 0.25)
+chart = ExtResource("11_27b1o")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=780756017]
 layer = -3

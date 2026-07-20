@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="1_5cbcl"]
 [ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_dsbte"]
 [ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="1_r3bk5"]
+[ext_resource type="Resource" uid="uid://c6eclu2ybw25q" path="res://Scripts/Charts/LastPulseTest.tres" id="2_np6qb"]
 [ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="2_p87wn"]
 [ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="3_18gwp"]
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
@@ -236,7 +237,7 @@ alpha_curve = SubResource("CurveTexture_57yhw")
 
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
 script = ExtResource("1_dsbte")
-chart = ExtResource("7_dcs3l")
+chart = ExtResource("2_np6qb")
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
 script = ExtResource("1_r3bk5")
@@ -658,7 +659,7 @@ script = ExtResource("6_n4yq1")
 chart = ExtResource("7_dcs3l")
 note_scene = ExtResource("3_bn5gq")
 dummy_note_scene = ExtResource("12_dsbte")
-travel_time = 10.0
+travel_time = 8.0
 dummy_spawn_interval = 1.0
 sine_decay_rate = 0.2
 
