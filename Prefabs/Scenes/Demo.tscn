@@ -12,7 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_dsbte"]
 [ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="7_dcs3l"]
+[ext_resource type="Texture2D" uid="uid://b2hm7dnva547x" path="res://Assets/UIAssets/errorbox.png" id="9_iw33s"]
+[ext_resource type="Texture2D" uid="uid://b5bqiiukeboqu" path="res://Assets/UIAssets/errorboxuuh.png" id="10_x0pjv"]
 [ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="12_dsbte"]
+[ext_resource type="Script" uid="uid://d1s32sdp3jr7f" path="res://Scripts/Managers/Event_Conductor.gd" id="14_8r4qt"]
 
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
@@ -112,8 +115,11 @@ shader_parameter/glow_threshold = 0.65
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_r3bk5"]
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_1fuao"]
+diffuse_texture = ExtResource("5_86r3q")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18gwp"]
-size = Vector2(13, 1)
+size = Vector2(16, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_7vajh"]
 
@@ -235,6 +241,451 @@ scale_over_velocity_max = 174.9
 scale_over_velocity_curve = SubResource("CurveTexture_np6qb")
 alpha_curve = SubResource("CurveTexture_57yhw")
 
+[sub_resource type="Animation" id="Animation_8r4qt"]
+resource_name = "Event"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../InGameElements/RailBottom:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(3.363589, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../InGameElements/RailTop:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(3.363589, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../InGameElements/Hit Line:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(0.32987696, 1),
+"update": 0,
+"values": [Vector2(0, -1), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CanvasLayer/Control/Accuracy:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2, 2.9999998),
+"transitions": PackedFloat32Array(0.29730177, 1),
+"update": 0,
+"values": [Vector2(1, -1), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CanvasLayer/Control/SongName:offset_transform_position_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2, 2.9999998),
+"transitions": PackedFloat32Array(0.29730198, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../CanvasLayer/Control/ComboTag:offset_transform_position_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1, 1.2),
+"transitions": PackedFloat32Array(0.27739263, 1),
+"update": 0,
+"values": [Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../CanvasLayer/Control/LevelDetail:offset_transform_position_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(3.6, 4.6000004),
+"transitions": PackedFloat32Array(0.32987735, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../CanvasLayer/Control/Pause:offset_transform_position_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(3.6, 4.6000004),
+"transitions": PackedFloat32Array(0.3186402, 1),
+"update": 0,
+"values": [Vector2(-1.2, -1.2), Vector2(0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../InGameElements/Errorbox:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 18.15, 18.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../InGameElements/Errorbox2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 18.3, 18.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../InGameElements/Errorbox3:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 18.45, 18.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../InGameElements/Errorbox4:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 18.6, 19.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../InGameElements/Errorbox5:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 18.15, 18.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../InGameElements/Errorbox6:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 18.3, 18.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../InGameElements/Errorbox7:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 18.45, 18.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("../InGameElements/Errorbox8:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 18.6, 19.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = false
+tracks/16/path = NodePath("../CanvasLayer/Control/ColorRect:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 18.6, 19.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = false
+tracks/17/path = NodePath("../InGameElements/BlackBox:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(18.6, 19.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_iw33s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../InGameElements/RailBottom:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../InGameElements/RailTop:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../InGameElements/Hit Line:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CanvasLayer/Control/Accuracy:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, -1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CanvasLayer/Control/SongName:offset_transform_position_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../CanvasLayer/Control/ComboTag:offset_transform_position_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../CanvasLayer/Control/LevelDetail:offset_transform_position_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../CanvasLayer/Control/Pause:offset_transform_position_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.2, -1.2)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../InGameElements/Errorbox:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../InGameElements/Errorbox2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../InGameElements/Errorbox3:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../InGameElements/Errorbox4:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../InGameElements/Errorbox5:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../InGameElements/Errorbox6:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../InGameElements/Errorbox7:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("../InGameElements/Errorbox8:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../CanvasLayer/Control/ColorRect:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("../InGameElements/BlackBox:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x0pjv"]
+_data = {
+&"Event": SubResource("Animation_8r4qt"),
+&"RESET": SubResource("Animation_iw33s")
+}
+
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
 script = ExtResource("1_dsbte")
 chart = ExtResource("2_np6qb")
@@ -278,17 +729,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=806142077]
+[node name="Pause" type="Button" parent="CanvasLayer/Control" unique_id=1051741657]
 self_modulate = Color(0.179842, 0.22810352, 0.7026473, 1)
 layout_mode = 0
 offset_left = 24.0
 offset_top = 16.0
 offset_right = 88.0
 offset_bottom = 80.0
-texture = ExtResource("5_86r3q")
-expand_mode = 1
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-1.2, -1.2)
+icon = ExtResource("5_86r3q")
+icon_alignment = 1
+expand_icon = true
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/TextureRect" unique_id=299460268]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Pause" unique_id=299460268]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -310,6 +764,8 @@ offset_left = 222.0
 offset_top = 28.0
 offset_right = 278.0
 offset_bottom = 68.0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, -3)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="ComboTag2" type="ColorRect" parent="CanvasLayer/Control/ComboTag" unique_id=1339686072]
@@ -352,6 +808,8 @@ anchor_right = 1.0
 offset_left = -318.79004
 offset_bottom = 67.06
 grow_horizontal = 0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(1, -1)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="AccuracyLabel" type="Label" parent="CanvasLayer/Control/Accuracy" unique_id=669504614]
@@ -396,6 +854,8 @@ offset_top = -50.824036
 offset_right = 204.68
 offset_bottom = -31.0
 grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-1, 1)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="SongLabel" type="Label" parent="CanvasLayer/Control/SongName" unique_id=1327533810]
@@ -426,6 +886,8 @@ offset_top = -91.0
 offset_bottom = -31.0
 grow_horizontal = 0
 grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(1, 1)
 color = Color(0.19247293, 0.35953876, 0.9913725, 1)
 
 [node name="DetailLabel" type="Label" parent="CanvasLayer/Control/LevelDetail" unique_id=1977836251]
@@ -444,6 +906,17 @@ vertical_alignment = 1
 [node name="RatingAnimPlayer" type="AnimationPlayer" parent="CanvasLayer/Control" unique_id=302687489]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_dcs3l")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control" unique_id=1606931222]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
 material = SubResource("ShaderMaterial_bn5gq")
@@ -488,6 +961,7 @@ z_index = -10
 position = Vector2(576, 250)
 scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
+offset = Vector2(-1, 0)
 
 [node name="RailBottom" type="Sprite2D" parent="InGameElements" unique_id=678003906]
 self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
@@ -495,6 +969,7 @@ z_index = -10
 position = Vector2(576, 400)
 scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
+offset = Vector2(-1, 0)
 
 [node name="RailBottom2" type="Sprite2D" parent="InGameElements" unique_id=295560481]
 self_modulate = Color(0.7239193, 0.43837702, 0, 1)
@@ -504,9 +979,75 @@ scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
 
 [node name="Hit Line" type="Sprite2D" parent="InGameElements" unique_id=1147199316]
+z_index = -10
 position = Vector2(250, 324)
 scale = Vector2(10, 648)
 texture = SubResource("CanvasTexture_r3bk5")
+offset = Vector2(0, -1)
+
+[node name="Errorbox" type="Sprite2D" parent="InGameElements" unique_id=1520359232]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(656, 544)
+texture = ExtResource("9_iw33s")
+
+[node name="Errorbox2" type="Sprite2D" parent="InGameElements" unique_id=415580747]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(232, 464)
+texture = ExtResource("9_iw33s")
+
+[node name="Errorbox3" type="Sprite2D" parent="InGameElements" unique_id=109824907]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(480, 97)
+texture = ExtResource("9_iw33s")
+
+[node name="Errorbox4" type="Sprite2D" parent="InGameElements" unique_id=717764219]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(504, 632)
+texture = ExtResource("9_iw33s")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements" unique_id=1449064312]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(556, 424)
+texture = ExtResource("9_iw33s")
+
+[node name="Errorbox6" type="Sprite2D" parent="InGameElements" unique_id=1975774717]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(848, 329)
+texture = ExtResource("9_iw33s")
+
+[node name="Errorbox7" type="Sprite2D" parent="InGameElements" unique_id=159971105]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(576, 288)
+texture = ExtResource("10_x0pjv")
+
+[node name="Errorbox8" type="Sprite2D" parent="InGameElements" unique_id=2080384776]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(950, 192)
+texture = ExtResource("9_iw33s")
+
+[node name="BlackBox" type="Sprite2D" parent="InGameElements" unique_id=1156828657]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+z_index = -5
+position = Vector2(568, 296)
+scale = Vector2(1.333, 1)
+texture = SubResource("CanvasTexture_1fuao")
 
 [node name="Hit Line Top" type="Sprite2D" parent="." unique_id=809933648]
 self_modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
@@ -529,7 +1070,7 @@ debug_color = Color(1, 0.616379, 0, 0.42000002)
 position = Vector2(-34.41, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Top/FailHit" unique_id=1969948358]
-position = Vector2(21.4, 0)
+position = Vector2(18.395, 0)
 scale = Vector2(1.0000002, 1)
 shape = SubResource("RectangleShape2D_18gwp")
 debug_color = Color(1, 0, 0, 0.42000002)
@@ -578,7 +1119,7 @@ debug_color = Color(1, 0.616379, 0, 0.42000002)
 position = Vector2(-34.41, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Mid/FailHit" unique_id=1275627779]
-position = Vector2(21.4, 0)
+position = Vector2(18.395, 0)
 scale = Vector2(1.0000002, 1)
 shape = SubResource("RectangleShape2D_18gwp")
 debug_color = Color(1, 0, 0, 0.42000002)
@@ -626,7 +1167,7 @@ debug_color = Color(1, 0.616379, 0, 0.42000002)
 position = Vector2(-34.41, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Bottom/FailHit" unique_id=958141413]
-position = Vector2(21.4, 0)
+position = Vector2(18.395, 0)
 scale = Vector2(1.0000002, 1)
 shape = SubResource("RectangleShape2D_18gwp")
 debug_color = Color(1, 0, 0, 0.42000002)
@@ -653,6 +1194,14 @@ lifetime = 0.5
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_x0pjv")
 
+[node name="Stars" type="GPUParticles2D" parent="." unique_id=218265872]
+self_modulate = Color(0.8729805, 1, 1, 1)
+z_index = -15
+position = Vector2(1252, 324)
+amount = 50
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_dsbte")
+
 [node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
 position = Vector2(-20, -20)
 script = ExtResource("6_n4yq1")
@@ -663,13 +1212,12 @@ travel_time = 8.0
 dummy_spawn_interval = 1.0
 sine_decay_rate = 0.2
 
-[node name="Stars" type="GPUParticles2D" parent="." unique_id=218265872]
-self_modulate = Color(0.8729805, 1, 1, 1)
-z_index = -15
-position = Vector2(1252, 324)
-amount = 50
-lifetime = 5.0
-process_material = SubResource("ParticleProcessMaterial_dsbte")
+[node name="EventConductor" type="Node2D" parent="." unique_id=736326546]
+script = ExtResource("14_8r4qt")
+
+[node name="EventPlayer" type="AnimationPlayer" parent="EventConductor" unique_id=202058872]
+libraries/ = SubResource("AnimationLibrary_x0pjv")
+autoplay = &"Event"
 
 [connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="area_entered" from="Hit Line Top/Hit" to="Hit Line Top" method="_on_hit_area_entered"]
