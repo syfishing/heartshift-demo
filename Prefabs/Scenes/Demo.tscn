@@ -18,7 +18,7 @@
 [ext_resource type="Shader" uid="uid://c8ove5jxr8r46" path="res://Assets/Shaders/glitch.gdshader" id="11_yikdd"]
 [ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="12_dsbte"]
 [ext_resource type="Script" uid="uid://d1s32sdp3jr7f" path="res://Scripts/Managers/Event_Conductor.gd" id="14_8r4qt"]
-[ext_resource type="Texture2D" uid="uid://cpmmeno73egwm" path="res://Assets/UIAssets/characterprototype2.png" id="19_hqa1v"]
+[ext_resource type="Texture2D" uid="uid://0lg60kmavb05" path="res://Assets/UIAssets/characterprototypesolid.png" id="19_hqa1v"]
 
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
@@ -339,7 +339,7 @@ shader_parameter/slice_strength = 0.38
 shader_parameter/shake_strength = 0.02
 shader_parameter/chroma_offset = 0.016
 shader_parameter/noise_strength = 0.2
-shader_parameter/color_flash_strength = 0.4
+shader_parameter/color_flash_strength = 0.0400000019
 shader_parameter/scanline_strength = 0.18
 shader_parameter/local_warp_strength = 0.14
 shader_parameter/flip_chance = 0.15
@@ -846,6 +846,348 @@ _data = {
 &"RESET": SubResource("Animation_iw33s")
 }
 
+[sub_resource type="Shader" id="Shader_hqa1v"]
+code = "shader_type canvas_item;
+
+// Godot 4 glitch shader.
+//
+// MODULATE:
+// The incoming COLOR built-in is the vertex color, which Godot has already
+// filled with this node's self_modulate combined with the inherited modulate
+// chain from its parents. It is captured on the first line and reapplied at the
+// end. (Exception: if the node lives under a CanvasGroup, the group's modulate
+// is composited after this shader runs and will not appear in COLOR.)
+//
+// TEXTURE WRAPPING:
+// Godot 4 disables texture repeat on CanvasItems by default, so UV offsets that
+// leave the 0-1 range smear the edge pixels. Either:
+//   - set the node's Texture > Repeat to \"Enabled\" in the inspector, or
+//   - leave \"clip_outside\" on below to make out-of-bounds areas transparent.
+//
+// ATLASES / REGIONS:
+// The clamping below assumes UV spans 0-1. If you use an AtlasTexture or a
+// Sprite2D with Region enabled, UV maps into a sub-rect and the clamp will be
+// wrong. Turn clip_outside off in that case, or pass the region rect in.
+
+/* ================= SETTINGS ================= */
+uniform bool enabled = true;
+// Probability of glitch effect happening
+uniform float glitch_chance : hint_range(0.0, 1.0) = 0.2;
+// Speed of glitch state changes (how many glitch \"frames\" per second)
+uniform float glitch_speed : hint_range(0.1, 60.0) = 7.0;
+// Number of horizontal slices
+uniform float slice_density : hint_range(1.0, 120.0) = 14.0;
+// Strength of horizontal displacement for slices
+uniform float slice_strength : hint_range(0.0, 1.0) = 0.38;
+// Global shake amount
+uniform float shake_strength : hint_range(0.0, 0.5) = 0.02;
+// Chromatic color separation amount
+uniform float chroma_offset : hint_range(0.0, 0.2) = 0.016;
+// Digital noise intensity
+uniform float noise_strength : hint_range(0.0, 1.0) = 0.2;
+// Intensity of color flashes
+uniform float color_flash_strength : hint_range(0.0, 1.0) = 0.4;
+// Intensity of scanline drop effect
+uniform float scanline_strength : hint_range(0.0, 1.0) = 0.18;
+// Strength of local warping distortion
+uniform float local_warp_strength : hint_range(0.0, 1.0) = 0.14;
+// Chance for horizontal flip of slices
+uniform float flip_chance : hint_range(0.0, 1.0) = 0.15;
+
+/* ---- modulate / clipping ---- */
+// ON  : modulate tints everything, including flashes and noise grain.
+//       The sprite always reads as one coherently tinted object.
+// OFF : modulate tints only the source art; flashes and grain keep their
+//       raw color and punch through the tint.
+uniform bool modulate_affects_glitch = true;
+// Discard pixels pushed outside the sprite instead of smearing the edge
+uniform bool clip_outside = true;
+// TIME is wrapped to this period to keep hash inputs small and precise.
+// The effect repeats every N seconds, which is imperceptible for noise.
+uniform float time_wrap : hint_range(1.0, 600.0) = 120.0;
+
+/* ================= HASH FUNCTIONS ================= */
+// Sine-free hashes (Dave Hoskins style). These stay well-behaved for large
+// inputs, unlike fract(sin(x * 143758.5) * 43758.5), which loses all precision
+// once TIME grows and produces visible banding.
+
+float hash11(float p) {
+	p = fract(p * 0.1031);
+	p *= p + 33.33;
+	p *= p + p;
+	return fract(p);
+}
+
+float hash12(vec2 p) {
+	vec3 p3 = fract(p.xyx * 0.1031);
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.x + p3.y) * p3.z);
+}
+
+vec2 hash22(vec2 p) {
+	vec3 p3 = fract(p.xyx * vec3(0.1031, 0.1030, 0.0973));
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.xx + p3.yz) * p3.zy);
+}
+
+/* ================= FRAGMENT SHADER ================= */
+void fragment() {
+	// Capture modulate / self_modulate / vertex color before COLOR is written.
+	vec4 modulate = COLOR;
+
+	// Split the tint into a pre-pass and a post-pass factor. Exactly one of
+	// them carries the color at any time, so modulate is never applied twice.
+	vec3 pre_tint  = modulate_affects_glitch ? vec3(1.0) : modulate.rgb;
+	vec3 post_tint = modulate_affects_glitch ? modulate.rgb : vec3(1.0);
+
+	vec2 uv = UV;
+	float t = mod(TIME, time_wrap);
+
+	// Quantized glitch \"frame\". Every random value below is keyed to this so
+	// effects hold for the duration of a step instead of buzzing per-frame.
+	float step_id = floor(t * glitch_speed);
+	float slow_id = floor(t);
+
+	float glitch = enabled ? step(1.0 - glitch_chance, hash11(step_id)) : 0.0;
+
+	/* ----- SLICES EFFECT ----- */
+	float slice_id = floor(uv.y * slice_density + hash11(slow_id) * 10.0);
+	float slice_rand = hash12(vec2(slice_id, step_id));
+	float slice_mask = step(0.5, slice_rand) * glitch;
+
+	// Flip is gated by the glitch mask and quantized to the glitch step.
+	// Branchless so it doesn't cost divergence on wide sprites.
+	float flip = step(hash12(vec2(slice_id + 91.7, step_id)), flip_chance) * slice_mask;
+	uv.x = mix(uv.x, 1.0 - uv.x, flip);
+
+	// Horizontal displacement for this slice
+	uv.x += (slice_rand - 0.5) * slice_strength * slice_mask;
+
+	/* ----- MICRO JITTER ----- */
+	float jitter = step(0.85, hash11(step_id * 1.7 + 5.0)) * glitch;
+	uv.x += (hash11(step_id * 3.1 + 13.0) - 0.5) * 0.08 * jitter;
+
+	/* ----- LOCAL WARP ----- */
+	float warp_zone = step(0.65, hash12(vec2(slice_id, step_id + 17.0)));
+	uv += (hash22(uv * 64.0 + step_id) - 0.5) * local_warp_strength * warp_zone * glitch;
+
+	/* ----- GLOBAL SHAKE ----- */
+	uv += (vec2(hash11(step_id * 1.3 + 41.0), hash11(step_id * 1.7 + 77.0)) - 0.5)
+		* shake_strength * glitch;
+
+	/* ----- SAMPLING ----- */
+	// Track whether we left the sprite before clamping, so we can cut the alpha
+	// rather than smear the border pixel across the displaced region.
+	vec2 in_range = step(vec2(0.0), uv) * step(uv, vec2(1.0));
+	float inside = in_range.x * in_range.y;
+	vec2 suv = clamp(uv, 0.0, 1.0);
+
+	vec4 base = texture(TEXTURE, suv);
+	float r = texture(TEXTURE, clamp(suv + vec2(chroma_offset * glitch, 0.0), 0.0, 1.0)).r;
+	float b = texture(TEXTURE, clamp(suv - vec2(chroma_offset * glitch, 0.0), 0.0, 1.0)).b;
+
+	// pre_tint is white unless modulate is set to spare the glitch artifacts.
+	vec3 color = vec3(r, base.g, b) * pre_tint;
+
+	/* ----- DIGITAL NOISE ----- */
+	// Keyed to UV and the glitch step, so grain resolution stays constant
+	// instead of blowing up as TIME grows.
+	color += (hash12(UV * 512.0 + vec2(step_id, step_id * 1.7)) - 0.5)
+		* noise_strength * glitch;
+
+	/* ----- SCANLINE DROP ----- */
+	float scan = step(0.9, hash12(vec2(floor(uv.y * 100.0), step_id)));
+	color *= 1.0 - scan * scanline_strength * glitch;
+
+	/* ----- COLOR FLASH ----- */
+	vec3 flash_color = step(vec3(0.5), vec3(
+		hash11(step_id + 0.1),
+		hash11(step_id + 31.7),
+		hash11(step_id + 61.3)
+	));
+	color = mix(color, flash_color, hash11(step_id * 4.0 + 7.0) * color_flash_strength * glitch);
+
+	// post_tint is white unless modulate should cover the glitch artifacts too.
+	// modulate.a is always applied here, so fading the node out still works
+	// regardless of which tint mode is selected.
+	float alpha = base.a * modulate.a * (clip_outside ? inside : 1.0);
+	COLOR = vec4(color * post_tint, alpha);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n3bcv"]
+shader = SubResource("Shader_hqa1v")
+shader_parameter/enabled = true
+shader_parameter/glitch_chance = 1.0
+shader_parameter/glitch_speed = 7.265000341827619
+shader_parameter/slice_density = 71.82000336395
+shader_parameter/slice_strength = 0.0
+shader_parameter/shake_strength = 0.02
+shader_parameter/chroma_offset = 0.016
+shader_parameter/noise_strength = 0.2
+shader_parameter/color_flash_strength = 0.4
+shader_parameter/scanline_strength = 0.18
+shader_parameter/local_warp_strength = 0.14
+shader_parameter/flip_chance = 0.15
+shader_parameter/modulate_affects_glitch = true
+shader_parameter/clip_outside = true
+shader_parameter/time_wrap = 120.0
+
+[sub_resource type="Shader" id="Shader_f72t2"]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/waveforms
+This shader is under CC0 license. Feel free to use, improve and 
+change this shader according to your needs and consider sharing 
+the modified result to godotshaders.com.
+
+Modified to correctly respect modulate / self_modulate (Godot 4):
+  - reads modulate from the vertex color via a varying, rather than from
+    fragment COLOR (which also contains the node's texture)
+  - premultiplies RGB by alpha to match blend_premul_alpha
+*/
+shader_type canvas_item;
+render_mode blend_premul_alpha;
+
+uniform int lines = 80; // Amount of lines the waveform is build up of
+uniform float amplitude : hint_range(0.0, 1.0) = 0.9; // Height of the wave
+uniform float frequency : hint_range(0.0, 0.5) = 0.1; // Set a lower value for a smoother wave
+uniform float intensity : hint_range(0.0, 1.0) = 0.75; // Lower values creates gaps in the wave while higher make the wave more solid
+uniform float line_sharpness : hint_range(0.0, 1.0) = 0.5; // Fuzzy edges on each line
+uniform float line_size : hint_range(0.0, 1.0) = 0.8; // Thickness of the lines
+uniform float fade : hint_range(0.0, 0.5) = 0.1; // Blurres the top and bottom of the lines
+uniform float rest_size : hint_range(-5., 5.) = -0.2; // The size of the lines when the line is not animating, i.e at value 0. Tweak if Fade is used.
+uniform float edge : hint_range(0.0, 0.5) = 0.05; // How close to the edges should the animation beginn
+uniform float speed = 0.5; // Speed of wave animation
+uniform vec4 color : source_color = vec4(.8, 0.25, 0.5, 1.0); // Color of wave
+uniform bool dot_matrix = false; 
+uniform int dot_matriz_size = 80;
+uniform bool speech_sim = true; // Toggle to simulate speach. Will create a more erratic movement in the wave
+uniform float speech_intensity : hint_range(0.0, 2.0) = 0.8; // How fast will the speech movement be
+uniform float progress : hint_range(0.0, 1.0) = 1.0; // Use to turn the animation on and off from outside the shader. 0 - off, 1 - on. Can animate values between which will shrink the wave.
+
+// In Godot 4 the final modulate (modulate * self_modulate, including any
+// inherited from parent CanvasItems) is baked into the vertex color, so we
+// capture it here and pass it to fragment().
+varying vec4 modulate;
+
+void vertex() {
+	modulate = COLOR;
+}
+
+// Scales RGB by alpha, as required by blend_premul_alpha
+vec4 premul(vec4 c) {
+	return vec4(c.rgb * c.a, c.a);
+}
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv.xy,
+	vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+float noise(vec2 uv) {
+	vec2 uv_index = floor(uv);
+	vec2 uv_fract = fract(uv);
+	// Four corners in 2D of a tile
+	float a = random(uv_index);
+	float b = random(uv_index + vec2(1.0, 0.0));
+	float c = random(uv_index + vec2(0.0, 1.0));
+	float d = random(uv_index + vec2(1.0, 1.0));
+	vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+	return mix(a, b, blur.x) +
+				(c - a) * blur.y * (1.0 - blur.x) +
+				(d - b) * blur.x * blur.y;
+}
+
+float fbm(vec2 uv) {
+	int octaves = 4;
+	float amp = 0.5;
+	float freq = 4.;
+	float value = 0.0;
+	
+	for(int i = 0; i < octaves; i++) {
+		value += amp * noise(freq * uv - 0.5);
+		amp *= 0.6;
+		freq *= 2.;
+	}
+	return value;
+}
+
+void fragment()
+{
+	// Some initialising
+	float time = TIME;
+	float f_columns = float(lines);
+	
+	// Make some distance to the edges before the animation starts
+	float cutoff = smoothstep(0.0, edge, (round ((UV.x) * (f_columns) ) / f_columns) );
+	cutoff *= 1. - smoothstep(1.-edge, 1.0, (round ((UV.x) * (f_columns) ) / f_columns) );
+
+	// Speech simulation setup
+	float ss = 1.0;
+	if (speech_sim == true){
+		ss = fbm(vec2(1.0, time * speed * 1.3) * speech_intensity) * 1.5;
+	}
+	
+	// Create the noise that controlls the animation
+	float noise = fbm(vec2( round( (UV.x) * f_columns ) * frequency, time * speed) ) * ss * progress;
+	noise *= cutoff; // Apply edge cutoff
+	
+	// Make wave values based on the noise
+	float wave = smoothstep(1.-intensity, 1.0, noise) * amplitude;
+	wave = wave + (rest_size * 0.2);
+	
+	// Create the lines
+	float line = abs( sin(( f_columns * 3.1416 * UV.x) + 1.5) );
+	line = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), line);
+	
+	// Simulate dot_matrix
+	if (dot_matrix){
+		float dm = abs( sin(( float(dot_matriz_size) * 3.1416 * UV.y) + 1.5) );
+		dm = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), dm);
+		line *= dm;
+	}
+	
+	// Duplicate mask on top an bottom and apply to line
+	float mask = 1.0 - smoothstep(wave, wave + fade, abs(UV.y - 0.5) * 2.);
+	line *= mask;
+	
+	// Wave colour, premultiplied by its own alpha
+	vec4 c = vec4(line) * premul(color);
+	
+	// Apply modulate * self_modulate, also premultiplied
+	c *= premul(modulate);
+	
+	COLOR = c;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oxxfm"]
+shader = SubResource("Shader_f72t2")
+shader_parameter/lines = 310
+shader_parameter/amplitude = 0.8750000415625
+shader_parameter/frequency = 0.10000000475
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 0.5
+shader_parameter/line_size = 0.4050000192375
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = -0.2
+shader_parameter/edge = 0.3550000168625
+shader_parameter/speed = 1.6400000000000001
+shader_parameter/color = Color(0.77, 0, 0, 0.011764706)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
+[sub_resource type="Gradient" id="Gradient_hqa1v"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1tw2i"]
+gradient = SubResource("Gradient_hqa1v")
+width = 991
+height = 110
+
 [sub_resource type="Gradient" id="Gradient_oxxfm"]
 offsets = PackedFloat32Array(0, 0.21160409, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.59044373, 0.59044373, 0.59044373, 1, 0, 0, 0, 1)
@@ -854,6 +1196,15 @@ colors = PackedColorArray(1, 1, 1, 1, 0.59044373, 0.59044373, 0.59044373, 1, 0, 
 gradient = SubResource("Gradient_oxxfm")
 width = 1152
 height = 648
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i0hs6"]
+gradient = SubResource("Gradient_oxxfm")
+width = 1152
+height = 144
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0, 0)
@@ -1211,7 +1562,7 @@ texture = ExtResource("9_iw33s")
 [node name="BossLevel" type="Sprite2D" parent="InGameElements" unique_id=412391198]
 modulate = Color(0.57930714, 0.7278699, 0.78118825, 1)
 material = SubResource("ShaderMaterial_hqa1v")
-position = Vector2(608, 67)
+position = Vector2(576, 63)
 scale = Vector2(1, 0.9955752)
 texture = ExtResource("11_57yhw")
 
@@ -1394,22 +1745,34 @@ libraries/ = SubResource("AnimationLibrary_x0pjv")
 autoplay = &"Event"
 
 [node name="BackgroundLevelElements" type="Node2D" parent="." unique_id=392097994]
-visible = false
 z_index = -20
-position = Vector2(638, 390)
+position = Vector2(576, 328)
 
 [node name="Characterprototype2" type="Sprite2D" parent="BackgroundLevelElements" unique_id=1004706745]
 modulate = Color(18.892157, 18.892157, 18.892157, 1)
-self_modulate = Color(0, 0, 0, 0.28235295)
+self_modulate = Color(0, 0, 0, 0.36862746)
 z_index = 7
-position = Vector2(-62, -5.9999847)
-scale = Vector2(0.223, 0.212)
+material = SubResource("ShaderMaterial_n3bcv")
+position = Vector2(0, -55.999996)
+scale = Vector2(0.189, 0.181)
 texture = ExtResource("19_hqa1v")
+
+[node name="Wave" type="Sprite2D" parent="BackgroundLevelElements/Characterprototype2" unique_id=1581851969]
+material = SubResource("ShaderMaterial_oxxfm")
+position = Vector2(0, 314.9171)
+scale = Vector2(6.134969, 6.4102564)
+texture = SubResource("GradientTexture2D_1tw2i")
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundLevelElements" unique_id=978845146]
 self_modulate = Color(1, 0, 0, 0.101960786)
-position = Vector2(-62.00002, -65.999985)
 texture = SubResource("GradientTexture2D_jkxj3")
+
+[node name="Sprite2D2" type="Sprite2D" parent="BackgroundLevelElements" unique_id=1523184300]
+self_modulate = Color(1, 0, 0, 0.101960786)
+texture = SubResource("GradientTexture2D_i0hs6")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="BackgroundLevelElements" unique_id=1554717412]
+layer = -1
 
 [connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="area_entered" from="Hit Line Top/Hit" to="Hit Line Top" method="_on_hit_area_entered"]
