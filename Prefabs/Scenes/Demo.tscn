@@ -3,15 +3,14 @@
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="1_5cbcl"]
 [ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_dsbte"]
 [ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="1_r3bk5"]
-[ext_resource type="Resource" uid="uid://c6eclu2ybw25q" path="res://Scripts/Charts/LastPulseTest.tres" id="2_np6qb"]
 [ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="2_p87wn"]
+[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_yikdd"]
 [ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="3_18gwp"]
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
 [ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="3_r3bk5"]
 [ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_86r3q"]
 [ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_dsbte"]
 [ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
-[ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="7_dcs3l"]
 [ext_resource type="Texture2D" uid="uid://b2hm7dnva547x" path="res://Assets/UIAssets/errorbox.png" id="9_iw33s"]
 [ext_resource type="Texture2D" uid="uid://b5bqiiukeboqu" path="res://Assets/UIAssets/errorboxuuh.png" id="10_x0pjv"]
 [ext_resource type="Texture2D" uid="uid://4f0ndihlddxd" path="res://Assets/UIAssets/BossLevel.png" id="11_57yhw"]
@@ -1173,7 +1172,7 @@ shader_parameter/line_size = 0.4050000192375
 shader_parameter/fade = 0.0
 shader_parameter/rest_size = -0.2
 shader_parameter/edge = 0.3550000168625
-shader_parameter/speed = 1.6400000000000001
+shader_parameter/speed = 1.64
 shader_parameter/color = Color(0.77, 0, 0, 0.011764706)
 shader_parameter/dot_matrix = false
 shader_parameter/dot_matriz_size = 80
@@ -1212,7 +1211,7 @@ metadata/_snap_enabled = true
 
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
 script = ExtResource("1_dsbte")
-chart = ExtResource("2_np6qb")
+chart = ExtResource("2_yikdd")
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
 script = ExtResource("1_r3bk5")
@@ -1730,7 +1729,7 @@ process_material = SubResource("ParticleProcessMaterial_dsbte")
 [node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
 position = Vector2(-20, -20)
 script = ExtResource("6_n4yq1")
-chart = ExtResource("7_dcs3l")
+chart = ExtResource("2_yikdd")
 note_scene = ExtResource("3_bn5gq")
 dummy_note_scene = ExtResource("12_dsbte")
 travel_time = 8.0

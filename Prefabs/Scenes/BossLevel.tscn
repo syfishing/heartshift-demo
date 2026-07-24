@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dv1awscsn006r"]
 
 [ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_gvjxc"]
-[ext_resource type="Resource" uid="uid://bpqe83raxiwak" path="res://Scripts/Charts/Last Pulse.tres" id="2_gvjxc"]
+[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_gvjxc"]
 [ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="3_tua6g"]
 [ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="4_2uhvq"]
 [ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_h0omu"]
