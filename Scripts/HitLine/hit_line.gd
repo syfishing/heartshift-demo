@@ -2,19 +2,28 @@ extends Sprite2D
 
 signal rating_broadcast(rating: String, lane: String)
 
-@export var DREAMY_WINDOW: float = 6.0
-@export var GREAT_WINDOW: float = 14.0
-@export var GOOD_WINDOW: float = 28.0
+@export var DREAMY_WINDOW_MS: float = 35.0
+@export var GREAT_WINDOW_MS: float = 45.0
+@export var GOOD_WINDOW_MS: float = 55.0
+@export var PASS_WINDOW_MS: float = 70.0
+
 @export_enum("lane1", "lane2", "lane3") var input_lane: String = "lane1"
 
 @export var show_debug_windows: bool = true
 
-var overlapping_areas: Array[Area2D] = []
+@export var conductor_path: NodePath = ^"../Conductor"
+
+const LANES: Array[String] = ["lane1", "lane2", "lane3"]
+
+var conductor: Node = null
+var lane_index: int = 0
 var active_hold: Node2D = null
 var hold_head_rating: String = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	conductor = get_node_or_null(conductor_path)
+	lane_index = maxi(LANES.find(input_lane), 0)
 	queue_redraw()
 	#$AnimationPlayer.seek(0.3, true)
 	#$AnimationPlayer.stop()
@@ -22,49 +31,107 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if conductor == null or not conductor.is_playing():
+		return
+
+	var song_time: float = conductor.song_time
+
 	if Input.is_action_just_pressed(input_lane):
 		$AnimationPlayer.stop()
 		$AnimationPlayer.play("HitMark")
-		check_hits()
+		judge_press(song_time)
 
-	if active_hold != null and is_instance_valid(active_hold):
-		var song_time = active_hold.audio_player_ref.get_playback_position() + AudioServer.get_time_since_last_mix()
-		
-		if Input.is_action_just_released(input_lane):
-			if song_time >= active_hold.end_time:
-				active_hold.complete_hold()
-				rating_broadcast.emit(hold_head_rating, input_lane)
-
-			else:
-				active_hold.fail_note()
-				rating_broadcast.emit("Fail", input_lane)
-				$FailParticle.emitting = true
+	judge_misses(song_time)
+	update_hold(song_time)
 
 
-			active_hold = null
-			hold_head_rating = ""
-			
-		elif song_time >= active_hold.end_time:
-			active_hold.complete_hold()
-			rating_broadcast.emit(hold_head_rating, input_lane)
-			active_hold = null
-			hold_head_rating = ""
+func judge_press(song_time: float) -> void:
+	var note: Node2D = conductor.get_hittable_note(lane_index, song_time, PASS_WINDOW_MS / 1000.0)
+	if note == null:
+		return
 
-	elif active_hold != null:
+	var error_ms: float = absf(song_time - note.hit_time) * 1000.0
+	var rating: String = get_rating(error_ms)
+
+	note.start_hit()
+	AudioHub.play_note_sfx()
+
+	if note.is_hold_note():
+		active_hold = note
+		hold_head_rating = rating
+	else:
+		rating_broadcast.emit(rating, input_lane)
+
+
+func judge_misses(song_time: float) -> void:
+	var missed: Node2D = conductor.take_missed_note(lane_index, song_time, PASS_WINDOW_MS / 1000.0)
+
+	while missed != null:
+		missed.fail_note()
+		rating_broadcast.emit("Fail", input_lane)
+		$FailParticle.emitting = true
+		missed = conductor.take_missed_note(lane_index, song_time, PASS_WINDOW_MS / 1000.0)
+
+
+func update_hold(song_time: float) -> void:
+	if active_hold == null:
+		return
+
+	if not is_instance_valid(active_hold):
 		active_hold = null
 		hold_head_rating = ""
+		return
+
+	if Input.is_action_just_released(input_lane):
+		if song_time >= active_hold.end_time:
+			active_hold.complete_hold()
+			rating_broadcast.emit(hold_head_rating, input_lane)
+
+		else:
+			active_hold.fail_note()
+			rating_broadcast.emit("Fail", input_lane)
+			$FailParticle.emitting = true
+
+		active_hold = null
+		hold_head_rating = ""
+
+	elif song_time >= active_hold.end_time:
+		active_hold.complete_hold()
+		rating_broadcast.emit(hold_head_rating, input_lane)
+		active_hold = null
+		hold_head_rating = ""
+
+
+func get_rating(error_ms: float) -> String:
+	if error_ms <= DREAMY_WINDOW_MS:
+		return "Dreamy"
+	elif error_ms <= GREAT_WINDOW_MS:
+		return "Great"
+	elif error_ms <= GOOD_WINDOW_MS:
+		return "Good"
+	else:
+		return "Pass"
 
 
 func _draw() -> void:
 	if not show_debug_windows:
 		return
 
+	var note_speed: float = conductor.get_note_speed() if conductor != null else 0.0
+	var px_per_ms: float = note_speed / 1000.0 / maxf(absf(scale.x), 0.0001)
+
 	var half_h: float = get_viewport_rect().size.y
-	var debug_dreamy: float = DREAMY_WINDOW / 10.0
-	var debug_great: float = GREAT_WINDOW / 10.0
-	var debug_good: float = GOOD_WINDOW / 10.0
+	var debug_dreamy: float = DREAMY_WINDOW_MS * px_per_ms
+	var debug_great: float = GREAT_WINDOW_MS * px_per_ms
+	var debug_good: float = GOOD_WINDOW_MS * px_per_ms
+	var debug_pass: float = PASS_WINDOW_MS * px_per_ms
 
 	# Draw from largest to smallest so tighter windows remain visible on top.
+	draw_rect(
+		Rect2(Vector2(-debug_pass, -half_h), Vector2(debug_pass * 2.0, half_h * 2.0)),
+		Color(0.6, 0.6, 0.6, 0.1),
+		true
+	)
 	draw_rect(
 		Rect2(Vector2(-debug_good, -half_h), Vector2(debug_good * 2.0, half_h * 2.0)),
 		Color(0.18, 0.65, 1.0, 0.15),
@@ -83,81 +150,3 @@ func _draw() -> void:
 
 	# Exact hit center line.
 	draw_line(Vector2(0.0, -half_h), Vector2(0.0, half_h), Color(1.0, 0.35, 0.35, 0.95), 2.0)
-
-
-func check_hits() -> void:
-	var line_x: float = global_position.x
-
-	for area in overlapping_areas:
-		if not is_instance_valid(area):
-			continue
-
-		# Is Hit code
-		var point_node = area.get_parent()
-		if point_node.get("hit"):
-			continue
-		_process_point_hit(point_node)
-		AudioHub.play_note_sfx()
-
-		# Ranking code
-		var distance: float = abs(area.global_position.x - line_x)
-
-		var rating: String = get_rating(distance)
-
-		if point_node.is_hold_note():
-			active_hold = point_node
-			hold_head_rating = rating
-		else:
-			rating_broadcast.emit(rating, input_lane)
-
-func get_rating(distance: float) -> String:
-	if distance <= DREAMY_WINDOW:
-		return "Dreamy"
-	elif distance <= GREAT_WINDOW:
-		return "Great"
-	elif distance <= GOOD_WINDOW:
-		return "Good"
-	else:
-		return "Pass"
-
-func _process_point_hit(point_node: Node) -> void:
-	point_node.start_hit()
-
-
-func _on_hit_area_entered(area: Area2D) -> void:
-	if area == null:
-		return
-
-	if not overlapping_areas.has(area):
-		overlapping_areas.append(area)
-
-	# check_hits()
-
-
-func _on_hit_area_exited(area: Area2D) -> void:
-	var filtered_areas: Array[Area2D] = []
-
-	for a in overlapping_areas:
-		if not is_instance_valid(a):
-			continue
-
-		if a == area:
-			continue
-
-		filtered_areas.append(a)
-
-	overlapping_areas = filtered_areas
-
-
-func _on_fail_hit_area_entered(area: Area2D) -> void:
-	if area == null:
-		return
-
-	var point_node = area.get_parent()
-	var was_hit: bool = point_node.get("hit")
-	if was_hit:
-		return
-
-	point_node.fail_note()
-	rating_broadcast.emit("Fail", input_lane)
-	$FailParticle.emitting = true

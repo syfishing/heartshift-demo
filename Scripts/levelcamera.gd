@@ -34,5 +34,5 @@ func on_timeout() -> void:
 	print(current_numberline_pos)
 	
 	var tween = get_tree().create_tween()
-	tween.tween_property(self, "zoom", Vector2(0.98, 0.98), 0.1)
+	tween.tween_property(self, "zoom", Vector2(0.99, 0.99), 0.1)
 	tween.tween_property(self, "zoom", Vector2(1.0, 1.0), 0.2)

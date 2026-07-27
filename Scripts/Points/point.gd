@@ -14,6 +14,8 @@ var travel_time: float = 2.0
 var spawn_pos: Vector2
 var hit_pos: Vector2
 var bpm: float
+var lane: int = -1
+var conductor: Node = null
 
 @onready var screen_center = get_viewport_rect().size
 
@@ -21,8 +23,6 @@ var bpm: float
 var hit = false
 var note_state: int = NoteState.PENDING
 
-var audio_player_ref: AudioStreamPlayer
-var _last_song_time: float = 0.0
 var _next_beat_time: float = -1.0
 
 func is_hold_note() -> bool:
@@ -35,8 +35,9 @@ func start_hit() -> void:
 	hit = true
 	if is_hold_note():
 		note_state = NoteState.HOLDING
-		var beat_duration = 60.0 / bpm
-		_next_beat_time = ceil(hit_time / beat_duration) * beat_duration
+		if bpm > 0.0:
+			var beat_duration = 60.0 / bpm
+			_next_beat_time = ceil(hit_time / beat_duration) * beat_duration
 		# position = hit_pos
 		$Spray.emitting = true
 		$HoldSpray.emitting = true
@@ -47,8 +48,10 @@ func start_hit() -> void:
 		note_state = NoteState.COMPLETED
 		$Spray.emitting = true
 		$PointHead.visible = false
-		
-	
+
+	_resolve_with_conductor()
+
+
 func complete_hold() -> void:
 	if note_state != NoteState.HOLDING:
 		return
@@ -66,9 +69,18 @@ func fail_note() -> void:
 	$HoldSpray.emitting = false
 	$HoldSpray/Dot.emitting = false
 
+	_resolve_with_conductor()
+
+func _resolve_with_conductor() -> void:
+	if is_instance_valid(conductor):
+		conductor.resolve_note(self )
+
 func _remove_from_conductor() -> void:
-	if get_parent().has_method("remove_active_note"):
-		get_parent().remove_active_note(self )
+	if not is_instance_valid(conductor):
+		return
+
+	conductor.remove_active_note(self )
+	conductor.resolve_note(self )
 
 
 func _ready() -> void:
@@ -79,27 +91,22 @@ func _ready() -> void:
 		$PointBody.add_point(Vector2($PointTail.position.x, 0))
 		$PointBody.add_point(Vector2(0, 0))
 
-func _process(delta: float) -> void:
-	if not audio_player_ref:
+func _process(_delta: float) -> void:
+	if conductor == null:
 		return
-		
+
 	visible = true
 
-	if audio_player_ref.playing:
-		_last_song_time = audio_player_ref.get_playback_position() + AudioServer.get_time_since_last_mix()
-	else:
-		_last_song_time += delta
+	var song_time: float = conductor.song_time
 
-	if note_state == NoteState.HOLDING:
-		$Area2D/CollisionShape2D.disabled = true
-		if _next_beat_time >= 0.0:
-			while _last_song_time >= _next_beat_time:
-				_on_beat()
-				_next_beat_time += 60.0 / bpm
-	
-	var progress = 1.0 - ((hit_time - _last_song_time) / travel_time)
+	if note_state == NoteState.HOLDING and _next_beat_time >= 0.0:
+		while song_time >= _next_beat_time:
+			_on_beat()
+			_next_beat_time += 60.0 / bpm
+
+	var progress = 1.0 - ((hit_time - song_time) / travel_time)
 	position = lerp(spawn_pos, hit_pos, progress)
-	
+
 	if position.x < screen_center.x * -8:
 		_remove_from_conductor()
 		queue_free()

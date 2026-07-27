@@ -349,9 +349,6 @@ shader_parameter/time_wrap = 120.0
 [sub_resource type="CanvasTexture" id="CanvasTexture_1fuao"]
 diffuse_texture = ExtResource("5_86r3q")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_18gwp"]
-size = Vector2(16, 1)
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_7vajh"]
 
 [sub_resource type="Animation" id="Animation_dsbte"]
@@ -1578,26 +1575,8 @@ self_modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
 position = Vector2(250, 175)
 scale = Vector2(10, 141.99997)
 script = ExtResource("3_r3bk5")
-DREAMY_WINDOW = 40.0
-GREAT_WINDOW = 50.0
-GOOD_WINDOW = 60.0
+PASS_WINDOW_MS = 100.0
 show_debug_windows = false
-
-[node name="Hit" type="Area2D" parent="Hit Line Top" unique_id=697181837]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Top/Hit" unique_id=210682509]
-scale = Vector2(1.0000002, 1)
-shape = SubResource("RectangleShape2D_18gwp")
-debug_color = Color(1, 0.616379, 0, 0.42000002)
-
-[node name="FailHit" type="Area2D" parent="Hit Line Top" unique_id=1889111428]
-position = Vector2(-34.41, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Top/FailHit" unique_id=1969948358]
-position = Vector2(18.395, 0)
-scale = Vector2(1.0000002, 1)
-shape = SubResource("RectangleShape2D_18gwp")
-debug_color = Color(1, 0, 0, 0.42000002)
 
 [node name="HitMark" type="Sprite2D" parent="Hit Line Top" unique_id=1068159725]
 self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
@@ -1626,27 +1605,9 @@ position = Vector2(250, 325)
 rotation = 0.008726646
 scale = Vector2(10, 141.99997)
 script = ExtResource("3_r3bk5")
-DREAMY_WINDOW = 40.0
-GREAT_WINDOW = 50.0
-GOOD_WINDOW = 60.0
+PASS_WINDOW_MS = 100.0
 input_lane = "lane2"
 show_debug_windows = false
-
-[node name="Hit" type="Area2D" parent="Hit Line Mid" unique_id=1499853021]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Mid/Hit" unique_id=561027308]
-scale = Vector2(1.0000002, 1)
-shape = SubResource("RectangleShape2D_18gwp")
-debug_color = Color(1, 0.616379, 0, 0.42000002)
-
-[node name="FailHit" type="Area2D" parent="Hit Line Mid" unique_id=1017587168]
-position = Vector2(-34.41, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Mid/FailHit" unique_id=1275627779]
-position = Vector2(18.395, 0)
-scale = Vector2(1.0000002, 1)
-shape = SubResource("RectangleShape2D_18gwp")
-debug_color = Color(1, 0, 0, 0.42000002)
 
 [node name="HitMark" type="Sprite2D" parent="Hit Line Mid" unique_id=607412973]
 self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
@@ -1674,27 +1635,12 @@ process_material = SubResource("ParticleProcessMaterial_x0pjv")
 position = Vector2(250, 475.00003)
 scale = Vector2(10, 141.99997)
 script = ExtResource("3_r3bk5")
-DREAMY_WINDOW = 40.0
-GREAT_WINDOW = 50.0
-GOOD_WINDOW = 60.0
+DREAMY_WINDOW_MS = 50.0
+GREAT_WINDOW_MS = 70.0
+GOOD_WINDOW_MS = 90.0
+PASS_WINDOW_MS = 150.0
 input_lane = "lane3"
 show_debug_windows = false
-
-[node name="Hit" type="Area2D" parent="Hit Line Bottom" unique_id=2123441056]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Bottom/Hit" unique_id=293245576]
-scale = Vector2(1.0000002, 1)
-shape = SubResource("RectangleShape2D_18gwp")
-debug_color = Color(1, 0.616379, 0, 0.42000002)
-
-[node name="FailHit" type="Area2D" parent="Hit Line Bottom" unique_id=84832229]
-position = Vector2(-34.41, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit Line Bottom/FailHit" unique_id=958141413]
-position = Vector2(18.395, 0)
-scale = Vector2(1.0000002, 1)
-shape = SubResource("RectangleShape2D_18gwp")
-debug_color = Color(1, 0, 0, 0.42000002)
 
 [node name="HitMark" type="Sprite2D" parent="Hit Line Bottom" unique_id=801568233]
 self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
@@ -1774,14 +1720,5 @@ texture = SubResource("GradientTexture2D_i0hs6")
 layer = -1
 
 [connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
-[connection signal="area_entered" from="Hit Line Top/Hit" to="Hit Line Top" method="_on_hit_area_entered"]
-[connection signal="area_exited" from="Hit Line Top/Hit" to="Hit Line Top" method="_on_hit_area_exited"]
-[connection signal="area_entered" from="Hit Line Top/FailHit" to="Hit Line Top" method="_on_fail_hit_area_entered"]
 [connection signal="rating_broadcast" from="Hit Line Mid" to="PointManager" method="_on_hit_line_rating_broadcast"]
-[connection signal="area_entered" from="Hit Line Mid/Hit" to="Hit Line Mid" method="_on_hit_area_entered"]
-[connection signal="area_exited" from="Hit Line Mid/Hit" to="Hit Line Mid" method="_on_hit_area_exited"]
-[connection signal="area_entered" from="Hit Line Mid/FailHit" to="Hit Line Mid" method="_on_fail_hit_area_entered"]
 [connection signal="rating_broadcast" from="Hit Line Bottom" to="PointManager" method="_on_hit_line_rating_broadcast"]
-[connection signal="area_entered" from="Hit Line Bottom/Hit" to="Hit Line Bottom" method="_on_hit_area_entered"]
-[connection signal="area_exited" from="Hit Line Bottom/Hit" to="Hit Line Bottom" method="_on_hit_area_exited"]
-[connection signal="area_entered" from="Hit Line Bottom/FailHit" to="Hit Line Bottom" method="_on_fail_hit_area_entered"]

@@ -10,9 +10,6 @@ diffuse_texture = ExtResource("2_qqjss")
 [sub_resource type="CanvasTexture" id="CanvasTexture_or058"]
 diffuse_texture = ExtResource("2_qqjss")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qqjss"]
-radius = 14.0
-
 [sub_resource type="Gradient" id="Gradient_qqjss"]
 offsets = PackedFloat32Array(0, 0.99019605)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -117,12 +114,6 @@ texture = SubResource("CanvasTexture_5cbcl")
 self_modulate = Color(0, 0, 0, 1)
 scale = Vector2(0.77, 0.77)
 texture = SubResource("CanvasTexture_5cbcl")
-
-[node name="Area2D" type="Area2D" parent="." unique_id=586878931]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=388372704]
-shape = SubResource("CircleShape2D_qqjss")
-debug_color = Color(1, 0, 0, 0.42000002)
 
 [node name="Spray" type="GPUParticles2D" parent="." unique_id=846592248]
 self_modulate = Color(1, 0.8472311, 0, 1)
