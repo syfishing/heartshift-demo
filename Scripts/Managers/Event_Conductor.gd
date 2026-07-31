@@ -13,3 +13,8 @@ func _process(delta: float) -> void:
 	# Only correct if drift is noticeable
 	if abs(audio_t - anim_t) > 0.01:  # 10ms threshold
 		anim_player.seek(audio_t)
+
+
+func _on_event_player_animation_finished(anim_name: StringName) -> void:
+	queue_free()
+	pass # Replace with function body.

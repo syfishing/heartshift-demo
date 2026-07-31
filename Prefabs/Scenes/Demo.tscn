@@ -9,11 +9,18 @@
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
 [ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="3_r3bk5"]
 [ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_86r3q"]
+[ext_resource type="Texture2D" uid="uid://bvdycarl00gi6" path="res://Assets/UIAssets/mocktitlerank.png" id="6_aoha2"]
 [ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_dsbte"]
 [ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
+[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="7_a5jj2"]
+[ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="8_p4jp6"]
 [ext_resource type="Texture2D" uid="uid://b2hm7dnva547x" path="res://Assets/UIAssets/errorbox.png" id="9_iw33s"]
+[ext_resource type="Texture2D" uid="uid://tvsxlvuuo4cq" path="res://Assets/UIAssets/retrobuttonopen.png" id="9_mrkwl"]
+[ext_resource type="Texture2D" uid="uid://cwhsshv0irukc" path="res://Assets/UIAssets/SongCovers/pixel-cover-816x816.png" id="9_qpyjv"]
+[ext_resource type="Texture2D" uid="uid://cp0trdc32123a" path="res://Assets/UIAssets/retrobuttonclosed.png" id="10_kux6b"]
 [ext_resource type="Texture2D" uid="uid://b5bqiiukeboqu" path="res://Assets/UIAssets/errorboxuuh.png" id="10_x0pjv"]
 [ext_resource type="Texture2D" uid="uid://4f0ndihlddxd" path="res://Assets/UIAssets/BossLevel.png" id="11_57yhw"]
+[ext_resource type="Texture2D" uid="uid://xebl0kenqjf8" path="res://Assets/UIAssets/rankrow.png" id="11_qpyjv"]
 [ext_resource type="Shader" uid="uid://c8ove5jxr8r46" path="res://Assets/Shaders/glitch.gdshader" id="11_yikdd"]
 [ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="12_dsbte"]
 [ext_resource type="Script" uid="uid://d1s32sdp3jr7f" path="res://Scripts/Managers/Event_Conductor.gd" id="14_8r4qt"]
@@ -30,66 +37,235 @@ glow_normalized = true
 glow_strength = 1.5
 glow_bloom = 0.1
 
-[sub_resource type="Animation" id="Animation_r3bk5"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RatingLabel:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(291, 70)]
+[sub_resource type="Shader" id="Shader_p4jp6"]
+code = "shader_type canvas_item;
+
+// License: CC0
+// Author: Ultipuk, https://ultipuk.xyz
+// Link: https://godotshaders.com/shader/transition-with-a-pattern-texture/
+
+// Uncomment this if you want to use background texture
+//#define USE_BACKGROUND_TEXTURE
+
+// Uncomment this if you want to use closing transition,
+// starting removing the pattern after the progress reaches 0.5
+//#define USE_CLOSING
+
+// Uncomment this if you want to remove tile distortion.
+// The result will look weird in the editor, and the tiles will have some clipping. Intended for viewport-sized canvases.
+//#define REMOVE_DISTORTION
+
+/** Actual transition progress. You want to change it from a script. */
+uniform float progress: hint_range(0.0, 1.0) = 0.0;
+/** The width of the transition as a fraction of the UV. */
+uniform float width: hint_range(0.0, 1.0) = 0.5;
+
+/** Actual pattern. You can use a texture with an ALPHA channel.
+*   This color is modulated, so you can use modulate parameter to change the color. */
+uniform sampler2D tile_texture: source_color, repeat_disable;
+/** Tile size in pixels. */
+uniform float tile_pixel_size = 32.0;
+/** The maximum scale of the tile on the edge of the transition window. */
+uniform float tile_grown_scale: hint_range(0.0, 16.0) = 2.0;
+
+/** Transition uses red channel to determine when the part should be visible. */
+uniform sampler2D transition_texture;
+
+#ifdef USE_BACKGROUND_TEXTURE
+/** Simple background texture that will be mixed with the tile texture. It can be a SubViewport texture or just a gradient. */
+uniform sampler2D background_texture: source_color;
+#endif
+
+void fragment() {
+	vec2 tile_uv = vec2(
+		fract(FRAGCOORD.x / tile_pixel_size),
+		fract(FRAGCOORD.y / tile_pixel_size)
+	);
+	
+#ifdef REMOVE_DISTORTION
+	vec2 tiles = vec2(1.0 / SCREEN_PIXEL_SIZE / tile_pixel_size);
+	vec2 transition_uv = ceil(UV * tiles) / tiles;
+#else
+	vec2 transition_uv = UV;
+#endif
+	
+#ifdef USE_CLOSING
+	float part, transition;
+	
+	if (progress > 0.5) {
+		part = (1.0 - (progress - 0.5) * 2.0) * (1.0 + 2.0 * width) - width;
+		transition = 1.0 - texture(transition_texture, transition_uv).r;
+	} else {
+		part = 2.0 * progress * (1.0 + 2.0 * width) - width;
+		transition = texture(transition_texture, transition_uv).r;
+	}
+#else
+	float part = progress * (1.0 + 2.0 * width) - width;
+	float transition = texture(transition_texture, transition_uv).r;
+#endif
+	
+	float window = max(0.0, min(1.0, width + (part - transition) / width));
+	
+	tile_uv = tile_uv * 2.0 - 1.0;
+	tile_uv /= window * tile_grown_scale;
+	tile_uv = (tile_uv + 1.0) * 0.5;
+	
+#ifdef USE_BACKGROUND_TEXTURE
+	vec4 tile = texture(tile_texture, tile_uv) * texture(background_texture, UV);
+#else
+	vec4 tile = texture(tile_texture, tile_uv);
+#endif
+	
+	COLOR *= tile;
+}"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mrkwl"]
+load_path = "res://.godot/imported/roundeddiamond.png-4ff04342e72f0a31fd057d2828b6b1a3.ctex"
+
+[sub_resource type="Gradient" id="Gradient_aoha2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aoha2"]
+gradient = SubResource("Gradient_aoha2")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qpyjv"]
+shader = SubResource("Shader_p4jp6")
+shader_parameter/progress = 0.0
+shader_parameter/width = 0.5
+shader_parameter/tile_texture = SubResource("CompressedTexture2D_mrkwl")
+shader_parameter/tile_pixel_size = 32.0
+shader_parameter/tile_grown_scale = 2.0
+shader_parameter/transition_texture = SubResource("GradientTexture2D_aoha2")
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_kux6b"]
+file = "res://Assets/Backgrounds/wavymenubg2.ogv"
+
+[sub_resource type="Shader" id="Shader_ekrlx"]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+uniform vec2 mask_scale = vec2(1.0, 1.0);
+uniform vec2 mask_offset = vec2(0.0, 0.0);
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV) * COLOR;
+
+    vec2 mask_uv = (UV - 0.5) / mask_scale + 0.5 + mask_offset;
+    float mask = texture(mask_texture, mask_uv).a;
+	
+    vec2 inside = step(vec2(0.0), mask_uv) * step(mask_uv, vec2(1.0));
+    mask *= inside.x * inside.y;
+
+    color.a *= mask;
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mydub"]
+shader = SubResource("Shader_ekrlx")
+shader_parameter/mask_texture = ExtResource("7_a5jj2")
+shader_parameter/mask_scale = Vector2(1, 1)
+shader_parameter/mask_offset = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_hbsud"]
+colors = PackedColorArray(1, 1, 1, 0.4509804, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rql4f"]
+gradient = SubResource("Gradient_hbsud")
+
+[sub_resource type="Shader" id="Shader_jahwt"]
+code = "shader_type canvas_item;
+
+
+uniform vec2 resolution;
+uniform vec2 mouse_pos;
+uniform float speed_multiplier = 1.0;
+uniform bool enable_background = true;
+uniform vec4 background_color = vec4(0.0, 0.0, 0.0, 1.0); 
+
+
+float No(float x, vec2 T){
+	return fract(9667.5 * sin(7983.75 * (x + T.x) + 297. + T.y));
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("RatingLabel:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
+vec4 Rancol(vec2 x, vec2 T){
+	return vec4(No(x.x + x.y, T), No(x.x*x.x + x.y, T), No(x.x*x.x + x.y*x.y, T), 1.0);
+}
+vec4 grid(vec2 uv, float t, vec2 T){
+	vec4 C1 = vec4(0.0);
+	vec4 C2 = vec4(0.0);
+	uv *= 20.0;
+	vec2 id = vec2(floor(uv.x), floor(uv.y));
+	uv.y += (5.0 * No(id.x * id.x, T) + 1.0) * t * 0.04;
+	uv.y += No(id.x, T);
+	id = vec2(floor(uv.x), floor(uv.y));
+	uv = fract(uv) - 0.5;
+	float d = length(uv);
+	float t_local = t * (1.0 * No(id.x + id.y, T));
+	float r = 0.1 * sin(t_local + sin(t_local) * 0.5) + 0.3;
+	float r1 = 0.07 * sin(2.0 * t_local + sin(2.0 * t_local) * 0.5) + 0.1 * No(id.x + id.y, T);
+	if (d < r && d > r - 0.1) {
+		C2 = 0.5 * Rancol(id + vec2(1.0), T) + vec4(0.5);
+		C2 *= smoothstep(r - 0.12, r, d);
+		C2 *= 1.0 - smoothstep(r - 0.05, r + 0.12, d);
+	}
+	if (d < r1) {
+		C2 = 0.5 * Rancol(id + vec2(1.0), T) + vec4(0.5);
+	}
+	return C2 + C1;
 }
 
-[sub_resource type="Animation" id="Animation_n4yq1"]
-resource_name = "RatingAnim"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RatingLabel:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(312.28, 34.79), Vector2(312.28, 23.75)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("RatingLabel:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(3.2490087, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcs3l"]
-_data = {
-&"RESET": SubResource("Animation_r3bk5"),
-&"RatingAnim": SubResource("Animation_n4yq1")
-}
+void fragment() {
+	vec2 uv = FRAGCOORD.xy / resolution.xy;
+	uv.y *= resolution.y / resolution.x;
+	float t = TIME * speed_multiplier;
+    vec2 T = mouse_pos / resolution;
+	vec4 final_color = grid(uv, t, T);
+
+    if (enable_background) {
+        final_color += background_color;
+    }
+
+    COLOR = final_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7rtu4"]
+shader = SubResource("Shader_jahwt")
+shader_parameter/resolution = Vector2(700, 200)
+shader_parameter/mouse_pos = Vector2(0, 0)
+shader_parameter/speed_multiplier = 1.0
+shader_parameter/enable_background = false
+shader_parameter/background_color = Vector4(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_hcp02"]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+uniform vec2 mask_scale = vec2(1.0, 1.0);
+uniform vec2 mask_offset = vec2(0.0, 0.0);
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV) * COLOR;
+
+    vec2 mask_uv = (UV - 0.5) / mask_scale + 0.5 + mask_offset;
+    float mask = texture(mask_texture, mask_uv).a;
+
+    // Zero the mask anywhere we've sampled outside the texture.
+    vec2 inside = step(vec2(0.0), mask_uv) * step(mask_uv, vec2(1.0));
+    mask *= inside.x * inside.y;
+
+    color.a *= mask;
+    COLOR = color;
+}"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y1hkt"]
+load_path = "res://.godot/imported/roundedrect.png-546c6fd7b9616b1388628124dfdb78c3.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h43uj"]
+shader = SubResource("Shader_hcp02")
+shader_parameter/mask_texture = SubResource("CompressedTexture2D_y1hkt")
+shader_parameter/mask_scale = Vector2(1, 1)
+shader_parameter/mask_offset = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
 shader = ExtResource("3_18gwp")
@@ -626,6 +802,67 @@ shader_parameter/intensidad_picos = 0.0
 shader_parameter/cierre_picos = 0.0
 shader_parameter/rotacion_picos = 0.0
 
+[sub_resource type="Animation" id="Animation_r3bk5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RatingLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(291, 70)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RatingLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_n4yq1"]
+resource_name = "RatingAnim"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RatingLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(312.28, 34.79), Vector2(312.28, 23.75)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RatingLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(3.2490087, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcs3l"]
+_data = {
+&"RESET": SubResource("Animation_r3bk5"),
+&"RatingAnim": SubResource("Animation_n4yq1")
+}
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_18gwp"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_r3bk5"]
@@ -773,7 +1010,7 @@ alpha_curve = SubResource("CurveTexture_57yhw")
 
 [sub_resource type="Animation" id="Animation_8r4qt"]
 resource_name = "Event"
-length = 135.58333
+length = 125.0
 step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -946,7 +1183,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("../CanvasLayer/CRT/Glitch:visible")
+tracks/14/path = NodePath("../PauseMenu/CRT/Glitch:visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -970,7 +1207,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("../CanvasLayer/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/pieces_y")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -982,7 +1219,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("../CanvasLayer/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/fall_progress")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -1066,7 +1303,7 @@ tracks/23/keys = {
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("../CanvasLayer/CRT/Jostar:visible")
+tracks/24/path = NodePath("../PauseMenu/CRT/Jostar:visible")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
@@ -1078,7 +1315,7 @@ tracks/24/keys = {
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("../CanvasLayer/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/cierre_picos")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
@@ -1186,7 +1423,7 @@ tracks/33/keys = {
 tracks/34/type = "value"
 tracks/34/imported = false
 tracks/34/enabled = true
-tracks/34/path = NodePath("../CanvasLayer/CRT/Crash:visible")
+tracks/34/path = NodePath("../PauseMenu/CRT/Crash:visible")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = {
@@ -1198,7 +1435,7 @@ tracks/34/keys = {
 tracks/35/type = "value"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("../CanvasLayer/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/rotacion_picos")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
@@ -1210,7 +1447,7 @@ tracks/35/keys = {
 tracks/36/type = "value"
 tracks/36/imported = false
 tracks/36/enabled = true
-tracks/36/path = NodePath("../CanvasLayer/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/intensidad_picos")
 tracks/36/interp = 1
 tracks/36/loop_wrap = true
 tracks/36/keys = {
@@ -1226,10 +1463,10 @@ tracks/37/path = NodePath("../Camera2D:pulse")
 tracks/37/interp = 1
 tracks/37/loop_wrap = true
 tracks/37/keys = {
-"times": PackedFloat32Array(0, 4.6),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 4.6, 124.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [false, true]
+"values": [false, true, false]
 }
 
 [sub_resource type="Animation" id="Animation_iw33s"]
@@ -1405,7 +1642,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("../CanvasLayer/CRT/Glitch:visible")
+tracks/14/path = NodePath("../PauseMenu/CRT/Glitch:visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -1429,7 +1666,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("../CanvasLayer/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/pieces_y")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -1441,7 +1678,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("../CanvasLayer/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/fall_progress")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -1525,7 +1762,7 @@ tracks/23/keys = {
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("../CanvasLayer/CRT/Jostar:visible")
+tracks/24/path = NodePath("../PauseMenu/CRT/Jostar:visible")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
@@ -1537,7 +1774,7 @@ tracks/24/keys = {
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("../CanvasLayer/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/cierre_picos")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
@@ -1645,7 +1882,7 @@ tracks/33/keys = {
 tracks/34/type = "value"
 tracks/34/imported = false
 tracks/34/enabled = true
-tracks/34/path = NodePath("../CanvasLayer/CRT/Crash:visible")
+tracks/34/path = NodePath("../PauseMenu/CRT/Crash:visible")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = {
@@ -1657,7 +1894,7 @@ tracks/34/keys = {
 tracks/35/type = "value"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("../CanvasLayer/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/rotacion_picos")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
@@ -1669,7 +1906,7 @@ tracks/35/keys = {
 tracks/36/type = "value"
 tracks/36/imported = false
 tracks/36/enabled = true
-tracks/36/path = NodePath("../CanvasLayer/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/intensidad_picos")
 tracks/36/interp = 1
 tracks/36/loop_wrap = true
 tracks/36/keys = {
@@ -2081,6 +2318,8 @@ script = ExtResource("2_p87wn")
 pulse = true
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=103199223]
+layer = 2
+follow_viewport_enabled = true
 
 [node name="TextureRect" type="TextureRect" parent="PauseMenu" unique_id=455672928]
 anchors_preset = 8
@@ -2094,6 +2333,603 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="RankReveal" type="Control" parent="PauseMenu" unique_id=2125491467]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Upper" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1900463846]
+z_index = 2
+material = SubResource("ShaderMaterial_qpyjv")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.008850009, 0.0041999994, 0.06, 1)
+
+[node name="Mocktitlerank" type="TextureRect" parent="PauseMenu/RankReveal" unique_id=77228622]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 24.0
+offset_right = 1391.0
+offset_bottom = 199.0
+scale = Vector2(0.835, 0.835)
+texture = ExtResource("6_aoha2")
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1797219537]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.68235296)
+
+[node name="ColorRect2" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1596024847]
+self_modulate = Color(0, 0, 0, 0.69411767)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DebugRect" type="ColorRect" parent="PauseMenu/RankReveal/ColorRect2" unique_id=1919264495]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12941177, 0.09019608, 0.18039216, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="PauseMenu/RankReveal/ColorRect2" unique_id=313193094]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stream = SubResource("VideoStreamTheora_kux6b")
+speed_scale = 1.523
+autoplay = true
+expand = true
+loop = true
+
+[node name="Card" type="TextureRect" parent="PauseMenu/RankReveal" unique_id=1253714275]
+self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1072.0
+offset_top = -100.0
+offset_right = -687.0
+offset_bottom = 179.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("7_a5jj2")
+expand_mode = 1
+
+[node name="InnerCard" type="TextureRect" parent="PauseMenu/RankReveal/Card" unique_id=105890879]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -197.30852
+offset_top = -141.93475
+offset_right = 196.30847
+offset_bottom = 143.93475
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.94, 0.92)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("7_a5jj2")
+expand_mode = 1
+
+[node name="GradientBG" type="TextureRect" parent="PauseMenu/RankReveal/Card/InnerCard" unique_id=314754869]
+unique_name_in_owner = true
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+material = SubResource("ShaderMaterial_mydub")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_rql4f")
+
+[node name="SongCoverBG" type="ColorRect" parent="PauseMenu/RankReveal/Card" unique_id=632450168]
+material = SubResource("ShaderMaterial_7rtu4")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = 155.0
+grow_horizontal = 2
+
+[node name="SongCoverBG2" type="ColorRect" parent="PauseMenu/RankReveal/Card/SongCoverBG" unique_id=1240220188]
+self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = 146.0
+offset_right = 8.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongCoverFrame" type="TextureRect" parent="PauseMenu/RankReveal/Card/SongCoverBG" unique_id=133180259]
+self_modulate = Color(0.9019608, 0.65882355, 0.99607843, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.09, 1.09)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("5_86r3q")
+expand_mode = 1
+
+[node name="SongCover" type="TextureRect" parent="PauseMenu/RankReveal/Card/SongCoverBG" unique_id=1164060036]
+unique_name_in_owner = true
+self_modulate = Color(0.8217887, 0.82178867, 0.82178867, 1)
+material = SubResource("ShaderMaterial_h43uj")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("9_qpyjv")
+expand_mode = 1
+
+[node name="Level Difficulty Container" type="ColorRect" parent="PauseMenu/RankReveal/Card" unique_id=1458444951]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -185.5
+offset_top = -111.0
+offset_right = 184.5
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.09411765, 0.2, 1)
+
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Card/Level Difficulty Container" unique_id=149472661]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 20
+text = "Artist"
+vertical_alignment = 1
+
+[node name="LevelDifficultyLabel" type="Label" parent="PauseMenu/RankReveal/Card/Level Difficulty Container" unique_id=452632721]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 20
+text = "insertartist"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Length Container" type="ColorRect" parent="PauseMenu/RankReveal/Card" unique_id=1820897176]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -185.5
+offset_top = -71.0
+offset_right = 184.5
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.09411765, 0.2, 1)
+
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Card/Length Container" unique_id=45747059]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 20
+text = "Charting"
+vertical_alignment = 1
+
+[node name="LengthLabel" type="Label" parent="PauseMenu/RankReveal/Card/Length Container" unique_id=2096488798]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 20
+text = "insertcharter"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Rank" type="Control" parent="PauseMenu/RankReveal" unique_id=1769660189]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 82.0
+offset_top = -128.0
+offset_right = 338.0
+offset_bottom = -26.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Rank" unique_id=1380167137]
+self_modulate = Color(0.8, 0.64000005, 0, 1)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -67.884995
+offset_right = 131.0
+offset_bottom = -0.8849945
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 56
+text = "RANK"
+vertical_alignment = 2
+
+[node name="Grade" type="Label" parent="PauseMenu/RankReveal/Rank" unique_id=1573994675]
+self_modulate = Color(0.8, 0.64000005, 0, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -116.0
+offset_top = -123.0
+offset_right = 6.0
+offset_bottom = 9.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 96
+text = "A"
+vertical_alignment = 2
+
+[node name="Control" type="Control" parent="PauseMenu/RankReveal" unique_id=1679862693]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=912452828]
+self_modulate = Color(0, 0.69109005, 0.804423, 1)
+layout_mode = 0
+offset_left = -482.0
+offset_top = -80.0
+offset_right = -23.0
+offset_bottom = -9.605003
+texture = ExtResource("11_qpyjv")
+expand_mode = 1
+
+[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect" unique_id=1655452497]
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "DREAMY"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect" unique_id=2057534768]
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "203"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=2091561766]
+self_modulate = Color(0, 0.8, 0.47999993, 1)
+layout_mode = 0
+offset_left = -482.0
+offset_right = -23.0
+offset_bottom = 70.395
+texture = ExtResource("11_qpyjv")
+expand_mode = 1
+
+[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect2" unique_id=1803956736]
+self_modulate = Color(0.03529412, 1, 0.5294118, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "GREAT"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect2" unique_id=203590835]
+self_modulate = Color(0.03529412, 1, 0.5294118, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "203"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=1875330552]
+self_modulate = Color(0.8, 0.64000005, 0, 1)
+layout_mode = 0
+offset_left = -480.0
+offset_top = 80.0
+offset_right = -21.0
+offset_bottom = 150.39499
+texture = ExtResource("11_qpyjv")
+expand_mode = 1
+
+[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect3" unique_id=1287728261]
+self_modulate = Color(1, 0.90588236, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "GOOD"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect3" unique_id=968089942]
+self_modulate = Color(1, 0.90588236, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "203"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect4" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=815931875]
+self_modulate = Color(0.8, 0.32000002, 0, 1)
+layout_mode = 0
+offset_left = -482.0
+offset_top = 160.0
+offset_right = -23.0
+offset_bottom = 230.39499
+texture = ExtResource("11_qpyjv")
+expand_mode = 1
+
+[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect4" unique_id=1751192934]
+self_modulate = Color(1, 0.42352942, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "PASS"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect4" unique_id=1171091340]
+self_modulate = Color(1, 0.42352942, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "203"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect5" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=2044138657]
+self_modulate = Color(0.43, 0.43, 0.43, 1)
+layout_mode = 0
+offset_left = -482.0
+offset_top = 240.0
+offset_right = -23.0
+offset_bottom = 310.395
+texture = ExtResource("11_qpyjv")
+expand_mode = 1
+
+[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect5" unique_id=1581196215]
+self_modulate = Color(0.627451, 0.6313726, 0.6509804, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "FAIL"
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect5" unique_id=1328451705]
+self_modulate = Color(0.627451, 0.6313726, 0.6509804, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 40
+text = "203"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CRT" type="ColorRect" parent="PauseMenu" unique_id=1134534797]
+material = SubResource("ShaderMaterial_bn5gq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Glitch" type="ColorRect" parent="PauseMenu/CRT" unique_id=2045397140]
+visible = false
+material = SubResource("ShaderMaterial_i0hs6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Shatter" type="ColorRect" parent="PauseMenu/CRT" unique_id=1095969783]
+material = SubResource("ShaderMaterial_3hl7e")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Jostar" type="ColorRect" parent="PauseMenu/CRT" unique_id=1583569024]
+visible = false
+show_behind_parent = true
+material = SubResource("ShaderMaterial_p4jp6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crash" type="ColorRect" parent="PauseMenu/CRT" unique_id=1805268367]
+visible = false
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(8.612998e-05, 0.10160727, 0.3889947, 1)
+
+[node name="Label" type="Label" parent="PauseMenu/CRT/Crash" unique_id=1062602850]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -505.0
+offset_top = 104.0
+offset_right = 505.0
+offset_bottom = 164.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 52
+text = ":(  Your Computer Ran Into A Problem"
+horizontal_alignment = 1
+
+[node name="Button" type="TextureButton" parent="PauseMenu/CRT/Crash" unique_id=872833973]
+self_modulate = Color(0.5211406, 0.5211406, 0.5211405, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = -216.00003
+offset_right = 140.0
+offset_bottom = -114.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.58, 0.58)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("9_mrkwl")
+texture_pressed = ExtResource("10_kux6b")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
 follow_viewport_enabled = true
@@ -2283,57 +3119,6 @@ vertical_alignment = 1
 [node name="RatingAnimPlayer" type="AnimationPlayer" parent="CanvasLayer/Control" unique_id=302687489]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_dcs3l")
-
-[node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
-material = SubResource("ShaderMaterial_bn5gq")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="Glitch" type="ColorRect" parent="CanvasLayer/CRT" unique_id=2045397140]
-visible = false
-material = SubResource("ShaderMaterial_i0hs6")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Shatter" type="ColorRect" parent="CanvasLayer/CRT" unique_id=1095969783]
-material = SubResource("ShaderMaterial_3hl7e")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Jostar" type="ColorRect" parent="CanvasLayer/CRT" unique_id=1583569024]
-visible = false
-show_behind_parent = true
-material = SubResource("ShaderMaterial_p4jp6")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Crash" type="ColorRect" parent="CanvasLayer/CRT" unique_id=1805268367]
-visible = false
-show_behind_parent = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(8.612998e-05, 0.10160727, 0.3889947, 1)
 
 [node name="Curve" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
 script = ExtResource("1_5cbcl")
@@ -2691,7 +3476,6 @@ script = ExtResource("14_8r4qt")
 [node name="EventPlayer" type="AnimationPlayer" parent="EventConductor" unique_id=202058872]
 libraries/ = SubResource("AnimationLibrary_x0pjv")
 autoplay = &"Event"
-movie_quit_on_finish = true
 
 [node name="BackgroundLevelElements" type="Node2D" parent="." unique_id=392097994]
 z_index = -20
@@ -2763,3 +3547,4 @@ texture = ExtResource("21_1tw2i")
 [connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="rating_broadcast" from="Hit Line Mid" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="rating_broadcast" from="Hit Line Bottom" to="PointManager" method="_on_hit_line_rating_broadcast"]
+[connection signal="animation_finished" from="EventConductor/EventPlayer" to="EventConductor" method="_on_event_player_animation_finished"]
