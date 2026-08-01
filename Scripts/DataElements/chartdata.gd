@@ -9,5 +9,7 @@ class_name ChartData
 
 #Label Tags
 @export var name: String
+@export var artist_name: String
+@export var charter_name: String
 @export var stage: int
 @export var difficulty: int

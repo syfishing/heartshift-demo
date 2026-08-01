@@ -3,12 +3,14 @@ extends Node
 var combo: int = 0
 var scorenum: float = 0
 var rating_score: Dictionary = {"Dreamy": 1, "Great": 0.8, "Good": 0.6, "Pass": 0.4}
-
+var rating_num: Dictionary = {"Dreamy": 0, "Great": 0, "Good": 0, "Pass": 0, "Fail": 0}
+var score = 0
 @onready var chart_size = $"..".chart.notes.size()
 
 func _on_hit_line_rating_broadcast(rating: String, _lane: String) -> void:
-	print(rating)
-	
+	#print(rating)
+	rating_num[rating] += 1
+	print(rating_num)
 	%RatingLabel.text = rating+"!"
 	%RatingAnimPlayer.play("RatingAnim")
 
@@ -25,8 +27,8 @@ func _on_hit_line_rating_broadcast(rating: String, _lane: String) -> void:
 			
 	
 	#Accuracy
-	var score = snapped((scorenum/chart_size)*100, 0.0001)
-	print(str(scorenum) + " / " + str(chart_size))
+	score = snapped((scorenum/chart_size)*100, 0.0001)
+	#print(str(scorenum) + " / " + str(chart_size))
 	%AccuracyLabel.text = str(score) + "%"
 	
 	camera_tilt(_lane)

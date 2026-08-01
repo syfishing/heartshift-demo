@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
 [ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="3_r3bk5"]
 [ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_86r3q"]
+[ext_resource type="Script" uid="uid://c3tgicyyuo43e" path="res://Scripts/UIscripts/rank_reveal.gd" id="5_qpyjv"]
 [ext_resource type="Texture2D" uid="uid://bvdycarl00gi6" path="res://Assets/UIAssets/mocktitlerank.png" id="6_aoha2"]
 [ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_dsbte"]
 [ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
@@ -122,10 +123,10 @@ void fragment() {
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mrkwl"]
 load_path = "res://.godot/imported/roundeddiamond.png-4ff04342e72f0a31fd057d2828b6b1a3.ctex"
 
-[sub_resource type="Gradient" id="Gradient_aoha2"]
+[sub_resource type="Gradient" id="Gradient_mydub"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_aoha2"]
-gradient = SubResource("Gradient_aoha2")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rql4f"]
+gradient = SubResource("Gradient_mydub")
 fill_from = Vector2(1, 1)
 fill_to = Vector2(0, 0)
 
@@ -136,7 +137,7 @@ shader_parameter/width = 0.5
 shader_parameter/tile_texture = SubResource("CompressedTexture2D_mrkwl")
 shader_parameter/tile_pixel_size = 32.0
 shader_parameter/tile_grown_scale = 2.0
-shader_parameter/transition_texture = SubResource("GradientTexture2D_aoha2")
+shader_parameter/transition_texture = SubResource("GradientTexture2D_rql4f")
 
 [sub_resource type="VideoStreamTheora" id="VideoStreamTheora_kux6b"]
 file = "res://Assets/Backgrounds/wavymenubg2.ogv"
@@ -266,6 +267,353 @@ shader = SubResource("Shader_hcp02")
 shader_parameter/mask_texture = SubResource("CompressedTexture2D_y1hkt")
 shader_parameter/mask_scale = Vector2(1, 1)
 shader_parameter/mask_offset = Vector2(0, 0)
+
+[sub_resource type="Shader" id="Shader_7rtu4"]
+code = "shader_type canvas_item;
+
+// License: CC0
+// Author: Ultipuk, https://ultipuk.xyz
+// Link: https://godotshaders.com/shader/transition-with-a-pattern-texture/
+
+// Uncomment this if you want to use background texture
+//#define USE_BACKGROUND_TEXTURE
+
+// Uncomment this if you want to use closing transition,
+// starting removing the pattern after the progress reaches 0.5
+//#define USE_CLOSING
+
+// Uncomment this if you want to remove tile distortion.
+// The result will look weird in the editor, and the tiles will have some clipping. Intended for viewport-sized canvases.
+//#define REMOVE_DISTORTION
+
+/** Actual transition progress. You want to change it from a script. */
+uniform float progress: hint_range(0.0, 1.0) = 0.0;
+/** The width of the transition as a fraction of the UV. */
+uniform float width: hint_range(0.0, 1.0) = 0.5;
+
+/** Actual pattern. You can use a texture with an ALPHA channel.
+*   This color is modulated, so you can use modulate parameter to change the color. */
+uniform sampler2D tile_texture: source_color, repeat_disable;
+/** Tile size in pixels. */
+uniform float tile_pixel_size = 32.0;
+/** The maximum scale of the tile on the edge of the transition window. */
+uniform float tile_grown_scale: hint_range(0.0, 16.0) = 2.0;
+
+/** Transition uses red channel to determine when the part should be visible. */
+uniform sampler2D transition_texture;
+
+#ifdef USE_BACKGROUND_TEXTURE
+/** Simple background texture that will be mixed with the tile texture. It can be a SubViewport texture or just a gradient. */
+uniform sampler2D background_texture: source_color;
+#endif
+
+void fragment() {
+	vec2 tile_uv = vec2(
+		fract(FRAGCOORD.x / tile_pixel_size),
+		fract(FRAGCOORD.y / tile_pixel_size)
+	);
+	
+#ifdef REMOVE_DISTORTION
+	vec2 tiles = vec2(1.0 / SCREEN_PIXEL_SIZE / tile_pixel_size);
+	vec2 transition_uv = ceil(UV * tiles) / tiles;
+#else
+	vec2 transition_uv = UV;
+#endif
+	
+#ifdef USE_CLOSING
+	float part, transition;
+	
+	if (progress > 0.5) {
+		part = (1.0 - (progress - 0.5) * 2.0) * (1.0 + 2.0 * width) - width;
+		transition = 1.0 - texture(transition_texture, transition_uv).r;
+	} else {
+		part = 2.0 * progress * (1.0 + 2.0 * width) - width;
+		transition = texture(transition_texture, transition_uv).r;
+	}
+#else
+	float part = progress * (1.0 + 2.0 * width) - width;
+	float transition = texture(transition_texture, transition_uv).r;
+#endif
+	
+	float window = max(0.0, min(1.0, width + (part - transition) / width));
+	
+	tile_uv = tile_uv * 2.0 - 1.0;
+	tile_uv /= window * tile_grown_scale;
+	tile_uv = (tile_uv + 1.0) * 0.5;
+	
+#ifdef USE_BACKGROUND_TEXTURE
+	vec4 tile = texture(tile_texture, tile_uv) * texture(background_texture, UV);
+#else
+	vec4 tile = texture(tile_texture, tile_uv);
+#endif
+	
+	COLOR *= tile;
+}"
+
+[sub_resource type="Gradient" id="Gradient_aoha2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aoha2"]
+gradient = SubResource("Gradient_aoha2")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s1nel"]
+shader = SubResource("Shader_7rtu4")
+shader_parameter/progress = 1.0
+shader_parameter/width = 0.5
+shader_parameter/tile_texture = SubResource("CompressedTexture2D_mrkwl")
+shader_parameter/tile_pixel_size = 32.0
+shader_parameter/tile_grown_scale = 2.0
+shader_parameter/transition_texture = SubResource("GradientTexture2D_aoha2")
+
+[sub_resource type="Animation" id="Animation_mydub"]
+resource_name = "CloseReveal"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.6, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Upper:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ht26k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Reveal:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Reveal/Lower:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Upper:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CRT/Crash:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Reveal/Lower:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_lhw6a"]
+resource_name = "RankReveal"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.6, 1, 0.36602145),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Reveal:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Reveal/Lower:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(0.6, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Upper:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Reveal/Lower:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_qpyjv"]
+resource_name = "RankRevealCrash"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.6, 1, 0.36602145),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Reveal:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Reveal/Lower:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(0.6, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Upper:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CRT/Crash:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Reveal/Lower:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_avgt3"]
+_data = {
+&"CloseReveal": SubResource("Animation_mydub"),
+&"RESET": SubResource("Animation_ht26k"),
+&"RankReveal": SubResource("Animation_lhw6a"),
+&"RankRevealCrash": SubResource("Animation_qpyjv")
+}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
 shader = ExtResource("3_18gwp")
@@ -1468,6 +1816,18 @@ tracks/37/keys = {
 "update": 1,
 "values": [false, true, false]
 }
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("../Stars:speed_scale")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 18.15, 19.05),
+"transitions": PackedFloat32Array(1, 0.36602142, 1e-05),
+"update": 0,
+"values": [1.0, 1.0, 3.0]
+}
 
 [sub_resource type="Animation" id="Animation_iw33s"]
 length = 0.001
@@ -1927,6 +2287,18 @@ tracks/37/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("../Stars:speed_scale")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x0pjv"]
 _data = {
@@ -2303,6 +2675,7 @@ script = ExtResource("1_dsbte")
 chart = ExtResource("2_yikdd")
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
+unique_name_in_owner = true
 script = ExtResource("1_r3bk5")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
@@ -2341,6 +2714,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_qpyjv")
+reveal_at_end = false
 
 [node name="Upper" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1900463846]
 z_index = 2
@@ -2353,7 +2729,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.008850009, 0.0041999994, 0.06, 1)
 
-[node name="Mocktitlerank" type="TextureRect" parent="PauseMenu/RankReveal" unique_id=77228622]
+[node name="Reveal" type="Control" parent="PauseMenu/RankReveal" unique_id=560220332]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Mocktitlerank" type="TextureRect" parent="PauseMenu/RankReveal/Reveal" unique_id=77228622]
 layout_mode = 0
 offset_left = -24.0
 offset_top = 24.0
@@ -2362,17 +2747,37 @@ offset_bottom = 199.0
 scale = Vector2(0.835, 0.835)
 texture = ExtResource("6_aoha2")
 
-[node name="ColorRect" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1797219537]
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Mocktitlerank" unique_id=2123497874]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -413.80237
+offset_top = 39.4461
+offset_right = -34.802246
+offset_bottom = 71.446106
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_font_sizes/font_size = 28
+text = "Press Any Key To Continue"
+horizontal_alignment = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1797219537]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 200.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.68235296)
 
-[node name="ColorRect2" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1596024847]
+[node name="ColorRect2" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1596024847]
 self_modulate = Color(0, 0, 0, 0.69411767)
 z_index = -1
 layout_mode = 1
@@ -2383,7 +2788,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="DebugRect" type="ColorRect" parent="PauseMenu/RankReveal/ColorRect2" unique_id=1919264495]
+[node name="DebugRect" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/ColorRect2" unique_id=1919264495]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -2393,7 +2798,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.12941177, 0.09019608, 0.18039216, 1)
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="PauseMenu/RankReveal/ColorRect2" unique_id=313193094]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="PauseMenu/RankReveal/Reveal/ColorRect2" unique_id=313193094]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -2408,7 +2813,7 @@ autoplay = true
 expand = true
 loop = true
 
-[node name="Card" type="TextureRect" parent="PauseMenu/RankReveal" unique_id=1253714275]
+[node name="Card" type="TextureRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1253714275]
 self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
 layout_mode = 1
 anchors_preset = 6
@@ -2426,7 +2831,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("7_a5jj2")
 expand_mode = 1
 
-[node name="InnerCard" type="TextureRect" parent="PauseMenu/RankReveal/Card" unique_id=105890879]
+[node name="InnerCard" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=105890879]
 self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -2445,7 +2850,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("7_a5jj2")
 expand_mode = 1
 
-[node name="GradientBG" type="TextureRect" parent="PauseMenu/RankReveal/Card/InnerCard" unique_id=314754869]
+[node name="GradientBG" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/InnerCard" unique_id=314754869]
 unique_name_in_owner = true
 self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
 material = SubResource("ShaderMaterial_mydub")
@@ -2457,7 +2862,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_rql4f")
 
-[node name="SongCoverBG" type="ColorRect" parent="PauseMenu/RankReveal/Card" unique_id=632450168]
+[node name="SongCoverBG" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=632450168]
 material = SubResource("ShaderMaterial_7rtu4")
 layout_mode = 1
 anchors_preset = 10
@@ -2468,7 +2873,7 @@ offset_right = -8.0
 offset_bottom = 155.0
 grow_horizontal = 2
 
-[node name="SongCoverBG2" type="ColorRect" parent="PauseMenu/RankReveal/Card/SongCoverBG" unique_id=1240220188]
+[node name="SongCoverBG2" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=1240220188]
 self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -2481,7 +2886,7 @@ offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SongCoverFrame" type="TextureRect" parent="PauseMenu/RankReveal/Card/SongCoverBG" unique_id=133180259]
+[node name="SongCoverFrame" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=133180259]
 self_modulate = Color(0.9019608, 0.65882355, 0.99607843, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -2500,7 +2905,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_86r3q")
 expand_mode = 1
 
-[node name="SongCover" type="TextureRect" parent="PauseMenu/RankReveal/Card/SongCoverBG" unique_id=1164060036]
+[node name="SongCover" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=1164060036]
 unique_name_in_owner = true
 self_modulate = Color(0.8217887, 0.82178867, 0.82178867, 1)
 material = SubResource("ShaderMaterial_h43uj")
@@ -2520,7 +2925,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("9_qpyjv")
 expand_mode = 1
 
-[node name="Level Difficulty Container" type="ColorRect" parent="PauseMenu/RankReveal/Card" unique_id=1458444951]
+[node name="Artist Container" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=1458444951]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -2535,7 +2940,7 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.2, 0.09411765, 0.2, 1)
 
-[node name="Label" type="Label" parent="PauseMenu/RankReveal/Card/Level Difficulty Container" unique_id=149472661]
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Artist Container" unique_id=149472661]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -2550,7 +2955,7 @@ theme_override_font_sizes/font_size = 20
 text = "Artist"
 vertical_alignment = 1
 
-[node name="LevelDifficultyLabel" type="Label" parent="PauseMenu/RankReveal/Card/Level Difficulty Container" unique_id=452632721]
+[node name="ArtistLabel" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Artist Container" unique_id=452632721]
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 1
@@ -2567,7 +2972,7 @@ text = "insertartist"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Length Container" type="ColorRect" parent="PauseMenu/RankReveal/Card" unique_id=1820897176]
+[node name="Charting Container" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=1820897176]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -2582,7 +2987,7 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.2, 0.09411765, 0.2, 1)
 
-[node name="Label" type="Label" parent="PauseMenu/RankReveal/Card/Length Container" unique_id=45747059]
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Charting Container" unique_id=45747059]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -2597,7 +3002,7 @@ theme_override_font_sizes/font_size = 20
 text = "Charting"
 vertical_alignment = 1
 
-[node name="LengthLabel" type="Label" parent="PauseMenu/RankReveal/Card/Length Container" unique_id=2096488798]
+[node name="ChartingLabel" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Charting Container" unique_id=2096488798]
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 1
@@ -2614,7 +3019,7 @@ text = "insertcharter"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Rank" type="Control" parent="PauseMenu/RankReveal" unique_id=1769660189]
+[node name="Rank" type="Control" parent="PauseMenu/RankReveal/Reveal" unique_id=1769660189]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -2625,7 +3030,7 @@ offset_right = 338.0
 offset_bottom = -26.0
 grow_vertical = 0
 
-[node name="Label" type="Label" parent="PauseMenu/RankReveal/Rank" unique_id=1380167137]
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Rank" unique_id=1380167137]
 self_modulate = Color(0.8, 0.64000005, 0, 1)
 layout_mode = 1
 anchors_preset = 2
@@ -2640,7 +3045,7 @@ theme_override_font_sizes/font_size = 56
 text = "RANK"
 vertical_alignment = 2
 
-[node name="Grade" type="Label" parent="PauseMenu/RankReveal/Rank" unique_id=1573994675]
+[node name="Grade" type="Label" parent="PauseMenu/RankReveal/Reveal/Rank" unique_id=1573994675]
 self_modulate = Color(0.8, 0.64000005, 0, 1)
 layout_mode = 1
 anchors_preset = 3
@@ -2659,7 +3064,7 @@ theme_override_font_sizes/font_size = 96
 text = "A"
 vertical_alignment = 2
 
-[node name="Control" type="Control" parent="PauseMenu/RankReveal" unique_id=1679862693]
+[node name="Control" type="Control" parent="PauseMenu/RankReveal/Reveal" unique_id=1679862693]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -2672,7 +3077,7 @@ offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=912452828]
+[node name="TextureRect" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=912452828]
 self_modulate = Color(0, 0.69109005, 0.804423, 1)
 layout_mode = 0
 offset_left = -482.0
@@ -2682,7 +3087,7 @@ offset_bottom = -9.605003
 texture = ExtResource("11_qpyjv")
 expand_mode = 1
 
-[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect" unique_id=1655452497]
+[node name="DreamyRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect" unique_id=1655452497]
 self_modulate = Color(0, 1, 1, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2694,7 +3099,8 @@ theme_override_font_sizes/font_size = 40
 text = "DREAMY"
 vertical_alignment = 1
 
-[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect" unique_id=2057534768]
+[node name="DreamyScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect" unique_id=2057534768]
+unique_name_in_owner = true
 self_modulate = Color(0, 1, 1, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2703,11 +3109,11 @@ offset_right = 434.0
 offset_bottom = 70.0
 theme_override_fonts/font = ExtResource("8_p4jp6")
 theme_override_font_sizes/font_size = 40
-text = "203"
+text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=2091561766]
+[node name="TextureRect2" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=2091561766]
 self_modulate = Color(0, 0.8, 0.47999993, 1)
 layout_mode = 0
 offset_left = -482.0
@@ -2716,7 +3122,7 @@ offset_bottom = 70.395
 texture = ExtResource("11_qpyjv")
 expand_mode = 1
 
-[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect2" unique_id=1803956736]
+[node name="GreatRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect2" unique_id=1803956736]
 self_modulate = Color(0.03529412, 1, 0.5294118, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2728,7 +3134,8 @@ theme_override_font_sizes/font_size = 40
 text = "GREAT"
 vertical_alignment = 1
 
-[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect2" unique_id=203590835]
+[node name="GreatScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect2" unique_id=203590835]
+unique_name_in_owner = true
 self_modulate = Color(0.03529412, 1, 0.5294118, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2737,11 +3144,11 @@ offset_right = 434.0
 offset_bottom = 70.0
 theme_override_fonts/font = ExtResource("8_p4jp6")
 theme_override_font_sizes/font_size = 40
-text = "203"
+text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="TextureRect3" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=1875330552]
+[node name="TextureRect3" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=1875330552]
 self_modulate = Color(0.8, 0.64000005, 0, 1)
 layout_mode = 0
 offset_left = -480.0
@@ -2751,7 +3158,7 @@ offset_bottom = 150.39499
 texture = ExtResource("11_qpyjv")
 expand_mode = 1
 
-[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect3" unique_id=1287728261]
+[node name="GoodRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect3" unique_id=1287728261]
 self_modulate = Color(1, 0.90588236, 0, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2763,7 +3170,8 @@ theme_override_font_sizes/font_size = 40
 text = "GOOD"
 vertical_alignment = 1
 
-[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect3" unique_id=968089942]
+[node name="GoodScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect3" unique_id=968089942]
+unique_name_in_owner = true
 self_modulate = Color(1, 0.90588236, 0, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2772,11 +3180,11 @@ offset_right = 434.0
 offset_bottom = 70.0
 theme_override_fonts/font = ExtResource("8_p4jp6")
 theme_override_font_sizes/font_size = 40
-text = "203"
+text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="TextureRect4" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=815931875]
+[node name="TextureRect4" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=815931875]
 self_modulate = Color(0.8, 0.32000002, 0, 1)
 layout_mode = 0
 offset_left = -482.0
@@ -2786,7 +3194,7 @@ offset_bottom = 230.39499
 texture = ExtResource("11_qpyjv")
 expand_mode = 1
 
-[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect4" unique_id=1751192934]
+[node name="PassRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect4" unique_id=1751192934]
 self_modulate = Color(1, 0.42352942, 0, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2798,7 +3206,8 @@ theme_override_font_sizes/font_size = 40
 text = "PASS"
 vertical_alignment = 1
 
-[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect4" unique_id=1171091340]
+[node name="PassScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect4" unique_id=1171091340]
+unique_name_in_owner = true
 self_modulate = Color(1, 0.42352942, 0, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2807,11 +3216,11 @@ offset_right = 434.0
 offset_bottom = 70.0
 theme_override_fonts/font = ExtResource("8_p4jp6")
 theme_override_font_sizes/font_size = 40
-text = "203"
+text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="TextureRect5" type="TextureRect" parent="PauseMenu/RankReveal/Control" unique_id=2044138657]
+[node name="TextureRect5" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=2044138657]
 self_modulate = Color(0.43, 0.43, 0.43, 1)
 layout_mode = 0
 offset_left = -482.0
@@ -2821,7 +3230,7 @@ offset_bottom = 310.395
 texture = ExtResource("11_qpyjv")
 expand_mode = 1
 
-[node name="Rank" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect5" unique_id=1581196215]
+[node name="FailRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect5" unique_id=1581196215]
 self_modulate = Color(0.627451, 0.6313726, 0.6509804, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2833,7 +3242,8 @@ theme_override_font_sizes/font_size = 40
 text = "FAIL"
 vertical_alignment = 1
 
-[node name="Score" type="Label" parent="PauseMenu/RankReveal/Control/TextureRect5" unique_id=1328451705]
+[node name="FailScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect5" unique_id=1328451705]
+unique_name_in_owner = true
 self_modulate = Color(0.627451, 0.6313726, 0.6509804, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -2842,11 +3252,26 @@ offset_right = 434.0
 offset_bottom = 70.0
 theme_override_fonts/font = ExtResource("8_p4jp6")
 theme_override_font_sizes/font_size = 40
-text = "203"
+text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="Lower" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1351418168]
+z_index = 2
+material = SubResource("ShaderMaterial_s1nel")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.008850009, 0.0041999994, 0.06, 1)
+
+[node name="RevealPlayer" type="AnimationPlayer" parent="PauseMenu/RankReveal" unique_id=1089017335]
+libraries/ = SubResource("AnimationLibrary_avgt3")
+
 [node name="CRT" type="ColorRect" parent="PauseMenu" unique_id=1134534797]
+z_index = 2
 material = SubResource("ShaderMaterial_bn5gq")
 anchors_preset = 15
 anchor_right = 1.0
@@ -2888,6 +3313,7 @@ grow_vertical = 2
 [node name="Crash" type="ColorRect" parent="PauseMenu/CRT" unique_id=1805268367]
 visible = false
 show_behind_parent = true
+z_index = -2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3009,7 +3435,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 31
-text = "25"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -3083,7 +3509,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 18
-text = "Vanishing Point - Haseeb"
+text = "name - artist"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -3544,6 +3970,8 @@ position = Vector2(40, 0)
 scale = Vector2(0.44, 0.44)
 texture = ExtResource("21_1tw2i")
 
+[connection signal="animation_finished" from="PauseMenu/RankReveal/RevealPlayer" to="PauseMenu/RankReveal" method="_on_reveal_player_animation_finished"]
+[connection signal="button_down" from="PauseMenu/CRT/Crash/Button" to="PauseMenu/RankReveal" method="_on_button_button_down"]
 [connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="rating_broadcast" from="Hit Line Mid" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="rating_broadcast" from="Hit Line Bottom" to="PointManager" method="_on_hit_line_rating_broadcast"]

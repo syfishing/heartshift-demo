@@ -10,7 +10,7 @@
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="7_f72t2"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="8_uhd87"]
 [ext_resource type="Resource" uid="uid://co31nfscdxhmx" path="res://Scripts/Charts/BellBound.tres" id="9_ekrlx"]
-[ext_resource type="Resource" uid="uid://bpqe83raxiwak" path="res://Scripts/Charts/Last Pulse.tres" id="11_27b1o"]
+[ext_resource type="Resource" uid="uid://bpqe83raxiwak" path="res://Scripts/Charts/Last Pulse OLD.tres" id="11_27b1o"]
 
 [sub_resource type="Shader" id="Shader_8lxbd"]
 code = "shader_type canvas_item;
@@ -878,7 +878,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
+offset_left = 0.0
 offset_top = 0.0
+offset_right = 382.53003
 offset_bottom = 90.0
 grow_horizontal = 1
 grow_vertical = 1
@@ -892,7 +894,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
+offset_left = 0.0
 offset_top = 136.975
+offset_right = 382.53003
 offset_bottom = 228.0951
 grow_horizontal = 1
 grow_vertical = 1
@@ -907,7 +911,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
+offset_left = 0.0
 offset_top = 275.0701
+offset_right = 382.53003
 offset_bottom = 366.1902
 grow_horizontal = 1
 grow_vertical = 1
@@ -922,7 +928,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
+offset_left = 0.0
 offset_top = 413.1652
+offset_right = 382.53003
 offset_bottom = 504.28528
 grow_horizontal = 1
 grow_vertical = 1
