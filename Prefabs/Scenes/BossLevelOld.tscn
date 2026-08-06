@@ -1,0 +1,615 @@
+[gd_scene format=3 uid="uid://dv1awscsn006r"]
+
+[ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_gvjxc"]
+[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_gvjxc"]
+[ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="3_tua6g"]
+[ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="4_2uhvq"]
+[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_h0omu"]
+[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_mwbrj"]
+[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="7_4yic7"]
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="8_mnbds"]
+[ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="9_23cj3"]
+[ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="10_n5cxe"]
+[ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="11_h8ol2"]
+[ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="12_cwu2h"]
+
+[sub_resource type="Environment" id="Environment_cqqlt"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_strength = 1.5
+glow_bloom = 0.1
+
+[sub_resource type="Animation" id="Animation_r3bk5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RatingLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(291, 70)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RatingLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_n4yq1"]
+resource_name = "RatingAnim"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RatingLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(312.28, 34.79), Vector2(312.28, 23.75)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RatingLabel:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(3.2490087, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcs3l"]
+_data = {
+&"RESET": SubResource("Animation_r3bk5"),
+&"RatingAnim": SubResource("Animation_n4yq1")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
+shader = ExtResource("7_4yic7")
+shader_parameter/brightness = 1.4950000710125
+shader_parameter/contrast = 0.910000043225
+shader_parameter/saturation = 2.0
+shader_parameter/gamma = 1.17200004915023
+shader_parameter/source_softness = 0.250000011875
+shader_parameter/curvature = 0.030000001425
+shader_parameter/corner_soften = 0.0400000019
+shader_parameter/vignette = 0.0
+shader_parameter/scanline_strength = 0.0
+shader_parameter/scanline_density = 0.5
+shader_parameter/interlace_strength = 0.0
+shader_parameter/mask_strength = 0.0850000040375
+shader_parameter/mask_scale = 0.5
+shader_parameter/chroma_offset_px = 0.8570000407075
+shader_parameter/luma_smear_px = 0.0
+shader_parameter/jitter_px = 0.0
+shader_parameter/wobble_px = 0.78000003705
+shader_parameter/tape_noise = 0.22
+shader_parameter/tape_lines = 0.1050000049875
+shader_parameter/roll_speed = 0.1
+shader_parameter/roll_strength = 0.15
+shader_parameter/glow_strength = 0.25
+shader_parameter/glow_threshold = 0.65
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_18gwp"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_r3bk5"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_7vajh"]
+
+[sub_resource type="Animation" id="Animation_dsbte"]
+resource_name = "FailHit"
+length = 0.3
+
+[sub_resource type="Animation" id="Animation_7vajh"]
+resource_name = "HitMark"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitMark:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.4822746, 0.4822746, 0.4822746, 1), Color(0.4822746, 0.4822746, 0.4822746, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitMark:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(4, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_np6qb"]
+resource_name = "Initialise"
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_p87wn"]
+length = 0.646
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitMark:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.4822746, 0.4822746, 0.4822746, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitMark:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_25417"]
+_data = {
+&"FailHit": SubResource("Animation_dsbte"),
+&"HitMark": SubResource("Animation_7vajh"),
+&"Initialise": SubResource("Animation_np6qb"),
+&"RESET": SubResource("Animation_p87wn")
+}
+
+[sub_resource type="Curve" id="Curve_np6qb"]
+_data = [Vector2(0.04782608, 1), 0.0, 0.0, 0, 0, Vector2(0.73913044, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_8r4qt"]
+curve = SubResource("Curve_np6qb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x0pjv"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 52.68, 1)
+direction = Vector3(9, 0, 0)
+spread = 0.0
+initial_velocity_min = 182.83
+initial_velocity_max = 209.87
+gravity = Vector3(0, 0, 0)
+damping_min = 88.157005
+damping_max = 88.157005
+scale_max = 9.8
+alpha_curve = SubResource("CurveTexture_8r4qt")
+
+[sub_resource type="CurveTexture" id="CurveTexture_57yhw"]
+curve = SubResource("Curve_np6qb")
+
+[sub_resource type="Curve" id="Curve_dsbte"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 3), 6.822472, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_np6qb"]
+curve = SubResource("Curve_dsbte")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dsbte"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 324, 1)
+direction = Vector3(-10, 0, 0)
+spread = 0.0
+initial_velocity_max = 276.12
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -14.930002
+linear_accel_max = 70.149994
+scale_max = 2.85
+scale_over_velocity_max = 174.9
+scale_over_velocity_curve = SubResource("CurveTexture_np6qb")
+alpha_curve = SubResource("CurveTexture_57yhw")
+
+[node name="DemoLevel" type="Node2D" unique_id=253205913]
+script = ExtResource("1_gvjxc")
+chart = ExtResource("2_gvjxc")
+
+[node name="PointManager" type="Node" parent="." unique_id=1475372008]
+script = ExtResource("3_tua6g")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
+environment = SubResource("Environment_cqqlt")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1677109058]
+ignore_rotation = false
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+script = ExtResource("4_2uhvq")
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=103199223]
+
+[node name="TextureRect" type="TextureRect" parent="PauseMenu" unique_id=455672928]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1967918697]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=806142077]
+self_modulate = Color(0.179842, 0.22810352, 0.7026473, 1)
+layout_mode = 0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 88.0
+offset_bottom = 80.0
+texture = ExtResource("5_h0omu")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/TextureRect" unique_id=299460268]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_mwbrj")
+expand_mode = 1
+
+[node name="ComboTag" type="ColorRect" parent="CanvasLayer/Control" unique_id=1055121295]
+layout_mode = 1
+offset_left = 222.0
+offset_top = 28.0
+offset_right = 278.0
+offset_bottom = 68.0
+color = Color(0.99999994, 0.5682773, 0.26168016, 1)
+
+[node name="ComboTag2" type="ColorRect" parent="CanvasLayer/Control/ComboTag" unique_id=1339686072]
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 0.33850098
+offset_top = -8.0
+offset_right = 40.3385
+offset_bottom = 32.00006
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.7853982
+color = Color(0.99999994, 0.5682773, 0.26168016, 1)
+
+[node name="ComboLabel" type="Label" parent="CanvasLayer/Control/ComboTag" unique_id=1773942047]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 31
+text = "25"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Accuracy" type="ColorRect" parent="CanvasLayer/Control" unique_id=458059101]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -318.79004
+offset_bottom = 67.06
+grow_horizontal = 0
+color = Color(0.99999994, 0.5682773, 0.26168016, 1)
+
+[node name="AccuracyLabel" type="Label" parent="CanvasLayer/Control/Accuracy" unique_id=669504614]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 42
+text = "0.0000%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RatingLabel" type="Label" parent="CanvasLayer/Control" unique_id=381179365]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -285.0
+offset_top = 70.0
+offset_right = -78.99985
+offset_bottom = 132.97226
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.8472311, 0.6636825, 0.03876, 1)
+theme_override_font_sizes/font_size = 31
+
+[node name="SongName" type="ColorRect" parent="CanvasLayer/Control" unique_id=1050076660]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.938
+anchor_right = 0.035
+anchor_bottom = 1.0
+offset_top = -50.824036
+offset_right = 204.68
+offset_bottom = -31.0
+grow_vertical = 0
+color = Color(0.99999994, 0.5682773, 0.26168016, 1)
+
+[node name="SongLabel" type="Label" parent="CanvasLayer/Control/SongName" unique_id=1327533810]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 18
+text = "Vanishing Point - Haseeb"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelDetail" type="ColorRect" parent="CanvasLayer/Control" unique_id=1502213279]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -245.0
+offset_top = -91.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0.19247293, 0.35953876, 0.9913725, 1)
+
+[node name="DetailLabel" type="Label" parent="CanvasLayer/Control/LevelDetail" unique_id=1977836251]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 21
+text = "Stage 5 - Level 10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RatingAnimPlayer" type="AnimationPlayer" parent="CanvasLayer/Control" unique_id=302687489]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_dcs3l")
+
+[node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
+material = SubResource("ShaderMaterial_bn5gq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Curve" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
+script = ExtResource("8_mnbds")
+curve_line = NodePath("Line2D")
+handle_strength = 0.375
+bezier_steps_per_segment = 32
+
+[node name="Line2D" type="Line2D" parent="Curve" unique_id=1209914502]
+z_index = -6
+width = 3.5
+default_color = Color(0.51065123, 0.36099148, 1, 1)
+
+[node name="InGameElements" type="Node2D" parent="." unique_id=646899271]
+
+[node name="Sprite2D" type="Sprite2D" parent="InGameElements" unique_id=549827527]
+visible = false
+self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+z_index = -3
+position = Vector2(576, 325)
+scale = Vector2(1152, 8.765)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="RailTop2" type="Sprite2D" parent="InGameElements" unique_id=630842441]
+self_modulate = Color(0.28626168, 0.46248925, 0.99612087, 1)
+z_index = -3
+position = Vector2(576, 100)
+scale = Vector2(1152, 6.36)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="RailTop" type="Sprite2D" parent="InGameElements" unique_id=517595092]
+self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+z_index = -10
+position = Vector2(576, 250)
+scale = Vector2(1152, 6.36)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="RailBottom" type="Sprite2D" parent="InGameElements" unique_id=678003906]
+self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+z_index = -10
+position = Vector2(576, 400)
+scale = Vector2(1152, 6.36)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="RailBottom2" type="Sprite2D" parent="InGameElements" unique_id=295560481]
+self_modulate = Color(0.7239193, 0.43837702, 0, 1)
+z_index = -3
+position = Vector2(576, 554)
+scale = Vector2(1152, 6.36)
+texture = SubResource("CanvasTexture_18gwp")
+
+[node name="Hit Line" type="Sprite2D" parent="InGameElements" unique_id=1147199316]
+position = Vector2(250, 324)
+scale = Vector2(10, 648)
+texture = SubResource("CanvasTexture_r3bk5")
+
+[node name="Hit Line Top" type="Sprite2D" parent="." unique_id=809933648]
+self_modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
+position = Vector2(250, 175)
+scale = Vector2(10, 141.99997)
+script = ExtResource("9_23cj3")
+show_debug_windows = false
+
+[node name="HitMark" type="Sprite2D" parent="Hit Line Top" unique_id=1068159725]
+self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
+z_index = -1
+scale = Vector2(3, 1)
+texture = SubResource("CanvasTexture_7vajh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Top" unique_id=590070409]
+libraries/ = SubResource("AnimationLibrary_25417")
+
+[node name="FailParticle" type="GPUParticles2D" parent="Hit Line Top" unique_id=1019062241]
+self_modulate = Color(1, 0.6940905, 0.65601605, 1)
+z_index = -5
+position = Vector2(-25, 0)
+rotation = -0.00061456824
+scale = Vector2(0.09999622, 0.007095851)
+skew = -0.1226784
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_x0pjv")
+
+[node name="Hit Line Mid" type="Sprite2D" parent="." unique_id=2129025600]
+position = Vector2(250, 325)
+rotation = 0.008726646
+scale = Vector2(10, 141.99997)
+script = ExtResource("9_23cj3")
+input_lane = "lane2"
+show_debug_windows = false
+
+[node name="HitMark" type="Sprite2D" parent="Hit Line Mid" unique_id=607412973]
+self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
+z_index = -1
+scale = Vector2(3, 1)
+texture = SubResource("CanvasTexture_7vajh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Mid" unique_id=2136872612]
+libraries/ = SubResource("AnimationLibrary_25417")
+
+[node name="FailParticle" type="GPUParticles2D" parent="Hit Line Mid" unique_id=678677448]
+self_modulate = Color(1, 0.6940905, 0.65601605, 1)
+z_index = -5
+position = Vector2(-25, 0)
+rotation = -0.00061456824
+scale = Vector2(0.09999622, 0.007095851)
+skew = -0.1226784
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_x0pjv")
+
+[node name="Hit Line Bottom" type="Sprite2D" parent="." unique_id=1292322369]
+position = Vector2(250, 475.00003)
+scale = Vector2(10, 141.99997)
+script = ExtResource("9_23cj3")
+input_lane = "lane3"
+show_debug_windows = false
+
+[node name="HitMark" type="Sprite2D" parent="Hit Line Bottom" unique_id=801568233]
+self_modulate = Color(0.4822746, 0.4822746, 0.4822746, 1)
+z_index = -1
+scale = Vector2(3, 1)
+texture = SubResource("CanvasTexture_7vajh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hit Line Bottom" unique_id=1476210854]
+libraries/ = SubResource("AnimationLibrary_25417")
+
+[node name="FailParticle" type="GPUParticles2D" parent="Hit Line Bottom" unique_id=235584845]
+self_modulate = Color(1, 0.6940905, 0.65601605, 1)
+z_index = -5
+position = Vector2(-25, 0)
+rotation = -0.00061456824
+scale = Vector2(0.09999622, 0.007095851)
+skew = -0.1226784
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_x0pjv")
+
+[node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
+position = Vector2(-20, -20)
+script = ExtResource("10_n5cxe")
+chart = ExtResource("2_gvjxc")
+note_scene = ExtResource("11_h8ol2")
+dummy_note_scene = ExtResource("12_cwu2h")
+travel_time = 10.0
+dummy_spawn_interval = 1.0
+sine_decay_rate = 0.2
+
+[node name="Stars" type="GPUParticles2D" parent="." unique_id=218265872]
+self_modulate = Color(0.8729805, 1, 1, 1)
+z_index = -15
+position = Vector2(1252, 324)
+amount = 50
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_dsbte")
+
+[connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
+[connection signal="rating_broadcast" from="Hit Line Mid" to="PointManager" method="_on_hit_line_rating_broadcast"]
+[connection signal="rating_broadcast" from="Hit Line Bottom" to="PointManager" method="_on_hit_line_rating_broadcast"]

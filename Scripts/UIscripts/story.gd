@@ -7,6 +7,12 @@ extends Node2D
 			_event_idx = 0
 			_setup_story()
 
+@export var chart: ChartData
+
+var scene: PackedScene = preload("res://Prefabs/Scenes/Level.tscn") # change later!!
+
+
+
 var _initialized := false
 var _event_idx := 0
 var _character_nodes: Dictionary[String, Sprite2D] = {}
@@ -28,6 +34,7 @@ func _find_character(id: String) -> CharacterData:
 
 func _ready() -> void:
 	if story:
+		print(chart)
 		_setup_story()
 	pass
 
@@ -147,8 +154,22 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func _on_transition_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "Exit_Transition":
-		get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
-
+	if anim_name != "Exit_Transition": return
 	
-	pass # Replace with function body.
+	var inst = scene.instantiate()
+	#inst.story = story
+	inst.chart = chart
+	AudioHub.stop_menu_music()
+	# Defer the swap to the next frame
+	call_deferred("_replace_scene", inst)
+
+
+
+func _replace_scene(new_scene):
+	await get_tree().process_frame  # wait one frame so the scene unlocks
+
+	var tree := get_tree()
+
+	tree.current_scene.free()
+	tree.root.add_child(new_scene)
+	tree.current_scene = new_scene

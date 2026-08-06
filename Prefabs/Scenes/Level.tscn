@@ -1,35 +1,36 @@
-[gd_scene format=3 uid="uid://b7jmlpusn5j51"]
+[gd_scene format=3 uid="uid://goipfyssiyte"]
 
-[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="1_5cbcl"]
-[ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_dsbte"]
-[ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="1_r3bk5"]
-[ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="2_p87wn"]
-[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_yikdd"]
-[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="3_18gwp"]
-[ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="3_bn5gq"]
-[ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="3_r3bk5"]
-[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_86r3q"]
-[ext_resource type="Script" uid="uid://c3tgicyyuo43e" path="res://Scripts/UIscripts/rank_reveal.gd" id="5_qpyjv"]
-[ext_resource type="Texture2D" uid="uid://bvdycarl00gi6" path="res://Assets/UIAssets/mocktitlerank.png" id="6_aoha2"]
-[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_dsbte"]
-[ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="6_n4yq1"]
-[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="7_a5jj2"]
-[ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="8_p4jp6"]
-[ext_resource type="Texture2D" uid="uid://b2hm7dnva547x" path="res://Assets/UIAssets/errorbox.png" id="9_iw33s"]
-[ext_resource type="Texture2D" uid="uid://tvsxlvuuo4cq" path="res://Assets/UIAssets/retrobuttonopen.png" id="9_mrkwl"]
-[ext_resource type="Texture2D" uid="uid://cwhsshv0irukc" path="res://Assets/UIAssets/SongCovers/pixel-cover-816x816.png" id="9_qpyjv"]
-[ext_resource type="Texture2D" uid="uid://cp0trdc32123a" path="res://Assets/UIAssets/retrobuttonclosed.png" id="10_kux6b"]
-[ext_resource type="Texture2D" uid="uid://b5bqiiukeboqu" path="res://Assets/UIAssets/errorboxuuh.png" id="10_x0pjv"]
-[ext_resource type="Texture2D" uid="uid://4f0ndihlddxd" path="res://Assets/UIAssets/BossLevel.png" id="11_57yhw"]
-[ext_resource type="Texture2D" uid="uid://xebl0kenqjf8" path="res://Assets/UIAssets/rankrow.png" id="11_qpyjv"]
-[ext_resource type="Shader" uid="uid://c8ove5jxr8r46" path="res://Assets/Shaders/glitch.gdshader" id="11_yikdd"]
-[ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="12_dsbte"]
-[ext_resource type="Script" uid="uid://d1s32sdp3jr7f" path="res://Scripts/Managers/Event_Conductor.gd" id="14_8r4qt"]
-[ext_resource type="Script" uid="uid://c5hxxv0hvmjw3" path="res://Scripts/UIscripts/BossLevel/first_stage.gd" id="18_1tw2i"]
-[ext_resource type="Texture2D" uid="uid://e4koddyn5mb4" path="res://Assets/UIAssets/heartwhole.png" id="18_hqa1v"]
-[ext_resource type="Texture2D" uid="uid://0lg60kmavb05" path="res://Assets/UIAssets/characterprototypesolid.png" id="19_hqa1v"]
-[ext_resource type="Texture2D" uid="uid://3ucdietkj654" path="res://Assets/UIAssets/heartleft.png" id="20_i0hs6"]
-[ext_resource type="Texture2D" uid="uid://gwfk6uemirh2" path="res://Assets/UIAssets/heartright.png" id="21_1tw2i"]
+[ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_tq31w"]
+[ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="2_7uy4l"]
+[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_x1q7v"]
+[ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="3_7uy4l"]
+[ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="4_3td5b"]
+[ext_resource type="Script" uid="uid://c3tgicyyuo43e" path="res://Scripts/UIscripts/rank_reveal.gd" id="5_734hs"]
+[ext_resource type="Texture2D" uid="uid://bvdycarl00gi6" path="res://Assets/UIAssets/mocktitlerank.png" id="6_j2t6j"]
+[ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="7_8sjmd"]
+[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="8_ttwme"]
+[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="9_qtkxc"]
+[ext_resource type="Texture2D" uid="uid://cwhsshv0irukc" path="res://Assets/UIAssets/SongCovers/pixel-cover-816x816.png" id="10_ulaew"]
+[ext_resource type="Texture2D" uid="uid://xebl0kenqjf8" path="res://Assets/UIAssets/rankrow.png" id="11_4xs0d"]
+[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="12_3tmru"]
+[ext_resource type="Texture2D" uid="uid://tvsxlvuuo4cq" path="res://Assets/UIAssets/retrobuttonopen.png" id="13_lt0hh"]
+[ext_resource type="Texture2D" uid="uid://cp0trdc32123a" path="res://Assets/UIAssets/retrobuttonclosed.png" id="14_ahhwt"]
+[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="15_56o4m"]
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="16_rdlsc"]
+[ext_resource type="Shader" uid="uid://c8ove5jxr8r46" path="res://Assets/Shaders/glitch.gdshader" id="17_upt58"]
+[ext_resource type="Texture2D" uid="uid://4f0ndihlddxd" path="res://Assets/UIAssets/BossLevel.png" id="18_e1uu1"]
+[ext_resource type="Texture2D" uid="uid://b2hm7dnva547x" path="res://Assets/UIAssets/errorbox.png" id="19_r6c0y"]
+[ext_resource type="Texture2D" uid="uid://b5bqiiukeboqu" path="res://Assets/UIAssets/errorboxuuh.png" id="20_1wvm0"]
+[ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="21_1ovfs"]
+[ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="22_mitl1"]
+[ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="23_xkypx"]
+[ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="24_dqge4"]
+[ext_resource type="Script" uid="uid://d1s32sdp3jr7f" path="res://Scripts/Managers/Event_Conductor.gd" id="25_110p8"]
+[ext_resource type="Script" uid="uid://c5hxxv0hvmjw3" path="res://Scripts/UIscripts/BossLevel/first_stage.gd" id="26_kkptr"]
+[ext_resource type="Texture2D" uid="uid://e4koddyn5mb4" path="res://Assets/UIAssets/heartwhole.png" id="27_c6dri"]
+[ext_resource type="Texture2D" uid="uid://0lg60kmavb05" path="res://Assets/UIAssets/characterprototypesolid.png" id="28_q5v34"]
+[ext_resource type="Texture2D" uid="uid://3ucdietkj654" path="res://Assets/UIAssets/heartleft.png" id="29_olapy"]
+[ext_resource type="Texture2D" uid="uid://gwfk6uemirh2" path="res://Assets/UIAssets/heartright.png" id="30_1engb"]
 
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
@@ -164,7 +165,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mydub"]
 shader = SubResource("Shader_ekrlx")
-shader_parameter/mask_texture = ExtResource("7_a5jj2")
+shader_parameter/mask_texture = ExtResource("8_ttwme")
 shader_parameter/mask_scale = Vector2(1, 1)
 shader_parameter/mask_offset = Vector2(0, 0)
 
@@ -616,7 +617,7 @@ _data = {
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
-shader = ExtResource("3_18gwp")
+shader = ExtResource("12_3tmru")
 shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.910000043225
 shader_parameter/saturation = 2.0
@@ -1216,7 +1217,7 @@ _data = {
 [sub_resource type="CanvasTexture" id="CanvasTexture_r3bk5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hqa1v"]
-shader = ExtResource("11_yikdd")
+shader = ExtResource("17_upt58")
 shader_parameter/enabled = true
 shader_parameter/glitch_chance = 0.2950000140125
 shader_parameter/glitch_speed = 7.45500035085262
@@ -1234,7 +1235,7 @@ shader_parameter/clip_outside = true
 shader_parameter/time_wrap = 120.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_1fuao"]
-diffuse_texture = ExtResource("5_86r3q")
+diffuse_texture = ExtResource("9_qtkxc")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_7vajh"]
 
@@ -1829,6 +1830,479 @@ tracks/38/keys = {
 "values": [1.0, 1.0, 3.0]
 }
 
+[sub_resource type="Animation" id="Animation_x1q7v"]
+resource_name = "Event_2"
+length = 125.0
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../InGameElements/RailBottom:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(3.363589, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../InGameElements/RailTop:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(3.363589, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../InGameElements/Hit Line:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(0.32987696, 1),
+"update": 0,
+"values": [Vector2(0, -1), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CanvasLayer/Control/Accuracy:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2, 2.9999998),
+"transitions": PackedFloat32Array(0.29730177, 1),
+"update": 0,
+"values": [Vector2(1, -1), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CanvasLayer/Control/SongName:offset_transform_position_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2, 2.9999998),
+"transitions": PackedFloat32Array(0.29730198, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../CanvasLayer/Control/ComboTag:offset_transform_position_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1, 1.2),
+"transitions": PackedFloat32Array(0.27739263, 1),
+"update": 0,
+"values": [Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../CanvasLayer/Control/LevelDetail:offset_transform_position_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(3.6, 4.6000004),
+"transitions": PackedFloat32Array(0.32987735, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../CanvasLayer/Control/Pause:offset_transform_position_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(3.6, 4.6000004),
+"transitions": PackedFloat32Array(0.3186402, 1),
+"update": 0,
+"values": [Vector2(-1.2, -1.2), Vector2(0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 18.15, 18.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 18.3, 18.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox3:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 18.45, 18.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox4:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 18.6, 19.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = false
+tracks/12/path = NodePath("../InGameElements/BlackBox:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(27.6, 28.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../InGameElements/BossLevel:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 18.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../PauseMenu/CRT/Glitch:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 18.15, 19.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("%FirstStage/Transparency:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(18.15, 19.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(37.2, 37.350002, 37.5, 37.649998, 37.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(37.8, 38.399998),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("%FirstStage:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(37.2, 37.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("../BackgroundLevelElements/SecondStage:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(37.2, 37.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Heartleft:position")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(37.8, 48),
+"transitions": PackedFloat32Array(0.75786, 1),
+"update": 0,
+"values": [Vector2(-40, 0), Vector2(-450, 0)]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Heartright:position")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(37.8, 48),
+"transitions": PackedFloat32Array(0.75786, 1),
+"update": 0,
+"values": [Vector2(40, 0), Vector2(450, 0)]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Wave:scale")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(37.8, 48),
+"transitions": PackedFloat32Array(0.75786, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1.16), Vector2(1.16, 1.16)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("../BackgroundLevelElements/SecondStage/Characterprototype2:self_modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(66.45, 66.9),
+"transitions": PackedFloat32Array(0.757, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0.5294118)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("../PauseMenu/CRT/Jostar:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(57.600002, 66.9, 86.4, 96.00001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(57.600002, 60, 62.4, 64.875, 66, 66.450005, 66.9, 86.4, 91.2, 96.00001),
+"transitions": PackedFloat32Array(0.20306334, 0.20306334, 0.20306334, 0.20306334, 0.21022432, 2.8284276, 0.35355368, 0.20306315, 2.1435478, 1),
+"update": 0,
+"values": [0.0, 0.30400001444, 0.50000002375, 0.7550000358625, 0.7550000358625, 1.0, 0.0, 0.0, 0.18000000855, 0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox:visible")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 124.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox2:visible")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 124.275),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox3:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 124.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox4:visible")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 124.425),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox5:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 124.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox6:visible")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 124.575),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox7:visible")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 124.65),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox8:visible")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 124.725),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("../PauseMenu/CRT/Crash:visible")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 124.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/interp = 1
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(66.76667, 86.4, 91.200005, 96.00001),
+"transitions": PackedFloat32Array(1, 0.20306315, 2.1435478, 1),
+"update": 0,
+"values": [0.0, 8.549999989782009e-06, 90.000012825, 180.0]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(57.45, 66.76667, 86.4, 96.00001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.02000000095, 0.0]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("../Camera2D:pulse")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 4.6, 124.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("../Stars:speed_scale")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 18.15, 19.05),
+"transitions": PackedFloat32Array(1, 0.36602142, 1e-05),
+"update": 0,
+"values": [1.0, 1.0, 3.0]
+}
+
 [sub_resource type="Animation" id="Animation_iw33s"]
 length = 0.001
 tracks/0/type = "value"
@@ -1841,7 +2315,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-1, 0)]
+"values": [Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -1853,7 +2327,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-1, 0)]
+"values": [Vector2(0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -1865,7 +2339,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -1)]
+"values": [Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1877,7 +2351,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, -1)]
+"values": [Vector2(0, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1889,7 +2363,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-1, 1)]
+"values": [Vector2(0, 0)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1901,7 +2375,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -3)]
+"values": [Vector2(0, 0)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -1913,7 +2387,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(0, 0)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -1925,7 +2399,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-1.2, -1.2)]
+"values": [Vector2(0, 0)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -1997,7 +2471,7 @@ tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
@@ -2285,7 +2759,7 @@ tracks/37/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/38/type = "value"
 tracks/38/imported = false
@@ -2303,6 +2777,7 @@ tracks/38/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x0pjv"]
 _data = {
 &"Event": SubResource("Animation_8r4qt"),
+&"Event_2": SubResource("Animation_x1q7v"),
 &"RESET": SubResource("Animation_iw33s")
 }
 
@@ -2671,12 +3146,12 @@ width = 993
 height = 110
 
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
-script = ExtResource("1_dsbte")
-chart = ExtResource("2_yikdd")
+script = ExtResource("1_tq31w")
+chart = ExtResource("2_7uy4l")
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
 unique_name_in_owner = true
-script = ExtResource("1_r3bk5")
+script = ExtResource("3_7uy4l")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
 environment = SubResource("Environment_cqqlt")
@@ -2687,8 +3162,7 @@ limit_left = 0
 limit_top = 0
 limit_right = 1152
 limit_bottom = 648
-script = ExtResource("2_p87wn")
-pulse = true
+script = ExtResource("4_3td5b")
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=103199223]
 layer = 2
@@ -2715,7 +3189,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("5_qpyjv")
+script = ExtResource("5_734hs")
 reveal_at_end = false
 
 [node name="Upper" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1900463846]
@@ -2745,7 +3219,7 @@ offset_top = 24.0
 offset_right = 1391.0
 offset_bottom = 199.0
 scale = Vector2(0.835, 0.835)
-texture = ExtResource("6_aoha2")
+texture = ExtResource("6_j2t6j")
 
 [node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Mocktitlerank" unique_id=2123497874]
 layout_mode = 1
@@ -2761,7 +3235,7 @@ offset_bottom = 71.446106
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 1, 1, 1)
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 28
 text = "Press Any Key To Continue"
 horizontal_alignment = 2
@@ -2828,7 +3302,7 @@ offset_bottom = 179.0
 grow_horizontal = 0
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("7_a5jj2")
+texture = ExtResource("8_ttwme")
 expand_mode = 1
 
 [node name="InnerCard" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=105890879]
@@ -2847,7 +3321,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.94, 0.92)
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("7_a5jj2")
+texture = ExtResource("8_ttwme")
 expand_mode = 1
 
 [node name="GradientBG" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/InnerCard" unique_id=314754869]
@@ -2902,7 +3376,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.09, 1.09)
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("5_86r3q")
+texture = ExtResource("9_qtkxc")
 expand_mode = 1
 
 [node name="SongCover" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=1164060036]
@@ -2922,7 +3396,7 @@ offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("9_qpyjv")
+texture = ExtResource("10_ulaew")
 expand_mode = 1
 
 [node name="Artist Container" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=1458444951]
@@ -2950,7 +3424,7 @@ offset_left = 19.0
 offset_right = -22.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 20
 text = "Artist"
 vertical_alignment = 1
@@ -2966,7 +3440,7 @@ offset_left = 19.0
 offset_right = -22.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 20
 text = "insertartist"
 horizontal_alignment = 2
@@ -2997,7 +3471,7 @@ offset_left = 19.0
 offset_right = -22.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 20
 text = "Charting"
 vertical_alignment = 1
@@ -3013,7 +3487,7 @@ offset_left = 19.0
 offset_right = -22.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 20
 text = "insertcharter"
 horizontal_alignment = 2
@@ -3040,7 +3514,7 @@ offset_top = -67.884995
 offset_right = 131.0
 offset_bottom = -0.8849945
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 56
 text = "RANK"
 vertical_alignment = 2
@@ -3059,7 +3533,7 @@ offset_right = 6.0
 offset_bottom = 9.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 96
 text = "A"
 vertical_alignment = 2
@@ -3084,7 +3558,7 @@ offset_left = -482.0
 offset_top = -80.0
 offset_right = -23.0
 offset_bottom = -9.605003
-texture = ExtResource("11_qpyjv")
+texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
 [node name="DreamyRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect" unique_id=1655452497]
@@ -3094,7 +3568,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "DREAMY"
 vertical_alignment = 1
@@ -3107,7 +3581,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "0"
 horizontal_alignment = 2
@@ -3119,7 +3593,7 @@ layout_mode = 0
 offset_left = -482.0
 offset_right = -23.0
 offset_bottom = 70.395
-texture = ExtResource("11_qpyjv")
+texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
 [node name="GreatRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect2" unique_id=1803956736]
@@ -3129,7 +3603,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "GREAT"
 vertical_alignment = 1
@@ -3142,7 +3616,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "0"
 horizontal_alignment = 2
@@ -3155,7 +3629,7 @@ offset_left = -480.0
 offset_top = 80.0
 offset_right = -21.0
 offset_bottom = 150.39499
-texture = ExtResource("11_qpyjv")
+texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
 [node name="GoodRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect3" unique_id=1287728261]
@@ -3165,7 +3639,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "GOOD"
 vertical_alignment = 1
@@ -3178,7 +3652,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "0"
 horizontal_alignment = 2
@@ -3191,7 +3665,7 @@ offset_left = -482.0
 offset_top = 160.0
 offset_right = -23.0
 offset_bottom = 230.39499
-texture = ExtResource("11_qpyjv")
+texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
 [node name="PassRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect4" unique_id=1751192934]
@@ -3201,7 +3675,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "PASS"
 vertical_alignment = 1
@@ -3214,7 +3688,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "0"
 horizontal_alignment = 2
@@ -3227,7 +3701,7 @@ offset_left = -482.0
 offset_top = 240.0
 offset_right = -23.0
 offset_bottom = 310.395
-texture = ExtResource("11_qpyjv")
+texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
 [node name="FailRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect5" unique_id=1581196215]
@@ -3237,7 +3711,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "FAIL"
 vertical_alignment = 1
@@ -3250,7 +3724,7 @@ offset_left = 60.0
 offset_top = 9.0
 offset_right = 434.0
 offset_bottom = 70.0
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 40
 text = "0"
 horizontal_alignment = 2
@@ -3333,7 +3807,7 @@ offset_top = 104.0
 offset_right = 505.0
 offset_bottom = 164.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("8_p4jp6")
+theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 52
 text = ":(  Your Computer Ran Into A Problem"
 horizontal_alignment = 1
@@ -3354,8 +3828,8 @@ grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.58, 0.58)
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture_normal = ExtResource("9_mrkwl")
-texture_pressed = ExtResource("10_kux6b")
+texture_normal = ExtResource("13_lt0hh")
+texture_pressed = ExtResource("14_ahhwt")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
 follow_viewport_enabled = true
@@ -3376,8 +3850,7 @@ offset_top = 16.0
 offset_right = 88.0
 offset_bottom = 80.0
 offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(-1.2, -1.2)
-icon = ExtResource("5_86r3q")
+icon = ExtResource("9_qtkxc")
 icon_alignment = 1
 expand_icon = true
 
@@ -3394,7 +3867,7 @@ offset_right = 15.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("6_dsbte")
+texture = ExtResource("15_56o4m")
 expand_mode = 1
 
 [node name="ComboTag" type="ColorRect" parent="CanvasLayer/Control" unique_id=1055121295]
@@ -3404,7 +3877,6 @@ offset_top = 28.0
 offset_right = 278.0
 offset_bottom = 68.0
 offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(0, -3)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="ComboTag2" type="ColorRect" parent="CanvasLayer/Control/ComboTag" unique_id=1339686072]
@@ -3448,7 +3920,6 @@ offset_left = -318.79004
 offset_bottom = 67.06
 grow_horizontal = 0
 offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(1, -1)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="AccuracyLabel" type="Label" parent="CanvasLayer/Control/Accuracy" unique_id=669504614]
@@ -3494,7 +3965,6 @@ offset_right = 204.68
 offset_bottom = -31.0
 grow_vertical = 0
 offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(-1, 1)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="SongLabel" type="Label" parent="CanvasLayer/Control/SongName" unique_id=1327533810]
@@ -3526,7 +3996,6 @@ offset_bottom = -31.0
 grow_horizontal = 0
 grow_vertical = 0
 offset_transform_enabled = true
-offset_transform_position_ratio = Vector2(1, 1)
 color = Color(0.19247293, 0.35953876, 0.9913725, 1)
 
 [node name="DetailLabel" type="Label" parent="CanvasLayer/Control/LevelDetail" unique_id=1977836251]
@@ -3547,7 +4016,7 @@ unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_dcs3l")
 
 [node name="Curve" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
-script = ExtResource("1_5cbcl")
+script = ExtResource("16_rdlsc")
 curve_line = NodePath("Line2D")
 handle_strength = 0.375
 bezier_steps_per_segment = 32
@@ -3580,7 +4049,6 @@ z_index = -10
 position = Vector2(576, 250)
 scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
-offset = Vector2(-1, 0)
 
 [node name="RailBottom" type="Sprite2D" parent="InGameElements" unique_id=678003906]
 self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
@@ -3588,7 +4056,6 @@ z_index = -10
 position = Vector2(576, 400)
 scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
-offset = Vector2(-1, 0)
 
 [node name="RailBottom2" type="Sprite2D" parent="InGameElements" unique_id=295560481]
 self_modulate = Color(0.7239193, 0.43837702, 0, 1)
@@ -3601,14 +4068,14 @@ texture = SubResource("CanvasTexture_18gwp")
 position = Vector2(250, 324)
 scale = Vector2(10, 648)
 texture = SubResource("CanvasTexture_r3bk5")
-offset = Vector2(0, -1)
 
 [node name="BossLevel" type="Sprite2D" parent="InGameElements" unique_id=412391198]
+visible = false
 modulate = Color(0.57930714, 0.7278699, 0.78118825, 1)
 material = SubResource("ShaderMaterial_hqa1v")
 position = Vector2(576, 63)
 scale = Vector2(1, 0.9955752)
-texture = ExtResource("11_57yhw")
+texture = ExtResource("18_e1uu1")
 
 [node name="BlackBox" type="Sprite2D" parent="InGameElements" unique_id=1156828657]
 visible = false
@@ -3625,52 +4092,52 @@ visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(656, 544)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst/Errorbox" unique_id=1449064312]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(-100, -120)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox2" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst" unique_id=415580747]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(232, 464)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox6" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst/Errorbox2" unique_id=1975774717]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(616, -135)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox3" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst" unique_id=109824907]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(480, 97)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox7" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst/Errorbox3" unique_id=159971105]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(96, 191)
-texture = ExtResource("10_x0pjv")
+texture = ExtResource("20_1wvm0")
 
 [node name="Errorbox4" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst" unique_id=717764219]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(504, 632)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox8" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst/Errorbox4" unique_id=2080384776]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(446, -440)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="ErrorBoxesSecond" type="Node2D" parent="InGameElements" unique_id=326419969]
 
@@ -3679,110 +4146,110 @@ visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(240, 172)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox" unique_id=1163897422]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(143.65, 0)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox2" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=1727633339]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(312, 246)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox2" unique_id=1133454480]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(143.65, 0)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox3" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=1024442899]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(390, 320)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox3" unique_id=2071486331]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(143.65, 0)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox4" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=1978093039]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(464, 400)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox4" unique_id=623382043]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(143.65, 0)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=201251839]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(638, 242.5)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox5" unique_id=521391568]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(143.65, 0)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox6" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=311784406]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(710, 316.5)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox6" unique_id=972652928]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(143.65, 0)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox7" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=2033699655]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(788, 390.5)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox7" unique_id=1921954078]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(143.65, 0)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox8" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=719303870]
 visible = false
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(862, 470.5)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox8" unique_id=1949824059]
 self_modulate = Color(0.59, 0.59, 0.59, 1)
 z_index = 10
 position = Vector2(143.65, 0)
-texture = ExtResource("9_iw33s")
+texture = ExtResource("19_r6c0y")
 
 [node name="Hit Line Top" type="Sprite2D" parent="." unique_id=809933648]
 self_modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
 position = Vector2(250, 175)
 scale = Vector2(10, 141.99997)
-script = ExtResource("3_r3bk5")
+script = ExtResource("21_1ovfs")
 DREAMY_WINDOW_MS = 70.0
 GREAT_WINDOW_MS = 80.0
 GOOD_WINDOW_MS = 90.0
@@ -3815,7 +4282,7 @@ process_material = SubResource("ParticleProcessMaterial_x0pjv")
 position = Vector2(250, 325)
 rotation = 0.008726646
 scale = Vector2(10, 141.99997)
-script = ExtResource("3_r3bk5")
+script = ExtResource("21_1ovfs")
 DREAMY_WINDOW_MS = 70.0
 GREAT_WINDOW_MS = 80.0
 GOOD_WINDOW_MS = 90.0
@@ -3848,7 +4315,7 @@ process_material = SubResource("ParticleProcessMaterial_x0pjv")
 [node name="Hit Line Bottom" type="Sprite2D" parent="." unique_id=1292322369]
 position = Vector2(250, 475.00003)
 scale = Vector2(10, 141.99997)
-script = ExtResource("3_r3bk5")
+script = ExtResource("21_1ovfs")
 DREAMY_WINDOW_MS = 70.0
 GREAT_WINDOW_MS = 80.0
 GOOD_WINDOW_MS = 90.0
@@ -3888,20 +4355,20 @@ process_material = SubResource("ParticleProcessMaterial_dsbte")
 
 [node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
 position = Vector2(-20, -20)
-script = ExtResource("6_n4yq1")
-chart = ExtResource("2_yikdd")
-note_scene = ExtResource("3_bn5gq")
-dummy_note_scene = ExtResource("12_dsbte")
+script = ExtResource("22_mitl1")
+chart = ExtResource("2_x1q7v")
+note_scene = ExtResource("23_xkypx")
+dummy_note_scene = ExtResource("24_dqge4")
 travel_time = 8.0
 dummy_spawn_interval = 1.0
 sine_decay_rate = 0.2
 
 [node name="EventConductor" type="Node2D" parent="." unique_id=736326546]
-script = ExtResource("14_8r4qt")
+script = ExtResource("25_110p8")
 
 [node name="EventPlayer" type="AnimationPlayer" parent="EventConductor" unique_id=202058872]
 libraries/ = SubResource("AnimationLibrary_x0pjv")
-autoplay = &"Event"
+autoplay = &"RESET"
 
 [node name="BackgroundLevelElements" type="Node2D" parent="." unique_id=392097994]
 z_index = -20
@@ -3913,14 +4380,14 @@ layer = -1
 [node name="FirstStage" type="Node2D" parent="BackgroundLevelElements" unique_id=756637791]
 unique_name_in_owner = true
 modulate = Color(0.87, 0.435, 0.435, 1)
-script = ExtResource("18_1tw2i")
+script = ExtResource("26_kkptr")
 
 [node name="Transparency" type="Node2D" parent="BackgroundLevelElements/FirstStage" unique_id=181683449]
 modulate = Color(1, 1, 1, 0)
 
 [node name="Heartwhole" type="Sprite2D" parent="BackgroundLevelElements/FirstStage/Transparency" unique_id=810332631]
 scale = Vector2(0.44, 0.44)
-texture = ExtResource("18_hqa1v")
+texture = ExtResource("27_c6dri")
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundLevelElements/FirstStage/Transparency" unique_id=1573174946]
 self_modulate = Color(1, 1, 1, 0.101960786)
@@ -3940,7 +4407,7 @@ z_index = 7
 material = SubResource("ShaderMaterial_n3bcv")
 position = Vector2(0, -56)
 scale = Vector2(0.189, 0.181)
-texture = ExtResource("19_hqa1v")
+texture = ExtResource("28_q5v34")
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundLevelElements/SecondStage" unique_id=978845146]
 self_modulate = Color(1, 0, 0, 0.101960786)
@@ -3962,13 +4429,13 @@ texture = SubResource("GradientTexture2D_1tw2i")
 self_modulate = Color(0.85, 0, 0, 0.16862746)
 position = Vector2(-40, 0)
 scale = Vector2(0.44, 0.44)
-texture = ExtResource("20_i0hs6")
+texture = ExtResource("29_olapy")
 
 [node name="Heartright" type="Sprite2D" parent="BackgroundLevelElements/SecondStage/Heart" unique_id=1717590081]
 self_modulate = Color(0.21, 0, 0, 1)
 position = Vector2(40, 0)
 scale = Vector2(0.44, 0.44)
-texture = ExtResource("21_1tw2i")
+texture = ExtResource("30_1engb")
 
 [connection signal="animation_finished" from="PauseMenu/RankReveal/RevealPlayer" to="PauseMenu/RankReveal" method="_on_reveal_player_animation_finished"]
 [connection signal="button_down" from="PauseMenu/CRT/Crash/Button" to="PauseMenu/RankReveal" method="_on_button_button_down"]

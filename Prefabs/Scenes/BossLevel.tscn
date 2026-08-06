@@ -1,17 +1,35 @@
-[gd_scene format=3 uid="uid://dv1awscsn006r"]
+[gd_scene format=3 uid="uid://b7jmlpusn5j51"]
 
-[ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_gvjxc"]
-[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_gvjxc"]
-[ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="3_tua6g"]
-[ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="4_2uhvq"]
-[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_h0omu"]
-[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_mwbrj"]
-[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="7_4yic7"]
-[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="8_mnbds"]
-[ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="9_23cj3"]
-[ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="10_n5cxe"]
-[ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="11_h8ol2"]
-[ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="12_cwu2h"]
+[ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_ivveo"]
+[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_jqkyv"]
+[ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="3_qc16h"]
+[ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="4_uafi4"]
+[ext_resource type="Script" uid="uid://c3tgicyyuo43e" path="res://Scripts/UIscripts/rank_reveal.gd" id="5_twwc8"]
+[ext_resource type="Texture2D" uid="uid://bvdycarl00gi6" path="res://Assets/UIAssets/mocktitlerank.png" id="6_6d8np"]
+[ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="7_dn45n"]
+[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="8_8diav"]
+[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="9_2yfga"]
+[ext_resource type="Texture2D" uid="uid://cwhsshv0irukc" path="res://Assets/UIAssets/SongCovers/pixel-cover-816x816.png" id="10_4d617"]
+[ext_resource type="Texture2D" uid="uid://xebl0kenqjf8" path="res://Assets/UIAssets/rankrow.png" id="11_bcn6b"]
+[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="12_1iok0"]
+[ext_resource type="Texture2D" uid="uid://tvsxlvuuo4cq" path="res://Assets/UIAssets/retrobuttonopen.png" id="13_ae5me"]
+[ext_resource type="Texture2D" uid="uid://cp0trdc32123a" path="res://Assets/UIAssets/retrobuttonclosed.png" id="14_wh3a0"]
+[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="15_kol1d"]
+[ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="16_jehkj"]
+[ext_resource type="Shader" uid="uid://c8ove5jxr8r46" path="res://Assets/Shaders/glitch.gdshader" id="17_nagcr"]
+[ext_resource type="Texture2D" uid="uid://4f0ndihlddxd" path="res://Assets/UIAssets/BossLevel.png" id="18_vye68"]
+[ext_resource type="Texture2D" uid="uid://b2hm7dnva547x" path="res://Assets/UIAssets/errorbox.png" id="19_ljpnr"]
+[ext_resource type="Texture2D" uid="uid://b5bqiiukeboqu" path="res://Assets/UIAssets/errorboxuuh.png" id="20_7jxw3"]
+[ext_resource type="Script" uid="uid://ch7lqrq4cohqf" path="res://Scripts/HitLine/hit_line.gd" id="21_jdax3"]
+[ext_resource type="Script" uid="uid://dvihq5bqds4gr" path="res://Scripts/Managers/Conductor.gd" id="22_4vjch"]
+[ext_resource type="PackedScene" uid="uid://cf2fo3mo1rnvy" path="res://Prefabs/Wave/point.tscn" id="23_qb2hu"]
+[ext_resource type="PackedScene" uid="uid://mvlkyo5dglh5" path="res://Prefabs/Wave/dummypoint.tscn" id="24_1qvkw"]
+[ext_resource type="Script" uid="uid://d1s32sdp3jr7f" path="res://Scripts/Managers/Event_Conductor.gd" id="25_0kasr"]
+[ext_resource type="Script" uid="uid://c5hxxv0hvmjw3" path="res://Scripts/UIscripts/BossLevel/first_stage.gd" id="26_je33v"]
+[ext_resource type="Texture2D" uid="uid://e4koddyn5mb4" path="res://Assets/UIAssets/heartwhole.png" id="27_d4e7s"]
+[ext_resource type="Texture2D" uid="uid://0lg60kmavb05" path="res://Assets/UIAssets/characterprototypesolid.png" id="28_x01r1"]
+[ext_resource type="Texture2D" uid="uid://3ucdietkj654" path="res://Assets/UIAssets/heartleft.png" id="29_yn5do"]
+[ext_resource type="Texture2D" uid="uid://gwfk6uemirh2" path="res://Assets/UIAssets/heartright.png" id="30_52ud6"]
 
 [sub_resource type="Environment" id="Environment_cqqlt"]
 background_mode = 3
@@ -19,6 +37,1118 @@ glow_enabled = true
 glow_normalized = true
 glow_strength = 1.5
 glow_bloom = 0.1
+
+[sub_resource type="Shader" id="Shader_p4jp6"]
+code = "shader_type canvas_item;
+
+// License: CC0
+// Author: Ultipuk, https://ultipuk.xyz
+// Link: https://godotshaders.com/shader/transition-with-a-pattern-texture/
+
+// Uncomment this if you want to use background texture
+//#define USE_BACKGROUND_TEXTURE
+
+// Uncomment this if you want to use closing transition,
+// starting removing the pattern after the progress reaches 0.5
+//#define USE_CLOSING
+
+// Uncomment this if you want to remove tile distortion.
+// The result will look weird in the editor, and the tiles will have some clipping. Intended for viewport-sized canvases.
+//#define REMOVE_DISTORTION
+
+/** Actual transition progress. You want to change it from a script. */
+uniform float progress: hint_range(0.0, 1.0) = 0.0;
+/** The width of the transition as a fraction of the UV. */
+uniform float width: hint_range(0.0, 1.0) = 0.5;
+
+/** Actual pattern. You can use a texture with an ALPHA channel.
+*   This color is modulated, so you can use modulate parameter to change the color. */
+uniform sampler2D tile_texture: source_color, repeat_disable;
+/** Tile size in pixels. */
+uniform float tile_pixel_size = 32.0;
+/** The maximum scale of the tile on the edge of the transition window. */
+uniform float tile_grown_scale: hint_range(0.0, 16.0) = 2.0;
+
+/** Transition uses red channel to determine when the part should be visible. */
+uniform sampler2D transition_texture;
+
+#ifdef USE_BACKGROUND_TEXTURE
+/** Simple background texture that will be mixed with the tile texture. It can be a SubViewport texture or just a gradient. */
+uniform sampler2D background_texture: source_color;
+#endif
+
+void fragment() {
+	vec2 tile_uv = vec2(
+		fract(FRAGCOORD.x / tile_pixel_size),
+		fract(FRAGCOORD.y / tile_pixel_size)
+	);
+	
+#ifdef REMOVE_DISTORTION
+	vec2 tiles = vec2(1.0 / SCREEN_PIXEL_SIZE / tile_pixel_size);
+	vec2 transition_uv = ceil(UV * tiles) / tiles;
+#else
+	vec2 transition_uv = UV;
+#endif
+	
+#ifdef USE_CLOSING
+	float part, transition;
+	
+	if (progress > 0.5) {
+		part = (1.0 - (progress - 0.5) * 2.0) * (1.0 + 2.0 * width) - width;
+		transition = 1.0 - texture(transition_texture, transition_uv).r;
+	} else {
+		part = 2.0 * progress * (1.0 + 2.0 * width) - width;
+		transition = texture(transition_texture, transition_uv).r;
+	}
+#else
+	float part = progress * (1.0 + 2.0 * width) - width;
+	float transition = texture(transition_texture, transition_uv).r;
+#endif
+	
+	float window = max(0.0, min(1.0, width + (part - transition) / width));
+	
+	tile_uv = tile_uv * 2.0 - 1.0;
+	tile_uv /= window * tile_grown_scale;
+	tile_uv = (tile_uv + 1.0) * 0.5;
+	
+#ifdef USE_BACKGROUND_TEXTURE
+	vec4 tile = texture(tile_texture, tile_uv) * texture(background_texture, UV);
+#else
+	vec4 tile = texture(tile_texture, tile_uv);
+#endif
+	
+	COLOR *= tile;
+}"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mrkwl"]
+load_path = "res://.godot/imported/roundeddiamond.png-4ff04342e72f0a31fd057d2828b6b1a3.ctex"
+
+[sub_resource type="Gradient" id="Gradient_mydub"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rql4f"]
+gradient = SubResource("Gradient_mydub")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qpyjv"]
+shader = SubResource("Shader_p4jp6")
+shader_parameter/progress = 0.0
+shader_parameter/width = 0.5
+shader_parameter/tile_texture = SubResource("CompressedTexture2D_mrkwl")
+shader_parameter/tile_pixel_size = 32.0
+shader_parameter/tile_grown_scale = 2.0
+shader_parameter/transition_texture = SubResource("GradientTexture2D_rql4f")
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_kux6b"]
+file = "res://Assets/Backgrounds/wavymenubg2.ogv"
+
+[sub_resource type="Shader" id="Shader_ekrlx"]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+uniform vec2 mask_scale = vec2(1.0, 1.0);
+uniform vec2 mask_offset = vec2(0.0, 0.0);
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV) * COLOR;
+
+    vec2 mask_uv = (UV - 0.5) / mask_scale + 0.5 + mask_offset;
+    float mask = texture(mask_texture, mask_uv).a;
+	
+    vec2 inside = step(vec2(0.0), mask_uv) * step(mask_uv, vec2(1.0));
+    mask *= inside.x * inside.y;
+
+    color.a *= mask;
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mydub"]
+shader = SubResource("Shader_ekrlx")
+shader_parameter/mask_texture = ExtResource("8_8diav")
+shader_parameter/mask_scale = Vector2(1, 1)
+shader_parameter/mask_offset = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_hbsud"]
+colors = PackedColorArray(1, 1, 1, 0.4509804, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rql4f"]
+gradient = SubResource("Gradient_hbsud")
+
+[sub_resource type="Shader" id="Shader_jahwt"]
+code = "shader_type canvas_item;
+
+
+uniform vec2 resolution;
+uniform vec2 mouse_pos;
+uniform float speed_multiplier = 1.0;
+uniform bool enable_background = true;
+uniform vec4 background_color = vec4(0.0, 0.0, 0.0, 1.0); 
+
+
+float No(float x, vec2 T){
+	return fract(9667.5 * sin(7983.75 * (x + T.x) + 297. + T.y));
+}
+vec4 Rancol(vec2 x, vec2 T){
+	return vec4(No(x.x + x.y, T), No(x.x*x.x + x.y, T), No(x.x*x.x + x.y*x.y, T), 1.0);
+}
+vec4 grid(vec2 uv, float t, vec2 T){
+	vec4 C1 = vec4(0.0);
+	vec4 C2 = vec4(0.0);
+	uv *= 20.0;
+	vec2 id = vec2(floor(uv.x), floor(uv.y));
+	uv.y += (5.0 * No(id.x * id.x, T) + 1.0) * t * 0.04;
+	uv.y += No(id.x, T);
+	id = vec2(floor(uv.x), floor(uv.y));
+	uv = fract(uv) - 0.5;
+	float d = length(uv);
+	float t_local = t * (1.0 * No(id.x + id.y, T));
+	float r = 0.1 * sin(t_local + sin(t_local) * 0.5) + 0.3;
+	float r1 = 0.07 * sin(2.0 * t_local + sin(2.0 * t_local) * 0.5) + 0.1 * No(id.x + id.y, T);
+	if (d < r && d > r - 0.1) {
+		C2 = 0.5 * Rancol(id + vec2(1.0), T) + vec4(0.5);
+		C2 *= smoothstep(r - 0.12, r, d);
+		C2 *= 1.0 - smoothstep(r - 0.05, r + 0.12, d);
+	}
+	if (d < r1) {
+		C2 = 0.5 * Rancol(id + vec2(1.0), T) + vec4(0.5);
+	}
+	return C2 + C1;
+}
+
+
+void fragment() {
+	vec2 uv = FRAGCOORD.xy / resolution.xy;
+	uv.y *= resolution.y / resolution.x;
+	float t = TIME * speed_multiplier;
+    vec2 T = mouse_pos / resolution;
+	vec4 final_color = grid(uv, t, T);
+
+    if (enable_background) {
+        final_color += background_color;
+    }
+
+    COLOR = final_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7rtu4"]
+shader = SubResource("Shader_jahwt")
+shader_parameter/resolution = Vector2(700, 200)
+shader_parameter/mouse_pos = Vector2(0, 0)
+shader_parameter/speed_multiplier = 1.0
+shader_parameter/enable_background = false
+shader_parameter/background_color = Vector4(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_hcp02"]
+code = "shader_type canvas_item;
+
+uniform sampler2D mask_texture;
+uniform vec2 mask_scale = vec2(1.0, 1.0);
+uniform vec2 mask_offset = vec2(0.0, 0.0);
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV) * COLOR;
+
+    vec2 mask_uv = (UV - 0.5) / mask_scale + 0.5 + mask_offset;
+    float mask = texture(mask_texture, mask_uv).a;
+
+    // Zero the mask anywhere we've sampled outside the texture.
+    vec2 inside = step(vec2(0.0), mask_uv) * step(mask_uv, vec2(1.0));
+    mask *= inside.x * inside.y;
+
+    color.a *= mask;
+    COLOR = color;
+}"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y1hkt"]
+load_path = "res://.godot/imported/roundedrect.png-546c6fd7b9616b1388628124dfdb78c3.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h43uj"]
+shader = SubResource("Shader_hcp02")
+shader_parameter/mask_texture = SubResource("CompressedTexture2D_y1hkt")
+shader_parameter/mask_scale = Vector2(1, 1)
+shader_parameter/mask_offset = Vector2(0, 0)
+
+[sub_resource type="Shader" id="Shader_7rtu4"]
+code = "shader_type canvas_item;
+
+// License: CC0
+// Author: Ultipuk, https://ultipuk.xyz
+// Link: https://godotshaders.com/shader/transition-with-a-pattern-texture/
+
+// Uncomment this if you want to use background texture
+//#define USE_BACKGROUND_TEXTURE
+
+// Uncomment this if you want to use closing transition,
+// starting removing the pattern after the progress reaches 0.5
+//#define USE_CLOSING
+
+// Uncomment this if you want to remove tile distortion.
+// The result will look weird in the editor, and the tiles will have some clipping. Intended for viewport-sized canvases.
+//#define REMOVE_DISTORTION
+
+/** Actual transition progress. You want to change it from a script. */
+uniform float progress: hint_range(0.0, 1.0) = 0.0;
+/** The width of the transition as a fraction of the UV. */
+uniform float width: hint_range(0.0, 1.0) = 0.5;
+
+/** Actual pattern. You can use a texture with an ALPHA channel.
+*   This color is modulated, so you can use modulate parameter to change the color. */
+uniform sampler2D tile_texture: source_color, repeat_disable;
+/** Tile size in pixels. */
+uniform float tile_pixel_size = 32.0;
+/** The maximum scale of the tile on the edge of the transition window. */
+uniform float tile_grown_scale: hint_range(0.0, 16.0) = 2.0;
+
+/** Transition uses red channel to determine when the part should be visible. */
+uniform sampler2D transition_texture;
+
+#ifdef USE_BACKGROUND_TEXTURE
+/** Simple background texture that will be mixed with the tile texture. It can be a SubViewport texture or just a gradient. */
+uniform sampler2D background_texture: source_color;
+#endif
+
+void fragment() {
+	vec2 tile_uv = vec2(
+		fract(FRAGCOORD.x / tile_pixel_size),
+		fract(FRAGCOORD.y / tile_pixel_size)
+	);
+	
+#ifdef REMOVE_DISTORTION
+	vec2 tiles = vec2(1.0 / SCREEN_PIXEL_SIZE / tile_pixel_size);
+	vec2 transition_uv = ceil(UV * tiles) / tiles;
+#else
+	vec2 transition_uv = UV;
+#endif
+	
+#ifdef USE_CLOSING
+	float part, transition;
+	
+	if (progress > 0.5) {
+		part = (1.0 - (progress - 0.5) * 2.0) * (1.0 + 2.0 * width) - width;
+		transition = 1.0 - texture(transition_texture, transition_uv).r;
+	} else {
+		part = 2.0 * progress * (1.0 + 2.0 * width) - width;
+		transition = texture(transition_texture, transition_uv).r;
+	}
+#else
+	float part = progress * (1.0 + 2.0 * width) - width;
+	float transition = texture(transition_texture, transition_uv).r;
+#endif
+	
+	float window = max(0.0, min(1.0, width + (part - transition) / width));
+	
+	tile_uv = tile_uv * 2.0 - 1.0;
+	tile_uv /= window * tile_grown_scale;
+	tile_uv = (tile_uv + 1.0) * 0.5;
+	
+#ifdef USE_BACKGROUND_TEXTURE
+	vec4 tile = texture(tile_texture, tile_uv) * texture(background_texture, UV);
+#else
+	vec4 tile = texture(tile_texture, tile_uv);
+#endif
+	
+	COLOR *= tile;
+}"
+
+[sub_resource type="Gradient" id="Gradient_aoha2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aoha2"]
+gradient = SubResource("Gradient_aoha2")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s1nel"]
+shader = SubResource("Shader_7rtu4")
+shader_parameter/progress = 1.0
+shader_parameter/width = 0.5
+shader_parameter/tile_texture = SubResource("CompressedTexture2D_mrkwl")
+shader_parameter/tile_pixel_size = 32.0
+shader_parameter/tile_grown_scale = 2.0
+shader_parameter/transition_texture = SubResource("GradientTexture2D_aoha2")
+
+[sub_resource type="Animation" id="Animation_mydub"]
+resource_name = "CloseReveal"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.6, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Upper:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ht26k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Reveal:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Reveal/Lower:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Upper:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CRT/Crash:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Reveal/Lower:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_lhw6a"]
+resource_name = "RankReveal"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.6, 1, 0.36602145),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Reveal:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Reveal/Lower:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(0.6, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Upper:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Reveal/Lower:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_qpyjv"]
+resource_name = "RankRevealCrash"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.6, 1, 0.36602145),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Reveal:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Reveal/Lower:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(0.6, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Upper:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.93333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CRT/Crash:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Reveal/Lower:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_avgt3"]
+_data = {
+&"CloseReveal": SubResource("Animation_mydub"),
+&"RESET": SubResource("Animation_ht26k"),
+&"RankReveal": SubResource("Animation_lhw6a"),
+&"RankRevealCrash": SubResource("Animation_qpyjv")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
+shader = ExtResource("12_1iok0")
+shader_parameter/brightness = 1.4950000710125
+shader_parameter/contrast = 0.910000043225
+shader_parameter/saturation = 2.0
+shader_parameter/gamma = 1.17200004915023
+shader_parameter/source_softness = 0.250000011875
+shader_parameter/curvature = 0.030000001425
+shader_parameter/corner_soften = 0.0400000019
+shader_parameter/vignette = 0.0
+shader_parameter/scanline_strength = 0.0
+shader_parameter/scanline_density = 0.5
+shader_parameter/interlace_strength = 0.0
+shader_parameter/mask_strength = 0.0850000040375
+shader_parameter/mask_scale = 0.5
+shader_parameter/chroma_offset_px = 0.8570000407075
+shader_parameter/luma_smear_px = 0.0
+shader_parameter/jitter_px = 0.0
+shader_parameter/wobble_px = 0.78000003705
+shader_parameter/tape_noise = 0.22
+shader_parameter/tape_lines = 0.1050000049875
+shader_parameter/roll_speed = 0.1
+shader_parameter/roll_strength = 0.15
+shader_parameter/glow_strength = 0.25
+shader_parameter/glow_threshold = 0.65
+
+[sub_resource type="Shader" id="Shader_yikdd"]
+code = "shader_type canvas_item;
+
+// Godot 4 screen-space glitch shader.
+// Glitches everything drawn BEHIND this node, rather than the node's own texture.
+//
+// SETUP:
+//  1. Attach to a ColorRect (easiest), Sprite2D, or Polygon2D.
+//  2. Put it in a CanvasLayer above the content you want distorted, or give it a
+//     higher z_index. The back buffer only contains what was drawn BEFORE this
+//     node, so anything drawn after it is untouched.
+//  3. For a single effect you do NOT need a BackBufferCopy node -- Godot copies
+//     the screen automatically the first time hint_screen_texture is hit.
+//     You only need one if a SECOND screen-reading shader overlaps this one and
+//     must see this one's output. In that case use copy_mode = Viewport;
+//     Rect mode has had update bugs across several 4.x releases.
+//
+// SCALE NOTE:
+// Offsets are in screen-UV units, so 0.1 means 10% of viewport WIDTH horizontally
+// and 10% of HEIGHT vertically -- not equal distances on a non-square viewport.
+// Defaults are lowered from the sprite version accordingly. For pixel-exact
+// offsets instead, multiply by SCREEN_PIXEL_SIZE (which is 1.0 / viewport size).
+
+/* ================= SETTINGS ================= */
+uniform sampler2D screen_tex : hint_screen_texture, repeat_disable, filter_linear;
+
+uniform bool enabled = true;
+// Probability of glitch effect happening
+uniform float glitch_chance : hint_range(0.0, 1.0) = 0.2;
+// Speed of glitch state changes (how many glitch \"frames\" per second)
+uniform float glitch_speed : hint_range(0.1, 60.0) = 7.0;
+// Number of horizontal slices, measured across the NODE's height
+uniform float slice_density : hint_range(1.0, 120.0) = 14.0;
+// Strength of horizontal displacement for slices
+uniform float slice_strength : hint_range(0.0, 1.0) = 0.12;
+// Global shake amount
+uniform float shake_strength : hint_range(0.0, 0.5) = 0.008;
+// Chromatic color separation amount
+uniform float chroma_offset : hint_range(0.0, 0.2) = 0.006;
+// Digital noise intensity
+uniform float noise_strength : hint_range(0.0, 1.0) = 0.2;
+// Intensity of color flashes
+uniform float color_flash_strength : hint_range(0.0, 1.0) = 0.4;
+// Intensity of scanline drop effect
+uniform float scanline_strength : hint_range(0.0, 1.0) = 0.18;
+// Strength of local warping distortion
+uniform float local_warp_strength : hint_range(0.0, 1.0) = 0.04;
+// Chance for horizontal flip of slices. In screen space this mirrors a band of
+// the background around the node's centre line, which is a strong effect --
+// keep it low or set it to 0.
+uniform float flip_chance : hint_range(0.0, 1.0) = 0.08;
+
+/* ---- masking / modulate ---- */
+// Use the node's own texture alpha as a mask, so the glitch only shows inside
+// the sprite's shape. Leave off for a plain rectangular ColorRect.
+uniform bool use_texture_as_mask = false;
+// Fade the effect out toward the node's edges instead of a hard rectangular cut.
+uniform float edge_feather : hint_range(0.0, 0.5) = 0.0;
+// ON  : modulate tints everything, including flashes and noise grain.
+// OFF : modulate tints only the background; flashes and grain keep raw color.
+uniform bool modulate_affects_glitch = true;
+// TIME is wrapped to this period to keep hash inputs small and precise.
+uniform float time_wrap : hint_range(1.0, 600.0) = 120.0;
+
+/* ================= HASH FUNCTIONS ================= */
+// Sine-free hashes (Dave Hoskins style). These stay well-behaved for large
+// inputs, unlike fract(sin(x * 143758.5) * 43758.5), which loses all precision
+// once TIME grows and produces visible banding.
+
+float hash11(float p) {
+	p = fract(p * 0.1031);
+	p *= p + 33.33;
+	p *= p + p;
+	return fract(p);
+}
+
+float hash12(vec2 p) {
+	vec3 p3 = fract(p.xyx * 0.1031);
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.x + p3.y) * p3.z);
+}
+
+vec2 hash22(vec2 p) {
+	vec3 p3 = fract(p.xyx * vec3(0.1031, 0.1030, 0.0973));
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.xx + p3.yz) * p3.zy);
+}
+
+/* ================= FRAGMENT SHADER ================= */
+void fragment() {
+	// Capture modulate / self_modulate / vertex color before COLOR is written.
+	vec4 modulate = COLOR;
+	vec3 pre_tint  = modulate_affects_glitch ? vec3(1.0) : modulate.rgb;
+	vec3 post_tint = modulate_affects_glitch ? modulate.rgb : vec3(1.0);
+
+	// Two coordinate spaces here, and the split matters:
+	//   UV        - local to the node. Drives the slice PATTERN, so the bands
+	//               stay locked to the object and keep a consistent count no
+	//               matter the viewport resolution or where the node sits.
+	//   SCREEN_UV - where we actually SAMPLE the background from.
+	vec2 suv = SCREEN_UV;
+	float t = mod(TIME, time_wrap);
+
+	// Quantized glitch \"frame\". Every random value below is keyed to this so
+	// effects hold for the duration of a step instead of buzzing per-frame.
+	// SEED matters: these hashes all return exactly 0.0 for an input of 0.0, so
+	// without an offset the first glitch step can never pass the gate -- and if
+	// TIME is pinned near zero (a non-redrawing editor viewport, say) the shader
+	// sits on that dead step forever and renders a pure pass-through.
+	const float SEED = 137.13;
+	float step_id = floor(t * glitch_speed) + SEED;
+	float slow_id = floor(t) + SEED;
+
+	float glitch = enabled ? step(1.0 - glitch_chance, hash11(step_id)) : 0.0;
+
+	/* ----- SLICES EFFECT ----- */
+	float slice_id = floor(UV.y * slice_density + hash11(slow_id) * 10.0);
+	float slice_rand = hash12(vec2(slice_id, step_id));
+	float slice_mask = step(0.5, slice_rand) * glitch;
+
+	// Flip mirrors the sampled band around the NODE's horizontal centre, not the
+	// screen's. The mirrored local position is (1.0 - UV.x), so the local shift
+	// is (1.0 - 2.0 * UV.x); dFdx gives screen-UV per local-UV to convert that
+	// into a screen offset. Assumes the node is unrotated -- if you rotate it,
+	// pass the rect in from GDScript and use that instead.
+	float flip = step(hash12(vec2(slice_id + 91.7, step_id)), flip_chance) * slice_mask;
+	float u_to_screen = dFdx(SCREEN_UV.x) / max(abs(dFdx(UV.x)), 1e-6);
+	suv.x += (1.0 - 2.0 * UV.x) * u_to_screen * flip;
+
+	// Horizontal displacement for this slice
+	suv.x += (slice_rand - 0.5) * slice_strength * slice_mask;
+
+	/* ----- MICRO JITTER ----- */
+	float jitter = step(0.85, hash11(step_id * 1.7 + 5.0)) * glitch;
+	suv.x += (hash11(step_id * 3.1 + 13.0) - 0.5) * 0.08 * jitter;
+
+	/* ----- LOCAL WARP ----- */
+	float warp_zone = step(0.65, hash12(vec2(slice_id, step_id + 17.0)));
+	suv += (hash22(UV * 64.0 + step_id) - 0.5) * local_warp_strength * warp_zone * glitch;
+
+	/* ----- GLOBAL SHAKE ----- */
+	suv += (vec2(hash11(step_id * 1.3 + 41.0), hash11(step_id * 1.7 + 77.0)) - 0.5)
+		* shake_strength * glitch;
+
+	/* ----- SAMPLING ----- */
+	// Clamp rather than clip: sampling past the screen edge should smear the
+	// border pixel, not punch a transparent hole in the middle of the effect.
+	suv = clamp(suv, vec2(0.0), vec2(1.0));
+
+	vec3 base = texture(screen_tex, suv).rgb;
+	float r = texture(screen_tex, clamp(suv + vec2(chroma_offset * glitch, 0.0), 0.0, 1.0)).r;
+	float b = texture(screen_tex, clamp(suv - vec2(chroma_offset * glitch, 0.0), 0.0, 1.0)).b;
+
+	vec3 color = vec3(r, base.g, b) * pre_tint;
+
+	/* ----- DIGITAL NOISE ----- */
+	color += (hash12(UV * 512.0 + vec2(step_id, step_id * 1.7)) - 0.5)
+		* noise_strength * glitch;
+
+	/* ----- SCANLINE DROP ----- */
+	float scan = step(0.9, hash12(vec2(floor(UV.y * 100.0), step_id)));
+	color *= 1.0 - scan * scanline_strength * glitch;
+
+	/* ----- COLOR FLASH ----- */
+	vec3 flash_color = step(vec3(0.5), vec3(
+		hash11(step_id + 0.1),
+		hash11(step_id + 31.7),
+		hash11(step_id + 61.3)
+	));
+	color = mix(color, flash_color, hash11(step_id * 4.0 + 7.0) * color_flash_strength * glitch);
+
+	/* ----- MASK ----- */
+	float mask = 1.0;
+	if (use_texture_as_mask) {
+		mask *= texture(TEXTURE, UV).a;
+	}
+	if (edge_feather > 0.0) {
+		vec2 e = smoothstep(vec2(0.0), vec2(edge_feather), UV)
+			* smoothstep(vec2(0.0), vec2(edge_feather), 1.0 - UV);
+		mask *= e.x * e.y;
+	}
+
+	// Blend back toward the untouched background by the mask, so feathered
+	// edges dissolve into the scene instead of fading to transparent and
+	// revealing a hard rectangle of un-glitched screen underneath.
+	vec3 clean = texture(screen_tex, SCREEN_UV).rgb;
+	color = mix(clean, color, mask);
+
+	COLOR = vec4(color * post_tint, modulate.a);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i0hs6"]
+shader = SubResource("Shader_yikdd")
+shader_parameter/enabled = true
+shader_parameter/glitch_chance = 1.0
+shader_parameter/glitch_speed = 7.0
+shader_parameter/slice_density = 120.0
+shader_parameter/slice_strength = 0.0
+shader_parameter/shake_strength = 0.00400000019
+shader_parameter/chroma_offset = 0.006
+shader_parameter/noise_strength = 0.2
+shader_parameter/color_flash_strength = 0.0
+shader_parameter/scanline_strength = 0.18
+shader_parameter/local_warp_strength = 0.04
+shader_parameter/flip_chance = 0.08
+shader_parameter/use_texture_as_mask = false
+shader_parameter/edge_feather = 0.0
+shader_parameter/modulate_affects_glitch = false
+shader_parameter/time_wrap = 120.0
+
+[sub_resource type="Shader" id="Shader_1tw2i"]
+code = "shader_type canvas_item;
+
+uniform sampler2D screen_tex : hint_screen_texture, filter_linear_mipmap;
+
+uniform float fall_progress : hint_range(0.0, 1.0) = 0.0;
+
+uniform int pieces_x = 5;
+uniform int pieces_y = 3;
+
+// Multiplies the guaranteed falling distance
+// (1.0 = \"normal\" fall, higher values make the piece
+// accelerate and leave the screen faster).
+uniform float gravity : hint_range(0.5, 3.0) = 1.15;
+uniform float scatter : hint_range(0.0, 1.0) = 0.22;
+uniform float rotation_amount : hint_range(0.0, 4.0) = 1.0;
+
+uniform float point_jitter : hint_range(0.0, 0.48) = 0.34;
+uniform float delay_variation : hint_range(0.0, 0.8) = 0.28;
+
+// Extra margin (in screen heights) below the bottom edge
+// to guarantee the piece is completely out of view
+// when fall_progress reaches 1.0.
+uniform float exit_margin : hint_range(0.0, 1.0) = 0.35;
+
+uniform float edge_thickness : hint_range(0.0005, 0.05) = 0.01;
+uniform float edge_brightness : hint_range(0.0, 2.0) = 0.35;
+
+// Optional additional alpha fade near the end of the fall
+// (1.0 = no fade).
+uniform float alpha_fade_start : hint_range(0.0, 1.0) = 1.0;
+
+const int SEARCH_RADIUS = 1;
+const int MAX_ROWS = 32; // Safety limit for the row search loop
+
+float hash12(vec2 p) {
+	vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.x + p3.y) * p3.z);
+}
+
+vec2 hash22(vec2 p) {
+	return vec2(
+		hash12(p + vec2(1.23, 4.56)),
+		hash12(p + vec2(7.89, 0.12))
+	);
+}
+
+mat2 rot(float a) {
+	float s = sin(a);
+	float c = cos(a);
+	return mat2(vec2(c, -s), vec2(s, c));
+}
+
+vec2 cell_point(vec2 cell_id) {
+	vec2 h = hash22(cell_id);
+	return cell_id + 0.5 + (h - 0.5) * (point_jitter * 2.0);
+}
+
+// Finds the closest Voronoi owner (cell/point) to p,
+// along with an approximate distance to the cell boundary.
+void voronoi_info(vec2 p, out vec2 owner_cell, out vec2 owner_point, out float edge_dist) {
+	vec2 base = floor(p);
+
+	float best_d = 1e20;
+	float second_d = 1e20;
+	vec2 best_cell = vec2(0.0);
+	vec2 best_point = vec2(0.0);
+
+	for (int j = -SEARCH_RADIUS; j <= SEARCH_RADIUS; j++) {
+		for (int i = -SEARCH_RADIUS; i <= SEARCH_RADIUS; i++) {
+			vec2 c = base + vec2(float(i), float(j));
+			vec2 pt = cell_point(c);
+			float d = distance(p, pt);
+
+			if (d < best_d) {
+				second_d = best_d;
+				best_d = d;
+				best_cell = c;
+				best_point = pt;
+			} else if (d < second_d) {
+				second_d = d;
+			}
+		}
+	}
+
+	owner_cell = best_cell;
+	owner_point = best_point;
+	edge_dist = second_d - best_d;
+}
+
+// Piece transform:
+// Ensures that, in the worst-case scenario (t = 1),
+// the piece has already moved completely below the screen
+// (plus a safety margin), preventing it from stopping
+// halfway or overshooting prematurely.
+void piece_transform(
+	vec2 piece_cell,
+	vec2 point,
+	vec2 grid,
+	out float t,
+	out vec2 piece_offset_uv,
+	out float piece_angle
+) {
+	float rnd  = hash12(piece_cell);
+	float rnd2 = hash12(piece_cell + 17.37);
+	float rnd3 = hash12(piece_cell + 91.11);
+
+	float delay = rnd * delay_variation;
+	t = clamp((fall_progress - delay) / max(0.0001, 1.0 - delay), 0.0, 1.0);
+
+	float center_y = point.y / grid.y;
+
+	// Distance required for this piece to fully leave the screen.
+	float needed = (1.0 - center_y) + exit_margin;
+
+	float speed_variance = 0.6 + rnd2 * 0.8;
+	float fall_y = needed * (t * t) * gravity * speed_variance;
+
+	float drift_x = (rnd2 - 0.5) * scatter * t;
+
+	piece_offset_uv = vec2(drift_x, fall_y);
+	piece_angle = (rnd3 - 0.5) * rotation_amount * t;
+}
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	vec2 grid = vec2(float(pieces_x), float(pieces_y));
+	vec2 p_now = uv * grid;
+	vec2 base_cell = floor(p_now);
+
+	vec4 result = vec4(0.0);
+	bool found = false;
+	float found_edge = 0.0;
+	float found_t = 0.0;
+
+	// Horizontal drift is small (limited by \"scatter\"),
+	// so only neighboring columns need to be checked.
+	// Vertical movement, however, can be large, so we scan
+	// every row to determine which transformed piece
+	// actually covers this pixel.
+	for (int iy = 0; iy < MAX_ROWS; iy++) {
+		if (iy >= pieces_y) break;
+
+		for (int dx = -1; dx <= 1; dx++) {
+			float cx = base_cell.x + float(dx);
+			if (cx < 0.0 || cx >= grid.x) continue;
+
+			vec2 cell_id = vec2(cx, float(iy));
+			vec2 point = cell_point(cell_id);
+			vec2 piece_center_uv = point / grid;
+
+			float t;
+			vec2 offset;
+			float angle;
+			piece_transform(cell_id, point, grid, t, offset, angle);
+
+			vec2 rel_now = uv - piece_center_uv;
+			vec2 uv_from = piece_center_uv + rot(-angle) * (rel_now - offset);
+
+			if (uv_from.x < 0.0 || uv_from.y < 0.0 || uv_from.x > 1.0 || uv_from.y > 1.0) {
+				continue;
+			}
+
+			vec2 p_from = uv_from * grid;
+			vec2 from_cell;
+			vec2 from_point;
+			float from_edge;
+			voronoi_info(p_from, from_cell, from_point, from_edge);
+
+			if (distance(from_cell, cell_id) > 0.001) continue;
+
+			result = texture(screen_tex, uv_from);
+			found_edge = from_edge;
+			found_t = t;
+			found = true;
+		}
+	}
+
+	if (!found) {
+		COLOR = vec4(0.0);
+		discard;
+	}
+
+	float edge = 1.0 - smoothstep(0.0, edge_thickness, found_edge);
+	result.rgb += edge * edge_brightness;
+
+	float fade = 1.0 - smoothstep(alpha_fade_start, 1.0, found_t);
+	result.a *= fade;
+
+	COLOR = result;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hl7e"]
+shader = SubResource("Shader_1tw2i")
+shader_parameter/fall_progress = 0.0
+shader_parameter/pieces_x = 5
+shader_parameter/pieces_y = 0
+shader_parameter/gravity = 1.15
+shader_parameter/scatter = 0.22
+shader_parameter/rotation_amount = 1.0
+shader_parameter/point_jitter = 0.34
+shader_parameter/delay_variation = 0.28
+shader_parameter/exit_margin = 0.35
+shader_parameter/edge_thickness = 0.01
+shader_parameter/edge_brightness = 0.35
+shader_parameter/alpha_fade_start = 1.0
+
+[sub_resource type="Shader" id="Shader_n3bcv"]
+code = "shader_type canvas_item;
+
+// configuracion de colore
+group_uniforms Colores;
+uniform vec4 color_fondo : source_color = vec4(0.15, 0.25, 0.35, 1.0);
+uniform vec4 color_linea : source_color = vec4(1.0, 1.0, 1.0, 0.15);
+uniform vec4 color_picos : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+// opcione de cuadro
+group_uniforms Cuadricula;
+uniform float tamano_cuadros : hint_range(0.01, 0.5) = 0.05;
+uniform float grosor_linea : hint_range(0.0, 0.1) = 0.005;
+uniform vec2 velocidad_fondo = vec2(0.1, 0.05); 
+uniform float rotacion_cuadricula : hint_range(0.0, 360.0) = 0.0;
+
+// oico
+group_uniforms Picos;
+uniform float cantidad_picos : hint_range(1.0, 50.0) = 12.0;
+uniform float vel_picos_arriba : hint_range(-10.0, 10.0) = 1.5;
+uniform float vel_picos_abajo : hint_range(-10.0, 10.0) = -1.5;
+
+uniform float inclinacion_punta : hint_range(0.1, 0.9) = 0.5; 
+uniform float intensidad_picos : hint_range(0.0, 1.2) = 0.4;
+uniform float cierre_picos : hint_range(0.0, 1.0) = 0.0;
+uniform float rotacion_picos : hint_range(-180.0, 180.0) = 0.0;
+
+vec2 rotate_uv(vec2 uv, float degrees, float aspect) {
+    float rad = radians(degrees);
+    mat2 rotation_matrix = mat2(
+        vec2(cos(rad), -sin(rad)),
+        vec2(sin(rad), cos(rad))
+    );
+    vec2 p = uv - vec2(0.5 * aspect, 0.5);
+    p = rotation_matrix * p;
+    return p + vec2(0.5 * aspect, 0.5);
+}
+
+void fragment() {
+    float aspect = (1.0 / SCREEN_PIXEL_SIZE).x / (1.0 / SCREEN_PIXEL_SIZE).y;
+    vec2 uv_screen = vec2(UV.x * aspect, UV.y);
+
+    vec2 uv_grid = rotate_uv(uv_screen, rotacion_cuadricula, aspect);
+    uv_grid += TIME * velocidad_fondo;
+    
+    vec2 grid_pos = abs(mod(uv_grid, tamano_cuadros) - (tamano_cuadros * 0.5));
+    float grid_line = max(
+        step(grid_pos.x, tamano_cuadros * grosor_linea),
+        step(grid_pos.y, tamano_cuadros * grosor_linea)
+    );
+    
+    vec4 background_layer = mix(color_fondo, color_linea, grid_line * color_linea.a);
+
+    // no entiendo bien que hacer para que no se redondeen los picos pipi
+    vec2 uv_picos = rotate_uv(uv_screen, rotacion_picos, aspect);
+    float x_base = (uv_picos.x / aspect) * cantidad_picos;
+    
+  
+    float rampa_arriba = fract(x_base + (TIME * vel_picos_arriba));
+    float forma_arriba = (rampa_arriba < inclinacion_punta) ? (rampa_arriba / inclinacion_punta) : ((1.0 - rampa_arriba) / (1.0 - inclinacion_punta));
+    float rampa_abajo = fract(x_base + (TIME * vel_picos_abajo));
+    float forma_abajo = (rampa_abajo < inclinacion_punta) ? (rampa_abajo / inclinacion_punta) : ((1.0 - rampa_abajo) / (1.0 - inclinacion_punta));
+    
+    float closure_offset = cierre_picos * 0.5;
+    float upper_limit = (forma_arriba * intensidad_picos * (1.0 - cierre_picos)) + closure_offset;
+    float lower_limit = 1.0 - (forma_abajo * intensidad_picos * (1.0 - cierre_picos)) - closure_offset;
+
+    // visivilidad
+    float visibility_mask = step(upper_limit, uv_picos.y) * step(uv_picos.y, lower_limit);
+
+    COLOR = mix(color_picos, background_layer, visibility_mask);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p4jp6"]
+shader = SubResource("Shader_n3bcv")
+shader_parameter/color_fondo = Color(0.1428, 0.24468666, 0.34, 0)
+shader_parameter/color_linea = Color(1, 1, 1, 0)
+shader_parameter/color_picos = Color(0, 0, 0, 0.6627451)
+shader_parameter/tamano_cuadros = 0.05
+shader_parameter/grosor_linea = 0.005
+shader_parameter/velocidad_fondo = Vector2(0.1, 0.05)
+shader_parameter/rotacion_cuadricula = 90.000004275
+shader_parameter/cantidad_picos = 38.2950017715125
+shader_parameter/vel_picos_arriba = -7.999999905
+shader_parameter/vel_picos_abajo = -7.999999905
+shader_parameter/inclinacion_punta = 0.10000000149012
+shader_parameter/intensidad_picos = 0.0
+shader_parameter/cierre_picos = 0.0
+shader_parameter/rotacion_picos = 0.0
 
 [sub_resource type="Animation" id="Animation_r3bk5"]
 length = 0.001
@@ -81,35 +1211,30 @@ _data = {
 &"RatingAnim": SubResource("Animation_n4yq1")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
-shader = ExtResource("7_4yic7")
-shader_parameter/brightness = 1.4950000710125
-shader_parameter/contrast = 0.910000043225
-shader_parameter/saturation = 2.0
-shader_parameter/gamma = 1.17200004915023
-shader_parameter/source_softness = 0.250000011875
-shader_parameter/curvature = 0.030000001425
-shader_parameter/corner_soften = 0.0400000019
-shader_parameter/vignette = 0.0
-shader_parameter/scanline_strength = 0.0
-shader_parameter/scanline_density = 0.5
-shader_parameter/interlace_strength = 0.0
-shader_parameter/mask_strength = 0.0850000040375
-shader_parameter/mask_scale = 0.5
-shader_parameter/chroma_offset_px = 0.8570000407075
-shader_parameter/luma_smear_px = 0.0
-shader_parameter/jitter_px = 0.0
-shader_parameter/wobble_px = 0.78000003705
-shader_parameter/tape_noise = 0.22
-shader_parameter/tape_lines = 0.1050000049875
-shader_parameter/roll_speed = 0.1
-shader_parameter/roll_strength = 0.15
-shader_parameter/glow_strength = 0.25
-shader_parameter/glow_threshold = 0.65
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_18gwp"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_r3bk5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hqa1v"]
+shader = ExtResource("17_nagcr")
+shader_parameter/enabled = true
+shader_parameter/glitch_chance = 0.2950000140125
+shader_parameter/glitch_speed = 7.45500035085262
+shader_parameter/slice_density = 14.0
+shader_parameter/slice_strength = 0.38
+shader_parameter/shake_strength = 0.02
+shader_parameter/chroma_offset = 0.016
+shader_parameter/noise_strength = 0.2
+shader_parameter/color_flash_strength = 0.0400000019
+shader_parameter/scanline_strength = 0.18
+shader_parameter/local_warp_strength = 0.14
+shader_parameter/flip_chance = 0.15
+shader_parameter/modulate_affects_glitch = true
+shader_parameter/clip_outside = true
+shader_parameter/time_wrap = 120.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_1fuao"]
+diffuse_texture = ExtResource("9_2yfga")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_7vajh"]
 
@@ -231,12 +1356,1327 @@ scale_over_velocity_max = 174.9
 scale_over_velocity_curve = SubResource("CurveTexture_np6qb")
 alpha_curve = SubResource("CurveTexture_57yhw")
 
+[sub_resource type="Animation" id="Animation_8r4qt"]
+resource_name = "Event"
+length = 125.0
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../InGameElements/RailBottom:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(3.363589, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../InGameElements/RailTop:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(3.363589, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../InGameElements/Hit Line:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(0.32987696, 1),
+"update": 0,
+"values": [Vector2(0, -1), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CanvasLayer/Control/Accuracy:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2, 2.9999998),
+"transitions": PackedFloat32Array(0.29730177, 1),
+"update": 0,
+"values": [Vector2(1, -1), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CanvasLayer/Control/SongName:offset_transform_position_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2, 2.9999998),
+"transitions": PackedFloat32Array(0.29730198, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../CanvasLayer/Control/ComboTag:offset_transform_position_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1, 1.2),
+"transitions": PackedFloat32Array(0.27739263, 1),
+"update": 0,
+"values": [Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../CanvasLayer/Control/LevelDetail:offset_transform_position_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(3.6, 4.6000004),
+"transitions": PackedFloat32Array(0.32987735, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../CanvasLayer/Control/Pause:offset_transform_position_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(3.6, 4.6000004),
+"transitions": PackedFloat32Array(0.3186402, 1),
+"update": 0,
+"values": [Vector2(-1.2, -1.2), Vector2(0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 18.15, 18.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 18.3, 18.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox3:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 18.45, 18.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox4:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 18.6, 19.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = false
+tracks/12/path = NodePath("../InGameElements/BlackBox:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(27.6, 28.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../InGameElements/BossLevel:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 18.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../PauseMenu/CRT/Glitch:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 18.15, 19.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("%FirstStage/Transparency:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(18.15, 19.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(37.2, 37.350002, 37.5, 37.649998, 37.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(37.8, 38.399998),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("%FirstStage:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(37.2, 37.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("../BackgroundLevelElements/SecondStage:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(37.2, 37.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Heartleft:position")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(37.8, 48),
+"transitions": PackedFloat32Array(0.75786, 1),
+"update": 0,
+"values": [Vector2(-40, 0), Vector2(-450, 0)]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Heartright:position")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(37.8, 48),
+"transitions": PackedFloat32Array(0.75786, 1),
+"update": 0,
+"values": [Vector2(40, 0), Vector2(450, 0)]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Wave:scale")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(37.8, 48),
+"transitions": PackedFloat32Array(0.75786, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1.16), Vector2(1.16, 1.16)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("../BackgroundLevelElements/SecondStage/Characterprototype2:self_modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(66.45, 66.9),
+"transitions": PackedFloat32Array(0.757, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0.5294118)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("../PauseMenu/CRT/Jostar:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(57.600002, 66.9, 86.4, 96.00001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(57.600002, 60, 62.4, 64.875, 66, 66.450005, 66.9, 86.4, 91.2, 96.00001),
+"transitions": PackedFloat32Array(0.20306334, 0.20306334, 0.20306334, 0.20306334, 0.21022432, 2.8284276, 0.35355368, 0.20306315, 2.1435478, 1),
+"update": 0,
+"values": [0.0, 0.30400001444, 0.50000002375, 0.7550000358625, 0.7550000358625, 1.0, 0.0, 0.0, 0.18000000855, 0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox:visible")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 124.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox2:visible")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 124.275),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox3:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 124.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox4:visible")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 124.425),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox5:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 124.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox6:visible")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 124.575),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox7:visible")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 124.65),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox8:visible")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 124.725),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("../PauseMenu/CRT/Crash:visible")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 124.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/interp = 1
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(66.76667, 86.4, 91.200005, 96.00001),
+"transitions": PackedFloat32Array(1, 0.20306315, 2.1435478, 1),
+"update": 0,
+"values": [0.0, 8.549999989782009e-06, 90.000012825, 180.0]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(57.45, 66.76667, 86.4, 96.00001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.02000000095, 0.0]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("../Camera2D:pulse")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 4.6, 124.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("../Stars:speed_scale")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 18.15, 19.05),
+"transitions": PackedFloat32Array(1, 0.36602142, 1e-05),
+"update": 0,
+"values": [1.0, 1.0, 3.0]
+}
+
+[sub_resource type="Animation" id="Animation_iw33s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../InGameElements/RailBottom:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../InGameElements/RailTop:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../InGameElements/Hit Line:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CanvasLayer/Control/Accuracy:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, -1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CanvasLayer/Control/SongName:offset_transform_position_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../CanvasLayer/Control/ComboTag:offset_transform_position_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -3)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../CanvasLayer/Control/LevelDetail:offset_transform_position_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../CanvasLayer/Control/Pause:offset_transform_position_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.2, -1.2)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox3:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox4:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../InGameElements/BlackBox:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../InGameElements/BossLevel:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../PauseMenu/CRT/Glitch:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("%FirstStage/Transparency:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("%FirstStage:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("../BackgroundLevelElements/SecondStage:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Heartleft:position")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-40, 0)]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Heartright:position")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, 0)]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Wave:scale")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.345, 1.16)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("../BackgroundLevelElements/SecondStage/Characterprototype2:self_modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.41568628)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("../PauseMenu/CRT/Jostar:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox:visible")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox2:visible")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox3:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox4:visible")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox5:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox6:visible")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox7:visible")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox8:visible")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("../PauseMenu/CRT/Crash:visible")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/interp = 1
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("../Camera2D:pulse")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("../Stars:speed_scale")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x0pjv"]
+_data = {
+&"Event": SubResource("Animation_8r4qt"),
+&"RESET": SubResource("Animation_iw33s")
+}
+
+[sub_resource type="Gradient" id="Gradient_oxxfm"]
+offsets = PackedFloat32Array(0, 0.21160409, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.59044373, 0.59044373, 0.59044373, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jkxj3"]
+gradient = SubResource("Gradient_oxxfm")
+width = 1152
+height = 648
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i0hs6"]
+gradient = SubResource("Gradient_oxxfm")
+width = 1152
+height = 144
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Shader" id="Shader_hqa1v"]
+code = "shader_type canvas_item;
+
+// Godot 4 glitch shader.
+//
+// MODULATE:
+// The incoming COLOR built-in is the vertex color, which Godot has already
+// filled with this node's self_modulate combined with the inherited modulate
+// chain from its parents. It is captured on the first line and reapplied at the
+// end. (Exception: if the node lives under a CanvasGroup, the group's modulate
+// is composited after this shader runs and will not appear in COLOR.)
+//
+// TEXTURE WRAPPING:
+// Godot 4 disables texture repeat on CanvasItems by default, so UV offsets that
+// leave the 0-1 range smear the edge pixels. Either:
+//   - set the node's Texture > Repeat to \"Enabled\" in the inspector, or
+//   - leave \"clip_outside\" on below to make out-of-bounds areas transparent.
+//
+// ATLASES / REGIONS:
+// The clamping below assumes UV spans 0-1. If you use an AtlasTexture or a
+// Sprite2D with Region enabled, UV maps into a sub-rect and the clamp will be
+// wrong. Turn clip_outside off in that case, or pass the region rect in.
+
+/* ================= SETTINGS ================= */
+uniform bool enabled = true;
+// Probability of glitch effect happening
+uniform float glitch_chance : hint_range(0.0, 1.0) = 0.2;
+// Speed of glitch state changes (how many glitch \"frames\" per second)
+uniform float glitch_speed : hint_range(0.1, 60.0) = 7.0;
+// Number of horizontal slices
+uniform float slice_density : hint_range(1.0, 120.0) = 14.0;
+// Strength of horizontal displacement for slices
+uniform float slice_strength : hint_range(0.0, 1.0) = 0.38;
+// Global shake amount
+uniform float shake_strength : hint_range(0.0, 0.5) = 0.02;
+// Chromatic color separation amount
+uniform float chroma_offset : hint_range(0.0, 0.2) = 0.016;
+// Digital noise intensity
+uniform float noise_strength : hint_range(0.0, 1.0) = 0.2;
+// Intensity of color flashes
+uniform float color_flash_strength : hint_range(0.0, 1.0) = 0.4;
+// Intensity of scanline drop effect
+uniform float scanline_strength : hint_range(0.0, 1.0) = 0.18;
+// Strength of local warping distortion
+uniform float local_warp_strength : hint_range(0.0, 1.0) = 0.14;
+// Chance for horizontal flip of slices
+uniform float flip_chance : hint_range(0.0, 1.0) = 0.15;
+
+/* ---- modulate / clipping ---- */
+// ON  : modulate tints everything, including flashes and noise grain.
+//       The sprite always reads as one coherently tinted object.
+// OFF : modulate tints only the source art; flashes and grain keep their
+//       raw color and punch through the tint.
+uniform bool modulate_affects_glitch = true;
+// Discard pixels pushed outside the sprite instead of smearing the edge
+uniform bool clip_outside = true;
+// TIME is wrapped to this period to keep hash inputs small and precise.
+// The effect repeats every N seconds, which is imperceptible for noise.
+uniform float time_wrap : hint_range(1.0, 600.0) = 120.0;
+
+/* ================= HASH FUNCTIONS ================= */
+// Sine-free hashes (Dave Hoskins style). These stay well-behaved for large
+// inputs, unlike fract(sin(x * 143758.5) * 43758.5), which loses all precision
+// once TIME grows and produces visible banding.
+
+float hash11(float p) {
+	p = fract(p * 0.1031);
+	p *= p + 33.33;
+	p *= p + p;
+	return fract(p);
+}
+
+float hash12(vec2 p) {
+	vec3 p3 = fract(p.xyx * 0.1031);
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.x + p3.y) * p3.z);
+}
+
+vec2 hash22(vec2 p) {
+	vec3 p3 = fract(p.xyx * vec3(0.1031, 0.1030, 0.0973));
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.xx + p3.yz) * p3.zy);
+}
+
+/* ================= FRAGMENT SHADER ================= */
+void fragment() {
+	// Capture modulate / self_modulate / vertex color before COLOR is written.
+	vec4 modulate = COLOR;
+
+	// Split the tint into a pre-pass and a post-pass factor. Exactly one of
+	// them carries the color at any time, so modulate is never applied twice.
+	vec3 pre_tint  = modulate_affects_glitch ? vec3(1.0) : modulate.rgb;
+	vec3 post_tint = modulate_affects_glitch ? modulate.rgb : vec3(1.0);
+
+	vec2 uv = UV;
+	float t = mod(TIME, time_wrap);
+
+	// Quantized glitch \"frame\". Every random value below is keyed to this so
+	// effects hold for the duration of a step instead of buzzing per-frame.
+	float step_id = floor(t * glitch_speed);
+	float slow_id = floor(t);
+
+	float glitch = enabled ? step(1.0 - glitch_chance, hash11(step_id)) : 0.0;
+
+	/* ----- SLICES EFFECT ----- */
+	float slice_id = floor(uv.y * slice_density + hash11(slow_id) * 10.0);
+	float slice_rand = hash12(vec2(slice_id, step_id));
+	float slice_mask = step(0.5, slice_rand) * glitch;
+
+	// Flip is gated by the glitch mask and quantized to the glitch step.
+	// Branchless so it doesn't cost divergence on wide sprites.
+	float flip = step(hash12(vec2(slice_id + 91.7, step_id)), flip_chance) * slice_mask;
+	uv.x = mix(uv.x, 1.0 - uv.x, flip);
+
+	// Horizontal displacement for this slice
+	uv.x += (slice_rand - 0.5) * slice_strength * slice_mask;
+
+	/* ----- MICRO JITTER ----- */
+	float jitter = step(0.85, hash11(step_id * 1.7 + 5.0)) * glitch;
+	uv.x += (hash11(step_id * 3.1 + 13.0) - 0.5) * 0.08 * jitter;
+
+	/* ----- LOCAL WARP ----- */
+	float warp_zone = step(0.65, hash12(vec2(slice_id, step_id + 17.0)));
+	uv += (hash22(uv * 64.0 + step_id) - 0.5) * local_warp_strength * warp_zone * glitch;
+
+	/* ----- GLOBAL SHAKE ----- */
+	uv += (vec2(hash11(step_id * 1.3 + 41.0), hash11(step_id * 1.7 + 77.0)) - 0.5)
+		* shake_strength * glitch;
+
+	/* ----- SAMPLING ----- */
+	// Track whether we left the sprite before clamping, so we can cut the alpha
+	// rather than smear the border pixel across the displaced region.
+	vec2 in_range = step(vec2(0.0), uv) * step(uv, vec2(1.0));
+	float inside = in_range.x * in_range.y;
+	vec2 suv = clamp(uv, 0.0, 1.0);
+
+	vec4 base = texture(TEXTURE, suv);
+	float r = texture(TEXTURE, clamp(suv + vec2(chroma_offset * glitch, 0.0), 0.0, 1.0)).r;
+	float b = texture(TEXTURE, clamp(suv - vec2(chroma_offset * glitch, 0.0), 0.0, 1.0)).b;
+
+	// pre_tint is white unless modulate is set to spare the glitch artifacts.
+	vec3 color = vec3(r, base.g, b) * pre_tint;
+
+	/* ----- DIGITAL NOISE ----- */
+	// Keyed to UV and the glitch step, so grain resolution stays constant
+	// instead of blowing up as TIME grows.
+	color += (hash12(UV * 512.0 + vec2(step_id, step_id * 1.7)) - 0.5)
+		* noise_strength * glitch;
+
+	/* ----- SCANLINE DROP ----- */
+	float scan = step(0.9, hash12(vec2(floor(uv.y * 100.0), step_id)));
+	color *= 1.0 - scan * scanline_strength * glitch;
+
+	/* ----- COLOR FLASH ----- */
+	vec3 flash_color = step(vec3(0.5), vec3(
+		hash11(step_id + 0.1),
+		hash11(step_id + 31.7),
+		hash11(step_id + 61.3)
+	));
+	color = mix(color, flash_color, hash11(step_id * 4.0 + 7.0) * color_flash_strength * glitch);
+
+	// post_tint is white unless modulate should cover the glitch artifacts too.
+	// modulate.a is always applied here, so fading the node out still works
+	// regardless of which tint mode is selected.
+	float alpha = base.a * modulate.a * (clip_outside ? inside : 1.0);
+	COLOR = vec4(color * post_tint, alpha);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n3bcv"]
+shader = SubResource("Shader_hqa1v")
+shader_parameter/enabled = true
+shader_parameter/glitch_chance = 1.0
+shader_parameter/glitch_speed = 7.265000341827619
+shader_parameter/slice_density = 27.5050012589875
+shader_parameter/slice_strength = 0.2800000133
+shader_parameter/shake_strength = 0.02
+shader_parameter/chroma_offset = 0.016
+shader_parameter/noise_strength = 0.2
+shader_parameter/color_flash_strength = 0.4
+shader_parameter/scanline_strength = 0.18
+shader_parameter/local_warp_strength = 0.14
+shader_parameter/flip_chance = 0.15
+shader_parameter/modulate_affects_glitch = true
+shader_parameter/clip_outside = true
+shader_parameter/time_wrap = 120.0
+
+[sub_resource type="Shader" id="Shader_f72t2"]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/waveforms
+This shader is under CC0 license. Feel free to use, improve and 
+change this shader according to your needs and consider sharing 
+the modified result to godotshaders.com.
+
+Modified to correctly respect modulate / self_modulate (Godot 4):
+  - reads modulate from the vertex color via a varying, rather than from
+    fragment COLOR (which also contains the node's texture)
+  - premultiplies RGB by alpha to match blend_premul_alpha
+*/
+shader_type canvas_item;
+render_mode blend_premul_alpha;
+
+uniform int lines = 80; // Amount of lines the waveform is build up of
+uniform float amplitude : hint_range(0.0, 1.0) = 0.9; // Height of the wave
+uniform float frequency : hint_range(0.0, 0.5) = 0.1; // Set a lower value for a smoother wave
+uniform float intensity : hint_range(0.0, 1.0) = 0.75; // Lower values creates gaps in the wave while higher make the wave more solid
+uniform float line_sharpness : hint_range(0.0, 1.0) = 0.5; // Fuzzy edges on each line
+uniform float line_size : hint_range(0.0, 1.0) = 0.8; // Thickness of the lines
+uniform float fade : hint_range(0.0, 0.5) = 0.1; // Blurres the top and bottom of the lines
+uniform float rest_size : hint_range(-5., 5.) = -0.2; // The size of the lines when the line is not animating, i.e at value 0. Tweak if Fade is used.
+uniform float edge : hint_range(0.0, 0.5) = 0.05; // How close to the edges should the animation beginn
+uniform float speed = 0.5; // Speed of wave animation
+uniform vec4 color : source_color = vec4(.8, 0.25, 0.5, 1.0); // Color of wave
+uniform bool dot_matrix = false; 
+uniform int dot_matriz_size = 80;
+uniform bool speech_sim = true; // Toggle to simulate speach. Will create a more erratic movement in the wave
+uniform float speech_intensity : hint_range(0.0, 2.0) = 0.8; // How fast will the speech movement be
+uniform float progress : hint_range(0.0, 1.0) = 1.0; // Use to turn the animation on and off from outside the shader. 0 - off, 1 - on. Can animate values between which will shrink the wave.
+
+// In Godot 4 the final modulate (modulate * self_modulate, including any
+// inherited from parent CanvasItems) is baked into the vertex color, so we
+// capture it here and pass it to fragment().
+varying vec4 modulate;
+
+void vertex() {
+	modulate = COLOR;
+}
+
+// Scales RGB by alpha, as required by blend_premul_alpha
+vec4 premul(vec4 c) {
+	return vec4(c.rgb * c.a, c.a);
+}
+
+float random(vec2 uv) {
+	return fract(sin(dot(uv.xy,
+	vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+float noise(vec2 uv) {
+	vec2 uv_index = floor(uv);
+	vec2 uv_fract = fract(uv);
+	// Four corners in 2D of a tile
+	float a = random(uv_index);
+	float b = random(uv_index + vec2(1.0, 0.0));
+	float c = random(uv_index + vec2(0.0, 1.0));
+	float d = random(uv_index + vec2(1.0, 1.0));
+	vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+	return mix(a, b, blur.x) +
+				(c - a) * blur.y * (1.0 - blur.x) +
+				(d - b) * blur.x * blur.y;
+}
+
+float fbm(vec2 uv) {
+	int octaves = 4;
+	float amp = 0.5;
+	float freq = 4.;
+	float value = 0.0;
+	
+	for(int i = 0; i < octaves; i++) {
+		value += amp * noise(freq * uv - 0.5);
+		amp *= 0.6;
+		freq *= 2.;
+	}
+	return value;
+}
+
+void fragment()
+{
+	// Some initialising
+	float time = TIME;
+	float f_columns = float(lines);
+	
+	// Make some distance to the edges before the animation starts
+	float cutoff = smoothstep(0.0, edge, (round ((UV.x) * (f_columns) ) / f_columns) );
+	cutoff *= 1. - smoothstep(1.-edge, 1.0, (round ((UV.x) * (f_columns) ) / f_columns) );
+
+	// Speech simulation setup
+	float ss = 1.0;
+	if (speech_sim == true){
+		ss = fbm(vec2(1.0, time * speed * 1.3) * speech_intensity) * 1.5;
+	}
+	
+	// Create the noise that controlls the animation
+	float noise = fbm(vec2( round( (UV.x) * f_columns ) * frequency, time * speed) ) * ss * progress;
+	noise *= cutoff; // Apply edge cutoff
+	
+	// Make wave values based on the noise
+	float wave = smoothstep(1.-intensity, 1.0, noise) * amplitude;
+	wave = wave + (rest_size * 0.2);
+	
+	// Create the lines
+	float line = abs( sin(( f_columns * 3.1416 * UV.x) + 1.5) );
+	line = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), line);
+	
+	// Simulate dot_matrix
+	if (dot_matrix){
+		float dm = abs( sin(( float(dot_matriz_size) * 3.1416 * UV.y) + 1.5) );
+		dm = smoothstep(1.-line_size, (1.-line_size) + (1.-line_sharpness), dm);
+		line *= dm;
+	}
+	
+	// Duplicate mask on top an bottom and apply to line
+	float mask = 1.0 - smoothstep(wave, wave + fade, abs(UV.y - 0.5) * 2.);
+	line *= mask;
+	
+	// Wave colour, premultiplied by its own alpha
+	vec4 c = vec4(line) * premul(color);
+	
+	// Apply modulate * self_modulate, also premultiplied
+	c *= premul(modulate);
+	
+	COLOR = c;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oxxfm"]
+shader = SubResource("Shader_f72t2")
+shader_parameter/lines = 80
+shader_parameter/amplitude = 0.8750000415625
+shader_parameter/frequency = 0.10000000475
+shader_parameter/intensity = 1.0
+shader_parameter/line_sharpness = 0.5
+shader_parameter/line_size = 0.6350000301625
+shader_parameter/fade = 0.0
+shader_parameter/rest_size = -0.2
+shader_parameter/edge = 0.34000001615
+shader_parameter/speed = 1.64
+shader_parameter/color = Color(0.77, 0, 0, 0.12156863)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 1.0
+
+[sub_resource type="Gradient" id="Gradient_hqa1v"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1tw2i"]
+gradient = SubResource("Gradient_hqa1v")
+width = 993
+height = 110
+
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
-script = ExtResource("1_gvjxc")
-chart = ExtResource("2_gvjxc")
+script = ExtResource("1_ivveo")
+chart = ExtResource("2_jqkyv")
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
-script = ExtResource("3_tua6g")
+unique_name_in_owner = true
+script = ExtResource("3_qc16h")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1610253589]
 environment = SubResource("Environment_cqqlt")
@@ -247,9 +2687,12 @@ limit_left = 0
 limit_top = 0
 limit_right = 1152
 limit_bottom = 648
-script = ExtResource("4_2uhvq")
+script = ExtResource("4_uafi4")
+pulse = true
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=103199223]
+layer = 2
+follow_viewport_enabled = true
 
 [node name="TextureRect" type="TextureRect" parent="PauseMenu" unique_id=455672928]
 anchors_preset = 8
@@ -264,7 +2707,658 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="RankReveal" type="Control" parent="PauseMenu" unique_id=2125491467]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_twwc8")
+reveal_at_end = false
+
+[node name="Upper" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1900463846]
+z_index = 2
+material = SubResource("ShaderMaterial_qpyjv")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.008850009, 0.0041999994, 0.06, 1)
+
+[node name="Reveal" type="Control" parent="PauseMenu/RankReveal" unique_id=560220332]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Mocktitlerank" type="TextureRect" parent="PauseMenu/RankReveal/Reveal" unique_id=77228622]
+layout_mode = 0
+offset_left = -24.0
+offset_top = 24.0
+offset_right = 1391.0
+offset_bottom = 199.0
+scale = Vector2(0.835, 0.835)
+texture = ExtResource("6_6d8np")
+
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Mocktitlerank" unique_id=2123497874]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -413.80237
+offset_top = 39.4461
+offset_right = -34.802246
+offset_bottom = 71.446106
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 28
+text = "Press Any Key To Continue"
+horizontal_alignment = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1797219537]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 200.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.68235296)
+
+[node name="ColorRect2" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1596024847]
+self_modulate = Color(0, 0, 0, 0.69411767)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DebugRect" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/ColorRect2" unique_id=1919264495]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12941177, 0.09019608, 0.18039216, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="PauseMenu/RankReveal/Reveal/ColorRect2" unique_id=313193094]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stream = SubResource("VideoStreamTheora_kux6b")
+speed_scale = 1.523
+autoplay = true
+expand = true
+loop = true
+
+[node name="Card" type="TextureRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1253714275]
+self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1072.0
+offset_top = -100.0
+offset_right = -687.0
+offset_bottom = 179.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("8_8diav")
+expand_mode = 1
+
+[node name="InnerCard" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=105890879]
+self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -197.30852
+offset_top = -141.93475
+offset_right = 196.30847
+offset_bottom = 143.93475
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.94, 0.92)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("8_8diav")
+expand_mode = 1
+
+[node name="GradientBG" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/InnerCard" unique_id=314754869]
+unique_name_in_owner = true
+self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
+material = SubResource("ShaderMaterial_mydub")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_rql4f")
+
+[node name="SongCoverBG" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=632450168]
+material = SubResource("ShaderMaterial_7rtu4")
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = 155.0
+grow_horizontal = 2
+
+[node name="SongCoverBG2" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=1240220188]
+self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = 146.0
+offset_right = 8.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SongCoverFrame" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=133180259]
+self_modulate = Color(0.9019608, 0.65882355, 0.99607843, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.09, 1.09)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("9_2yfga")
+expand_mode = 1
+
+[node name="SongCover" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=1164060036]
+unique_name_in_owner = true
+self_modulate = Color(0.8217887, 0.82178867, 0.82178867, 1)
+material = SubResource("ShaderMaterial_h43uj")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("10_4d617")
+expand_mode = 1
+
+[node name="Artist Container" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=1458444951]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -185.5
+offset_top = -111.0
+offset_right = 184.5
+offset_bottom = -79.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.09411765, 0.2, 1)
+
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Artist Container" unique_id=149472661]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 20
+text = "Artist"
+vertical_alignment = 1
+
+[node name="ArtistLabel" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Artist Container" unique_id=452632721]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 20
+text = "insertartist"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Charting Container" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=1820897176]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -185.5
+offset_top = -71.0
+offset_right = 184.5
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.2, 0.09411765, 0.2, 1)
+
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Charting Container" unique_id=45747059]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 20
+text = "Charting"
+vertical_alignment = 1
+
+[node name="ChartingLabel" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Charting Container" unique_id=2096488798]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_right = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 20
+text = "insertcharter"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Rank" type="Control" parent="PauseMenu/RankReveal/Reveal" unique_id=1769660189]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 82.0
+offset_top = -128.0
+offset_right = 338.0
+offset_bottom = -26.0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Rank" unique_id=1380167137]
+self_modulate = Color(0.8, 0.64000005, 0, 1)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -67.884995
+offset_right = 131.0
+offset_bottom = -0.8849945
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 56
+text = "RANK"
+vertical_alignment = 2
+
+[node name="Grade" type="Label" parent="PauseMenu/RankReveal/Reveal/Rank" unique_id=1573994675]
+self_modulate = Color(0.8, 0.64000005, 0, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -116.0
+offset_top = -123.0
+offset_right = 6.0
+offset_bottom = 9.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 96
+text = "A"
+vertical_alignment = 2
+
+[node name="Control" type="Control" parent="PauseMenu/RankReveal/Reveal" unique_id=1679862693]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=912452828]
+self_modulate = Color(0, 0.69109005, 0.804423, 1)
+layout_mode = 0
+offset_left = -482.0
+offset_top = -80.0
+offset_right = -23.0
+offset_bottom = -9.605003
+texture = ExtResource("11_bcn6b")
+expand_mode = 1
+
+[node name="DreamyRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect" unique_id=1655452497]
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "DREAMY"
+vertical_alignment = 1
+
+[node name="DreamyScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect" unique_id=2057534768]
+unique_name_in_owner = true
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=2091561766]
+self_modulate = Color(0, 0.8, 0.47999993, 1)
+layout_mode = 0
+offset_left = -482.0
+offset_right = -23.0
+offset_bottom = 70.395
+texture = ExtResource("11_bcn6b")
+expand_mode = 1
+
+[node name="GreatRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect2" unique_id=1803956736]
+self_modulate = Color(0.03529412, 1, 0.5294118, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "GREAT"
+vertical_alignment = 1
+
+[node name="GreatScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect2" unique_id=203590835]
+unique_name_in_owner = true
+self_modulate = Color(0.03529412, 1, 0.5294118, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=1875330552]
+self_modulate = Color(0.8, 0.64000005, 0, 1)
+layout_mode = 0
+offset_left = -480.0
+offset_top = 80.0
+offset_right = -21.0
+offset_bottom = 150.39499
+texture = ExtResource("11_bcn6b")
+expand_mode = 1
+
+[node name="GoodRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect3" unique_id=1287728261]
+self_modulate = Color(1, 0.90588236, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "GOOD"
+vertical_alignment = 1
+
+[node name="GoodScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect3" unique_id=968089942]
+unique_name_in_owner = true
+self_modulate = Color(1, 0.90588236, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect4" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=815931875]
+self_modulate = Color(0.8, 0.32000002, 0, 1)
+layout_mode = 0
+offset_left = -482.0
+offset_top = 160.0
+offset_right = -23.0
+offset_bottom = 230.39499
+texture = ExtResource("11_bcn6b")
+expand_mode = 1
+
+[node name="PassRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect4" unique_id=1751192934]
+self_modulate = Color(1, 0.42352942, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "PASS"
+vertical_alignment = 1
+
+[node name="PassScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect4" unique_id=1171091340]
+unique_name_in_owner = true
+self_modulate = Color(1, 0.42352942, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect5" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=2044138657]
+self_modulate = Color(0.43, 0.43, 0.43, 1)
+layout_mode = 0
+offset_left = -482.0
+offset_top = 240.0
+offset_right = -23.0
+offset_bottom = 310.395
+texture = ExtResource("11_bcn6b")
+expand_mode = 1
+
+[node name="FailRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect5" unique_id=1581196215]
+self_modulate = Color(0.627451, 0.6313726, 0.6509804, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "FAIL"
+vertical_alignment = 1
+
+[node name="FailScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect5" unique_id=1328451705]
+unique_name_in_owner = true
+self_modulate = Color(0.627451, 0.6313726, 0.6509804, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 9.0
+offset_right = 434.0
+offset_bottom = 70.0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Lower" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1351418168]
+z_index = 2
+material = SubResource("ShaderMaterial_s1nel")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.008850009, 0.0041999994, 0.06, 1)
+
+[node name="RevealPlayer" type="AnimationPlayer" parent="PauseMenu/RankReveal" unique_id=1089017335]
+libraries/ = SubResource("AnimationLibrary_avgt3")
+
+[node name="CRT" type="ColorRect" parent="PauseMenu" unique_id=1134534797]
+z_index = 2
+material = SubResource("ShaderMaterial_bn5gq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Glitch" type="ColorRect" parent="PauseMenu/CRT" unique_id=2045397140]
+visible = false
+material = SubResource("ShaderMaterial_i0hs6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Shatter" type="ColorRect" parent="PauseMenu/CRT" unique_id=1095969783]
+material = SubResource("ShaderMaterial_3hl7e")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Jostar" type="ColorRect" parent="PauseMenu/CRT" unique_id=1583569024]
+visible = false
+show_behind_parent = true
+material = SubResource("ShaderMaterial_p4jp6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crash" type="ColorRect" parent="PauseMenu/CRT" unique_id=1805268367]
+visible = false
+show_behind_parent = true
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(8.612998e-05, 0.10160727, 0.3889947, 1)
+
+[node name="Label" type="Label" parent="PauseMenu/CRT/Crash" unique_id=1062602850]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -505.0
+offset_top = 104.0
+offset_right = 505.0
+offset_bottom = 164.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 52
+text = ":(  Your Computer Ran Into A Problem"
+horizontal_alignment = 1
+
+[node name="Button" type="TextureButton" parent="PauseMenu/CRT/Crash" unique_id=872833973]
+self_modulate = Color(0.5211406, 0.5211406, 0.5211405, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = -216.00003
+offset_right = 140.0
+offset_bottom = -114.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.58, 0.58)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_normal = ExtResource("13_ae5me")
+texture_pressed = ExtResource("14_wh3a0")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
+follow_viewport_enabled = true
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=1967918697]
 layout_mode = 3
@@ -274,17 +3368,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=806142077]
+[node name="Pause" type="Button" parent="CanvasLayer/Control" unique_id=1051741657]
+visible = false
 self_modulate = Color(0.179842, 0.22810352, 0.7026473, 1)
 layout_mode = 0
 offset_left = 24.0
 offset_top = 16.0
 offset_right = 88.0
 offset_bottom = 80.0
-texture = ExtResource("5_h0omu")
-expand_mode = 1
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-1.2, -1.2)
+icon = ExtResource("9_2yfga")
+icon_alignment = 1
+expand_icon = true
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/TextureRect" unique_id=299460268]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Pause" unique_id=299460268]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -297,7 +3395,7 @@ offset_right = 15.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("6_mwbrj")
+texture = ExtResource("15_kol1d")
 expand_mode = 1
 
 [node name="ComboTag" type="ColorRect" parent="CanvasLayer/Control" unique_id=1055121295]
@@ -306,6 +3404,8 @@ offset_left = 222.0
 offset_top = 28.0
 offset_right = 278.0
 offset_bottom = 68.0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0, -3)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="ComboTag2" type="ColorRect" parent="CanvasLayer/Control/ComboTag" unique_id=1339686072]
@@ -336,7 +3436,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 31
-text = "25"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -348,6 +3448,8 @@ anchor_right = 1.0
 offset_left = -318.79004
 offset_bottom = 67.06
 grow_horizontal = 0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(1, -1)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="AccuracyLabel" type="Label" parent="CanvasLayer/Control/Accuracy" unique_id=669504614]
@@ -392,6 +3494,8 @@ offset_top = -50.824036
 offset_right = 204.68
 offset_bottom = -31.0
 grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-1, 1)
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="SongLabel" type="Label" parent="CanvasLayer/Control/SongName" unique_id=1327533810]
@@ -406,7 +3510,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 18
-text = "Vanishing Point - Haseeb"
+text = "name - artist"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -422,6 +3526,8 @@ offset_top = -91.0
 offset_bottom = -31.0
 grow_horizontal = 0
 grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(1, 1)
 color = Color(0.19247293, 0.35953876, 0.9913725, 1)
 
 [node name="DetailLabel" type="Label" parent="CanvasLayer/Control/LevelDetail" unique_id=1977836251]
@@ -441,17 +3547,8 @@ vertical_alignment = 1
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_dcs3l")
 
-[node name="CRT" type="ColorRect" parent="CanvasLayer" unique_id=1134534797]
-material = SubResource("ShaderMaterial_bn5gq")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-
 [node name="Curve" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
-script = ExtResource("8_mnbds")
+script = ExtResource("16_jehkj")
 curve_line = NodePath("Line2D")
 handle_strength = 0.375
 bezier_steps_per_segment = 32
@@ -484,6 +3581,7 @@ z_index = -10
 position = Vector2(576, 250)
 scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
+offset = Vector2(-1, 0)
 
 [node name="RailBottom" type="Sprite2D" parent="InGameElements" unique_id=678003906]
 self_modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
@@ -491,6 +3589,7 @@ z_index = -10
 position = Vector2(576, 400)
 scale = Vector2(1152, 6.36)
 texture = SubResource("CanvasTexture_18gwp")
+offset = Vector2(-1, 0)
 
 [node name="RailBottom2" type="Sprite2D" parent="InGameElements" unique_id=295560481]
 self_modulate = Color(0.7239193, 0.43837702, 0, 1)
@@ -503,12 +3602,192 @@ texture = SubResource("CanvasTexture_18gwp")
 position = Vector2(250, 324)
 scale = Vector2(10, 648)
 texture = SubResource("CanvasTexture_r3bk5")
+offset = Vector2(0, -1)
+
+[node name="BossLevel" type="Sprite2D" parent="InGameElements" unique_id=412391198]
+modulate = Color(0.57930714, 0.7278699, 0.78118825, 1)
+material = SubResource("ShaderMaterial_hqa1v")
+position = Vector2(576, 63)
+scale = Vector2(1, 0.9955752)
+texture = ExtResource("18_vye68")
+
+[node name="BlackBox" type="Sprite2D" parent="InGameElements" unique_id=1156828657]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+z_index = -5
+position = Vector2(568, 296)
+scale = Vector2(1.333, 1)
+texture = SubResource("CanvasTexture_1fuao")
+
+[node name="ErrorBoxesFirst" type="Node2D" parent="InGameElements" unique_id=1014968978]
+
+[node name="Errorbox" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst" unique_id=1520359232]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(656, 544)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst/Errorbox" unique_id=1449064312]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(-100, -120)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox2" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst" unique_id=415580747]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(232, 464)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox6" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst/Errorbox2" unique_id=1975774717]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(616, -135)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox3" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst" unique_id=109824907]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(480, 97)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox7" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst/Errorbox3" unique_id=159971105]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(96, 191)
+texture = ExtResource("20_7jxw3")
+
+[node name="Errorbox4" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst" unique_id=717764219]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(504, 632)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox8" type="Sprite2D" parent="InGameElements/ErrorBoxesFirst/Errorbox4" unique_id=2080384776]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(446, -440)
+texture = ExtResource("19_ljpnr")
+
+[node name="ErrorBoxesSecond" type="Node2D" parent="InGameElements" unique_id=326419969]
+
+[node name="Errorbox" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=467058688]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(240, 172)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox" unique_id=1163897422]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(143.65, 0)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox2" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=1727633339]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(312, 246)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox2" unique_id=1133454480]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(143.65, 0)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox3" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=1024442899]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(390, 320)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox3" unique_id=2071486331]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(143.65, 0)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox4" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=1978093039]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(464, 400)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox4" unique_id=623382043]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(143.65, 0)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=201251839]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(638, 242.5)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox5" unique_id=521391568]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(143.65, 0)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox6" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=311784406]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(710, 316.5)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox6" unique_id=972652928]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(143.65, 0)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox7" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=2033699655]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(788, 390.5)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox7" unique_id=1921954078]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(143.65, 0)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox8" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond" unique_id=719303870]
+visible = false
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(862, 470.5)
+texture = ExtResource("19_ljpnr")
+
+[node name="Errorbox5" type="Sprite2D" parent="InGameElements/ErrorBoxesSecond/Errorbox8" unique_id=1949824059]
+self_modulate = Color(0.59, 0.59, 0.59, 1)
+z_index = 10
+position = Vector2(143.65, 0)
+texture = ExtResource("19_ljpnr")
 
 [node name="Hit Line Top" type="Sprite2D" parent="." unique_id=809933648]
 self_modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
 position = Vector2(250, 175)
 scale = Vector2(10, 141.99997)
-script = ExtResource("9_23cj3")
+script = ExtResource("21_jdax3")
+DREAMY_WINDOW_MS = 70.0
+GREAT_WINDOW_MS = 80.0
+GOOD_WINDOW_MS = 90.0
+PASS_WINDOW_MS = 100.0
 show_debug_windows = false
 
 [node name="HitMark" type="Sprite2D" parent="Hit Line Top" unique_id=1068159725]
@@ -537,7 +3816,11 @@ process_material = SubResource("ParticleProcessMaterial_x0pjv")
 position = Vector2(250, 325)
 rotation = 0.008726646
 scale = Vector2(10, 141.99997)
-script = ExtResource("9_23cj3")
+script = ExtResource("21_jdax3")
+DREAMY_WINDOW_MS = 70.0
+GREAT_WINDOW_MS = 80.0
+GOOD_WINDOW_MS = 90.0
+PASS_WINDOW_MS = 100.0
 input_lane = "lane2"
 show_debug_windows = false
 
@@ -566,7 +3849,11 @@ process_material = SubResource("ParticleProcessMaterial_x0pjv")
 [node name="Hit Line Bottom" type="Sprite2D" parent="." unique_id=1292322369]
 position = Vector2(250, 475.00003)
 scale = Vector2(10, 141.99997)
-script = ExtResource("9_23cj3")
+script = ExtResource("21_jdax3")
+DREAMY_WINDOW_MS = 70.0
+GREAT_WINDOW_MS = 80.0
+GOOD_WINDOW_MS = 90.0
+PASS_WINDOW_MS = 150.0
 input_lane = "lane3"
 show_debug_windows = false
 
@@ -592,16 +3879,6 @@ lifetime = 0.5
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_x0pjv")
 
-[node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
-position = Vector2(-20, -20)
-script = ExtResource("10_n5cxe")
-chart = ExtResource("2_gvjxc")
-note_scene = ExtResource("11_h8ol2")
-dummy_note_scene = ExtResource("12_cwu2h")
-travel_time = 10.0
-dummy_spawn_interval = 1.0
-sine_decay_rate = 0.2
-
 [node name="Stars" type="GPUParticles2D" parent="." unique_id=218265872]
 self_modulate = Color(0.8729805, 1, 1, 1)
 z_index = -15
@@ -610,6 +3887,93 @@ amount = 50
 lifetime = 5.0
 process_material = SubResource("ParticleProcessMaterial_dsbte")
 
+[node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
+position = Vector2(-20, -20)
+script = ExtResource("22_4vjch")
+chart = ExtResource("2_jqkyv")
+note_scene = ExtResource("23_qb2hu")
+dummy_note_scene = ExtResource("24_1qvkw")
+travel_time = 8.0
+dummy_spawn_interval = 1.0
+sine_decay_rate = 0.2
+
+[node name="EventConductor" type="Node2D" parent="." unique_id=736326546]
+script = ExtResource("25_0kasr")
+
+[node name="EventPlayer" type="AnimationPlayer" parent="EventConductor" unique_id=202058872]
+libraries/ = SubResource("AnimationLibrary_x0pjv")
+autoplay = &"Event"
+
+[node name="BackgroundLevelElements" type="Node2D" parent="." unique_id=392097994]
+z_index = -20
+position = Vector2(576, 328)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="BackgroundLevelElements" unique_id=1554717412]
+layer = -1
+
+[node name="FirstStage" type="Node2D" parent="BackgroundLevelElements" unique_id=756637791]
+unique_name_in_owner = true
+modulate = Color(0.87, 0.435, 0.435, 1)
+script = ExtResource("26_je33v")
+
+[node name="Transparency" type="Node2D" parent="BackgroundLevelElements/FirstStage" unique_id=181683449]
+modulate = Color(1, 1, 1, 0)
+
+[node name="Heartwhole" type="Sprite2D" parent="BackgroundLevelElements/FirstStage/Transparency" unique_id=810332631]
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("27_d4e7s")
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundLevelElements/FirstStage/Transparency" unique_id=1573174946]
+self_modulate = Color(1, 1, 1, 0.101960786)
+texture = SubResource("GradientTexture2D_jkxj3")
+
+[node name="Sprite2D2" type="Sprite2D" parent="BackgroundLevelElements/FirstStage/Transparency" unique_id=221027888]
+self_modulate = Color(1, 1, 1, 0.19215687)
+texture = SubResource("GradientTexture2D_i0hs6")
+
+[node name="SecondStage" type="Node2D" parent="BackgroundLevelElements" unique_id=607905512]
+visible = false
+
+[node name="Characterprototype2" type="Sprite2D" parent="BackgroundLevelElements/SecondStage" unique_id=1004706745]
+modulate = Color(18.892157, 18.892157, 18.892157, 1)
+self_modulate = Color(0, 0, 0, 0.41568628)
+z_index = 7
+material = SubResource("ShaderMaterial_n3bcv")
+position = Vector2(0, -56)
+scale = Vector2(0.189, 0.181)
+texture = ExtResource("28_x01r1")
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundLevelElements/SecondStage" unique_id=978845146]
+self_modulate = Color(1, 0, 0, 0.101960786)
+texture = SubResource("GradientTexture2D_jkxj3")
+
+[node name="Sprite2D2" type="Sprite2D" parent="BackgroundLevelElements/SecondStage" unique_id=1523184300]
+self_modulate = Color(1, 0, 0, 0.101960786)
+texture = SubResource("GradientTexture2D_i0hs6")
+
+[node name="Heart" type="Node2D" parent="BackgroundLevelElements/SecondStage" unique_id=1811264538]
+
+[node name="Wave" type="Sprite2D" parent="BackgroundLevelElements/SecondStage/Heart" unique_id=1581851969]
+material = SubResource("ShaderMaterial_oxxfm")
+position = Vector2(-4.003942e-05, 0)
+scale = Vector2(0.345, 1.16)
+texture = SubResource("GradientTexture2D_1tw2i")
+
+[node name="Heartleft" type="Sprite2D" parent="BackgroundLevelElements/SecondStage/Heart" unique_id=1023349714]
+self_modulate = Color(0.85, 0, 0, 0.16862746)
+position = Vector2(-40, 0)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("29_yn5do")
+
+[node name="Heartright" type="Sprite2D" parent="BackgroundLevelElements/SecondStage/Heart" unique_id=1717590081]
+self_modulate = Color(0.21, 0, 0, 1)
+position = Vector2(40, 0)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("30_52ud6")
+
+[connection signal="animation_finished" from="PauseMenu/RankReveal/RevealPlayer" to="PauseMenu/RankReveal" method="_on_reveal_player_animation_finished"]
+[connection signal="button_down" from="PauseMenu/CRT/Crash/Button" to="PauseMenu/RankReveal" method="_on_button_button_down"]
 [connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="rating_broadcast" from="Hit Line Mid" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="rating_broadcast" from="Hit Line Bottom" to="PointManager" method="_on_hit_line_rating_broadcast"]
+[connection signal="animation_finished" from="EventConductor/EventPlayer" to="EventConductor" method="_on_event_player_animation_finished"]

@@ -78,7 +78,7 @@ func _on_down_button_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_level_play_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Prefabs/Scenes/Demo.tscn")
+	get_tree().change_scene_to_file("res://Prefabs/Scenes/Level.tscn")
 	pass # Replace with function body.
 
 

@@ -4,7 +4,8 @@ extends Node2D
 @onready var anim_player = $EventPlayer
 
 func _ready() -> void:
-	anim_player.play("Event")
+	#anim_player.play("Event")
+	pass
 
 func _process(delta: float) -> void:
 	var audio_t = audio_player.get_playback_position()
