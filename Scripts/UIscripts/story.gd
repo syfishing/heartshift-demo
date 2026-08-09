@@ -64,6 +64,7 @@ func _play_event() -> void:
 	
 	if _event_idx >= story.events.size():
 		#get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
+		AudioHub.play_note_sfx()
 		$TransitionPlayer.play("Exit_Transition")
 		return
 	
@@ -159,9 +160,10 @@ func _on_transition_player_animation_finished(anim_name: StringName) -> void:
 	var inst = scene.instantiate()
 	#inst.story = story
 	inst.chart = chart
-	AudioHub.stop_menu_music()
+	AudioHub.stop_music()
 	# Defer the swap to the next frame
 	call_deferred("_replace_scene", inst)
+	
 
 
 

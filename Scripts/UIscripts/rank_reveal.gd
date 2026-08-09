@@ -13,18 +13,18 @@ func _on_music_finished():
 	print("Music ended!")
 	
 	if reveal_at_end:
-		$RevealPlayer.play("RankReveal")
+		%RevealPlayer.play("RankReveal")
 	
 
 
 func _on_button_button_down() -> void:
-	$RevealPlayer.play("RankRevealCrash")
+	%RevealPlayer.play("RankRevealCrash")
 	pass # Replace with function body.
 
 func _input(event: InputEvent) -> void:
 	# Keyboard
 	if (event is InputEventKey and event.is_pressed() and not event.is_echo() and close_reveal):
-		$RevealPlayer.play("CloseReveal")
+		%RevealPlayer.play("CloseReveal")
 		# change to whatever next scene needs to be
 
 func _process(delta: float) -> void:
@@ -52,4 +52,6 @@ func _process(delta: float) -> void:
 
 func _on_reveal_player_animation_finished(anim_name: StringName) -> void:
 	close_reveal = true
+	if anim_name == "CloseReveal":
+		print("left")
 	pass # Replace with function body.

@@ -35,7 +35,7 @@ shader_parameter/tile_pixel_size = 32.0
 shader_parameter/tile_grown_scale = 2.0
 shader_parameter/transition_texture = SubResource("GradientTexture2D_np72h")
 
-[sub_resource type="Shader" id="Shader_xbk6y"]
+[sub_resource type="Shader" id="Shader_v0vp6"]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
@@ -233,7 +233,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s47xw"]
-shader = SubResource("Shader_xbk6y")
+shader = SubResource("Shader_v0vp6")
 shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.910000043225
 shader_parameter/saturation = 2.0
@@ -1766,6 +1766,9 @@ unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_d42rl")
 
 [connection signal="button_down" from="CanvasLayer2/ButtonSelect/Story" to="." method="_on_story_button_down"]
+[connection signal="button_down" from="CanvasLayer2/ButtonSelect/Story" to="CanvasLayer2/ButtonSelect" method="_on_story_button_down"]
 [connection signal="button_down" from="CanvasLayer2/ButtonSelect/RhythmPlay" to="." method="_on_rhythm_play_button_down"]
+[connection signal="button_down" from="CanvasLayer2/ButtonSelect/RhythmPlay" to="CanvasLayer2/ButtonSelect" method="_on_rhythm_play_button_down"]
 [connection signal="button_down" from="CanvasLayer2/ButtonSelect/Options" to="." method="_on_options_button_down"]
+[connection signal="button_down" from="CanvasLayer2/ButtonSelect/Options" to="CanvasLayer2/ButtonSelect" method="_on_options_button_down"]
 [connection signal="animation_finished" from="TransitionPlayer" to="." method="_on_transition_player_animation_finished"]

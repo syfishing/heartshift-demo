@@ -1,15 +1,20 @@
 extends Control
 
-func on_button_hovered(button):
-	#for child in get_children():
-		#if child is Button and child != button:
-			#child.highlight.visible = false
-	pass
+func _on_story_button_down() -> void:
+	transitionout()
+	pass # Replace with function body.
 
-func on_button_focused(button):
-	#for child in get_children():
-		#if child is Button and child != button:
-			#child.highlight.visible = false
-	pass
 
-#I was dumb and made this script, it is redundant :D
+func _on_rhythm_play_button_down() -> void:
+	transitionout()
+	pass # Replace with function body.
+
+
+func _on_options_button_down() -> void:
+	transitionout()
+	pass # Replace with function body.
+
+
+func transitionout() -> void:
+	%Transition.visible = true
+	%TransitionPlayer.play("TransitionOut")

@@ -2,23 +2,28 @@ extends Button
 
 @onready var highlight = $Highlight
 @onready var text_element = $StorySelectText
-@onready var cursor = $"../Cursor"
+var cursor
+
+@export var rest_color: Color = Color("483901")
+@export var active_color: Color = Color()
 
 func _ready():
+	if $"../Cursor":
+		cursor = $"../Cursor"
 	highlight.visible = false
 	connect("mouse_entered", _on_mouse_entered)
 	connect("mouse_exited", _on_mouse_exited)
 	connect("focus_entered", _on_focus_entered)
 	connect("focus_exited", _on_focus_exited)
 	connect("button_down", _on_button_down)
+	animate_text_color(rest_color)
 
 func _on_mouse_entered():
 	highlight.visible = true
 	grab_focus()
 
 func _on_button_down() -> void:
-	%Transition.visible = true
-	%TransitionPlayer.play("TransitionOut")
+	pass
 	#z_index = 1
 	#pass # Replace with function body.
 
@@ -31,11 +36,12 @@ func _on_focus_entered():
 	animate_highlight(0.0, 1.0)
 	animate_text_color(Color.BLACK)
 	#animate_cursor()
-	cursor.position = Vector2(cursor.position.x, position.y+14.0825)
+	if cursor:
+		cursor.position = Vector2(cursor.position.x, position.y+14.0825)
 
 func _on_focus_exited():
 	animate_highlight(1.0, 0.0)
-	animate_text_color(Color("483901"))
+	animate_text_color(rest_color)
 
 func animate_highlight(from_anchor: float, to_anchor: float):
 	var tween = create_tween()

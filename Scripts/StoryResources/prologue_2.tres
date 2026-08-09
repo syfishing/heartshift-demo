@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://epyjnyvbck2i" path="res://Audio/Ambient/wavyambient_1.wav" id="5_ldyjt"]
 [ext_resource type="Script" uid="uid://sor5vrd66ykx" path="res://Scripts/DataElements/Story/music.gd" id="6_ioyua"]
 [ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="7_46udu"]
-[ext_resource type="AudioStream" uid="uid://c8r6861xmn7dk" path="res://Audio/SFX/clack.wav" id="8_ixk1a"]
 [ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="9_bgaal"]
 
 [sub_resource type="Gradient" id="Gradient_6l2hg"]
@@ -72,13 +71,8 @@ text = "But is she?"
 typing_speed = 0.7
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
-[sub_resource type="Resource" id="Resource_icxbx"]
-script = ExtResource("6_ioyua")
-audio = ExtResource("8_ixk1a")
-metadata/_custom_type_script = "uid://sor5vrd66ykx"
-
 [resource]
 script = ExtResource("9_bgaal")
-events = Array[ExtResource("2_3nus8")]([SubResource("Resource_1g5uw"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_vr2bo"), SubResource("Resource_lyobt"), SubResource("Resource_e2agj"), SubResource("Resource_ljurw"), SubResource("Resource_icxbx")])
+events = Array[ExtResource("2_3nus8")]([SubResource("Resource_1g5uw"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_vr2bo"), SubResource("Resource_lyobt"), SubResource("Resource_e2agj"), SubResource("Resource_ljurw")])
 characters = Array[ExtResource("1_ixk1a")]([SubResource("Resource_ijre4")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"

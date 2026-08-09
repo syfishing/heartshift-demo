@@ -12,9 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="9_qtkxc"]
 [ext_resource type="Texture2D" uid="uid://cwhsshv0irukc" path="res://Assets/UIAssets/SongCovers/pixel-cover-816x816.png" id="10_ulaew"]
 [ext_resource type="Texture2D" uid="uid://xebl0kenqjf8" path="res://Assets/UIAssets/rankrow.png" id="11_4xs0d"]
-[ext_resource type="Shader" uid="uid://yi3414rgd0k1" path="res://Assets/Shaders/CRTAlt.gdshader" id="12_3tmru"]
 [ext_resource type="Texture2D" uid="uid://tvsxlvuuo4cq" path="res://Assets/UIAssets/retrobuttonopen.png" id="13_lt0hh"]
+[ext_resource type="Script" uid="uid://bvpi3ib7pts4r" path="res://Scripts/UIscripts/pause_menu.gd" id="14_7uy4l"]
 [ext_resource type="Texture2D" uid="uid://cp0trdc32123a" path="res://Assets/UIAssets/retrobuttonclosed.png" id="14_ahhwt"]
+[ext_resource type="Script" uid="uid://b0mpekyu727g3" path="res://Scripts/UIscripts/mainmenubutton.gd" id="14_x1q7v"]
 [ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="15_56o4m"]
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="16_rdlsc"]
 [ext_resource type="Shader" uid="uid://c8ove5jxr8r46" path="res://Assets/Shaders/glitch.gdshader" id="17_upt58"]
@@ -616,8 +617,205 @@ _data = {
 &"RankRevealCrash": SubResource("Animation_qpyjv")
 }
 
+[sub_resource type="Shader" id="Shader_tq31w"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+// Full-screen post-process: reads the already-rendered frame. :contentReference[oaicite:1]{index=1}
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;
+
+// --- Color controls ---
+uniform float brightness : hint_range(0.0, 2.0) = 1.02;
+uniform float contrast   : hint_range(0.0, 2.0) = 1.08;
+uniform float saturation : hint_range(0.0, 2.0) = 1.10;
+uniform float gamma      : hint_range(0.2, 3.0) = 1.05;
+uniform float source_softness : hint_range(0.0, 2.0) = 0.35;
+
+// --- CRT geometry / lens ---
+uniform float curvature     : hint_range(0.0, 0.40) = 0.14;
+uniform float corner_soften : hint_range(0.0, 0.20) = 0.06;
+uniform float vignette      : hint_range(0.0, 1.00) = 0.38;
+
+// --- Scanlines / phosphor ---
+uniform float scanline_strength : hint_range(0.0, 2.0) = 0.95;
+uniform float scanline_density  : hint_range(0.5, 3.0) = 1.15; // 1.0 = native-ish
+uniform float interlace_strength: hint_range(0.0, 1.0) = 0.20;
+
+// Shadow mask (RGB triads). Turn down if you hate the “screen door”.
+uniform float mask_strength : hint_range(0.0, 1.0) = 0.22;
+uniform float mask_scale    : hint_range(0.5, 4.0) = 1.0; // bigger = chunkier triads
+
+// --- VHS/VCR artifacts ---
+uniform float chroma_offset_px : hint_range(0.0, 6.0) = 1.6; // RGB split in pixels
+uniform float luma_smear_px    : hint_range(0.0, 8.0) = 2.2; // horizontal smear
+uniform float jitter_px        : hint_range(0.0, 8.0) = 1.8; // per-line horizontal jitter
+uniform float wobble_px        : hint_range(0.0, 10.0) = 1.5; // slow wave wobble
+
+uniform float tape_noise       : hint_range(0.0, 1.0) = 0.22; // grain + specks
+uniform float tape_lines       : hint_range(0.0, 1.0) = 0.35; // horizontal “tracking” lines
+
+uniform float roll_speed       : hint_range(0.0, 1.5) = 0.10; // vertical roll bar speed
+uniform float roll_strength    : hint_range(0.0, 0.6) = 0.15; // roll bar intensity
+
+// --- Bloom-ish glow (cheap) ---
+uniform float glow_strength  : hint_range(0.0, 2.0) = 0.25;
+uniform float glow_threshold : hint_range(0.0, 1.0) = 0.65;
+
+// TIME is a built-in global in CanvasItem shaders. :contentReference[oaicite:2]{index=2}
+float hash11(float n) {
+	return fract(sin(n) * 43758.5453123);
+}
+
+float hash12(vec2 p) {
+	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+vec2 crt_curve(vec2 uv, float k) {
+	// Barrel distortion style curve.
+	vec2 cc = uv * 2.0 - 1.0;
+	vec2 d  = cc * cc;
+	cc *= 1.0 + k * vec2(d.y, d.x);
+	return cc * 0.5 + 0.5;
+}
+
+float inside01(vec2 uv) {
+	// 1.0 if uv in [0..1], else 0.0
+	return step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+}
+
+vec3 apply_color_controls(vec3 c) {
+	// brightness
+	c *= brightness;
+
+	// contrast around 0.5
+	c = mix(vec3(0.5), c, contrast);
+
+	// saturation
+	float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+	c = mix(vec3(l), c, saturation);
+
+	// gamma-ish
+	c = pow(max(c, vec3(0.0)), vec3(1.0 / max(gamma, 0.0001)));
+	return c;
+}
+
+vec3 triad_mask(vec2 frag_xy) {
+	// Simple RGB triad mask across X.
+	float x = floor(frag_xy.x / max(mask_scale, 0.0001));
+	float m = mod(x, 3.0);
+	// Slightly tinted triads
+	if (m < 1.0) return vec3(1.10, 0.85, 0.85);
+	if (m < 2.0) return vec3(0.85, 1.10, 0.85);
+	return vec3(0.85, 0.85, 1.10);
+}
+
+vec3 sample_screen(vec2 uv) {
+	// Use textureLod at LOD 0 like the docs show. :contentReference[oaicite:3]{index=3}
+	return textureLod(screen_texture, clamp(uv, vec2(0.0), vec2(1.0)), source_softness).rgb;
+}
+
+void fragment() {
+	vec2 px   = SCREEN_PIXEL_SIZE;
+	vec2 res  = 1.0 / px;
+	float t   = TIME;
+
+	// Start from screen UV
+	vec2 uv = SCREEN_UV;
+
+	// --- VHS line jitter (per scanline) ---
+	float y_line = floor(uv.y * res.y);
+	float jitter = (hash11(y_line + floor(t * 15.0) * 37.0) - 0.5) * 2.0;
+	uv.x += jitter * (jitter_px * px.x);
+
+	// Slow wobble
+	uv.x += sin(uv.y * 8.0 + t * 1.2) * (wobble_px * px.x);
+
+	// CRT curve
+	vec2 cuv = crt_curve(uv, curvature);
+	float in_bounds = inside01(cuv);
+
+	// Rounded corners (soft clip)
+	vec2 d = abs(cuv - 0.5) * 2.0;      // 0 at center, ~1 at edges
+	float edge = max(d.x, d.y);
+
+	// 1 in center, fades to 0 near edges
+	float corner_mask = 1.0 - smoothstep(1.0 - corner_soften, 1.0, edge);
+
+
+	// --- Chromatic aberration / VHS chroma shift ---
+	vec2 chroma = vec2(chroma_offset_px * px.x, 0.0);
+	float r = sample_screen(cuv + chroma).r;
+	float g = sample_screen(cuv).g;
+	float b = sample_screen(cuv - chroma).b;
+	vec3 col = vec3(r, g, b);
+
+	// --- Luma smear (horizontal) ---
+	float smear = luma_smear_px * px.x;
+	vec3 s1 = sample_screen(cuv + vec2(smear, 0.0));
+	vec3 s2 = sample_screen(cuv - vec2(smear, 0.0));
+	col = mix(col, (col + s1 + s2) / 3.0, 0.35);
+
+	// --- Scanlines ---
+	float scan = sin((cuv.y * res.y) * 3.14159 * scanline_density);
+	float scan_mul = 1.0 - scanline_strength * (0.5 - 0.5 * scan); // darker troughs
+	col *= scan_mul;
+
+	// --- Interlacing (alternate rows “flicker”) ---
+	float field = mod(floor(FRAGCOORD.y) + floor(t * 60.0), 2.0);
+	col *= 1.0 - interlace_strength * field * 0.10;
+
+	// --- Rolling tracking bar ---
+	float roll_y = fract(t * max(roll_speed, 0.0001));
+	float dist = abs(cuv.y - roll_y);
+	float bar = smoothstep(0.20, 0.0, dist); // wide soft bar
+	col += bar * roll_strength * vec3(0.12, 0.12, 0.12);
+
+	// --- Tape lines (random horizontal streaks) ---
+	float line_n = hash11(y_line * 0.7 + floor(t * 12.0) * 11.0);
+	float line = smoothstep(0.985, 1.0, line_n) * tape_lines;
+	col += line * vec3(0.18, 0.18, 0.18);
+
+	// --- Grain / specks ---
+	float n = hash12(FRAGCOORD.xy + vec2(t * 120.0, t * 90.0));
+	float grain = (n - 0.5) * 2.0;
+	col += grain * (tape_noise * 0.06);
+
+	// Occasional white specks
+	float speck = smoothstep(0.995, 1.0, hash12(FRAGCOORD.xy * 0.73 + t * 40.0));
+	col += speck * (tape_noise * 0.25);
+
+	// --- Cheap glow (cross blur on brights) ---
+	vec3 c0 = col;
+	vec3 cx1 = sample_screen(cuv + vec2(px.x, 0.0));
+	vec3 cx2 = sample_screen(cuv - vec2(px.x, 0.0));
+	vec3 cy1 = sample_screen(cuv + vec2(0.0, px.y));
+	vec3 cy2 = sample_screen(cuv - vec2(0.0, px.y));
+	vec3 blur = (c0 + cx1 + cx2 + cy1 + cy2) / 5.0;
+	float br = dot(blur, vec3(0.2126, 0.7152, 0.0722));
+	vec3 glow = max(blur - vec3(glow_threshold), vec3(0.0));
+	col += glow * glow_strength * (0.5 + 0.5 * br);
+
+	// --- Vignette ---
+	vec2 v = cuv - 0.5;
+	float vig = smoothstep(0.9, 0.2, dot(v, v) * 2.2);
+	col *= mix(1.0 - vignette, 1.0, vig);
+
+	// --- Shadow mask triads ---
+	vec3 mask = triad_mask(FRAGCOORD.xy);
+	col *= mix(vec3(1.0), mask, mask_strength);
+
+	// Color grading last
+	col = apply_color_controls(col);
+
+	// Apply bounds + rounded corners (outside = black)
+	col *= in_bounds * corner_mask;
+
+	COLOR = vec4(col, 1.0);
+}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bn5gq"]
-shader = ExtResource("12_3tmru")
+shader = SubResource("Shader_tq31w")
 shader_parameter/brightness = 1.4950000710125
 shader_parameter/contrast = 0.910000043225
 shader_parameter/saturation = 2.0
@@ -1151,6 +1349,329 @@ shader_parameter/intensidad_picos = 0.0
 shader_parameter/cierre_picos = 0.0
 shader_parameter/rotacion_picos = 0.0
 
+[sub_resource type="Animation" id="Animation_734hs"]
+resource_name = "MenuClose"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/saturation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.9666667, 2),
+"transitions": PackedFloat32Array(0.34151018, 0.34151018),
+"update": 0,
+"values": [0.0, 2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.9666667, 2),
+"transitions": PackedFloat32Array(0.34151018, 0.34151018),
+"update": 0,
+"values": [1.34000006365, 1.4950000710125]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/source_softness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.9666667, 2),
+"transitions": PackedFloat32Array(0.34151018, 0.34151012),
+"update": 0,
+"values": [1.1950000567625, 0.250000011875]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 1.5),
+"transitions": PackedFloat32Array(0.34151018, 0.34151006),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Button:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.033333335, 0.5233334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7uy4l"]
+resource_name = "MenuOpen"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/saturation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.34151018, 1),
+"update": 0,
+"values": [2.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.34151018, 1),
+"update": 0,
+"values": [1.4950000710125, 1.34000006365]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/source_softness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.34151012, 1),
+"update": 0,
+"values": [0.250000011875, 1.1950000567625]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 1.5),
+"transitions": PackedFloat32Array(0.34151006, 1),
+"update": 0,
+"values": [Vector2(-1, 0), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Button:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.51, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3td5b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/saturation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.4950000710125]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/source_softness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.250000011875]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Button:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_734hs"]
+_data = {
+&"MenuClose": SubResource("Animation_734hs"),
+&"MenuOpen": SubResource("Animation_7uy4l"),
+&"RESET": SubResource("Animation_3td5b")
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7uy4l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3td5b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_734hs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j2t6j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8sjmd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ttwme"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qtkxc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ulaew"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4xs0d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3tmru"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lt0hh"]
+
+[sub_resource type="SystemFont" id="SystemFont_ahhwt"]
+font_names = PackedStringArray("Fira Code")
+
+[sub_resource type="Shader" id="Shader_7uy4l"]
+code = "shader_type canvas_item;
+
+// License: CC0
+// Author: Ultipuk, https://ultipuk.xyz
+// Link: https://godotshaders.com/shader/transition-with-a-pattern-texture/
+
+// Uncomment this if you want to use background texture
+//#define USE_BACKGROUND_TEXTURE
+
+// Uncomment this if you want to use closing transition,
+// starting removing the pattern after the progress reaches 0.5
+//#define USE_CLOSING
+
+// Uncomment this if you want to remove tile distortion.
+// The result will look weird in the editor, and the tiles will have some clipping. Intended for viewport-sized canvases.
+//#define REMOVE_DISTORTION
+
+/** Actual transition progress. You want to change it from a script. */
+uniform float progress: hint_range(0.0, 1.0) = 0.0;
+/** The width of the transition as a fraction of the UV. */
+uniform float width: hint_range(0.0, 1.0) = 0.5;
+
+/** Actual pattern. You can use a texture with an ALPHA channel.
+*   This color is modulated, so you can use modulate parameter to change the color. */
+uniform sampler2D tile_texture: source_color, repeat_disable;
+/** Tile size in pixels. */
+uniform float tile_pixel_size = 32.0;
+/** The maximum scale of the tile on the edge of the transition window. */
+uniform float tile_grown_scale: hint_range(0.0, 16.0) = 2.0;
+
+/** Transition uses red channel to determine when the part should be visible. */
+uniform sampler2D transition_texture;
+
+#ifdef USE_BACKGROUND_TEXTURE
+/** Simple background texture that will be mixed with the tile texture. It can be a SubViewport texture or just a gradient. */
+uniform sampler2D background_texture: source_color;
+#endif
+
+void fragment() {
+	vec2 tile_uv = vec2(
+		fract(FRAGCOORD.x / tile_pixel_size),
+		fract(FRAGCOORD.y / tile_pixel_size)
+	);
+	
+#ifdef REMOVE_DISTORTION
+	vec2 tiles = vec2(1.0 / SCREEN_PIXEL_SIZE / tile_pixel_size);
+	vec2 transition_uv = ceil(UV * tiles) / tiles;
+#else
+	vec2 transition_uv = UV;
+#endif
+	
+#ifdef USE_CLOSING
+	float part, transition;
+	
+	if (progress > 0.5) {
+		part = (1.0 - (progress - 0.5) * 2.0) * (1.0 + 2.0 * width) - width;
+		transition = 1.0 - texture(transition_texture, transition_uv).r;
+	} else {
+		part = 2.0 * progress * (1.0 + 2.0 * width) - width;
+		transition = texture(transition_texture, transition_uv).r;
+	}
+#else
+	float part = progress * (1.0 + 2.0 * width) - width;
+	float transition = texture(transition_texture, transition_uv).r;
+#endif
+	
+	float window = max(0.0, min(1.0, width + (part - transition) / width));
+	
+	tile_uv = tile_uv * 2.0 - 1.0;
+	tile_uv /= window * tile_grown_scale;
+	tile_uv = (tile_uv + 1.0) * 0.5;
+	
+#ifdef USE_BACKGROUND_TEXTURE
+	vec4 tile = texture(tile_texture, tile_uv) * texture(background_texture, UV);
+#else
+	vec4 tile = texture(tile_texture, tile_uv);
+#endif
+	
+	COLOR *= tile;
+}"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3td5b"]
+load_path = "res://.godot/imported/roundeddiamond.png-4ff04342e72f0a31fd057d2828b6b1a3.ctex"
+
+[sub_resource type="Gradient" id="Gradient_734hs"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j2t6j"]
+gradient = SubResource("Gradient_734hs")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8sjmd"]
+shader = SubResource("Shader_7uy4l")
+shader_parameter/progress = 0.0
+shader_parameter/width = 0.5
+shader_parameter/tile_texture = SubResource("CompressedTexture2D_3td5b")
+shader_parameter/tile_pixel_size = 32.0
+shader_parameter/tile_grown_scale = 2.0
+shader_parameter/transition_texture = SubResource("GradientTexture2D_j2t6j")
+
 [sub_resource type="Animation" id="Animation_r3bk5"]
 length = 0.001
 tracks/0/type = "value"
@@ -1210,6 +1731,143 @@ tracks/1/keys = {
 _data = {
 &"RESET": SubResource("Animation_r3bk5"),
 &"RatingAnim": SubResource("Animation_n4yq1")
+}
+
+[sub_resource type="Shader" id="Shader_3td5b"]
+code = "shader_type canvas_item;
+
+// License: CC0
+// Author: Ultipuk, https://ultipuk.xyz
+// Link: https://godotshaders.com/shader/transition-with-a-pattern-texture/
+
+// Uncomment this if you want to use background texture
+//#define USE_BACKGROUND_TEXTURE
+
+// Uncomment this if you want to use closing transition,
+// starting removing the pattern after the progress reaches 0.5
+//#define USE_CLOSING
+
+// Uncomment this if you want to remove tile distortion.
+// The result will look weird in the editor, and the tiles will have some clipping. Intended for viewport-sized canvases.
+//#define REMOVE_DISTORTION
+
+/** Actual transition progress. You want to change it from a script. */
+uniform float progress: hint_range(0.0, 1.0) = 0.0;
+/** The width of the transition as a fraction of the UV. */
+uniform float width: hint_range(0.0, 1.0) = 0.5;
+
+/** Actual pattern. You can use a texture with an ALPHA channel.
+*   This color is modulated, so you can use modulate parameter to change the color. */
+uniform sampler2D tile_texture: source_color, repeat_disable;
+/** Tile size in pixels. */
+uniform float tile_pixel_size = 32.0;
+/** The maximum scale of the tile on the edge of the transition window. */
+uniform float tile_grown_scale: hint_range(0.0, 16.0) = 2.0;
+
+/** Transition uses red channel to determine when the part should be visible. */
+uniform sampler2D transition_texture;
+
+#ifdef USE_BACKGROUND_TEXTURE
+/** Simple background texture that will be mixed with the tile texture. It can be a SubViewport texture or just a gradient. */
+uniform sampler2D background_texture: source_color;
+#endif
+
+void fragment() {
+	vec2 tile_uv = vec2(
+		fract(FRAGCOORD.x / tile_pixel_size),
+		fract(FRAGCOORD.y / tile_pixel_size)
+	);
+	
+#ifdef REMOVE_DISTORTION
+	vec2 tiles = vec2(1.0 / SCREEN_PIXEL_SIZE / tile_pixel_size);
+	vec2 transition_uv = ceil(UV * tiles) / tiles;
+#else
+	vec2 transition_uv = UV;
+#endif
+	
+#ifdef USE_CLOSING
+	float part, transition;
+	
+	if (progress > 0.5) {
+		part = (1.0 - (progress - 0.5) * 2.0) * (1.0 + 2.0 * width) - width;
+		transition = 1.0 - texture(transition_texture, transition_uv).r;
+	} else {
+		part = 2.0 * progress * (1.0 + 2.0 * width) - width;
+		transition = texture(transition_texture, transition_uv).r;
+	}
+#else
+	float part = progress * (1.0 + 2.0 * width) - width;
+	float transition = texture(transition_texture, transition_uv).r;
+#endif
+	
+	float window = max(0.0, min(1.0, width + (part - transition) / width));
+	
+	tile_uv = tile_uv * 2.0 - 1.0;
+	tile_uv /= window * tile_grown_scale;
+	tile_uv = (tile_uv + 1.0) * 0.5;
+	
+#ifdef USE_BACKGROUND_TEXTURE
+	vec4 tile = texture(tile_texture, tile_uv) * texture(background_texture, UV);
+#else
+	vec4 tile = texture(tile_texture, tile_uv);
+#endif
+	
+	COLOR *= tile;
+}"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_734hs"]
+load_path = "res://.godot/imported/roundeddiamond.png-4ff04342e72f0a31fd057d2828b6b1a3.ctex"
+
+[sub_resource type="Gradient" id="Gradient_j2t6j"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8sjmd"]
+gradient = SubResource("Gradient_j2t6j")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ttwme"]
+shader = SubResource("Shader_3td5b")
+shader_parameter/progress = 1.0
+shader_parameter/width = 0.5
+shader_parameter/tile_texture = SubResource("CompressedTexture2D_734hs")
+shader_parameter/tile_pixel_size = 32.0
+shader_parameter/tile_grown_scale = 2.0
+shader_parameter/transition_texture = SubResource("GradientTexture2D_8sjmd")
+
+[sub_resource type="Animation" id="Animation_qtkxc"]
+resource_name = "Intro"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ulaew"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4xs0d"]
+_data = {
+&"Intro": SubResource("Animation_qtkxc"),
+&"RESET": SubResource("Animation_ulaew")
 }
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_18gwp"]
@@ -1532,7 +2190,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("../PauseMenu/CRT/Glitch:visible")
+tracks/14/path = NodePath("../EffectsAndReveal/CRT/Glitch:visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -1556,7 +2214,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/path = NodePath("../EffectsAndReveal/CRT/Shatter:material:shader_parameter/pieces_y")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -1568,7 +2226,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/path = NodePath("../EffectsAndReveal/CRT/Shatter:material:shader_parameter/fall_progress")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -1652,7 +2310,7 @@ tracks/23/keys = {
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("../PauseMenu/CRT/Jostar:visible")
+tracks/24/path = NodePath("../EffectsAndReveal/CRT/Jostar:visible")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
@@ -1664,7 +2322,7 @@ tracks/24/keys = {
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/cierre_picos")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
@@ -1772,7 +2430,7 @@ tracks/33/keys = {
 tracks/34/type = "value"
 tracks/34/imported = false
 tracks/34/enabled = true
-tracks/34/path = NodePath("../PauseMenu/CRT/Crash:visible")
+tracks/34/path = NodePath("../EffectsAndReveal/CRT/Crash:visible")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = {
@@ -1784,7 +2442,7 @@ tracks/34/keys = {
 tracks/35/type = "value"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/rotacion_picos")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
@@ -1796,7 +2454,7 @@ tracks/35/keys = {
 tracks/36/type = "value"
 tracks/36/imported = false
 tracks/36/enabled = true
-tracks/36/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/intensidad_picos")
 tracks/36/interp = 1
 tracks/36/loop_wrap = true
 tracks/36/keys = {
@@ -2005,7 +2663,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("../PauseMenu/CRT/Glitch:visible")
+tracks/14/path = NodePath("../EffectsAndReveal/CRT/Glitch:visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -2029,7 +2687,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/path = NodePath("../EffectsAndReveal/CRT/Shatter:material:shader_parameter/pieces_y")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -2041,7 +2699,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/path = NodePath("../EffectsAndReveal/CRT/Shatter:material:shader_parameter/fall_progress")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -2125,7 +2783,7 @@ tracks/23/keys = {
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("../PauseMenu/CRT/Jostar:visible")
+tracks/24/path = NodePath("../EffectsAndReveal/CRT/Jostar:visible")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
@@ -2137,7 +2795,7 @@ tracks/24/keys = {
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/cierre_picos")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
@@ -2245,7 +2903,7 @@ tracks/33/keys = {
 tracks/34/type = "value"
 tracks/34/imported = false
 tracks/34/enabled = true
-tracks/34/path = NodePath("../PauseMenu/CRT/Crash:visible")
+tracks/34/path = NodePath("../EffectsAndReveal/CRT/Crash:visible")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = {
@@ -2257,7 +2915,7 @@ tracks/34/keys = {
 tracks/35/type = "value"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/rotacion_picos")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
@@ -2269,7 +2927,7 @@ tracks/35/keys = {
 tracks/36/type = "value"
 tracks/36/imported = false
 tracks/36/enabled = true
-tracks/36/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/intensidad_picos")
 tracks/36/interp = 1
 tracks/36/loop_wrap = true
 tracks/36/keys = {
@@ -2476,7 +3134,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("../PauseMenu/CRT/Glitch:visible")
+tracks/14/path = NodePath("../EffectsAndReveal/CRT/Glitch:visible")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -2500,7 +3158,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/path = NodePath("../EffectsAndReveal/CRT/Shatter:material:shader_parameter/pieces_y")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -2512,7 +3170,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("../PauseMenu/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/path = NodePath("../EffectsAndReveal/CRT/Shatter:material:shader_parameter/fall_progress")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -2596,7 +3254,7 @@ tracks/23/keys = {
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("../PauseMenu/CRT/Jostar:visible")
+tracks/24/path = NodePath("../EffectsAndReveal/CRT/Jostar:visible")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
@@ -2608,7 +3266,7 @@ tracks/24/keys = {
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/cierre_picos")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
@@ -2716,7 +3374,7 @@ tracks/33/keys = {
 tracks/34/type = "value"
 tracks/34/imported = false
 tracks/34/enabled = true
-tracks/34/path = NodePath("../PauseMenu/CRT/Crash:visible")
+tracks/34/path = NodePath("../EffectsAndReveal/CRT/Crash:visible")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = {
@@ -2728,7 +3386,7 @@ tracks/34/keys = {
 tracks/35/type = "value"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/rotacion_picos")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
@@ -2740,7 +3398,7 @@ tracks/35/keys = {
 tracks/36/type = "value"
 tracks/36/imported = false
 tracks/36/enabled = true
-tracks/36/path = NodePath("../PauseMenu/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/intensidad_picos")
 tracks/36/interp = 1
 tracks/36/loop_wrap = true
 tracks/36/keys = {
@@ -2773,12 +3431,508 @@ tracks/38/keys = {
 "update": 0,
 "values": [1.0]
 }
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("../CanvasLayer/IntroTransition:material:shader_parameter/progress")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_j2t6j"]
+resource_name = "base_anim"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../InGameElements/RailBottom:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../InGameElements/RailTop:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../InGameElements/Hit Line:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CanvasLayer/Control/Accuracy:offset_transform_position_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CanvasLayer/Control/SongName:offset_transform_position_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../CanvasLayer/Control/ComboTag:offset_transform_position_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../CanvasLayer/Control/LevelDetail:offset_transform_position_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../CanvasLayer/Control/Pause:offset_transform_position_ratio")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox2:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox3:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../InGameElements/ErrorBoxesFirst/Errorbox4:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../InGameElements/BlackBox:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../InGameElements/BossLevel:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../EffectsAndReveal/CRT/Glitch:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("%FirstStage/Transparency:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../EffectsAndReveal/CRT/Shatter:material:shader_parameter/pieces_y")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("../EffectsAndReveal/CRT/Shatter:material:shader_parameter/fall_progress")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("%FirstStage:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("../BackgroundLevelElements/SecondStage:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Heartleft:position")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-40, 0)]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Heartright:position")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, 0)]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("../BackgroundLevelElements/SecondStage/Heart/Wave:scale")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.345, 1.16)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("../BackgroundLevelElements/SecondStage/Characterprototype2:self_modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.41568628)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("../EffectsAndReveal/CRT/Jostar:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/cierre_picos")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox:visible")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox2:visible")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox3:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox4:visible")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox5:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox6:visible")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox7:visible")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("../InGameElements/ErrorBoxesSecond/Errorbox8:visible")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("../EffectsAndReveal/CRT/Crash:visible")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/rotacion_picos")
+tracks/35/interp = 1
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("../EffectsAndReveal/CRT/Jostar:material:shader_parameter/intensidad_picos")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("../Camera2D:pulse")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("../Stars:speed_scale")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("../CanvasLayer/IntroTransition:material:shader_parameter/progress")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x0pjv"]
 _data = {
 &"Event": SubResource("Animation_8r4qt"),
 &"Event_2": SubResource("Animation_x1q7v"),
-&"RESET": SubResource("Animation_iw33s")
+&"RESET": SubResource("Animation_iw33s"),
+&"base_anim": SubResource("Animation_j2t6j")
 }
 
 [sub_resource type="Gradient" id="Gradient_oxxfm"]
@@ -3148,6 +4302,7 @@ height = 110
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
 script = ExtResource("1_tq31w")
 chart = ExtResource("2_7uy4l")
+start_delay = 1.0
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
 unique_name_in_owner = true
@@ -3164,24 +4319,11 @@ limit_right = 1152
 limit_bottom = 648
 script = ExtResource("4_3td5b")
 
-[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=103199223]
-layer = 2
+[node name="EffectsAndReveal" type="CanvasLayer" parent="." unique_id=103199223]
+layer = 3
 follow_viewport_enabled = true
 
-[node name="TextureRect" type="TextureRect" parent="PauseMenu" unique_id=455672928]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="RankReveal" type="Control" parent="PauseMenu" unique_id=2125491467]
+[node name="RankReveal" type="Control" parent="EffectsAndReveal" unique_id=2125491467]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -3190,20 +4332,22 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("5_734hs")
-reveal_at_end = false
 
-[node name="Upper" type="ColorRect" parent="PauseMenu/RankReveal" unique_id=1900463846]
+[node name="Upper" type="ColorRect" parent="EffectsAndReveal/RankReveal" unique_id=1900463846]
 z_index = 2
 material = SubResource("ShaderMaterial_qpyjv")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.008850009, 0.0041999994, 0.06, 1)
 
-[node name="Reveal" type="Control" parent="PauseMenu/RankReveal" unique_id=560220332]
+[node name="Reveal" type="Control" parent="EffectsAndReveal/RankReveal" unique_id=560220332]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -3211,8 +4355,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="Mocktitlerank" type="TextureRect" parent="PauseMenu/RankReveal/Reveal" unique_id=77228622]
+[node name="Mocktitlerank" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal" unique_id=77228622]
 layout_mode = 0
 offset_left = -24.0
 offset_top = 24.0
@@ -3221,7 +4366,7 @@ offset_bottom = 199.0
 scale = Vector2(0.835, 0.835)
 texture = ExtResource("6_j2t6j")
 
-[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Mocktitlerank" unique_id=2123497874]
+[node name="Label" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Mocktitlerank" unique_id=2123497874]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -3240,7 +4385,7 @@ theme_override_font_sizes/font_size = 28
 text = "Press Any Key To Continue"
 horizontal_alignment = 2
 
-[node name="ColorRect" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1797219537]
+[node name="ColorRect" type="ColorRect" parent="EffectsAndReveal/RankReveal/Reveal" unique_id=1797219537]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3249,9 +4394,10 @@ offset_top = 200.0
 offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.68235296)
 
-[node name="ColorRect2" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1596024847]
+[node name="ColorRect2" type="ColorRect" parent="EffectsAndReveal/RankReveal/Reveal" unique_id=1596024847]
 self_modulate = Color(0, 0, 0, 0.69411767)
 z_index = -1
 layout_mode = 1
@@ -3262,7 +4408,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="DebugRect" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/ColorRect2" unique_id=1919264495]
+[node name="DebugRect" type="ColorRect" parent="EffectsAndReveal/RankReveal/Reveal/ColorRect2" unique_id=1919264495]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -3270,9 +4416,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.12941177, 0.09019608, 0.18039216, 1)
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="PauseMenu/RankReveal/Reveal/ColorRect2" unique_id=313193094]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="EffectsAndReveal/RankReveal/Reveal/ColorRect2" unique_id=313193094]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -3287,7 +4434,7 @@ autoplay = true
 expand = true
 loop = true
 
-[node name="Card" type="TextureRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1253714275]
+[node name="Card" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal" unique_id=1253714275]
 self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
 layout_mode = 1
 anchors_preset = 6
@@ -3305,7 +4452,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("8_ttwme")
 expand_mode = 1
 
-[node name="InnerCard" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=105890879]
+[node name="InnerCard" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Card" unique_id=105890879]
 self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -3324,7 +4471,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("8_ttwme")
 expand_mode = 1
 
-[node name="GradientBG" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/InnerCard" unique_id=314754869]
+[node name="GradientBG" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Card/InnerCard" unique_id=314754869]
 unique_name_in_owner = true
 self_modulate = Color(0.23509473, 0.30687487, 0.5750075, 1)
 material = SubResource("ShaderMaterial_mydub")
@@ -3336,7 +4483,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_rql4f")
 
-[node name="SongCoverBG" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=632450168]
+[node name="SongCoverBG" type="ColorRect" parent="EffectsAndReveal/RankReveal/Reveal/Card" unique_id=632450168]
 material = SubResource("ShaderMaterial_7rtu4")
 layout_mode = 1
 anchors_preset = 10
@@ -3346,8 +4493,9 @@ offset_top = 9.0
 offset_right = -8.0
 offset_bottom = 155.0
 grow_horizontal = 2
+mouse_filter = 2
 
-[node name="SongCoverBG2" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=1240220188]
+[node name="SongCoverBG2" type="ColorRect" parent="EffectsAndReveal/RankReveal/Reveal/Card/SongCoverBG" unique_id=1240220188]
 self_modulate = Color(0.56164134, 0.46917653, 0.61033726, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -3359,8 +4507,9 @@ offset_right = 8.0
 offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="SongCoverFrame" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=133180259]
+[node name="SongCoverFrame" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Card/SongCoverBG" unique_id=133180259]
 self_modulate = Color(0.9019608, 0.65882355, 0.99607843, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -3379,7 +4528,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("9_qtkxc")
 expand_mode = 1
 
-[node name="SongCover" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Card/SongCoverBG" unique_id=1164060036]
+[node name="SongCover" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Card/SongCoverBG" unique_id=1164060036]
 unique_name_in_owner = true
 self_modulate = Color(0.8217887, 0.82178867, 0.82178867, 1)
 material = SubResource("ShaderMaterial_h43uj")
@@ -3399,7 +4548,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("10_ulaew")
 expand_mode = 1
 
-[node name="Artist Container" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=1458444951]
+[node name="Artist Container" type="ColorRect" parent="EffectsAndReveal/RankReveal/Reveal/Card" unique_id=1458444951]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -3412,9 +4561,10 @@ offset_right = 184.5
 offset_bottom = -79.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 color = Color(0.2, 0.09411765, 0.2, 1)
 
-[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Artist Container" unique_id=149472661]
+[node name="Label" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Card/Artist Container" unique_id=149472661]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -3429,7 +4579,7 @@ theme_override_font_sizes/font_size = 20
 text = "Artist"
 vertical_alignment = 1
 
-[node name="ArtistLabel" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Artist Container" unique_id=452632721]
+[node name="ArtistLabel" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Card/Artist Container" unique_id=452632721]
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 1
@@ -3446,7 +4596,7 @@ text = "insertartist"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Charting Container" type="ColorRect" parent="PauseMenu/RankReveal/Reveal/Card" unique_id=1820897176]
+[node name="Charting Container" type="ColorRect" parent="EffectsAndReveal/RankReveal/Reveal/Card" unique_id=1820897176]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -3459,9 +4609,10 @@ offset_right = 184.5
 offset_bottom = -39.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 color = Color(0.2, 0.09411765, 0.2, 1)
 
-[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Charting Container" unique_id=45747059]
+[node name="Label" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Card/Charting Container" unique_id=45747059]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -3476,7 +4627,7 @@ theme_override_font_sizes/font_size = 20
 text = "Charting"
 vertical_alignment = 1
 
-[node name="ChartingLabel" type="Label" parent="PauseMenu/RankReveal/Reveal/Card/Charting Container" unique_id=2096488798]
+[node name="ChartingLabel" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Card/Charting Container" unique_id=2096488798]
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 1
@@ -3493,7 +4644,7 @@ text = "insertcharter"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Rank" type="Control" parent="PauseMenu/RankReveal/Reveal" unique_id=1769660189]
+[node name="Rank" type="Control" parent="EffectsAndReveal/RankReveal/Reveal" unique_id=1769660189]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -3503,8 +4654,9 @@ offset_top = -128.0
 offset_right = 338.0
 offset_bottom = -26.0
 grow_vertical = 0
+mouse_filter = 2
 
-[node name="Label" type="Label" parent="PauseMenu/RankReveal/Reveal/Rank" unique_id=1380167137]
+[node name="Label" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Rank" unique_id=1380167137]
 self_modulate = Color(0.8, 0.64000005, 0, 1)
 layout_mode = 1
 anchors_preset = 2
@@ -3519,7 +4671,7 @@ theme_override_font_sizes/font_size = 56
 text = "RANK"
 vertical_alignment = 2
 
-[node name="Grade" type="Label" parent="PauseMenu/RankReveal/Reveal/Rank" unique_id=1573994675]
+[node name="Grade" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Rank" unique_id=1573994675]
 self_modulate = Color(0.8, 0.64000005, 0, 1)
 layout_mode = 1
 anchors_preset = 3
@@ -3538,7 +4690,7 @@ theme_override_font_sizes/font_size = 96
 text = "A"
 vertical_alignment = 2
 
-[node name="Control" type="Control" parent="PauseMenu/RankReveal/Reveal" unique_id=1679862693]
+[node name="Control" type="Control" parent="EffectsAndReveal/RankReveal/Reveal" unique_id=1679862693]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -3550,8 +4702,9 @@ offset_top = -20.0
 offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=912452828]
+[node name="TextureRect" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Control" unique_id=912452828]
 self_modulate = Color(0, 0.69109005, 0.804423, 1)
 layout_mode = 0
 offset_left = -482.0
@@ -3561,7 +4714,7 @@ offset_bottom = -9.605003
 texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
-[node name="DreamyRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect" unique_id=1655452497]
+[node name="DreamyRank" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect" unique_id=1655452497]
 self_modulate = Color(0, 1, 1, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -3573,7 +4726,7 @@ theme_override_font_sizes/font_size = 40
 text = "DREAMY"
 vertical_alignment = 1
 
-[node name="DreamyScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect" unique_id=2057534768]
+[node name="DreamyScore" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect" unique_id=2057534768]
 unique_name_in_owner = true
 self_modulate = Color(0, 1, 1, 1)
 layout_mode = 0
@@ -3587,7 +4740,7 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=2091561766]
+[node name="TextureRect2" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Control" unique_id=2091561766]
 self_modulate = Color(0, 0.8, 0.47999993, 1)
 layout_mode = 0
 offset_left = -482.0
@@ -3596,7 +4749,7 @@ offset_bottom = 70.395
 texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
-[node name="GreatRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect2" unique_id=1803956736]
+[node name="GreatRank" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect2" unique_id=1803956736]
 self_modulate = Color(0.03529412, 1, 0.5294118, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -3608,7 +4761,7 @@ theme_override_font_sizes/font_size = 40
 text = "GREAT"
 vertical_alignment = 1
 
-[node name="GreatScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect2" unique_id=203590835]
+[node name="GreatScore" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect2" unique_id=203590835]
 unique_name_in_owner = true
 self_modulate = Color(0.03529412, 1, 0.5294118, 1)
 layout_mode = 0
@@ -3622,7 +4775,7 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="TextureRect3" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=1875330552]
+[node name="TextureRect3" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Control" unique_id=1875330552]
 self_modulate = Color(0.8, 0.64000005, 0, 1)
 layout_mode = 0
 offset_left = -480.0
@@ -3632,7 +4785,7 @@ offset_bottom = 150.39499
 texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
-[node name="GoodRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect3" unique_id=1287728261]
+[node name="GoodRank" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect3" unique_id=1287728261]
 self_modulate = Color(1, 0.90588236, 0, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -3644,7 +4797,7 @@ theme_override_font_sizes/font_size = 40
 text = "GOOD"
 vertical_alignment = 1
 
-[node name="GoodScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect3" unique_id=968089942]
+[node name="GoodScore" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect3" unique_id=968089942]
 unique_name_in_owner = true
 self_modulate = Color(1, 0.90588236, 0, 1)
 layout_mode = 0
@@ -3658,7 +4811,7 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="TextureRect4" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=815931875]
+[node name="TextureRect4" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Control" unique_id=815931875]
 self_modulate = Color(0.8, 0.32000002, 0, 1)
 layout_mode = 0
 offset_left = -482.0
@@ -3668,7 +4821,7 @@ offset_bottom = 230.39499
 texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
-[node name="PassRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect4" unique_id=1751192934]
+[node name="PassRank" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect4" unique_id=1751192934]
 self_modulate = Color(1, 0.42352942, 0, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -3680,7 +4833,7 @@ theme_override_font_sizes/font_size = 40
 text = "PASS"
 vertical_alignment = 1
 
-[node name="PassScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect4" unique_id=1171091340]
+[node name="PassScore" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect4" unique_id=1171091340]
 unique_name_in_owner = true
 self_modulate = Color(1, 0.42352942, 0, 1)
 layout_mode = 0
@@ -3694,7 +4847,7 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="TextureRect5" type="TextureRect" parent="PauseMenu/RankReveal/Reveal/Control" unique_id=2044138657]
+[node name="TextureRect5" type="TextureRect" parent="EffectsAndReveal/RankReveal/Reveal/Control" unique_id=2044138657]
 self_modulate = Color(0.43, 0.43, 0.43, 1)
 layout_mode = 0
 offset_left = -482.0
@@ -3704,7 +4857,7 @@ offset_bottom = 310.395
 texture = ExtResource("11_4xs0d")
 expand_mode = 1
 
-[node name="FailRank" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect5" unique_id=1581196215]
+[node name="FailRank" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect5" unique_id=1581196215]
 self_modulate = Color(0.627451, 0.6313726, 0.6509804, 1)
 layout_mode = 0
 offset_left = 60.0
@@ -3716,7 +4869,7 @@ theme_override_font_sizes/font_size = 40
 text = "FAIL"
 vertical_alignment = 1
 
-[node name="FailScore" type="Label" parent="PauseMenu/RankReveal/Reveal/Control/TextureRect5" unique_id=1328451705]
+[node name="FailScore" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Control/TextureRect5" unique_id=1328451705]
 unique_name_in_owner = true
 self_modulate = Color(0.627451, 0.6313726, 0.6509804, 1)
 layout_mode = 0
@@ -3730,7 +4883,7 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Lower" type="ColorRect" parent="PauseMenu/RankReveal/Reveal" unique_id=1351418168]
+[node name="Lower" type="ColorRect" parent="EffectsAndReveal/RankReveal/Reveal" unique_id=1351418168]
 z_index = 2
 material = SubResource("ShaderMaterial_s1nel")
 layout_mode = 1
@@ -3741,10 +4894,11 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.008850009, 0.0041999994, 0.06, 1)
 
-[node name="RevealPlayer" type="AnimationPlayer" parent="PauseMenu/RankReveal" unique_id=1089017335]
+[node name="RevealPlayer" type="AnimationPlayer" parent="EffectsAndReveal/RankReveal" unique_id=1089017335]
+unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_avgt3")
 
-[node name="CRT" type="ColorRect" parent="PauseMenu" unique_id=1134534797]
+[node name="CRT" type="ColorRect" parent="EffectsAndReveal" unique_id=1134534797]
 z_index = 2
 material = SubResource("ShaderMaterial_bn5gq")
 anchors_preset = 15
@@ -3752,9 +4906,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 
-[node name="Glitch" type="ColorRect" parent="PauseMenu/CRT" unique_id=2045397140]
+[node name="Glitch" type="ColorRect" parent="EffectsAndReveal/CRT" unique_id=2045397140]
 visible = false
 material = SubResource("ShaderMaterial_i0hs6")
 layout_mode = 1
@@ -3763,8 +4917,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="Shatter" type="ColorRect" parent="PauseMenu/CRT" unique_id=1095969783]
+[node name="Shatter" type="ColorRect" parent="EffectsAndReveal/CRT" unique_id=1095969783]
 material = SubResource("ShaderMaterial_3hl7e")
 layout_mode = 1
 anchors_preset = 15
@@ -3772,8 +4927,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="Jostar" type="ColorRect" parent="PauseMenu/CRT" unique_id=1583569024]
+[node name="Jostar" type="ColorRect" parent="EffectsAndReveal/CRT" unique_id=1583569024]
 visible = false
 show_behind_parent = true
 material = SubResource("ShaderMaterial_p4jp6")
@@ -3783,8 +4939,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="Crash" type="ColorRect" parent="PauseMenu/CRT" unique_id=1805268367]
+[node name="Crash" type="ColorRect" parent="EffectsAndReveal/CRT" unique_id=1805268367]
 visible = false
 show_behind_parent = true
 z_index = -2
@@ -3797,7 +4954,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(8.612998e-05, 0.10160727, 0.3889947, 1)
 
-[node name="Label" type="Label" parent="PauseMenu/CRT/Crash" unique_id=1062602850]
+[node name="Label" type="Label" parent="EffectsAndReveal/CRT/Crash" unique_id=1062602850]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -3812,7 +4969,7 @@ theme_override_font_sizes/font_size = 52
 text = ":(  Your Computer Ran Into A Problem"
 horizontal_alignment = 1
 
-[node name="Button" type="TextureButton" parent="PauseMenu/CRT/Crash" unique_id=872833973]
+[node name="Button" type="TextureButton" parent="EffectsAndReveal/CRT/Crash" unique_id=872833973]
 self_modulate = Color(0.5211406, 0.5211406, 0.5211405, 1)
 layout_mode = 1
 anchors_preset = 7
@@ -3831,6 +4988,188 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture_normal = ExtResource("13_lt0hh")
 texture_pressed = ExtResource("14_ahhwt")
 
+[node name="Pause Menu" type="CanvasLayer" parent="." unique_id=720686102]
+layer = 4
+script = ExtResource("14_7uy4l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pause Menu" unique_id=1851479873]
+libraries/ = SubResource("AnimationLibrary_734hs")
+autoplay = &"RESET"
+
+[node name="ColorRect" type="ColorRect" parent="Pause Menu" unique_id=1099269628]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -71.0
+offset_right = 576.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-1, 0)
+mouse_filter = 2
+color = Color(0, 0, 0, 0.6509804)
+
+[node name="Button" type="Control" parent="Pause Menu" unique_id=112354953]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ExitLevel" type="Button" parent="Pause Menu/Button" unique_id=1969107124]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 180.0
+offset_top = 287.0
+offset_right = -637.0
+offset_bottom = -285.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_right = NodePath("../ResumeLevel")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7uy4l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_3td5b")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_734hs")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_j2t6j")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8sjmd")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ttwme")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_qtkxc")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ulaew")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_4xs0d")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_3tmru")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lt0hh")
+script = ExtResource("14_x1q7v")
+rest_color = Color(0.47727227, 0.5514406, 1, 1)
+
+[node name="StorySelectText" type="Label" parent="Pause Menu/Button/ExitLevel" unique_id=869064461]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+mouse_filter = 1
+theme_override_fonts/font = SubResource("SystemFont_ahhwt")
+theme_override_font_sizes/font_size = 45
+text = "Exit Level?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Highlight" type="TextureRect" parent="Pause Menu/Button/ExitLevel" unique_id=1121976082]
+self_modulate = Color(0.23921569, 0.36862746, 1, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("8_ttwme")
+expand_mode = 1
+
+[node name="ResumeLevel" type="Button" parent="Pause Menu/Button" unique_id=2126725744]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 638.0
+offset_top = 287.0
+offset_right = -179.0
+offset_bottom = -285.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_left = NodePath("../ExitLevel")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7uy4l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_3td5b")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_734hs")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_j2t6j")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8sjmd")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ttwme")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_qtkxc")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ulaew")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_4xs0d")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_3tmru")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lt0hh")
+script = ExtResource("14_x1q7v")
+rest_color = Color(0.9426243, 0.7692707, 0.06626069, 1)
+
+[node name="StorySelectText" type="Label" parent="Pause Menu/Button/ResumeLevel" unique_id=2070973197]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+mouse_filter = 1
+theme_override_fonts/font = SubResource("SystemFont_ahhwt")
+theme_override_font_sizes/font_size = 45
+text = "Resume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Highlight" type="TextureRect" parent="Pause Menu/Button/ResumeLevel" unique_id=258324236]
+self_modulate = Color(0.9997932, 0.8499523, 0, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("8_ttwme")
+expand_mode = 1
+
+[node name="DummyButton" type="Button" parent="Pause Menu/Button" unique_id=246543636]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -257.0
+offset_top = -15.0
+offset_right = -113.0
+offset_bottom = 16.0
+grow_vertical = 2
+text = "GET OCEY A GUN"
+
+[node name="ColorRect2" type="ColorRect" parent="Pause Menu" unique_id=373538423]
+self_modulate = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_8sjmd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InputBlock" type="ColorRect" parent="Pause Menu" unique_id=1128539902]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -78.0
+offset_right = 576.0
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=883296826]
 follow_viewport_enabled = true
 
@@ -3841,6 +5180,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Pause" type="Button" parent="CanvasLayer/Control" unique_id=1051741657]
 self_modulate = Color(0.179842, 0.22810352, 0.7026473, 1)
@@ -3877,6 +5217,7 @@ offset_top = 28.0
 offset_right = 278.0
 offset_bottom = 68.0
 offset_transform_enabled = true
+mouse_filter = 2
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="ComboTag2" type="ColorRect" parent="CanvasLayer/Control/ComboTag" unique_id=1339686072]
@@ -3894,6 +5235,7 @@ offset_bottom = 32.00006
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.7853982
+mouse_filter = 2
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="ComboLabel" type="Label" parent="CanvasLayer/Control/ComboTag" unique_id=1773942047]
@@ -3920,6 +5262,7 @@ offset_left = -318.79004
 offset_bottom = 67.06
 grow_horizontal = 0
 offset_transform_enabled = true
+mouse_filter = 2
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="AccuracyLabel" type="Label" parent="CanvasLayer/Control/Accuracy" unique_id=669504614]
@@ -3965,6 +5308,7 @@ offset_right = 204.68
 offset_bottom = -31.0
 grow_vertical = 0
 offset_transform_enabled = true
+mouse_filter = 2
 color = Color(0.99999994, 0.5682773, 0.26168016, 1)
 
 [node name="SongLabel" type="Label" parent="CanvasLayer/Control/SongName" unique_id=1327533810]
@@ -3996,6 +5340,7 @@ offset_bottom = -31.0
 grow_horizontal = 0
 grow_vertical = 0
 offset_transform_enabled = true
+mouse_filter = 2
 color = Color(0.19247293, 0.35953876, 0.9913725, 1)
 
 [node name="DetailLabel" type="Label" parent="CanvasLayer/Control/LevelDetail" unique_id=1977836251]
@@ -4014,6 +5359,20 @@ vertical_alignment = 1
 [node name="RatingAnimPlayer" type="AnimationPlayer" parent="CanvasLayer/Control" unique_id=302687489]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_dcs3l")
+
+[node name="IntroTransition" type="ColorRect" parent="CanvasLayer" unique_id=1507627833]
+self_modulate = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_ttwme")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IntroPlayer" type="AnimationPlayer" parent="CanvasLayer/IntroTransition" unique_id=101940312]
+libraries/ = SubResource("AnimationLibrary_4xs0d")
+autoplay = &"Intro"
+movie_quit_on_finish = true
 
 [node name="Curve" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
 script = ExtResource("16_rdlsc")
@@ -4346,6 +5705,7 @@ one_shot = true
 process_material = SubResource("ParticleProcessMaterial_x0pjv")
 
 [node name="Stars" type="GPUParticles2D" parent="." unique_id=218265872]
+unique_name_in_owner = true
 self_modulate = Color(0.8729805, 1, 1, 1)
 z_index = -15
 position = Vector2(1252, 324)
@@ -4367,6 +5727,7 @@ sine_decay_rate = 0.2
 script = ExtResource("25_110p8")
 
 [node name="EventPlayer" type="AnimationPlayer" parent="EventConductor" unique_id=202058872]
+active = false
 libraries/ = SubResource("AnimationLibrary_x0pjv")
 autoplay = &"RESET"
 
@@ -4437,8 +5798,11 @@ position = Vector2(40, 0)
 scale = Vector2(0.44, 0.44)
 texture = ExtResource("30_1engb")
 
-[connection signal="animation_finished" from="PauseMenu/RankReveal/RevealPlayer" to="PauseMenu/RankReveal" method="_on_reveal_player_animation_finished"]
-[connection signal="button_down" from="PauseMenu/CRT/Crash/Button" to="PauseMenu/RankReveal" method="_on_button_button_down"]
+[connection signal="animation_finished" from="EffectsAndReveal/RankReveal/RevealPlayer" to="EffectsAndReveal/RankReveal" method="_on_reveal_player_animation_finished"]
+[connection signal="button_down" from="EffectsAndReveal/CRT/Crash/Button" to="EffectsAndReveal/RankReveal" method="_on_button_button_down"]
+[connection signal="pressed" from="Pause Menu/Button/ExitLevel" to="Pause Menu" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause Menu/Button/ResumeLevel" to="Pause Menu" method="_on_resume_level_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Pause" to="Pause Menu" method="_on_pause_pressed"]
 [connection signal="rating_broadcast" from="Hit Line Top" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="rating_broadcast" from="Hit Line Mid" to="PointManager" method="_on_hit_line_rating_broadcast"]
 [connection signal="rating_broadcast" from="Hit Line Bottom" to="PointManager" method="_on_hit_line_rating_broadcast"]
