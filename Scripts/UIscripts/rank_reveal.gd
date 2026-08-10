@@ -8,6 +8,7 @@ func _ready():
 	%ArtistLabel.text = $"../..".chart.artist_name
 	%ChartingLabel.text = $"../..".chart.charter_name
 	%SongCover.texture = $"../..".chart.cover
+	
 
 func _on_music_finished():
 	print("Music ended!")
@@ -51,7 +52,10 @@ func _process(delta: float) -> void:
 		$Reveal/Rank/Grade.text = "F"
 
 func _on_reveal_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "RESET": return
+	print("help")
 	close_reveal = true
 	if anim_name == "CloseReveal":
 		print("left")
+		get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
 	pass # Replace with function body.

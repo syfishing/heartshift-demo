@@ -35,13 +35,20 @@ func play_track(audio: AudioStream):
 func toggle_trackpause():
 	if pause_state == false:
 		track_position = trackmusicplayer.get_playback_position()
-		await fade_volume(trackmusicplayer, trackmusicplayer.volume_db, -40, 0.5)
 		trackmusicplayer.stop()
+		await fade_volume(trackmusicplayer, trackmusicplayer.volume_db, -40, 0.5)
 		pause_state = true
 	else:
+		
+		await fade_volume(trackmusicplayer, -40, 0, 0.5)
 		trackmusicplayer.play(track_position)
-		fade_volume(trackmusicplayer, -40, 0, 0.5)
 		pause_state = false
+
+func stop_track():
+	trackmusicplayer.stop()
+	pause_state = false
+	track_position = 0.0
+
 
 
 func play_music(audio: AudioStream):

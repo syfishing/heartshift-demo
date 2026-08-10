@@ -8,7 +8,7 @@ var cursor
 @export var active_color: Color = Color()
 
 func _ready():
-	if $"../Cursor":
+	if get("Cursor"):
 		cursor = $"../Cursor"
 	highlight.visible = false
 	connect("mouse_entered", _on_mouse_entered)

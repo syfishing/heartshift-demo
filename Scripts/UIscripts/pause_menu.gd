@@ -27,6 +27,7 @@ func openmenu() -> void:
 
 
 func _on_exit_level_pressed() -> void:
+	AudioHub.stop_track()
 	transitionout()
 
 

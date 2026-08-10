@@ -41,6 +41,7 @@ glow_strength = 1.5
 glow_bloom = 0.1
 
 [sub_resource type="Shader" id="Shader_p4jp6"]
+resource_local_to_scene = true
 code = "shader_type canvas_item;
 
 // License: CC0
@@ -271,6 +272,7 @@ shader_parameter/mask_scale = Vector2(1, 1)
 shader_parameter/mask_offset = Vector2(0, 0)
 
 [sub_resource type="Shader" id="Shader_7rtu4"]
+resource_local_to_scene = true
 code = "shader_type canvas_item;
 
 // License: CC0
@@ -1573,6 +1575,7 @@ _data = {
 font_names = PackedStringArray("Fira Code")
 
 [sub_resource type="Shader" id="Shader_7uy4l"]
+resource_local_to_scene = true
 code = "shader_type canvas_item;
 
 // License: CC0
@@ -1734,6 +1737,7 @@ _data = {
 }
 
 [sub_resource type="Shader" id="Shader_3td5b"]
+resource_local_to_scene = true
 code = "shader_type canvas_item;
 
 // License: CC0
@@ -1827,7 +1831,7 @@ fill_to = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ttwme"]
 shader = SubResource("Shader_3td5b")
-shader_parameter/progress = 1.0
+shader_parameter/progress = 0.0
 shader_parameter/width = 0.5
 shader_parameter/tile_texture = SubResource("CompressedTexture2D_734hs")
 shader_parameter/tile_pixel_size = 32.0
@@ -1861,7 +1865,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4xs0d"]
@@ -3431,18 +3435,6 @@ tracks/38/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/39/type = "value"
-tracks/39/imported = false
-tracks/39/enabled = true
-tracks/39/path = NodePath("../CanvasLayer/IntroTransition:material:shader_parameter/progress")
-tracks/39/interp = 1
-tracks/39/loop_wrap = true
-tracks/39/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
 
 [sub_resource type="Animation" id="Animation_j2t6j"]
 resource_name = "base_anim"
@@ -3913,18 +3905,6 @@ tracks/38/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
-}
-tracks/39/type = "value"
-tracks/39/imported = false
-tracks/39/enabled = true
-tracks/39/path = NodePath("../CanvasLayer/IntroTransition:material:shader_parameter/progress")
-tracks/39/interp = 1
-tracks/39/loop_wrap = true
-tracks/39/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x0pjv"]
@@ -4897,6 +4877,7 @@ color = Color(0.008850009, 0.0041999994, 0.06, 1)
 [node name="RevealPlayer" type="AnimationPlayer" parent="EffectsAndReveal/RankReveal" unique_id=1089017335]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_avgt3")
+autoplay = &"RESET"
 
 [node name="CRT" type="ColorRect" parent="EffectsAndReveal" unique_id=1134534797]
 z_index = 2
@@ -5034,6 +5015,7 @@ offset_right = -637.0
 offset_bottom = -285.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_right = NodePath("../ResumeLevel")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7uy4l")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_3td5b")
@@ -5090,6 +5072,7 @@ offset_bottom = -285.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_neighbor_left = NodePath("../ExitLevel")
+focus_neighbor_right = NodePath(".")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7uy4l")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_3td5b")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_734hs")
@@ -5135,6 +5118,7 @@ expand_mode = 1
 
 [node name="DummyButton" type="Button" parent="Pause Menu/Button" unique_id=246543636]
 unique_name_in_owner = true
+top_level = true
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -5144,9 +5128,10 @@ offset_top = -15.0
 offset_right = -113.0
 offset_bottom = 16.0
 grow_vertical = 2
-text = "GET OCEY A GUN"
+text = "I hate my life"
 
 [node name="ColorRect2" type="ColorRect" parent="Pause Menu" unique_id=373538423]
+visible = false
 self_modulate = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_8sjmd")
 anchors_preset = 15
@@ -5370,9 +5355,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="IntroPlayer" type="AnimationPlayer" parent="CanvasLayer/IntroTransition" unique_id=101940312]
+unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_4xs0d")
 autoplay = &"Intro"
-movie_quit_on_finish = true
 
 [node name="Curve" type="Node2D" parent="." unique_id=1240438056 node_paths=PackedStringArray("curve_line")]
 script = ExtResource("16_rdlsc")
