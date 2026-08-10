@@ -3268,6 +3268,7 @@ grow_vertical = 2
 color = Color(0.008850009, 0.0041999994, 0.06, 1)
 
 [node name="RevealPlayer" type="AnimationPlayer" parent="PauseMenu/RankReveal" unique_id=1089017335]
+unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_avgt3")
 
 [node name="CRT" type="ColorRect" parent="PauseMenu" unique_id=1134534797]

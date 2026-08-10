@@ -7,7 +7,8 @@ extends Node2D
 func _ready() -> void:
 	AudioHub.stop_music()
 	AudioHub.stop_menu_music()
-	%IntroPlayer.play("Intro")
+	if get_node("%IntroPlayer"):
+		%IntroPlayer.play("Intro")
 	$Conductor.chart = chart
 	%SongLabel.text = chart.name
 	%DetailLabel.text = "Stage " + str(chart.stage) + " - Diff. " + str(chart.difficulty)
