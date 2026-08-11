@@ -49,10 +49,12 @@ func _setup_story() -> void:
 	for c in story.characters:
 		var node = Sprite2D.new()
 		var sprite := c.poses[c.default_pose]
+		node.scale = Vector2(0.3,0.3)
+		node.self_modulate = Color(0.593, 0.593, 0.593, 1.0)
 		node.texture = sprite
 		node.centered = false
 		node.offset = Vector2(0, -sprite.get_height())
-		node.position = Vector2(10000, height)
+		node.position = Vector2(10000, height+200)
 		add_child(node)
 		_character_nodes[c.id] = node
 	

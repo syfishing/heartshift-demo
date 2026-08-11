@@ -2,14 +2,15 @@ extends Button
 
 @onready var highlight = $Highlight
 @onready var text_element = $StorySelectText
-var cursor
+var cursor: Control
 
 @export var rest_color: Color = Color("483901")
 @export var active_color: Color = Color()
 
 func _ready():
-	if get("Cursor"):
-		cursor = $"../Cursor"
+	if get_node("%Cursor"):
+		print("cursor")
+		cursor = get_node("%Cursor")
 	highlight.visible = false
 	connect("mouse_entered", _on_mouse_entered)
 	connect("mouse_exited", _on_mouse_exited)

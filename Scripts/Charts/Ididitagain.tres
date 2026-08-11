@@ -1,0 +1,1476 @@
+[gd_resource type="Resource" script_class="ChartData" format=3 uid="uid://bgm3hcl0is5oh"]
+
+[ext_resource type="AudioStream" uid="uid://b6ugn3fpkd7eb" path="res://Audio/Music/Ididitagainremastered (1).wav" id="1_xnysv"]
+[ext_resource type="Script" uid="uid://ctjk703l25fkk" path="res://Scripts/DataElements/pointdata.gd" id="2_point"]
+[ext_resource type="Texture2D" uid="uid://bi3k2uv6r46ij" path="res://Assets/UIAssets/SongCovers/pixel-cover-386x386.png" id="3_cover"]
+[ext_resource type="Script" uid="uid://cntkrjpe8bu7j" path="res://Scripts/DataElements/chartdata.gd" id="4_chart"]
+
+[sub_resource type="Resource" id="Point_0"]
+script = ExtResource("2_point")
+hit_time = 4.602
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_1"]
+script = ExtResource("2_point")
+hit_time = 5.028
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_2"]
+script = ExtResource("2_point")
+hit_time = 5.412
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_3"]
+script = ExtResource("2_point")
+hit_time = 5.795
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_4"]
+script = ExtResource("2_point")
+hit_time = 6.477
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_5"]
+script = ExtResource("2_point")
+hit_time = 6.903
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_6"]
+script = ExtResource("2_point")
+hit_time = 7.628
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_7"]
+script = ExtResource("2_point")
+hit_time = 8.011
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_8"]
+script = ExtResource("2_point")
+hit_time = 8.565
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_9"]
+script = ExtResource("2_point")
+hit_time = 8.778
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_10"]
+script = ExtResource("2_point")
+hit_time = 9.503
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_11"]
+script = ExtResource("2_point")
+hit_time = 9.716
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_12"]
+script = ExtResource("2_point")
+hit_time = 10.099
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_13"]
+script = ExtResource("2_point")
+hit_time = 10.27
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_14"]
+script = ExtResource("2_point")
+hit_time = 10.994
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_15"]
+script = ExtResource("2_point")
+hit_time = 11.207
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_16"]
+script = ExtResource("2_point")
+hit_time = 11.378
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_17"]
+script = ExtResource("2_point")
+hit_time = 11.761
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_18"]
+script = ExtResource("2_point")
+hit_time = 12.145
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_19"]
+script = ExtResource("2_point")
+hit_time = 12.955
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_20"]
+script = ExtResource("2_point")
+hit_time = 13.636
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_21"]
+script = ExtResource("2_point")
+hit_time = 14.02
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_22"]
+script = ExtResource("2_point")
+hit_time = 14.403
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_23"]
+script = ExtResource("2_point")
+hit_time = 14.787
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_24"]
+script = ExtResource("2_point")
+hit_time = 15.17
+end_time = 15.682
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_25"]
+script = ExtResource("2_point")
+hit_time = 15.554
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_26"]
+script = ExtResource("2_point")
+hit_time = 15.937
+end_time = 16.321
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_27"]
+script = ExtResource("2_point")
+hit_time = 16.321
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_28"]
+script = ExtResource("2_point")
+hit_time = 16.449
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_29"]
+script = ExtResource("2_point")
+hit_time = 16.662
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_30"]
+script = ExtResource("2_point")
+hit_time = 17.003
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_31"]
+script = ExtResource("2_point")
+hit_time = 17.429
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_32"]
+script = ExtResource("2_point")
+hit_time = 17.599
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_33"]
+script = ExtResource("2_point")
+hit_time = 17.813
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_34"]
+script = ExtResource("2_point")
+hit_time = 18.153
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_35"]
+script = ExtResource("2_point")
+hit_time = 18.537
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_36"]
+script = ExtResource("2_point")
+hit_time = 19.261
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_37"]
+script = ExtResource("2_point")
+hit_time = 20.028
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_38"]
+script = ExtResource("2_point")
+hit_time = 20.582
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_39"]
+script = ExtResource("2_point")
+hit_time = 20.753
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_40"]
+script = ExtResource("2_point")
+hit_time = 21.136
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_41"]
+script = ExtResource("2_point")
+hit_time = 21.903
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_42"]
+script = ExtResource("2_point")
+hit_time = 22.287
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_43"]
+script = ExtResource("2_point")
+hit_time = 23.011
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_44"]
+script = ExtResource("2_point")
+hit_time = 23.608
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_45"]
+script = ExtResource("2_point")
+hit_time = 23.778
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_46"]
+script = ExtResource("2_point")
+hit_time = 23.949
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_47"]
+script = ExtResource("2_point")
+hit_time = 24.503
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_48"]
+script = ExtResource("2_point")
+hit_time = 24.886
+end_time = 25.227
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_49"]
+script = ExtResource("2_point")
+hit_time = 25.27
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_50"]
+script = ExtResource("2_point")
+hit_time = 25.653
+end_time = 25.909
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_51"]
+script = ExtResource("2_point")
+hit_time = 26.037
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_52"]
+script = ExtResource("2_point")
+hit_time = 26.378
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_53"]
+script = ExtResource("2_point")
+hit_time = 26.591
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_54"]
+script = ExtResource("2_point")
+hit_time = 26.761
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_55"]
+script = ExtResource("2_point")
+hit_time = 27.145
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_56"]
+script = ExtResource("2_point")
+hit_time = 27.358
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_57"]
+script = ExtResource("2_point")
+hit_time = 27.528
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_58"]
+script = ExtResource("2_point")
+hit_time = 27.912
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_59"]
+script = ExtResource("2_point")
+hit_time = 28.253
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_60"]
+script = ExtResource("2_point")
+hit_time = 28.423
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_61"]
+script = ExtResource("2_point")
+hit_time = 28.636
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_62"]
+script = ExtResource("2_point")
+hit_time = 29.02
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_63"]
+script = ExtResource("2_point")
+hit_time = 29.403
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_64"]
+script = ExtResource("2_point")
+hit_time = 29.787
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_65"]
+script = ExtResource("2_point")
+hit_time = 30.511
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_66"]
+script = ExtResource("2_point")
+hit_time = 31.278
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_67"]
+script = ExtResource("2_point")
+hit_time = 31.662
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_68"]
+script = ExtResource("2_point")
+hit_time = 31.832
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_69"]
+script = ExtResource("2_point")
+hit_time = 32.045
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_70"]
+script = ExtResource("2_point")
+hit_time = 32.386
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_71"]
+script = ExtResource("2_point")
+hit_time = 32.599
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_72"]
+script = ExtResource("2_point")
+hit_time = 32.77
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_73"]
+script = ExtResource("2_point")
+hit_time = 33.153
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_74"]
+script = ExtResource("2_point")
+hit_time = 33.537
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_75"]
+script = ExtResource("2_point")
+hit_time = 34.091
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_76"]
+script = ExtResource("2_point")
+hit_time = 35.028
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_77"]
+script = ExtResource("2_point")
+hit_time = 35.412
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_78"]
+script = ExtResource("2_point")
+hit_time = 35.753
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_79"]
+script = ExtResource("2_point")
+hit_time = 36.52
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_80"]
+script = ExtResource("2_point")
+hit_time = 37.116
+end_time = 37.67
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_81"]
+script = ExtResource("2_point")
+hit_time = 37.67
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_82"]
+script = ExtResource("2_point")
+hit_time = 38.011
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_83"]
+script = ExtResource("2_point")
+hit_time = 38.395
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_84"]
+script = ExtResource("2_point")
+hit_time = 38.778
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_85"]
+script = ExtResource("2_point")
+hit_time = 39.545
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_86"]
+script = ExtResource("2_point")
+hit_time = 40.27
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_87"]
+script = ExtResource("2_point")
+hit_time = 41.037
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_88"]
+script = ExtResource("2_point")
+hit_time = 41.761
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_89"]
+script = ExtResource("2_point")
+hit_time = 42.528
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_90"]
+script = ExtResource("2_point")
+hit_time = 43.082
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_91"]
+script = ExtResource("2_point")
+hit_time = 43.253
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_92"]
+script = ExtResource("2_point")
+hit_time = 43.636
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_93"]
+script = ExtResource("2_point")
+hit_time = 44.02
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_94"]
+script = ExtResource("2_point")
+hit_time = 44.574
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_95"]
+script = ExtResource("2_point")
+hit_time = 44.787
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_96"]
+script = ExtResource("2_point")
+hit_time = 45.341
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_97"]
+script = ExtResource("2_point")
+hit_time = 45.511
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_98"]
+script = ExtResource("2_point")
+hit_time = 46.065
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_99"]
+script = ExtResource("2_point")
+hit_time = 46.278
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_100"]
+script = ExtResource("2_point")
+hit_time = 46.662
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_101"]
+script = ExtResource("2_point")
+hit_time = 46.832
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_102"]
+script = ExtResource("2_point")
+hit_time = 47.045
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_103"]
+script = ExtResource("2_point")
+hit_time = 47.216
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_104"]
+script = ExtResource("2_point")
+hit_time = 47.386
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_105"]
+script = ExtResource("2_point")
+hit_time = 47.599
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_106"]
+script = ExtResource("2_point")
+hit_time = 47.77
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_107"]
+script = ExtResource("2_point")
+hit_time = 47.94
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_108"]
+script = ExtResource("2_point")
+hit_time = 48.537
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_109"]
+script = ExtResource("2_point")
+hit_time = 49.091
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_110"]
+script = ExtResource("2_point")
+hit_time = 50.028
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_111"]
+script = ExtResource("2_point")
+hit_time = 50.582
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_112"]
+script = ExtResource("2_point")
+hit_time = 50.795
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_113"]
+script = ExtResource("2_point")
+hit_time = 51.52
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_114"]
+script = ExtResource("2_point")
+hit_time = 51.903
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_115"]
+script = ExtResource("2_point")
+hit_time = 52.287
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_116"]
+script = ExtResource("2_point")
+hit_time = 52.67
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_117"]
+script = ExtResource("2_point")
+hit_time = 53.778
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_118"]
+script = ExtResource("2_point")
+hit_time = 54.545
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_119"]
+script = ExtResource("2_point")
+hit_time = 55.27
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_120"]
+script = ExtResource("2_point")
+hit_time = 56.037
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_121"]
+script = ExtResource("2_point")
+hit_time = 56.761
+end_time = 57.273
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_122"]
+script = ExtResource("2_point")
+hit_time = 57.145
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_123"]
+script = ExtResource("2_point")
+hit_time = 57.358
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_124"]
+script = ExtResource("2_point")
+hit_time = 57.699
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_125"]
+script = ExtResource("2_point")
+hit_time = 57.912
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_126"]
+script = ExtResource("2_point")
+hit_time = 58.253
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_127"]
+script = ExtResource("2_point")
+hit_time = 58.466
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_128"]
+script = ExtResource("2_point")
+hit_time = 60.128
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_129"]
+script = ExtResource("2_point")
+hit_time = 60.341
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_130"]
+script = ExtResource("2_point")
+hit_time = 60.895
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_131"]
+script = ExtResource("2_point")
+hit_time = 61.662
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_132"]
+script = ExtResource("2_point")
+hit_time = 62.386
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_133"]
+script = ExtResource("2_point")
+hit_time = 63.153
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_134"]
+script = ExtResource("2_point")
+hit_time = 63.878
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_135"]
+script = ExtResource("2_point")
+hit_time = 64.645
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_136"]
+script = ExtResource("2_point")
+hit_time = 65.028
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_137"]
+script = ExtResource("2_point")
+hit_time = 65.412
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_138"]
+script = ExtResource("2_point")
+hit_time = 65.795
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_139"]
+script = ExtResource("2_point")
+hit_time = 66.52
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_140"]
+script = ExtResource("2_point")
+hit_time = 67.287
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_141"]
+script = ExtResource("2_point")
+hit_time = 68.011
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_142"]
+script = ExtResource("2_point")
+hit_time = 68.565
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_143"]
+script = ExtResource("2_point")
+hit_time = 68.778
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_144"]
+script = ExtResource("2_point")
+hit_time = 69.332
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_145"]
+script = ExtResource("2_point")
+hit_time = 69.503
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_146"]
+script = ExtResource("2_point")
+hit_time = 70.27
+end_time = 70.909
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_147"]
+script = ExtResource("2_point")
+hit_time = 71.019
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_148"]
+script = ExtResource("2_point")
+hit_time = 71.378
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_149"]
+script = ExtResource("2_point")
+hit_time = 71.591
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_150"]
+script = ExtResource("2_point")
+hit_time = 71.761
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_151"]
+script = ExtResource("2_point")
+hit_time = 71.974
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_152"]
+script = ExtResource("2_point")
+hit_time = 72.145
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_153"]
+script = ExtResource("2_point")
+hit_time = 72.528
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_154"]
+script = ExtResource("2_point")
+hit_time = 73.082
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_155"]
+script = ExtResource("2_point")
+hit_time = 73.253
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_156"]
+script = ExtResource("2_point")
+hit_time = 73.636
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_157"]
+script = ExtResource("2_point")
+hit_time = 74.02
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_158"]
+script = ExtResource("2_point")
+hit_time = 74.574
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_159"]
+script = ExtResource("2_point")
+hit_time = 74.769
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_160"]
+script = ExtResource("2_point")
+hit_time = 75.511
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_161"]
+script = ExtResource("2_point")
+hit_time = 75.895
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_162"]
+script = ExtResource("2_point")
+hit_time = 76.474
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_163"]
+script = ExtResource("2_point")
+hit_time = 77.386
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_164"]
+script = ExtResource("2_point")
+hit_time = 77.77
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_165"]
+script = ExtResource("2_point")
+hit_time = 78.153
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_166"]
+script = ExtResource("2_point")
+hit_time = 78.519
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_167"]
+script = ExtResource("2_point")
+hit_time = 79.261
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_168"]
+script = ExtResource("2_point")
+hit_time = 80.028
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_169"]
+script = ExtResource("2_point")
+hit_time = 80.565
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_170"]
+script = ExtResource("2_point")
+hit_time = 80.753
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_171"]
+script = ExtResource("2_point")
+hit_time = 81.136
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_172"]
+script = ExtResource("2_point")
+hit_time = 81.903
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_173"]
+script = ExtResource("2_point")
+hit_time = 82.244
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_174"]
+script = ExtResource("2_point")
+hit_time = 83.011
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_175"]
+script = ExtResource("2_point")
+hit_time = 83.224
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_176"]
+script = ExtResource("2_point")
+hit_time = 83.395
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_177"]
+script = ExtResource("2_point")
+hit_time = 83.778
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_178"]
+script = ExtResource("2_point")
+hit_time = 83.949
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_179"]
+script = ExtResource("2_point")
+hit_time = 84.545
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_180"]
+script = ExtResource("2_point")
+hit_time = 85.27
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_181"]
+script = ExtResource("2_point")
+hit_time = 85.824
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_182"]
+script = ExtResource("2_point")
+hit_time = 85.994
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_183"]
+script = ExtResource("2_point")
+hit_time = 86.761
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_184"]
+script = ExtResource("2_point")
+hit_time = 87.315
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_185"]
+script = ExtResource("2_point")
+hit_time = 87.528
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_186"]
+script = ExtResource("2_point")
+hit_time = 88.295
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_187"]
+script = ExtResource("2_point")
+hit_time = 88.636
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_188"]
+script = ExtResource("2_point")
+hit_time = 88.849
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_189"]
+script = ExtResource("2_point")
+hit_time = 89.02
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_190"]
+script = ExtResource("2_point")
+hit_time = 89.19
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_191"]
+script = ExtResource("2_point")
+hit_time = 89.403
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_192"]
+script = ExtResource("2_point")
+hit_time = 89.574
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_193"]
+script = ExtResource("2_point")
+hit_time = 89.744
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_194"]
+script = ExtResource("2_point")
+hit_time = 89.957
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_195"]
+script = ExtResource("2_point")
+hit_time = 90.511
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_196"]
+script = ExtResource("2_point")
+hit_time = 91.278
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_197"]
+script = ExtResource("2_point")
+hit_time = 92.003
+end_time = 92.727
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_198"]
+script = ExtResource("2_point")
+hit_time = 92.77
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_199"]
+script = ExtResource("2_point")
+hit_time = 93.494
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_200"]
+script = ExtResource("2_point")
+hit_time = 93.878
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_201"]
+script = ExtResource("2_point")
+hit_time = 94.261
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_202"]
+script = ExtResource("2_point")
+hit_time = 94.858
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_203"]
+script = ExtResource("2_point")
+hit_time = 95.582
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_204"]
+script = ExtResource("2_point")
+hit_time = 95.753
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_205"]
+script = ExtResource("2_point")
+hit_time = 95.966
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_206"]
+script = ExtResource("2_point")
+hit_time = 96.52
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_207"]
+script = ExtResource("2_point")
+hit_time = 96.69
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_208"]
+script = ExtResource("2_point")
+hit_time = 97.244
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_209"]
+script = ExtResource("2_point")
+hit_time = 97.628
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_210"]
+script = ExtResource("2_point")
+hit_time = 98.011
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_211"]
+script = ExtResource("2_point")
+hit_time = 98.182
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_212"]
+script = ExtResource("2_point")
+hit_time = 98.778
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_213"]
+script = ExtResource("2_point")
+hit_time = 99.119
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_214"]
+script = ExtResource("2_point")
+hit_time = 99.545
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_215"]
+script = ExtResource("2_point")
+hit_time = 99.886
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_216"]
+script = ExtResource("2_point")
+hit_time = 100.27
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_217"]
+script = ExtResource("2_point")
+hit_time = 101.037
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_218"]
+script = ExtResource("2_point")
+hit_time = 101.591
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_219"]
+script = ExtResource("2_point")
+hit_time = 101.761
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_220"]
+script = ExtResource("2_point")
+hit_time = 102.528
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_221"]
+script = ExtResource("2_point")
+hit_time = 103.082
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_222"]
+script = ExtResource("2_point")
+hit_time = 103.253
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_223"]
+script = ExtResource("2_point")
+hit_time = 103.636
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_224"]
+script = ExtResource("2_point")
+hit_time = 104.02
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_225"]
+script = ExtResource("2_point")
+hit_time = 104.403
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_226"]
+script = ExtResource("2_point")
+hit_time = 104.787
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_227"]
+script = ExtResource("2_point")
+hit_time = 105.511
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_228"]
+script = ExtResource("2_point")
+hit_time = 106.278
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_229"]
+script = ExtResource("2_point")
+hit_time = 107.599
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_230"]
+script = ExtResource("2_point")
+hit_time = 107.77
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_231"]
+script = ExtResource("2_point")
+hit_time = 107.94
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_232"]
+script = ExtResource("2_point")
+hit_time = 108.537
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_233"]
+script = ExtResource("2_point")
+hit_time = 109.091
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_234"]
+script = ExtResource("2_point")
+hit_time = 110.028
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_235"]
+script = ExtResource("2_point")
+hit_time = 110.582
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_236"]
+script = ExtResource("2_point")
+hit_time = 111.52
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_237"]
+script = ExtResource("2_point")
+hit_time = 112.116
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_238"]
+script = ExtResource("2_point")
+hit_time = 113.011
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_239"]
+script = ExtResource("2_point")
+hit_time = 113.565
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_240"]
+script = ExtResource("2_point")
+hit_time = 113.949
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_241"]
+script = ExtResource("2_point")
+hit_time = 114.545
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_242"]
+script = ExtResource("2_point")
+hit_time = 115.27
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_243"]
+script = ExtResource("2_point")
+hit_time = 115.994
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_244"]
+script = ExtResource("2_point")
+hit_time = 116.591
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_245"]
+script = ExtResource("2_point")
+hit_time = 116.761
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_246"]
+script = ExtResource("2_point")
+hit_time = 117.528
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_247"]
+script = ExtResource("2_point")
+hit_time = 117.869
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_248"]
+script = ExtResource("2_point")
+hit_time = 118.082
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_249"]
+script = ExtResource("2_point")
+hit_time = 118.466
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_250"]
+script = ExtResource("2_point")
+hit_time = 119.02
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_251"]
+script = ExtResource("2_point")
+hit_time = 119.574
+track = 2
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_252"]
+script = ExtResource("2_point")
+hit_time = 119.787
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[sub_resource type="Resource" id="Point_253"]
+script = ExtResource("2_point")
+hit_time = 120.0
+track = 1
+metadata/_custom_type_script = "uid://ctjk703l25fkk"
+
+[resource]
+script = ExtResource("4_chart")
+bpm = 88
+notes = Array[ExtResource("2_point")]([SubResource("Point_0"), SubResource("Point_1"), SubResource("Point_2"), SubResource("Point_3"), SubResource("Point_4"), SubResource("Point_5"), SubResource("Point_6"), SubResource("Point_7"), SubResource("Point_8"), SubResource("Point_9"), SubResource("Point_10"), SubResource("Point_11"), SubResource("Point_12"), SubResource("Point_13"), SubResource("Point_14"), SubResource("Point_15"), SubResource("Point_16"), SubResource("Point_17"), SubResource("Point_18"), SubResource("Point_19"), SubResource("Point_20"), SubResource("Point_21"), SubResource("Point_22"), SubResource("Point_23"), SubResource("Point_24"), SubResource("Point_25"), SubResource("Point_26"), SubResource("Point_27"), SubResource("Point_28"), SubResource("Point_29"), SubResource("Point_30"), SubResource("Point_31"), SubResource("Point_32"), SubResource("Point_33"), SubResource("Point_34"), SubResource("Point_35"), SubResource("Point_36"), SubResource("Point_37"), SubResource("Point_38"), SubResource("Point_39"), SubResource("Point_40"), SubResource("Point_41"), SubResource("Point_42"), SubResource("Point_43"), SubResource("Point_44"), SubResource("Point_45"), SubResource("Point_46"), SubResource("Point_47"), SubResource("Point_48"), SubResource("Point_49"), SubResource("Point_50"), SubResource("Point_51"), SubResource("Point_52"), SubResource("Point_53"), SubResource("Point_54"), SubResource("Point_55"), SubResource("Point_56"), SubResource("Point_57"), SubResource("Point_58"), SubResource("Point_59"), SubResource("Point_60"), SubResource("Point_61"), SubResource("Point_62"), SubResource("Point_63"), SubResource("Point_64"), SubResource("Point_65"), SubResource("Point_66"), SubResource("Point_67"), SubResource("Point_68"), SubResource("Point_69"), SubResource("Point_70"), SubResource("Point_71"), SubResource("Point_72"), SubResource("Point_73"), SubResource("Point_74"), SubResource("Point_75"), SubResource("Point_76"), SubResource("Point_77"), SubResource("Point_78"), SubResource("Point_79"), SubResource("Point_80"), SubResource("Point_81"), SubResource("Point_82"), SubResource("Point_83"), SubResource("Point_84"), SubResource("Point_85"), SubResource("Point_86"), SubResource("Point_87"), SubResource("Point_88"), SubResource("Point_89"), SubResource("Point_90"), SubResource("Point_91"), SubResource("Point_92"), SubResource("Point_93"), SubResource("Point_94"), SubResource("Point_95"), SubResource("Point_96"), SubResource("Point_97"), SubResource("Point_98"), SubResource("Point_99"), SubResource("Point_100"), SubResource("Point_101"), SubResource("Point_102"), SubResource("Point_103"), SubResource("Point_104"), SubResource("Point_105"), SubResource("Point_106"), SubResource("Point_107"), SubResource("Point_108"), SubResource("Point_109"), SubResource("Point_110"), SubResource("Point_111"), SubResource("Point_112"), SubResource("Point_113"), SubResource("Point_114"), SubResource("Point_115"), SubResource("Point_116"), SubResource("Point_117"), SubResource("Point_118"), SubResource("Point_119"), SubResource("Point_120"), SubResource("Point_121"), SubResource("Point_122"), SubResource("Point_123"), SubResource("Point_124"), SubResource("Point_125"), SubResource("Point_126"), SubResource("Point_127"), SubResource("Point_128"), SubResource("Point_129"), SubResource("Point_130"), SubResource("Point_131"), SubResource("Point_132"), SubResource("Point_133"), SubResource("Point_134"), SubResource("Point_135"), SubResource("Point_136"), SubResource("Point_137"), SubResource("Point_138"), SubResource("Point_139"), SubResource("Point_140"), SubResource("Point_141"), SubResource("Point_142"), SubResource("Point_143"), SubResource("Point_144"), SubResource("Point_145"), SubResource("Point_146"), SubResource("Point_147"), SubResource("Point_148"), SubResource("Point_149"), SubResource("Point_150"), SubResource("Point_151"), SubResource("Point_152"), SubResource("Point_153"), SubResource("Point_154"), SubResource("Point_155"), SubResource("Point_156"), SubResource("Point_157"), SubResource("Point_158"), SubResource("Point_159"), SubResource("Point_160"), SubResource("Point_161"), SubResource("Point_162"), SubResource("Point_163"), SubResource("Point_164"), SubResource("Point_165"), SubResource("Point_166"), SubResource("Point_167"), SubResource("Point_168"), SubResource("Point_169"), SubResource("Point_170"), SubResource("Point_171"), SubResource("Point_172"), SubResource("Point_173"), SubResource("Point_174"), SubResource("Point_175"), SubResource("Point_176"), SubResource("Point_177"), SubResource("Point_178"), SubResource("Point_179"), SubResource("Point_180"), SubResource("Point_181"), SubResource("Point_182"), SubResource("Point_183"), SubResource("Point_184"), SubResource("Point_185"), SubResource("Point_186"), SubResource("Point_187"), SubResource("Point_188"), SubResource("Point_189"), SubResource("Point_190"), SubResource("Point_191"), SubResource("Point_192"), SubResource("Point_193"), SubResource("Point_194"), SubResource("Point_195"), SubResource("Point_196"), SubResource("Point_197"), SubResource("Point_198"), SubResource("Point_199"), SubResource("Point_200"), SubResource("Point_201"), SubResource("Point_202"), SubResource("Point_203"), SubResource("Point_204"), SubResource("Point_205"), SubResource("Point_206"), SubResource("Point_207"), SubResource("Point_208"), SubResource("Point_209"), SubResource("Point_210"), SubResource("Point_211"), SubResource("Point_212"), SubResource("Point_213"), SubResource("Point_214"), SubResource("Point_215"), SubResource("Point_216"), SubResource("Point_217"), SubResource("Point_218"), SubResource("Point_219"), SubResource("Point_220"), SubResource("Point_221"), SubResource("Point_222"), SubResource("Point_223"), SubResource("Point_224"), SubResource("Point_225"), SubResource("Point_226"), SubResource("Point_227"), SubResource("Point_228"), SubResource("Point_229"), SubResource("Point_230"), SubResource("Point_231"), SubResource("Point_232"), SubResource("Point_233"), SubResource("Point_234"), SubResource("Point_235"), SubResource("Point_236"), SubResource("Point_237"), SubResource("Point_238"), SubResource("Point_239"), SubResource("Point_240"), SubResource("Point_241"), SubResource("Point_242"), SubResource("Point_243"), SubResource("Point_244"), SubResource("Point_245"), SubResource("Point_246"), SubResource("Point_247"), SubResource("Point_248"), SubResource("Point_249"), SubResource("Point_250"), SubResource("Point_251"), SubResource("Point_252"), SubResource("Point_253")])
+audio = ExtResource("1_xnysv")
+cover = ExtResource("3_cover")
+song_colour = Color(0.23529412, 0.30588236, 0.5764706, 1)
+name = "Mialo May - I did it again"
+artist_name = "Mialo May"
+charter_name = "HZEE"
+stage = 4
+difficulty = 7
+metadata/_custom_type_script = "uid://cntkrjpe8bu7j"

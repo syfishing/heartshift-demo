@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://goipfyssiyte"]
 
 [ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_tq31w"]
-[ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="2_7uy4l"]
-[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_x1q7v"]
+[ext_resource type="Resource" uid="uid://bgm3hcl0is5oh" path="res://Scripts/Charts/Ididitagain.tres" id="2_7uy4l"]
 [ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="3_7uy4l"]
 [ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="4_3td5b"]
 [ext_resource type="Script" uid="uid://c3tgicyyuo43e" path="res://Scripts/UIscripts/rank_reveal.gd" id="5_734hs"]
@@ -5701,7 +5700,6 @@ process_material = SubResource("ParticleProcessMaterial_dsbte")
 [node name="Conductor" type="Node2D" parent="." unique_id=2020328125]
 position = Vector2(-20, -20)
 script = ExtResource("22_mitl1")
-chart = ExtResource("2_x1q7v")
 note_scene = ExtResource("23_xkypx")
 dummy_note_scene = ExtResource("24_dqge4")
 travel_time = 8.0

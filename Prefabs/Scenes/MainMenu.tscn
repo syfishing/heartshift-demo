@@ -358,12 +358,13 @@ limit_bottom = 648
 script = ExtResource("2_qgnro")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1126722528]
+layer = 2
 follow_viewport_enabled = true
 
 [node name="Characterplaceholder" type="Sprite2D" parent="CanvasLayer" unique_id=1842887231]
 self_modulate = Color(0.80049086, 0.80049074, 0.80049074, 1)
-position = Vector2(878, 373)
-scale = Vector2(0.295, 0.295)
+position = Vector2(926, 431.99997)
+scale = Vector2(0.19314754, 0.19314754)
 texture = ExtResource("3_v0vp6")
 
 [node name="Transition" type="ColorRect" parent="CanvasLayer" unique_id=759965071]
@@ -389,14 +390,23 @@ mouse_filter = 2
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=2120310170]
 layer = -1
 
+[node name="Mocktitle" type="Sprite2D" parent="CanvasLayer2" unique_id=1791352723]
+position = Vector2(474.99997, 107.00001)
+scale = Vector2(0.886, 0.942)
+texture = ExtResource("9_q7bm4")
+
 [node name="ButtonSelect" type="Control" parent="CanvasLayer2" unique_id=1331528288]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 34.0
+offset_top = 38.0
+offset_right = 74.0
+offset_bottom = 78.0
+scale = Vector2(0.9, 0.9)
 script = ExtResource("4_2uwgl")
 
 [node name="Cursor" type="Control" parent="CanvasLayer2/ButtonSelect" unique_id=1746830941]
+unique_name_in_owner = true
 modulate = Color(1, 0.84705883, 0, 1)
 z_index = 1
 layout_mode = 1
@@ -1755,11 +1765,6 @@ speed_scale = 1.523
 autoplay = true
 expand = true
 loop = true
-
-[node name="Mocktitle" type="Sprite2D" parent="." unique_id=1791352723]
-position = Vector2(442.00003, 98)
-scale = Vector2(0.811, 0.863)
-texture = ExtResource("9_q7bm4")
 
 [node name="TransitionPlayer" type="AnimationPlayer" parent="." unique_id=1148883191]
 unique_name_in_owner = true

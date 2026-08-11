@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c16dq5r6hiybv"]
 
 [ext_resource type="Script" uid="uid://bs3plsrjgdgq6" path="res://Scripts/UIscripts/story.gd" id="1_6ijvs"]
-[ext_resource type="Resource" uid="uid://ue1tfqe3fxfc" path="res://Scripts/StoryResources/prologue_2.tres" id="2_wcnqx"]
+[ext_resource type="Resource" uid="uid://c6xirulfktei4" path="res://Scripts/StoryResources/stage_1.tres" id="2_f3lw0"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="3_f3lw0"]
 [ext_resource type="Shader" uid="uid://bt23e3padhsoj" path="res://Assets/Shaders/bgtransition.gdshader" id="3_wcnqx"]
 [ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="4_f3lw0"]
@@ -342,7 +342,7 @@ _data = {
 
 [node name="Story" type="Node2D" unique_id=1874266194]
 script = ExtResource("1_6ijvs")
-story = ExtResource("2_wcnqx")
+story = ExtResource("2_f3lw0")
 chart = ExtResource("3_f3lw0")
 
 [node name="BGLayer" type="CanvasLayer" parent="." unique_id=1344694391]
@@ -350,12 +350,14 @@ layer = -1
 
 [node name="Background" type="TextureRect" parent="BGLayer" unique_id=779292132]
 unique_name_in_owner = true
+self_modulate = Color(0.6872149, 0.68721503, 0.68721485, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_6ijvs")
+expand_mode = 1
 
 [node name="BackgroundV" type="VideoStreamPlayer" parent="BGLayer" unique_id=1630654324]
 unique_name_in_owner = true
