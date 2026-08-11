@@ -19,30 +19,30 @@ Syfish's writing of the story, lore, characters, worldbuilding etc is tracked wi
     - [x] Hold notes.
     - [ ] Unique/Experimental note types(?).
 - [x] **Sync System**: Ensure the wave engine is perfectly synced to the music track.
-- [ ] **Dynamic Features**:
+- [x] **Dynamic Features**:
     - [x] Mid-song scroll speed changes(possibly?).
-    - [ ] Effect/Visual triggers for specific song segments.
+    - [x] Effect/Visual triggers for specific song segments.
     - [x] Make the wave calm down into a regularised, smoother pattern toward the end of a song.
-    - [ ] Pause functionality.
+    - [x] Pause functionality.
 - [ ] **Scoring & Feedback**:
-    - [ ] Point system and ranking logic (S/A/B/C).
+    - [x] Point system and ranking logic (S/A/B/C).
     - [x] Accuracy labels (e.g. Dreamy, Dreamy, Great, Good, Fail).
     - [ ] Difficulty labeling and life gauges.
 
 ### Narrative & Creative
-- [ ] **Game Vision**: Define the core theme and story "hook."
-- [ ] **Character Design**: Conceptualize and design the main cast.
-- [ ] **World Building**: Establish the lore, setting, and history.
-- [ ] **Story Outline**: Develop the plot using the **Snowflake Method** (iterative depth).
+- [x] **Game Vision**: Define the core theme and story "hook."
+- [x] **Character Design**: Conceptualize and design the main cast.
+- [x] **World Building**: Establish the lore, setting, and history.
+- [x] **Story Outline**: Develop the plot using the **Snowflake Method** (iterative depth).
 
 ### Systems & UI
-- [ ] **Visual Novel Engine**: System for dialogue, sprites, and narrative delivery.
-- [ ] **Hybrid Integration**: Seamless flow between Story → Song → Mid-song Dialogue → Story.
+- [x] **Visual Novel Engine**: System for dialogue, sprites, and narrative delivery.
+- [x] **Hybrid Integration**: Seamless flow between Story → Song → Mid-song Dialogue → Story.
 - [ ] **Menu Suite**:
-    - [ ] Main Menu.
+    - [x] Main Menu.
     - [ ] Settings Panel (Volume controls, offset calibration, etc.).
-    - [ ] Story Mode Level Selector.
-    - [ ] Song Select Menu (Free play for official and community/custom songs).
+    - [x] Story Mode Level Selector.
+    - [x] Song Select Menu (Free play for official and community/custom songs).
 
 ### Future / Optional
 - [ ] **Beat Analyzer**: ML model integration for automated rhythm analysis.
