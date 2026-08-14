@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca6bwtqw03eqp"
-path="res://.godot/imported/trainbg.png-c29831ed9e4413b408a1f947b33724a7.ctex"
+uid="uid://6v55veknts53"
+path="res://.godot/imported/clover.png-49f1d830008245cebc166b578d316f2c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UIAssets/StoryBGs/trainbg.png"
-dest_files=["res://.godot/imported/trainbg.png-c29831ed9e4413b408a1f947b33724a7.ctex"]
+source_file="res://Assets/UIAssets/clover.png"
+dest_files=["res://.godot/imported/clover.png-49f1d830008245cebc166b578d316f2c.ctex"]
 
 [params]
 
