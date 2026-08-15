@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://c6xirulfktei4" path="res://Scripts/StoryResources/stage_1.tres" id="2_f3lw0"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="3_f3lw0"]
 [ext_resource type="Shader" uid="uid://bt23e3padhsoj" path="res://Assets/Shaders/bgtransition.gdshader" id="3_wcnqx"]
+[ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="4_3ine8"]
 [ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="4_f3lw0"]
 
 [sub_resource type="Gradient" id="Gradient_lgay8"]
@@ -390,9 +391,11 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -175.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 0
-color = Color(0, 0, 0, 0.73333335)
+color = Color(0, 0, 0, 0.92941177)
 
 [node name="TextLabel" type="RichTextLabel" parent="CanvasLayer/Dialogue/TextBox" unique_id=651614719]
 unique_name_in_owner = true
@@ -406,6 +409,9 @@ offset_right = -40.0
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = ExtResource("4_3ine8")
+theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "Text text text 123"
 
@@ -415,11 +421,11 @@ anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 64.0
-offset_top = -240.0
+offset_top = -215.0
 offset_right = 230.0
-offset_bottom = -200.0
+offset_bottom = -175.0
 grow_vertical = 0
-color = Color(0, 0, 0, 0.73333335)
+color = Color(0, 0, 0, 0.92941177)
 
 [node name="SpeakerLabel" type="Label" parent="CanvasLayer/Dialogue/Speaker" unique_id=1600383496]
 unique_name_in_owner = true
@@ -429,6 +435,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 25
 text = "Someone"
 horizontal_alignment = 1
 vertical_alignment = 1

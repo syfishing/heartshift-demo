@@ -54,7 +54,7 @@ func _setup_story() -> void:
 		node.texture = sprite
 		node.centered = false
 		node.offset = Vector2(0, -sprite.get_height())
-		node.position = Vector2(10000, height+200)
+		node.position = Vector2(10000, height)
 		add_child(node)
 		_character_nodes[c.id] = node
 	
@@ -79,6 +79,7 @@ func _play_event() -> void:
 		%TextLabel.text = event.text
 		%SpeakerLabel.text = c.name
 		%SpeakerLabel.add_theme_color_override("font_color", c.color)
+		%TextLabel.add_theme_color_override("default_color", c.color)
 		AudioHub.start_typing()
 		
 		# TODO: filter out bbcode etc for better timing
@@ -88,6 +89,14 @@ func _play_event() -> void:
 		_dialogue_tween.finished.connect(func(): _finish_typing(event.auto_advance))
 		if not event.uninterruptible:
 			_key_pressed.connect(func(): _finish_typing(event.auto_advance), CONNECT_ONE_SHOT)
+			
+		var node = _character_nodes[event.character_id]
+		if node:
+			var original_y_offset = node.offset.y
+			node.offset.y = node.offset.y + 20
+			var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			tween.tween_property(node, "offset", Vector2(node.offset.x, original_y_offset), 0.5)
+
 	elif event is StoryBGEvent:
 		%Background.texture = event.background
 		%Background.show()
@@ -107,8 +116,10 @@ func _play_event() -> void:
 			_next_event()
 	elif event is StoryMoveEvent:
 		var node := _character_nodes[event.character_id]
+		
 		if node:
 			node.flip_h = event.is_flipped
+			node.offset.y += event.y_offset
 			if node.position.x >= 9999:
 				node.position.x = event.x_pos
 			else:
@@ -126,7 +137,6 @@ func _play_event() -> void:
 			var sprite := ch.poses[event.pose]
 			var node := _character_nodes[event.character_id]
 			node.texture = sprite
-			node.offset = Vector2(0, -sprite.get_height())
 		_next_event()
 
 

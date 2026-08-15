@@ -17,9 +17,9 @@ id = "Lily"
 name = "Lily"
 color = Color(0.7137255, 0.2627451, 0.40392157, 1)
 poses = Dictionary[String, Texture2D]({
-"lilyfinger": ExtResource("2_d5fgi")
+"lilyidle": ExtResource("2_d5fgi")
 })
-default_pose = "lilyfinger"
+default_pose = "lilyidle"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
 [sub_resource type="Gradient" id="Gradient_3ine8"]
@@ -32,7 +32,7 @@ gradient = SubResource("Gradient_3ine8")
 [sub_resource type="Resource" id="Resource_yunxr"]
 script = ExtResource("1_d5fgi")
 id = "Teller"
-name = ""
+name = "------"
 poses = Dictionary[String, Texture2D]({
 "invisible": SubResource("GradientTexture1D_yunxr")
 })
@@ -45,9 +45,9 @@ id = "Clover"
 name = "Clover"
 color = Color(0.9728525, 0.6835202, 0, 1)
 poses = Dictionary[String, Texture2D]({
-"Idle": ExtResource("3_nbsfc")
+"cloveridle": ExtResource("3_nbsfc")
 })
-default_pose = "Idle"
+default_pose = "cloveridle"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
 [sub_resource type="Resource" id="Resource_d5fgi"]
@@ -113,6 +113,7 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 script = ExtResource("5_vrsui")
 character_id = "Lily"
 x_pos = 170.0
+y_offset = 800.0
 is_flipped = true
 metadata/_custom_type_script = "uid://30jsstye3dlf"
 
@@ -120,12 +121,19 @@ metadata/_custom_type_script = "uid://30jsstye3dlf"
 script = ExtResource("5_vrsui")
 character_id = "Clover"
 x_pos = 715.0
+y_offset = 780.0
 metadata/_custom_type_script = "uid://30jsstye3dlf"
+
+[sub_resource type="Resource" id="Resource_hpcvt"]
+script = ExtResource("6_m1mo6")
+character_id = "Clover"
+pose = "cloveridle"
+metadata/_custom_type_script = "uid://spg081awr7vi"
 
 [sub_resource type="Resource" id="Resource_ckh3w"]
 script = ExtResource("6_m1mo6")
 character_id = "Lily"
-pose = "lilyfinger"
+pose = "lilyidle"
 metadata/_custom_type_script = "uid://spg081awr7vi"
 
 [sub_resource type="Resource" id="Resource_ijre4"]
@@ -184,6 +192,6 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("9_ifxot")
-events = Array[ExtResource("3_hpcvt")]([SubResource("Resource_d5fgi"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_2f7h2"), SubResource("Resource_f3lw0"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_3ine8"), SubResource("Resource_mun78"), SubResource("Resource_8ajhl"), SubResource("Resource_nbsfc"), SubResource("Resource_ckh3w"), SubResource("Resource_ijre4"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_jlhv0"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_vh6uw"), SubResource("Resource_ov53a"), SubResource("Resource_cvj6d")])
+events = Array[ExtResource("3_hpcvt")]([SubResource("Resource_d5fgi"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_2f7h2"), SubResource("Resource_f3lw0"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_3ine8"), SubResource("Resource_mun78"), SubResource("Resource_8ajhl"), SubResource("Resource_nbsfc"), SubResource("Resource_hpcvt"), SubResource("Resource_ckh3w"), SubResource("Resource_ijre4"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_jlhv0"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_vh6uw"), SubResource("Resource_ov53a"), SubResource("Resource_cvj6d")])
 characters = Array[ExtResource("1_d5fgi")]([SubResource("Resource_vr2bo"), SubResource("Resource_yunxr"), SubResource("Resource_6l2hg")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"

@@ -5167,6 +5167,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Pause" type="Button" parent="CanvasLayer/Control" unique_id=1051741657]
+unique_name_in_owner = true
 self_modulate = Color(0.179842, 0.22810352, 0.7026473, 1)
 layout_mode = 0
 offset_left = 24.0
@@ -5352,6 +5353,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="IntroPlayer" type="AnimationPlayer" parent="CanvasLayer/IntroTransition" unique_id=101940312]
 unique_name_in_owner = true

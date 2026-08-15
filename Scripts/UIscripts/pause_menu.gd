@@ -37,11 +37,13 @@ func _on_resume_level_pressed() -> void:
 	%Stars.speed_scale = 1
 	$AnimationPlayer.play("MenuClose")
 	menu_open = false
+	%Pause.disabled = false
 	%DummyButton.grab_focus()
 	
 func transitionout() -> void:
 	#%Transition.visible = true
 	#%TransitionPlayer.play("TransitionOut")
+	
 	%RevealPlayer.play("CloseReveal")
 	$AnimationPlayer.play("MenuClose")
 	pass
@@ -49,4 +51,5 @@ func transitionout() -> void:
 
 func _on_pause_pressed() -> void:
 	openmenu()
+	%Pause.disabled = true
 	pass # Replace with function body.
