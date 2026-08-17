@@ -16,6 +16,10 @@
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="10_vkxt3"]
 [ext_resource type="Resource" uid="uid://coud6c7s687hj" path="res://Scripts/StoryResources/prologue_1.tres" id="14_2e7ft"]
 [ext_resource type="Resource" uid="uid://ue1tfqe3fxfc" path="res://Scripts/StoryResources/prologue_2.tres" id="16_np72h"]
+[ext_resource type="Resource" uid="uid://c6xirulfktei4" path="res://Scripts/StoryResources/stage_1.tres" id="17_n1mdb"]
+[ext_resource type="Resource" uid="uid://dh8o14qc86n37" path="res://Scripts/StoryResources/stage_2.tres" id="18_bbh37"]
+[ext_resource type="Resource" uid="uid://ci7bhofn6cwup" path="res://Scripts/StoryResources/stage_3.tres" id="19_48y5r"]
+[ext_resource type="Resource" uid="uid://b3unrkw1b3ots" path="res://Scripts/StoryResources/stage_4.tres" id="20_sgc80"]
 
 [sub_resource type="Environment" id="Environment_8lxbd"]
 background_mode = 3
@@ -1136,12 +1140,23 @@ story_quote = "Arrival"
 
 [node name="StoryPoint3" parent="2DStuff/StoryPoints" unique_id=1834699676 instance=ExtResource("9_sgtdn")]
 position = Vector2(1176, 576)
+story = ExtResource("17_n1mdb")
 
 [node name="StoryPoint4" parent="2DStuff/StoryPoints" unique_id=2026919033 instance=ExtResource("9_sgtdn")]
 position = Vector2(1476, 496)
+story = ExtResource("18_bbh37")
 
 [node name="StoryPoint5" parent="2DStuff/StoryPoints" unique_id=1150236573 instance=ExtResource("9_sgtdn")]
 position = Vector2(1776, 576)
+story = ExtResource("19_48y5r")
+
+[node name="StoryPoint6" parent="2DStuff/StoryPoints" unique_id=1699062597 instance=ExtResource("9_sgtdn")]
+position = Vector2(2076, 496)
+story = ExtResource("20_sgc80")
+
+[node name="StoryPoint7" parent="2DStuff/StoryPoints" unique_id=110228382 instance=ExtResource("9_sgtdn")]
+position = Vector2(2376, 576)
+story = ExtResource("19_48y5r")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=115334710]
 position = Vector2(576, 324)

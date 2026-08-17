@@ -67,12 +67,16 @@ func select():
 
 
 func _on_leave_player_animation_finished(anim_name: StringName) -> void:
-	var inst = CoreStageScene.instantiate()
-	inst.story = current_point.story
-	inst.chart = current_point.chart
-	AudioHub.stop_menu_music()
-	# Defer the swap to the next frame
-	call_deferred("_replace_scene", inst)
+	if current_point.story:
+		var inst = CoreStageScene.instantiate()
+		inst.story = current_point.story
+		inst.chart = current_point.chart
+		AudioHub.stop_menu_music()
+		# Defer the swap to the next frame
+		call_deferred("_replace_scene", inst)
+	else:
+		#WRITE WHAT TO DO FOR NON STORY POINTS HERE
+		pass
 
 
 
