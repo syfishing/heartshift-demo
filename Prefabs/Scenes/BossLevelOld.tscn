@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dv1awscsn006r"]
+[gd_scene format=3 uid="uid://bnf0ckqitgwwb"]
 
 [ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_gvjxc"]
 [ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="2_gvjxc"]

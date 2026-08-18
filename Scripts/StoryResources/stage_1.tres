@@ -113,7 +113,6 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 script = ExtResource("5_vrsui")
 character_id = "Lily"
 x_pos = 170.0
-y_offset = 800.0
 is_flipped = true
 metadata/_custom_type_script = "uid://30jsstye3dlf"
 
@@ -121,7 +120,6 @@ metadata/_custom_type_script = "uid://30jsstye3dlf"
 script = ExtResource("5_vrsui")
 character_id = "Clover"
 x_pos = 715.0
-y_offset = 780.0
 metadata/_custom_type_script = "uid://30jsstye3dlf"
 
 [sub_resource type="Resource" id="Resource_hpcvt"]
