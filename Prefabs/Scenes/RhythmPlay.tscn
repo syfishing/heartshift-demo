@@ -388,7 +388,7 @@ font_stretch = 200
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hbsud"]
 
-[sub_resource type="Shader" id="Shader_xxws0"]
+[sub_resource type="Shader" id="Shader_27b1o"]
 code = "shader_type canvas_item;
 
 uniform vec4 bottom_color: source_color;
@@ -442,7 +442,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_43kdc"]
-shader = SubResource("Shader_xxws0")
+shader = SubResource("Shader_27b1o")
 shader_parameter/bottom_color = Color(0.1653012, 0.05625923, 0.35178638, 1)
 shader_parameter/top_color = Color(0.0058667595, 4.182863e-06, 0.04411248, 1)
 shader_parameter/beam_distance = 0.0790000037525

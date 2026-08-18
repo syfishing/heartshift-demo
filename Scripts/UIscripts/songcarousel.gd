@@ -17,7 +17,8 @@ var current_chart: ChartData
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$CarouselOffset.get_child(selected_index).toggle()
-	update_card()
+	if %SongCover:
+		update_card()
 	
 	pass # Replace with function body.
 
@@ -65,7 +66,8 @@ func _on_up_button_pressed() -> void:
 	$CarouselOffset.get_child(selected_index).toggle()
 	selected_index -= 1
 	$CarouselOffset.get_child(selected_index).toggle()
-	update_card()
+	if %SongCover:
+		update_card()
 	pass # Replace with function body.
 
 
@@ -74,7 +76,8 @@ func _on_down_button_pressed() -> void:
 	$CarouselOffset.get_child(selected_index).toggle()
 	selected_index += 1
 	$CarouselOffset.get_child(selected_index).toggle()
-	update_card()
+	if %SongCover:
+		update_card()
 	pass # Replace with function body.
 
 func _on_level_play_button_pressed() -> void:
