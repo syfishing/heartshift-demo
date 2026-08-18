@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="5_fawpt"]
 [ext_resource type="Script" uid="uid://c6701asi1c2x4" path="res://Scripts/UIscripts/button_select.gd" id="7_dhyxe"]
 [ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="8_qp327"]
+[ext_resource type="Script" uid="uid://cml87i5cl8vub" path="res://Scripts/UIscripts/options.gd" id="9_p6sxv"]
 [ext_resource type="Script" uid="uid://df6tcatrcaw1l" path="res://Scripts/UIscripts/remapbutton.gd" id="9_qahr7"]
 [ext_resource type="Script" uid="uid://b0mpekyu727g3" path="res://Scripts/UIscripts/mainmenubutton.gd" id="9_us3rk"]
 [ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="10_s47fv"]
@@ -1166,6 +1167,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("9_p6sxv")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer4/Control" unique_id=599239079]
 layout_mode = 1
@@ -1178,7 +1180,7 @@ offset_right = -29.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_vertical = 582
+scroll_vertical = 100
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer4/Control/ScrollContainer" unique_id=1166203151]
