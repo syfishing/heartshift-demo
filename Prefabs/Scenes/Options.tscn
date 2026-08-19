@@ -1180,7 +1180,6 @@ offset_right = -29.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_vertical = 100
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer4/Control/ScrollContainer" unique_id=1166203151]
@@ -1210,7 +1209,8 @@ theme_override_constants/separation = 67
 [node name="Control" type="Control" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container" unique_id=149258141]
 layout_mode = 2
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control" unique_id=876543511]
+[node name="SfxVolume" type="HSlider" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control" unique_id=876543511]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -1222,6 +1222,7 @@ offset_top = -8.0
 offset_bottom = 8.0
 grow_horizontal = 0
 grow_vertical = 2
+max_value = 1.0
 
 [node name="Label" type="Label" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control" unique_id=276043244]
 layout_mode = 1
@@ -1238,7 +1239,8 @@ vertical_alignment = 1
 [node name="Control2" type="Control" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container" unique_id=1904604180]
 layout_mode = 2
 
-[node name="HSlider" type="HSlider" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control2" unique_id=955024462]
+[node name="MusicVolume" type="HSlider" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control2" unique_id=955024462]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -1250,6 +1252,7 @@ offset_top = -8.0
 offset_bottom = 8.0
 grow_horizontal = 0
 grow_vertical = 2
+max_value = 1.0
 
 [node name="Label" type="Label" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control2" unique_id=1526425049]
 layout_mode = 1
@@ -1458,6 +1461,13 @@ vertical_alignment = 1
 [node name="Control" type="Control" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer" unique_id=876916301]
 layout_mode = 2
 
+[node name="Button" type="Button" parent="CanvasLayer4" unique_id=1447574358]
+offset_left = 974.0
+offset_top = 512.0
+offset_right = 1074.0
+offset_bottom = 543.0
+text = "Save & Exit?"
+
 [node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=899404168]
 layer = -3
 
@@ -1479,4 +1489,7 @@ libraries/ = SubResource("AnimationLibrary_d42rl")
 [connection signal="button_down" from="CanvasLayer2/ButtonSelect/RhythmPlay" to="CanvasLayer2/ButtonSelect" method="_on_rhythm_play_button_down"]
 [connection signal="button_down" from="CanvasLayer2/ButtonSelect/Options" to="." method="_on_options_button_down"]
 [connection signal="button_down" from="CanvasLayer2/ButtonSelect/Options" to="CanvasLayer2/ButtonSelect" method="_on_options_button_down"]
+[connection signal="drag_ended" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control/SfxVolume" to="CanvasLayer4/Control" method="_on_sfx_volume_drag_ended"]
+[connection signal="drag_ended" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control2/MusicVolume" to="CanvasLayer4/Control" method="_on_music_volume_drag_ended"]
+[connection signal="pressed" from="CanvasLayer4/Button" to="CanvasLayer4/Control" method="_on_button_pressed"]
 [connection signal="animation_finished" from="TransitionPlayer" to="." method="_on_transition_player_animation_finished"]

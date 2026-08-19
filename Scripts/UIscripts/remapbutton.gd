@@ -32,4 +32,8 @@ func _unhandled_input(event):
 
 
 func update_key_text():
-	text = "%s" % InputMap.action_get_events(action)[0].as_text()
+	var events = InputMap.action_get_events(action)
+	if events.is_empty():
+		text = "None"
+	else:
+		text = "%s" % events[0].as_text()

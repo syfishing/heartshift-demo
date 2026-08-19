@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://6v55veknts53" path="res://Assets/UIAssets/clover.png" id="3_nbsfc"]
 [ext_resource type="Texture2D" uid="uid://ca6bwtqw03eqp" path="res://Assets/UIAssets/StoryBGs/trainbg.png" id="4_d5fgi"]
 [ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="4_mougo"]
+[ext_resource type="Texture2D" uid="uid://dno8cjlwr3ise" path="res://Assets/UIAssets/StoryBGs/firstcityscene.png" id="5_hpcvt"]
 [ext_resource type="Script" uid="uid://bcjahdm17p8oh" path="res://Scripts/DataElements/Story/background.gd" id="5_nbsfc"]
 [ext_resource type="Script" uid="uid://30jsstye3dlf" path="res://Scripts/DataElements/Story/move.gd" id="5_vrsui"]
 [ext_resource type="Script" uid="uid://spg081awr7vi" path="res://Scripts/DataElements/Story/pose.gd" id="6_m1mo6"]
@@ -52,7 +53,7 @@ metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
 [sub_resource type="Resource" id="Resource_d5fgi"]
 script = ExtResource("5_nbsfc")
-background = ExtResource("4_d5fgi")
+background = ExtResource("5_hpcvt")
 metadata/_custom_type_script = "uid://bcjahdm17p8oh"
 
 [sub_resource type="Resource" id="Resource_u2tva"]
@@ -108,6 +109,11 @@ script = ExtResource("4_mougo")
 character_id = "Teller"
 text = "..."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_mougo"]
+script = ExtResource("5_nbsfc")
+background = ExtResource("4_d5fgi")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
 
 [sub_resource type="Resource" id="Resource_8ajhl"]
 script = ExtResource("5_vrsui")
@@ -190,6 +196,6 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("9_ifxot")
-events = Array[ExtResource("3_hpcvt")]([SubResource("Resource_d5fgi"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_2f7h2"), SubResource("Resource_f3lw0"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_3ine8"), SubResource("Resource_mun78"), SubResource("Resource_8ajhl"), SubResource("Resource_nbsfc"), SubResource("Resource_hpcvt"), SubResource("Resource_ckh3w"), SubResource("Resource_ijre4"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_jlhv0"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_vh6uw"), SubResource("Resource_ov53a"), SubResource("Resource_cvj6d")])
+events = Array[ExtResource("3_hpcvt")]([SubResource("Resource_d5fgi"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_2f7h2"), SubResource("Resource_f3lw0"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_3ine8"), SubResource("Resource_mun78"), SubResource("Resource_mougo"), SubResource("Resource_8ajhl"), SubResource("Resource_nbsfc"), SubResource("Resource_hpcvt"), SubResource("Resource_ckh3w"), SubResource("Resource_ijre4"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_jlhv0"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_vh6uw"), SubResource("Resource_ov53a"), SubResource("Resource_cvj6d")])
 characters = Array[ExtResource("1_d5fgi")]([SubResource("Resource_vr2bo"), SubResource("Resource_yunxr"), SubResource("Resource_6l2hg")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
