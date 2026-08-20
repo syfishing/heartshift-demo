@@ -10,12 +10,22 @@ var pause_state = false
 var track_position = 0.0
 
 
+var save_path = "user://options.save"
+
+var sfx_volume = 100.0
+var music_volume = 100.0
+var note_speed = 50.0
+
+func _enter_tree() -> void:
+	pass
+
 func _ready():
-	bgmusicplayer = get_node("BGMusicStreamPlayer")
-	trackmusicplayer = get_node("TrackStreamPlayer")
-	menumusicplayer = get_node("MainMenuMusicStreamPlayer")
-	sfxplayer = get_node("SFXStreamPlayer")
-	typingplayer = get_node("TypingPlayer")
+	bgmusicplayer = $BGMusicStreamPlayer
+	trackmusicplayer = $TrackStreamPlayer
+	menumusicplayer = $MainMenuMusicStreamPlayer
+	sfxplayer = $SFXStreamPlayer
+	typingplayer = $TypingPlayer
+	load_data()
 
 
 func fade_volume(player: AudioStreamPlayer, from_db: float, to_db: float, duration: float) -> void:
@@ -29,7 +39,7 @@ func play_track(audio: AudioStream):
 	trackmusicplayer.stream = audio
 	trackmusicplayer.volume_db = -40
 	trackmusicplayer.play()
-	fade_volume(trackmusicplayer, -40, 0, 0.8)
+	fade_volume(trackmusicplayer, -40, music_volume, 0.8)
 
 
 func toggle_trackpause():
@@ -40,7 +50,7 @@ func toggle_trackpause():
 		pause_state = true
 	else:
 		
-		await fade_volume(trackmusicplayer, -40, 0, 0.5)
+		await fade_volume(trackmusicplayer, -40, music_volume, 0.5)
 		trackmusicplayer.play(track_position)
 		pause_state = false
 
@@ -71,7 +81,7 @@ func play_menu_music(audio: AudioStream, stopping: bool):
 		menumusicplayer.stream = audio
 		menumusicplayer.volume_db = -40
 		menumusicplayer.play()
-		fade_volume(menumusicplayer, -40, 0, 1.0)
+		fade_volume(menumusicplayer, -40, music_volume, 1.0)
 	else:
 		await fade_volume(menumusicplayer, menumusicplayer.volume_db, -40, 0.7)
 		menumusicplayer.stop()
@@ -93,3 +103,21 @@ func start_typing():
 
 func stop_typing():
 	typingplayer.stop()
+
+
+func load_data():
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open(save_path, FileAccess.READ)
+
+		sfx_volume = file.get_var()
+		music_volume = file.get_var()
+		note_speed = file.get_var()
+		$SFXStreamPlayer.volume_db = sfx_volume
+		$TypingPlayer.volume_db = sfx_volume
+
+		$TypingPlayer.volume_db = sfx_volume
+		$BGMusicStreamPlayer.volume_db = music_volume
+		$MainMenuMusicStreamPlayer.volume_db = music_volume
+
+	else:
+		return

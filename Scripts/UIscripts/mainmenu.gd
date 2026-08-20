@@ -28,7 +28,7 @@ func _on_rhythm_play_button_down() -> void:
 
 
 func _on_options_button_down() -> void:
-	menu_to_change = "NewMainMenu" # WE DON'T GOT NO OPTIONS MENU PEOPLE YAYYYY
+	menu_to_change = "Options" # WE GOT AN OPTIONS MENU PEOPLE YAYYYY
 	pass # Replace with function body.
 
 
