@@ -2,8 +2,8 @@ extends Control
 
 var save_path = "user://options.save"
 
-var sfx_volume = 100.0
-var music_volume = 100.0
+var sfx_volume = 0.0
+var music_volume = 0.0
 
 var first_lane = InputMap.action_get_events("lane1")[0]
 var second_lane = InputMap.action_get_events("lane2")[0]
@@ -76,6 +76,14 @@ func load_data():
 
 	else:
 		return
+
+
+func delete_save():
+	if FileAccess.file_exists(save_path):
+		DirAccess.remove_absolute(save_path)
+		print("Save deleted")
+	else:
+		print("No save file found")
 
 
 func _on_button_pressed() -> void:

@@ -8,9 +8,9 @@ var cursor: Control
 @export var active_color: Color = Color()
 
 func _ready():
-	if %Cursor:
+	cursor = get_node_or_null("%Cursor")
+	if cursor:
 		print("cursor")
-		cursor = %Cursor
 	highlight.visible = false
 	connect("mouse_entered", _on_mouse_entered)
 	connect("mouse_exited", _on_mouse_exited)

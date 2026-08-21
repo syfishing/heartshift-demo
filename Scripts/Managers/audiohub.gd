@@ -12,8 +12,8 @@ var track_position = 0.0
 
 var save_path = "user://options.save"
 
-var sfx_volume = 100.0
-var music_volume = 100.0
+var sfx_volume = 0.0
+var music_volume = 0.0
 var note_speed = 50.0
 
 func _enter_tree() -> void:
@@ -111,6 +111,12 @@ func load_data():
 
 		sfx_volume = file.get_var()
 		music_volume = file.get_var()
+
+		file.get_var(true) # first_lane (unused here, but must be read to stay in sync with options.gd)
+		file.get_var(true) # second_lane
+		file.get_var(true) # third_lane
+		file.get_var(true) # select
+
 		note_speed = file.get_var()
 		$SFXStreamPlayer.volume_db = sfx_volume
 		$TypingPlayer.volume_db = sfx_volume
