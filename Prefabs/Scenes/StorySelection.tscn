@@ -18,6 +18,7 @@
 [ext_resource type="Resource" uid="uid://ue1tfqe3fxfc" path="res://Scripts/StoryResources/prologue_2.tres" id="16_np72h"]
 [ext_resource type="Resource" uid="uid://c6xirulfktei4" path="res://Scripts/StoryResources/stage_1.tres" id="17_n1mdb"]
 [ext_resource type="Resource" uid="uid://dh8o14qc86n37" path="res://Scripts/StoryResources/stage_2.tres" id="18_bbh37"]
+[ext_resource type="Resource" uid="uid://bgm3hcl0is5oh" path="res://Scripts/Charts/Ididitagain.tres" id="18_sgc80"]
 [ext_resource type="Resource" uid="uid://ci7bhofn6cwup" path="res://Scripts/StoryResources/stage_3.tres" id="19_48y5r"]
 [ext_resource type="Resource" uid="uid://b3unrkw1b3ots" path="res://Scripts/StoryResources/stage_4.tres" id="20_sgc80"]
 [ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="21_48y5r"]
@@ -937,7 +938,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 23
 text = "Alteration"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1168,6 +1169,7 @@ story_quote = "Arrival"
 
 [node name="StoryPoint3" parent="2DStuff/StoryPoints" unique_id=1834699676 instance=ExtResource("9_sgtdn")]
 position = Vector2(1176, 576)
+chart = ExtResource("18_sgc80")
 story = ExtResource("18_bbh37")
 
 [node name="StoryPoint4" parent="2DStuff/StoryPoints" unique_id=2026919033 instance=ExtResource("9_sgtdn")]
