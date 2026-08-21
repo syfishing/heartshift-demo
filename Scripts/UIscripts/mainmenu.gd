@@ -24,6 +24,7 @@ func _on_story_button_down() -> void:
 
 func _on_rhythm_play_button_down() -> void:
 	menu_to_change = "RhythmPlay"
+	AudioHub.stop_menu_music()
 	pass # Replace with function body.
 
 

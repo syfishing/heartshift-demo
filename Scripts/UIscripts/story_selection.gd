@@ -71,6 +71,14 @@ func _on_leave_player_animation_finished(anim_name: StringName) -> void:
 		var inst = CoreStageScene.instantiate()
 		inst.story = current_point.story
 		inst.chart = current_point.chart
+
+		if current_point.special_level:
+			inst.special_level = current_point.special_level
+			print("special level detected")
+		if current_point.second_story:
+			inst.second_story = current_point.second_story
+			print("special story detected")
+
 		AudioHub.stop_menu_music()
 		# Defer the swap to the next frame
 		call_deferred("_replace_scene", inst)

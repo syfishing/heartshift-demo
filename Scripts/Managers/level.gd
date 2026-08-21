@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var second_story: StoryData
 @export var chart: ChartData
 @export var start_delay: float = 0.0
 

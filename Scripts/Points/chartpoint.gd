@@ -3,6 +3,8 @@ extends Node2D
 @export var chart: ChartData
 @export var story: StoryData
 @export var story_quote: String
+@export var special_level: PackedScene
+@export var second_story: StoryData
 #@export var cover_image: Texture2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

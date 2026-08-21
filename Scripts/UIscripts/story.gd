@@ -9,6 +9,9 @@ extends Node2D
 
 @export var chart: ChartData
 
+@export var second_story: StoryData
+@export var special_level: PackedScene
+
 var scene: PackedScene = preload("res://Prefabs/Scenes/Level.tscn") # change later!!
 
 
@@ -169,10 +172,26 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func _on_transition_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name != "Exit_Transition": return
 	
-	var inst = scene.instantiate()
+	AudioHub.stop_music()
+	
+	if !chart:
+		get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
+		return
+	
+	
+	var inst
+	
+	if special_level:
+		inst = special_level.instantiate()
+	else:
+		inst = scene.instantiate()
 	#inst.story = story
 	inst.chart = chart
-	AudioHub.stop_music()
+	
+	if second_story:
+		inst.second_story = second_story
+	
+	
 	# Defer the swap to the next frame
 	call_deferred("_replace_scene", inst)
 	

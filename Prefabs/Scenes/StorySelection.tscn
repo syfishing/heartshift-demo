@@ -20,6 +20,8 @@
 [ext_resource type="Resource" uid="uid://dh8o14qc86n37" path="res://Scripts/StoryResources/stage_2.tres" id="18_bbh37"]
 [ext_resource type="Resource" uid="uid://ci7bhofn6cwup" path="res://Scripts/StoryResources/stage_3.tres" id="19_48y5r"]
 [ext_resource type="Resource" uid="uid://b3unrkw1b3ots" path="res://Scripts/StoryResources/stage_4.tres" id="20_sgc80"]
+[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="21_48y5r"]
+[ext_resource type="PackedScene" uid="uid://b7jmlpusn5j51" path="res://Prefabs/Scenes/BossLevel.tscn" id="21_bbh37"]
 
 [sub_resource type="Environment" id="Environment_8lxbd"]
 background_mode = 3
@@ -1156,16 +1158,17 @@ position = Vector2(576, 576)
 chart = ExtResource("10_vkxt3")
 story = ExtResource("14_2e7ft")
 story_quote = "Prologue"
+second_story = ExtResource("16_np72h")
 
 [node name="StoryPoint2" parent="2DStuff/StoryPoints" unique_id=974619855 instance=ExtResource("9_sgtdn")]
 position = Vector2(876, 496)
 chart = ExtResource("10_v1uep")
-story = ExtResource("16_np72h")
+story = ExtResource("17_n1mdb")
 story_quote = "Arrival"
 
 [node name="StoryPoint3" parent="2DStuff/StoryPoints" unique_id=1834699676 instance=ExtResource("9_sgtdn")]
 position = Vector2(1176, 576)
-story = ExtResource("17_n1mdb")
+story = ExtResource("18_bbh37")
 
 [node name="StoryPoint4" parent="2DStuff/StoryPoints" unique_id=2026919033 instance=ExtResource("9_sgtdn")]
 position = Vector2(1476, 496)
@@ -1181,7 +1184,10 @@ story = ExtResource("20_sgc80")
 
 [node name="StoryPoint7" parent="2DStuff/StoryPoints" unique_id=110228382 instance=ExtResource("9_sgtdn")]
 position = Vector2(2376, 576)
-story = ExtResource("19_48y5r")
+chart = ExtResource("21_48y5r")
+story = ExtResource("20_sgc80")
+special_level = ExtResource("21_bbh37")
+second_story = ExtResource("18_bbh37")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=115334710]
 position = Vector2(576, 324)
