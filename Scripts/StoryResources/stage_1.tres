@@ -125,7 +125,7 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 [sub_resource type="Resource" id="Resource_xw1pu"]
 script = ExtResource("4_mougo")
 character_id = "Clover"
-text = "[wave]Duuude[/wave], have you slept at all last night? Seriously?"
+text = "[wave]Duuude[/wave], did you sleep at all last night? Seriously?"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_lyobt"]
@@ -160,14 +160,20 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_gw235"]
 script = ExtResource("4_mougo")
+character_id = "Clover"
+text = "Hey, no need to be salty about it~"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_3ine8"]
+script = ExtResource("4_mougo")
 character_id = "Lily"
-text = "..."
+text = "Hmph. Fine..."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_vh6uw"]
 script = ExtResource("4_mougo")
 character_id = "Lily"
-text = "How do you feel about going to a fair for the first time? Isn't it awesome?"
+text = "Anyway- how do you feel about going to a fair for the first time? Isn't it awesome?"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_ov53a"]
@@ -196,8 +202,26 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_ifxot"]
 script = ExtResource("4_mougo")
+character_id = "Lily"
+text = "That's the spirit!"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_lbsbx"]
+script = ExtResource("4_mougo")
+character_id = "Teller"
+text = "Clover goes quiet for a moment, glancing over at Lily."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ttqys"]
+script = ExtResource("4_mougo")
 character_id = "Clover"
-text = "..."
+text = "Actually... can I ask you something?"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ufx24"]
+script = ExtResource("4_mougo")
+character_id = "Lily"
+text = "Sure, what's up?"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_efgmm"]
@@ -233,13 +257,13 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 [sub_resource type="Resource" id="Resource_kvi2g"]
 script = ExtResource("4_mougo")
 character_id = "Clover"
-text = "My point still stands, Lily."
+text = "My point still stands."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_cu5p8"]
 script = ExtResource("4_mougo")
 character_id = "Lily"
-text = "..."
+text = "...Thanks, Clover, but you know-"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_objdo"]
@@ -256,12 +280,12 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_gmcih"]
 script = ExtResource("4_mougo")
-character_id = "Teller"
-text = "Clover trails behind Lily, leaving the train before entering the busy Gotown station."
+character_id = "Clover"
+text = "wha- HEY WAIT UP!!"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("9_ifxot")
-events = Array[ExtResource("3_hpcvt")]([SubResource("Resource_d5fgi"), SubResource("Resource_u2tva"), SubResource("Resource_o6uit"), SubResource("Resource_mougo"), SubResource("Resource_8ajhl"), SubResource("Resource_nbsfc"), SubResource("Resource_hpcvt"), SubResource("Resource_ckh3w"), SubResource("Resource_ntf3o"), SubResource("Resource_ijre4"), SubResource("Resource_mun78"), SubResource("Resource_f3lw0"), SubResource("Resource_xw1pu"), SubResource("Resource_lyobt"), SubResource("Resource_jlhv0"), SubResource("Resource_g7oej"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_gw235"), SubResource("Resource_vh6uw"), SubResource("Resource_ov53a"), SubResource("Resource_cvj6d"), SubResource("Resource_m1mo6"), SubResource("Resource_vrsui"), SubResource("Resource_ifxot"), SubResource("Resource_efgmm"), SubResource("Resource_15pc0"), SubResource("Resource_wcd1m"), SubResource("Resource_pegag"), SubResource("Resource_qsntv"), SubResource("Resource_kvi2g"), SubResource("Resource_cu5p8"), SubResource("Resource_objdo"), SubResource("Resource_3wmdj"), SubResource("Resource_gmcih")])
+events = Array[ExtResource("3_hpcvt")]([SubResource("Resource_d5fgi"), SubResource("Resource_u2tva"), SubResource("Resource_o6uit"), SubResource("Resource_mougo"), SubResource("Resource_8ajhl"), SubResource("Resource_nbsfc"), SubResource("Resource_hpcvt"), SubResource("Resource_ckh3w"), SubResource("Resource_ntf3o"), SubResource("Resource_ijre4"), SubResource("Resource_mun78"), SubResource("Resource_f3lw0"), SubResource("Resource_xw1pu"), SubResource("Resource_lyobt"), SubResource("Resource_jlhv0"), SubResource("Resource_g7oej"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_gw235"), SubResource("Resource_3ine8"), SubResource("Resource_vh6uw"), SubResource("Resource_ov53a"), SubResource("Resource_cvj6d"), SubResource("Resource_m1mo6"), SubResource("Resource_vrsui"), SubResource("Resource_ifxot"), SubResource("Resource_lbsbx"), SubResource("Resource_ttqys"), SubResource("Resource_ufx24"), SubResource("Resource_efgmm"), SubResource("Resource_15pc0"), SubResource("Resource_wcd1m"), SubResource("Resource_pegag"), SubResource("Resource_qsntv"), SubResource("Resource_kvi2g"), SubResource("Resource_cu5p8"), SubResource("Resource_objdo"), SubResource("Resource_3wmdj"), SubResource("Resource_gmcih")])
 characters = Array[ExtResource("1_d5fgi")]([SubResource("Resource_vr2bo"), SubResource("Resource_yunxr"), SubResource("Resource_6l2hg")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
