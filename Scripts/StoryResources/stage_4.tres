@@ -53,19 +53,13 @@ metadata/_custom_type_script = "uid://48h1a5vjudcp"
 [sub_resource type="Resource" id="Resource_3ine8"]
 script = ExtResource("3_5p5lv")
 character_id = "Teller"
-text = "After a long day at the fair, Lily and Clover headed to a hotel where they booked rooms to stay in for the night."
+text = "After a long day at the fair, Lily and Clover headed to a hotel where they had booked rooms to stay in for the night."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_6l2hg"]
 script = ExtResource("3_5p5lv")
 character_id = "Teller"
-text = "..."
-metadata/_custom_type_script = "uid://xixdgkhinwgb"
-
-[sub_resource type="Resource" id="Resource_u2tva"]
-script = ExtResource("3_5p5lv")
-character_id = "Teller"
-text = "When the sun rose, they left the hotel and headed back to the art fair for day two."
+text = "...Upon entering their new hotel room, Lily plumps into bed."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_lqf37"]
@@ -83,119 +77,143 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 [sub_resource type="Resource" id="Resource_lyobt"]
 script = ExtResource("3_5p5lv")
 character_id = "Lily"
-text = "I hope Rivley is doing well..."
+text = "Have you heard anything from Rivley lately?"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_1g5uw"]
 script = ExtResource("3_5p5lv")
-character_id = "Lily"
-text = "We didn't bring her with us and i'm worried she'll get herself in trouble again and-"
+character_id = "Clover"
+text = "...no?"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_e2agj"]
+script = ExtResource("3_5p5lv")
+character_id = "Lily"
+text = "She's been isolating herself inside her home a lot lately, and i find it concerning."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ov53a"]
+script = ExtResource("3_5p5lv")
+character_id = "Lily"
+text = "...When i last saw her, she was really nervous about something too... I don't want her to fall into dangerou--"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ljurw"]
 script = ExtResource("3_5p5lv")
 character_id = "Clover"
 text = "Look."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
-[sub_resource type="Resource" id="Resource_ov53a"]
-script = ExtResource("3_5p5lv")
-character_id = "Clover"
-text = "She'll have learned her lesson by now after, well, y'know..."
-metadata/_custom_type_script = "uid://xixdgkhinwgb"
-
-[sub_resource type="Resource" id="Resource_ljurw"]
-script = ExtResource("3_5p5lv")
-character_id = "Lily"
-text = "...That one time she almost started a fire at the college cafetaria because she was nervous about messing up?"
-metadata/_custom_type_script = "uid://xixdgkhinwgb"
-
 [sub_resource type="Resource" id="Resource_2f7h2"]
 script = ExtResource("3_5p5lv")
 character_id = "Clover"
-text = "...Yeah, that."
+text = "I understand your concern, but this'll need to wait until we're back home."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_g7oej"]
 script = ExtResource("3_5p5lv")
-character_id = "Lily"
-text = "..."
+character_id = "Clover"
+text = "We'll pay her a visit soon, alright? I also hope she's doing okay, but now is not the time."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_xw1pu"]
 script = ExtResource("3_5p5lv")
 character_id = "Lily"
-text = "Well, i hope you're right."
+text = "...Are you sure?"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_o6uit"]
 script = ExtResource("3_5p5lv")
+character_id = "Clover"
+text = "Yes, now go to bed. Our sleep schedule is messed up enough already..."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_u2tva"]
+script = ExtResource("3_5p5lv")
 character_id = "Teller"
-text = "..."
+text = "...The next day as the sun rose, they left the hotel and headed back to the art fair for day two."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_mun78"]
 script = ExtResource("3_5p5lv")
 character_id = "Teller"
-text = "After spending a few hours at the fair, Lily notices the previously vandalized booth was in perfect condition."
+text = "Not much time after arriving, something catches Lily's eye."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_jlhv0"]
 script = ExtResource("3_5p5lv")
-character_id = "Teller"
-text = "...It seemed like nothing ever happened."
+character_id = "Lily"
+text = "...The booth is intact."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_vh6uw"]
 script = ExtResource("3_5p5lv")
 character_id = "Lily"
-text = "Clover? Wasn't that booth completely ruined yesterday?"
+text = "No scratches, no cracks, no damage."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_cvj6d"]
 script = ExtResource("3_5p5lv")
 character_id = "Clover"
-text = "Uh... Yeah?"
+text = "...what are you on abou-"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_ckh3w"]
 script = ExtResource("3_5p5lv")
 character_id = "Clover"
-text = "What's the matter?"
+text = "Oh."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_8ajhl"]
 script = ExtResource("3_5p5lv")
-character_id = "Lily"
-text = "I dunno- i'm surprised they repaired it so quickly... There's no trace of any vandalism left!"
+character_id = "Clover"
+text = "Didn't know they were that good at repairing things."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_0od15"]
 script = ExtResource("3_5p5lv")
-character_id = "Teller"
-text = "Clover shrugs."
+character_id = "Lily"
+text = "??????"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_j0wbi"]
 script = ExtResource("3_5p5lv")
 character_id = "Clover"
-text = "I guess they're good at cleaning, huh?"
+text = "I mean, they probably replaced the-"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_6wog7"]
 script = ExtResource("3_5p5lv")
 character_id = "Lily"
-text = "..."
+text = "What about the art though??"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_g3yrs"]
 script = ExtResource("3_5p5lv")
+character_id = "Clover"
+text = "[wave]I dunno![/wave] What else do you expect? Magic?"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_uc00v"]
+script = ExtResource("3_5p5lv")
 character_id = "Lily"
-text = "...Alright... i guess..."
+text = "...I don't know, honestly."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_qdcmd"]
+script = ExtResource("3_5p5lv")
+character_id = "Clover"
+text = "Don't worry about it."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_nbwj7"]
+script = ExtResource("3_5p5lv")
+character_id = "Clover"
+text = "..."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("4_5at38")
-events = Array[ExtResource("2_s4irw")]([SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_j0wbi"), SubResource("Resource_6wog7"), SubResource("Resource_g3yrs")])
+events = Array[ExtResource("2_s4irw")]([SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_u2tva"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_j0wbi"), SubResource("Resource_6wog7"), SubResource("Resource_g3yrs"), SubResource("Resource_uc00v"), SubResource("Resource_qdcmd"), SubResource("Resource_nbwj7")])
 characters = Array[ExtResource("1_4kndb")]([SubResource("Resource_f3lw0"), SubResource("Resource_yunxr"), SubResource("Resource_vr2bo")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
