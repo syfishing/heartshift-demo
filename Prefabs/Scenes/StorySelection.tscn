@@ -23,6 +23,8 @@
 [ext_resource type="Resource" uid="uid://b3unrkw1b3ots" path="res://Scripts/StoryResources/stage_4.tres" id="20_sgc80"]
 [ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="21_48y5r"]
 [ext_resource type="PackedScene" uid="uid://b7jmlpusn5j51" path="res://Prefabs/Scenes/BossLevel.tscn" id="21_bbh37"]
+[ext_resource type="Resource" uid="uid://cieec8dc2jabw" path="res://Scripts/StoryResources/stage_5A.tres" id="23_bdsso"]
+[ext_resource type="Resource" uid="uid://d078n7gglq3od" path="res://Scripts/StoryResources/stage_5B.tres" id="25_th8sy"]
 
 [sub_resource type="Environment" id="Environment_8lxbd"]
 background_mode = 3
@@ -1183,9 +1185,10 @@ story = ExtResource("20_sgc80")
 [node name="StoryPoint6" parent="2DStuff/StoryPoints" unique_id=110228382 instance=ExtResource("9_sgtdn")]
 position = Vector2(2376, 576)
 chart = ExtResource("21_48y5r")
-story = ExtResource("20_sgc80")
+story = ExtResource("23_bdsso")
+story_quote = "idk"
 special_level = ExtResource("21_bbh37")
-second_story = ExtResource("18_bbh37")
+second_story = ExtResource("25_th8sy")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=115334710]
 position = Vector2(576, 324)

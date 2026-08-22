@@ -186,6 +186,7 @@ func _on_transition_player_animation_finished(anim_name: StringName) -> void:
 	else:
 		inst = scene.instantiate()
 	#inst.story = story
+	
 	inst.chart = chart
 	
 	if second_story:

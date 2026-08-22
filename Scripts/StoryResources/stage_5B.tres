@@ -108,11 +108,26 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 [sub_resource type="Resource" id="Resource_e2agj"]
 script = ExtResource("3_ko6wx")
 character_id = "Teller"
-text = "Horrifying, terrifying; she cries."
+text = "Horrified, terrified, she begins to read the first message-"
+uninterruptible = true
+auto_advance = true
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_nhwsg"]
+script = ExtResource("4_43vmw")
+metadata/_custom_type_script = "uid://brfsujgtv47v4"
+
+[sub_resource type="Resource" id="Resource_wqoq4"]
+script = ExtResource("3_ko6wx")
+character_id = "Teller"
+text = "-but deep down, she already knows what is written..."
+uninterruptible = true
+auto_advance = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_ljurw"]
 script = ExtResource("4_43vmw")
+time_seconds = 2.0
 metadata/_custom_type_script = "uid://brfsujgtv47v4"
 
 [sub_resource type="Resource" id="Resource_ov53a"]
@@ -123,6 +138,6 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("5_w6ipd")
-events = Array[ExtResource("2_nhwsg")]([SubResource("Resource_3ine8"), SubResource("Resource_2f7h2"), SubResource("Resource_6l2hg"), SubResource("Resource_g7oej"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ljurw"), SubResource("Resource_ov53a")])
+events = Array[ExtResource("2_nhwsg")]([SubResource("Resource_3ine8"), SubResource("Resource_2f7h2"), SubResource("Resource_6l2hg"), SubResource("Resource_g7oej"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_nhwsg"), SubResource("Resource_wqoq4"), SubResource("Resource_ljurw"), SubResource("Resource_ov53a")])
 characters = Array[ExtResource("1_wqoq4")]([SubResource("Resource_f3lw0"), SubResource("Resource_yunxr"), SubResource("Resource_vr2bo")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
