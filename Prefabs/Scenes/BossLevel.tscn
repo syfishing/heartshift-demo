@@ -3894,7 +3894,7 @@ script = ExtResource("22_4vjch")
 chart = ExtResource("2_jqkyv")
 note_scene = ExtResource("23_qb2hu")
 dummy_note_scene = ExtResource("24_1qvkw")
-travel_time = 6.0
+travel_time = 8.0
 dummy_spawn_interval = 1.0
 sine_decay_rate = 0.2
 

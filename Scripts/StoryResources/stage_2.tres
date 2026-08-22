@@ -1,56 +1,60 @@
 [gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://dh8o14qc86n37"]
 
 [ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="1_rd7qi"]
+[ext_resource type="Texture2D" uid="uid://ca54yysfm1krx" path="res://Assets/UIAssets/lily.png" id="2_31duc"]
 [ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_mcdll"]
+[ext_resource type="Texture2D" uid="uid://clya5onmtgd3y" path="res://Assets/UIAssets/StoryBGs/trainstationbg.png" id="3_1uo5j"]
+[ext_resource type="Texture2D" uid="uid://6v55veknts53" path="res://Assets/UIAssets/clover.png" id="3_57g3v"]
 [ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="3_fvw0v"]
 [ext_resource type="Script" uid="uid://30jsstye3dlf" path="res://Scripts/DataElements/Story/move.gd" id="4_1uo5j"]
+[ext_resource type="Script" uid="uid://bcjahdm17p8oh" path="res://Scripts/DataElements/Story/background.gd" id="4_31duc"]
 [ext_resource type="Script" uid="uid://brfsujgtv47v4" path="res://Scripts/DataElements/Story/delay.gd" id="5_31duc"]
 [ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="6_57g3v"]
+[ext_resource type="Texture2D" uid="uid://dutrtg5g6y6xh" path="res://Assets/UIAssets/StoryBGs/walkingbg.png" id="8_57g3v"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wcnqx"]
-load_path = "res://.godot/imported/lilyfingerportrait.png-d72cfd8008de6fe37b225339a0459e4c.ctex"
-
-[sub_resource type="Resource" id="Resource_f3lw0"]
+[sub_resource type="Resource" id="Resource_vr2bo"]
 script = ExtResource("1_rd7qi")
 id = "Lily"
 name = "Lily"
 color = Color(0.7137255, 0.2627451, 0.40392157, 1)
 poses = Dictionary[String, Texture2D]({
-"lilyfinger": SubResource("CompressedTexture2D_wcnqx")
+"lilyidle": ExtResource("2_31duc")
 })
-default_pose = "lilyfinger"
+default_pose = "lilyidle"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
 [sub_resource type="Gradient" id="Gradient_3ine8"]
 interpolation_mode = 1
 colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ine8"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yunxr"]
 gradient = SubResource("Gradient_3ine8")
 
 [sub_resource type="Resource" id="Resource_yunxr"]
 script = ExtResource("1_rd7qi")
 id = "Teller"
-name = ""
+name = "------"
 poses = Dictionary[String, Texture2D]({
-"invisible": SubResource("GradientTexture1D_3ine8")
+"invisible": SubResource("GradientTexture1D_yunxr")
 })
 default_pose = "invisible"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_6l2hg"]
-gradient = SubResource("Gradient_3ine8")
-
-[sub_resource type="Resource" id="Resource_vr2bo"]
+[sub_resource type="Resource" id="Resource_6l2hg"]
 script = ExtResource("1_rd7qi")
 id = "Clover"
 name = "Clover"
 color = Color(0.9728525, 0.6835202, 0, 1)
 poses = Dictionary[String, Texture2D]({
-"invisible": SubResource("GradientTexture1D_6l2hg")
+"cloveridle": ExtResource("3_57g3v")
 })
-default_pose = "invisible"
+default_pose = "cloveridle"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_sgc80"]
+script = ExtResource("4_31duc")
+background = ExtResource("3_1uo5j")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
 
 [sub_resource type="Resource" id="Resource_3ine8"]
 script = ExtResource("3_fvw0v")
@@ -58,7 +62,7 @@ character_id = "Teller"
 text = "..."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
-[sub_resource type="Resource" id="Resource_6l2hg"]
+[sub_resource type="Resource" id="Resource_ycdng"]
 script = ExtResource("3_fvw0v")
 character_id = "Teller"
 text = "The train has arrived at it's destination."
@@ -70,10 +74,22 @@ character_id = "Teller"
 text = "Lily and Clover step off the train and get on their way to the art fair venue."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
+[sub_resource type="Resource" id="Resource_e0kpp"]
+script = ExtResource("4_31duc")
+background = ExtResource("8_57g3v")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
+
 [sub_resource type="Resource" id="Resource_g7oej"]
 script = ExtResource("4_1uo5j")
 character_id = "Lily"
 x_pos = 300.0
+is_flipped = true
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
+[sub_resource type="Resource" id="Resource_f3gh5"]
+script = ExtResource("4_1uo5j")
+character_id = "Clover"
+x_pos = 800.0
 metadata/_custom_type_script = "uid://30jsstye3dlf"
 
 [sub_resource type="Resource" id="Resource_lqf37"]
@@ -191,6 +207,6 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("6_57g3v")
-events = Array[ExtResource("2_mcdll")]([SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_u2tva"), SubResource("Resource_g7oej"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_ishqp"), SubResource("Resource_rjk7c")])
-characters = Array[ExtResource("1_rd7qi")]([SubResource("Resource_f3lw0"), SubResource("Resource_yunxr"), SubResource("Resource_vr2bo")])
+events = Array[ExtResource("2_mcdll")]([SubResource("Resource_sgc80"), SubResource("Resource_3ine8"), SubResource("Resource_ycdng"), SubResource("Resource_u2tva"), SubResource("Resource_e0kpp"), SubResource("Resource_g7oej"), SubResource("Resource_f3gh5"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_ishqp"), SubResource("Resource_rjk7c")])
+characters = Array[ExtResource("1_rd7qi")]([SubResource("Resource_vr2bo"), SubResource("Resource_yunxr"), SubResource("Resource_6l2hg")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"

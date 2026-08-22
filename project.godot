@@ -22,7 +22,7 @@ MainMenuBGTimer="*uid://brwv2y0qb5k7"
 
 [display]
 
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 
 [editor]
 

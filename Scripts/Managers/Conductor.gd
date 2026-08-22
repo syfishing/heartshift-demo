@@ -17,6 +17,11 @@ var time_since_last_dummy: float = 0.0
 
 @export var audio_offset_ms: float = 0.0
 
+@export var clock_smoothing: float = 4.0
+@export var clock_max_correction: float = 0.10
+@export var clock_resync_threshold: float = 0.10
+var _clock_running: bool = false
+
 var dummy_spawn_count: int = 0
 
 const NOTE_HIT_X: float = 250.0
@@ -31,7 +36,7 @@ func _ready() -> void:
 	process_priority = -100
 
 func _process(delta):
-	_update_song_time()
+	_update_song_time(delta)
 
 	if not audio_player.playing: return
 
@@ -48,12 +53,32 @@ func _process(delta):
 			next_note_index += 1
 
 
-func _update_song_time() -> void:
+func _update_song_time(delta: float) -> void:
 	if not audio_player.playing:
+		_clock_running = false
 		return
 
-	song_time = audio_player.get_playback_position() + AudioServer.get_time_since_last_mix() - AudioServer.get_output_latency() + audio_offset_ms / 1000.0
+	var raw: float = (
+		audio_player.get_playback_position()
+		+ AudioServer.get_time_since_last_mix()
+		- AudioServer.get_output_latency()
+		+ audio_offset_ms / 1000.0
+	)
 
+	if not _clock_running:
+		song_time = raw
+		_clock_running = true
+		return
+
+
+	song_time += delta * audio_player.pitch_scale
+
+	var drift: float = raw - song_time
+	if absf(drift) > clock_resync_threshold:
+		song_time = raw
+	else:
+		var max_step: float = clock_max_correction * delta
+		song_time += clampf(drift * clock_smoothing * delta, -max_step, max_step)
 
 func is_playing() -> bool:
 	return audio_player.playing
