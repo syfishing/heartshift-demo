@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 AudioHub="*uid://dckbjmebxktl0"
 MainMenuBGTimer="*uid://brwv2y0qb5k7"
+Save="*uid://ufka18i7kf0b"
 
 [display]
 

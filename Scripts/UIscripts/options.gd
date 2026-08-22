@@ -15,8 +15,6 @@ var note_speed = 50.0
 func _enter_tree() -> void:
 	print("I ENTEREDD")
 	load_data()
-	pass
-	
 
 func _process(delta: float) -> void:
 	if (Input.is_action_just_released("Exit")):
@@ -28,8 +26,8 @@ func save():
 	third_lane = InputMap.action_get_events("lane3")[0]
 	select = InputMap.action_get_events("Select")[0]
 	
-	var sfx_volume = %SfxVolume.value
-	var music_volume = %MusicVolume.value
+	sfx_volume = %SfxVolume.value
+	music_volume = %MusicVolume.value
 
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 	file.store_var(sfx_volume)
