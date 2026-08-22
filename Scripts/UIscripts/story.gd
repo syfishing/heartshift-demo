@@ -12,7 +12,7 @@ extends Node2D
 @export var second_story: StoryData
 @export var special_level: PackedScene
 
-var scene: PackedScene = preload("res://Prefabs/Scenes/Level.tscn") # change later!!
+const scene: PackedScene = preload("res://Prefabs/Scenes/Level.tscn") # change later!!
 
 
 

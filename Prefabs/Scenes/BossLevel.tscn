@@ -3064,6 +3064,25 @@ theme_override_font_sizes/font_size = 96
 text = "A"
 vertical_alignment = 2
 
+[node name="Points" type="Label" parent="PauseMenu/RankReveal/Reveal/Rank" unique_id=738579323]
+self_modulate = Color(0.7612016, 0.5339534, 1, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -142.0
+offset_right = 510.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("7_dn45n")
+theme_override_font_sizes/font_size = 30
+text = "(0.00000245)"
+vertical_alignment = 2
+
 [node name="Control" type="Control" parent="PauseMenu/RankReveal/Reveal" unique_id=1679862693]
 layout_mode = 1
 anchors_preset = 6

@@ -39,6 +39,7 @@ func _process(delta: float) -> void:
 	%FailScore.text = str(rating_num["Fail"])
 
 	var score = %PointManager.score
+	$Reveal/Rank/Points.text = "(" + str(score) + "%)"
 	if score >= 90:
 		$Reveal/Rank/Grade.text = "S"
 	elif score >= 80:

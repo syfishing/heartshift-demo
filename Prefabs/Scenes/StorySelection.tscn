@@ -1174,17 +1174,13 @@ story = ExtResource("18_bbh37")
 
 [node name="StoryPoint4" parent="2DStuff/StoryPoints" unique_id=2026919033 instance=ExtResource("9_sgtdn")]
 position = Vector2(1476, 496)
-story = ExtResource("18_bbh37")
+story = ExtResource("19_48y5r")
 
 [node name="StoryPoint5" parent="2DStuff/StoryPoints" unique_id=1150236573 instance=ExtResource("9_sgtdn")]
 position = Vector2(1776, 576)
-story = ExtResource("19_48y5r")
-
-[node name="StoryPoint6" parent="2DStuff/StoryPoints" unique_id=1699062597 instance=ExtResource("9_sgtdn")]
-position = Vector2(2076, 496)
 story = ExtResource("20_sgc80")
 
-[node name="StoryPoint7" parent="2DStuff/StoryPoints" unique_id=110228382 instance=ExtResource("9_sgtdn")]
+[node name="StoryPoint6" parent="2DStuff/StoryPoints" unique_id=110228382 instance=ExtResource("9_sgtdn")]
 position = Vector2(2376, 576)
 chart = ExtResource("21_48y5r")
 story = ExtResource("20_sgc80")

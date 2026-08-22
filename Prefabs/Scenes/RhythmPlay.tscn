@@ -10,7 +10,8 @@
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="7_f72t2"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="8_uhd87"]
 [ext_resource type="Resource" uid="uid://bgm3hcl0is5oh" path="res://Scripts/Charts/Ididitagain.tres" id="10_27b1o"]
-[ext_resource type="Resource" uid="uid://bpqe83raxiwak" path="res://Scripts/Charts/Last Pulse OLD.tres" id="11_27b1o"]
+[ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="11_27b1o"]
+[ext_resource type="PackedScene" uid="uid://b7jmlpusn5j51" path="res://Prefabs/Scenes/BossLevel.tscn" id="12_hbsud"]
 
 [sub_resource type="Shader" id="Shader_8lxbd"]
 code = "shader_type canvas_item;
@@ -864,15 +865,14 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 163.0
-offset_top = 278.99927
+offset_top = 279.0
 offset_right = 163.00012
-offset_bottom = 278.99927
+offset_bottom = 279.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0, 0.5)
 
 [node name="Button" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1588194998 instance=ExtResource("6_hcp02")]
-modulate = Color(1, 1, 1, 0.9999974)
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -883,7 +883,6 @@ offset_top = 0.0
 offset_bottom = 90.0
 grow_horizontal = 1
 grow_vertical = 1
-scale = Vector2(0.9999987, 0.9999987)
 chart = ExtResource("7_f72t2")
 
 [node name="Button2" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=595033799 instance=ExtResource("6_hcp02")]
@@ -902,7 +901,7 @@ scale = Vector2(0.75, 0.75)
 chart = ExtResource("8_uhd87")
 
 [node name="Button3" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=1527943070 instance=ExtResource("6_hcp02")]
-modulate = Color(1, 1, 1, 2.6222192e-06)
+modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -913,12 +912,12 @@ offset_top = 275.0701
 offset_bottom = 366.1902
 grow_horizontal = 1
 grow_vertical = 1
-scale = Vector2(0.5000013, 0.5000013)
+scale = Vector2(0.5, 0.5)
 item_colour = Color(0.75405735, 0.471628, 0.12861586, 1)
 chart = ExtResource("10_27b1o")
 
 [node name="Button4" parent="CanvasLayer/Control/SongCarousel/CarouselOffset" unique_id=651300743 instance=ExtResource("6_hcp02")]
-modulate = Color(1, 1, 1, 1.7044424e-06)
+modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -929,8 +928,9 @@ offset_top = 413.1652
 offset_bottom = 504.28528
 grow_horizontal = 1
 grow_vertical = 1
-scale = Vector2(0.2500013, 0.2500013)
+scale = Vector2(0.25, 0.25)
 chart = ExtResource("11_27b1o")
+special_level = ExtResource("12_hbsud")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=780756017]
 layer = -3

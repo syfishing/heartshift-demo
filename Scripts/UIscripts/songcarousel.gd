@@ -12,6 +12,9 @@ class_name CarouselContainer
 @export var selected_index: int = 0
 
 var current_chart: ChartData
+var selected_element
+
+const scene: PackedScene = preload("res://Prefabs/Scenes/Level.tscn") # change later!!
 
 
 # Called when the node enters the scene tree for the first time.
@@ -81,12 +84,22 @@ func _on_down_button_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_level_play_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Prefabs/Scenes/Level.tscn")
+	var inst
+	
+	if selected_element.special_level:
+		inst = selected_element.special_level.instantiate()
+	else:
+		inst = scene.instantiate()
+	#inst.story = story
+	inst.chart = current_chart
+	
+	# Defer the swap to the next frame
+	call_deferred("_replace_scene", inst)
 	pass # Replace with function body.
 
 
 func update_card():
-	var selected_element = $CarouselOffset.get_child(selected_index)
+	selected_element = $CarouselOffset.get_child(selected_index)
 	
 	if !selected_element.chart: return
 	current_chart = selected_element.chart
@@ -113,3 +126,12 @@ func get_audio_length_formatted(stream: AudioStream):
 	
 	# Format with zero‑padding for seconds
 	return "%d:%02d" % [minutes, seconds]
+
+func _replace_scene(new_scene):
+	await get_tree().process_frame  # wait one frame so the scene unlocks
+
+	var tree := get_tree()
+
+	tree.current_scene.free()
+	tree.root.add_child(new_scene)
+	tree.current_scene = new_scene

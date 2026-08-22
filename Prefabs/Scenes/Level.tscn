@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://goipfyssiyte"]
 
 [ext_resource type="Script" uid="uid://bt3blfgp7yr24" path="res://Scripts/Managers/level.gd" id="1_tq31w"]
-[ext_resource type="Resource" uid="uid://bgm3hcl0is5oh" path="res://Scripts/Charts/Ididitagain.tres" id="2_7uy4l"]
+[ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="2_x1q7v"]
 [ext_resource type="Script" uid="uid://b1n1qo2dxfkkc" path="res://Scripts/Managers/hit_manager.gd" id="3_7uy4l"]
 [ext_resource type="Script" uid="uid://bdjjxhvh5i460" path="res://Scripts/levelcamera.gd" id="4_3td5b"]
 [ext_resource type="Script" uid="uid://c3tgicyyuo43e" path="res://Scripts/UIscripts/rank_reveal.gd" id="5_734hs"]
@@ -4280,7 +4280,7 @@ height = 110
 
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
 script = ExtResource("1_tq31w")
-chart = ExtResource("2_7uy4l")
+chart = ExtResource("2_x1q7v")
 start_delay = 1.0
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
@@ -4667,6 +4667,25 @@ grow_vertical = 0
 theme_override_fonts/font = ExtResource("7_8sjmd")
 theme_override_font_sizes/font_size = 96
 text = "A"
+vertical_alignment = 2
+
+[node name="Points" type="Label" parent="EffectsAndReveal/RankReveal/Reveal/Rank" unique_id=1830758046]
+self_modulate = Color(0.7612016, 0.5339534, 1, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -142.0
+offset_right = 510.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("7_8sjmd")
+theme_override_font_sizes/font_size = 30
+text = "(0.00000245)"
 vertical_alignment = 2
 
 [node name="Control" type="Control" parent="EffectsAndReveal/RankReveal/Reveal" unique_id=1679862693]

@@ -2,6 +2,7 @@ extends Button
 
 @export var item_colour: Color
 @export var chart: ChartData
+@export var special_level: PackedScene
 
 @onready var grid_mat: Material = $GridBG.material.duplicate()
 @onready var wave_mat: Material = $Wave.material.duplicate()
