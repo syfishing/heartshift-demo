@@ -1,0 +1,128 @@
+[gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://d078n7gglq3od"]
+
+[ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="1_wqoq4"]
+[ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_nhwsg"]
+[ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="3_ko6wx"]
+[ext_resource type="Script" uid="uid://brfsujgtv47v4" path="res://Scripts/DataElements/Story/delay.gd" id="4_43vmw"]
+[ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="5_w6ipd"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wcnqx"]
+load_path = "res://.godot/imported/lilyfingerportrait.png-d72cfd8008de6fe37b225339a0459e4c.ctex"
+
+[sub_resource type="Resource" id="Resource_f3lw0"]
+script = ExtResource("1_wqoq4")
+id = "Lily"
+name = "Lily"
+color = Color(0.7137255, 0.2627451, 0.40392157, 1)
+poses = Dictionary[String, Texture2D]({
+"lilyfinger": SubResource("CompressedTexture2D_wcnqx")
+})
+default_pose = "lilyfinger"
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Gradient" id="Gradient_3ine8"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ine8"]
+gradient = SubResource("Gradient_3ine8")
+
+[sub_resource type="Resource" id="Resource_yunxr"]
+script = ExtResource("1_wqoq4")
+id = "Teller"
+name = ""
+poses = Dictionary[String, Texture2D]({
+"invisible": SubResource("GradientTexture1D_3ine8")
+})
+default_pose = "invisible"
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6l2hg"]
+gradient = SubResource("Gradient_3ine8")
+
+[sub_resource type="Resource" id="Resource_vr2bo"]
+script = ExtResource("1_wqoq4")
+id = "Clover"
+name = "Clover"
+color = Color(0.9728525, 0.6835202, 0, 1)
+poses = Dictionary[String, Texture2D]({
+"invisible": SubResource("GradientTexture1D_6l2hg")
+})
+default_pose = "invisible"
+metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_3ine8"]
+script = ExtResource("3_ko6wx")
+character_id = "Lily"
+text = "..!!!"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_2f7h2"]
+script = ExtResource("3_ko6wx")
+character_id = "Teller"
+text = "Lily's breathing slows down."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_6l2hg"]
+script = ExtResource("3_ko6wx")
+character_id = "Lily"
+text = "...it was just a dream...that's all it was...ugh...everything's fine..."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_g7oej"]
+script = ExtResource("3_ko6wx")
+character_id = "Teller"
+text = "She remains in bed for a while, letting herself calm down and take a breather from that stressful nightmare."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_u2tva"]
+script = ExtResource("3_ko6wx")
+character_id = "Teller"
+text = "..."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_lqf37"]
+script = ExtResource("3_ko6wx")
+character_id = "Teller"
+text = "Then, her phone rings again."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ntf3o"]
+script = ExtResource("3_ko6wx")
+character_id = "Lily"
+text = "[i]What is it this time?[/i]"
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_lyobt"]
+script = ExtResource("3_ko6wx")
+character_id = "Lily"
+text = "..."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_1g5uw"]
+script = ExtResource("3_ko6wx")
+character_id = "Teller"
+text = "She stares at a single message from Clover."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_e2agj"]
+script = ExtResource("3_ko6wx")
+character_id = "Teller"
+text = "Horrifying, terrifying; she cries."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ljurw"]
+script = ExtResource("4_43vmw")
+metadata/_custom_type_script = "uid://brfsujgtv47v4"
+
+[sub_resource type="Resource" id="Resource_ov53a"]
+script = ExtResource("3_ko6wx")
+character_id = "Teller"
+text = "Rivley has gone missing from her home."
+metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[resource]
+script = ExtResource("5_w6ipd")
+events = Array[ExtResource("2_nhwsg")]([SubResource("Resource_3ine8"), SubResource("Resource_2f7h2"), SubResource("Resource_6l2hg"), SubResource("Resource_g7oej"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ljurw"), SubResource("Resource_ov53a")])
+characters = Array[ExtResource("1_wqoq4")]([SubResource("Resource_f3lw0"), SubResource("Resource_yunxr"), SubResource("Resource_vr2bo")])
+metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
