@@ -1,6 +1,7 @@
 extends Control
 
 var save_path = "user://options.save"
+var save_progress_path = "user://savefile.save"
 
 var sfx_volume = 0.0
 var music_volume = 0.0
@@ -82,7 +83,15 @@ func delete_save():
 		print("Save deleted")
 	else:
 		print("No save file found")
-
+	load_data()
+		
+func _on_delete_progress_pressed() -> void:
+	if FileAccess.file_exists(save_progress_path):
+		DirAccess.remove_absolute(save_progress_path)
+		print("Save progress deleted")
+	else:
+		print("No save progress file found")
+	load_data()
 
 func _on_button_pressed() -> void:
 	save()

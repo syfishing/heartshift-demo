@@ -1,54 +1,72 @@
 [gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://b3unrkw1b3ots"]
 
 [ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="1_4kndb"]
+[ext_resource type="Texture2D" uid="uid://ca54yysfm1krx" path="res://Assets/UIAssets/lily.png" id="2_0manu"]
 [ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_s4irw"]
+[ext_resource type="Texture2D" uid="uid://6v55veknts53" path="res://Assets/UIAssets/clover.png" id="3_4aewu"]
+[ext_resource type="Texture2D" uid="uid://bdfmj883kd0fy" path="res://Assets/UIAssets/StoryBGs/hotelbackground.png" id="3_5at38"]
 [ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="3_5p5lv"]
 [ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="4_5at38"]
+[ext_resource type="Script" uid="uid://bcjahdm17p8oh" path="res://Scripts/DataElements/Story/background.gd" id="4_egfjd"]
+[ext_resource type="Script" uid="uid://30jsstye3dlf" path="res://Scripts/DataElements/Story/move.gd" id="5_5at38"]
+[ext_resource type="Texture2D" uid="uid://cwjcacutlfx40" path="res://Assets/UIAssets/StoryBGs/art-fair.png" id="9_4aewu"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wcnqx"]
-load_path = "res://.godot/imported/lilyfingerportrait.png-d72cfd8008de6fe37b225339a0459e4c.ctex"
-
-[sub_resource type="Resource" id="Resource_f3lw0"]
+[sub_resource type="Resource" id="Resource_vr2bo"]
 script = ExtResource("1_4kndb")
 id = "Lily"
 name = "Lily"
 color = Color(0.7137255, 0.2627451, 0.40392157, 1)
 poses = Dictionary[String, Texture2D]({
-"lilyfinger": SubResource("CompressedTexture2D_wcnqx")
+"lilyidle": ExtResource("2_0manu")
 })
-default_pose = "lilyfinger"
+default_pose = "lilyidle"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
 [sub_resource type="Gradient" id="Gradient_3ine8"]
 interpolation_mode = 1
 colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ine8"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yunxr"]
 gradient = SubResource("Gradient_3ine8")
 
 [sub_resource type="Resource" id="Resource_yunxr"]
 script = ExtResource("1_4kndb")
 id = "Teller"
-name = ""
+name = "------"
 poses = Dictionary[String, Texture2D]({
-"invisible": SubResource("GradientTexture1D_3ine8")
+"invisible": SubResource("GradientTexture1D_yunxr")
 })
 default_pose = "invisible"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_6l2hg"]
-gradient = SubResource("Gradient_3ine8")
-
-[sub_resource type="Resource" id="Resource_vr2bo"]
+[sub_resource type="Resource" id="Resource_6l2hg"]
 script = ExtResource("1_4kndb")
 id = "Clover"
 name = "Clover"
 color = Color(0.9728525, 0.6835202, 0, 1)
 poses = Dictionary[String, Texture2D]({
-"invisible": SubResource("GradientTexture1D_6l2hg")
+"cloveridle": ExtResource("3_4aewu")
 })
-default_pose = "invisible"
+default_pose = "cloveridle"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_0manu"]
+script = ExtResource("4_egfjd")
+background = ExtResource("3_5at38")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
+
+[sub_resource type="Resource" id="Resource_egfjd"]
+script = ExtResource("5_5at38")
+character_id = "Clover"
+x_pos = 800.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
+[sub_resource type="Resource" id="Resource_4aewu"]
+script = ExtResource("5_5at38")
+character_id = "Lily"
+x_pos = 250.0
+is_flipped = true
+metadata/_custom_type_script = "uid://30jsstye3dlf"
 
 [sub_resource type="Resource" id="Resource_3ine8"]
 script = ExtResource("3_5p5lv")
@@ -56,7 +74,7 @@ character_id = "Teller"
 text = "After a long day at the fair, Lily and Clover headed to a hotel where they had booked rooms to stay in for the night."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
-[sub_resource type="Resource" id="Resource_6l2hg"]
+[sub_resource type="Resource" id="Resource_f2yly"]
 script = ExtResource("3_5p5lv")
 character_id = "Teller"
 text = "...Upon entering their new hotel room, Lily plumps into bed."
@@ -128,16 +146,49 @@ character_id = "Clover"
 text = "Yes, now go to bed. Our sleep schedule is messed up enough already..."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
+[sub_resource type="Resource" id="Resource_g5h6f"]
+script = ExtResource("4_egfjd")
+background = ExtResource("9_4aewu")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
+
+[sub_resource type="Resource" id="Resource_77a4f"]
+script = ExtResource("5_5at38")
+character_id = "Clover"
+x_pos = -350.0
+y_offset = 0.0
+is_flipped = true
+duration = 0.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
+[sub_resource type="Resource" id="Resource_declk"]
+script = ExtResource("5_5at38")
+character_id = "Lily"
+x_pos = -350.0
+y_offset = 0.0
+is_flipped = true
+duration = 0.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
 [sub_resource type="Resource" id="Resource_u2tva"]
 script = ExtResource("3_5p5lv")
 character_id = "Teller"
 text = "...The next day as the sun rose, they left the hotel and headed back to the art fair for day two."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
+[sub_resource type="Resource" id="Resource_w8etm"]
+script = ExtResource("5_5at38")
+character_id = "Lily"
+x_pos = 700.0
+y_offset = 0.0
+is_flipped = true
+duration = 3.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
 [sub_resource type="Resource" id="Resource_mun78"]
 script = ExtResource("3_5p5lv")
 character_id = "Teller"
 text = "Not much time after arriving, something catches Lily's eye."
+uninterruptible = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_jlhv0"]
@@ -146,10 +197,19 @@ character_id = "Lily"
 text = "...The booth is intact."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
+[sub_resource type="Resource" id="Resource_iba8g"]
+script = ExtResource("5_5at38")
+character_id = "Clover"
+x_pos = 200.0
+y_offset = 0.0
+is_flipped = true
+duration = 3.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
 [sub_resource type="Resource" id="Resource_vh6uw"]
 script = ExtResource("3_5p5lv")
 character_id = "Lily"
-text = "No scratches, no cracks, no damage."
+text = "There aren't any scratches or cracks, what about all the damage??"
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_cvj6d"]
@@ -214,6 +274,6 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("4_5at38")
-events = Array[ExtResource("2_s4irw")]([SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_u2tva"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_j0wbi"), SubResource("Resource_6wog7"), SubResource("Resource_g3yrs"), SubResource("Resource_uc00v"), SubResource("Resource_qdcmd"), SubResource("Resource_nbwj7")])
-characters = Array[ExtResource("1_4kndb")]([SubResource("Resource_f3lw0"), SubResource("Resource_yunxr"), SubResource("Resource_vr2bo")])
+events = Array[ExtResource("2_s4irw")]([SubResource("Resource_0manu"), SubResource("Resource_egfjd"), SubResource("Resource_4aewu"), SubResource("Resource_3ine8"), SubResource("Resource_f2yly"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_g5h6f"), SubResource("Resource_77a4f"), SubResource("Resource_declk"), SubResource("Resource_u2tva"), SubResource("Resource_w8etm"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_iba8g"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_j0wbi"), SubResource("Resource_6wog7"), SubResource("Resource_g3yrs"), SubResource("Resource_uc00v"), SubResource("Resource_qdcmd"), SubResource("Resource_nbwj7")])
+characters = Array[ExtResource("1_4kndb")]([SubResource("Resource_vr2bo"), SubResource("Resource_yunxr"), SubResource("Resource_6l2hg")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"

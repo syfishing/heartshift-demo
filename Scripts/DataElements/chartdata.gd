@@ -6,6 +6,7 @@ class_name ChartData
 @export var audio: AudioStream
 @export var cover: Texture2D
 @export var song_colour: Color
+@export var id: String
 
 #Label Tags
 @export var name: String

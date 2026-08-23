@@ -2,6 +2,8 @@ extends Control
 
 @export var reveal_at_end: bool = true
 var close_reveal: bool = false
+var score: float = 0
+var rank: String = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -38,27 +40,42 @@ func _process(delta: float) -> void:
 	%PassScore.text = str(rating_num["Pass"])
 	%FailScore.text = str(rating_num["Fail"])
 
-	var score = %PointManager.score
+	score = %PointManager.score
 	$Reveal/Rank/Points.text = "(" + str(score) + "%)"
 	if score >= 90:
-		$Reveal/Rank/Grade.text = "S"
+		rank = "S"
 	elif score >= 80:
-		$Reveal/Rank/Grade.text = "A"
+		rank = "A"
 	elif score >= 70:
-		$Reveal/Rank/Grade.text = "B"
+		rank = "B"
 	elif score >= 60:
-		$Reveal/Rank/Grade.text = "C"
+		rank = "C"
 	elif score >= 50:
-		$Reveal/Rank/Grade.text = "D"
+		rank = "D"
 	else:
-		$Reveal/Rank/Grade.text = "F"
-
+		rank = "F"
+	
+	$Reveal/Rank/Grade.text = rank
+	
+	
 func _on_reveal_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "RESET": return
 	print("help")
 	close_reveal = true
 	if anim_name == "CloseReveal":
 		print("left")
+		if Save.ranks.has($"../..".chart.id):
+			if score > Save.ranks[$"../..".chart.id].score:
+				Save.ranks[$"../..".chart.id].score = score
+				Save.ranks[$"../..".chart.id].rank = rank
+		else:
+			Save.ranks[$"../..".chart.id] = {
+				"score": score,
+				"rank": rank
+			}
+			if $"../..".from_story:
+				Save.unlock_next_stage()
+			
 		if $"../..".second_story:
 			var CoreStageScene: PackedScene = load("res://Prefabs/Scenes/Story.tscn")
 			var inst = CoreStageScene.instantiate()

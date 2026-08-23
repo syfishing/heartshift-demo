@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://brfsujgtv47v4" path="res://Scripts/DataElements/Story/delay.gd" id="5_31duc"]
 [ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="6_57g3v"]
 [ext_resource type="Texture2D" uid="uid://dutrtg5g6y6xh" path="res://Assets/UIAssets/StoryBGs/walkingbg.png" id="8_57g3v"]
+[ext_resource type="Texture2D" uid="uid://cwjcacutlfx40" path="res://Assets/UIAssets/StoryBGs/art-fair.png" id="11_ycdng"]
 
 [sub_resource type="Resource" id="Resource_vr2bo"]
 script = ExtResource("1_rd7qi")
@@ -133,23 +134,73 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 script = ExtResource("3_fvw0v")
 character_id = "Lily"
 text = "WE NEED TO RUN."
+typing_speed = 0.5
+uninterruptible = true
+auto_advance = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_qprvt"]
+script = ExtResource("4_1uo5j")
+character_id = "Lily"
+x_pos = -370.0
+y_offset = 0.0
+duration = 1.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
 
 [sub_resource type="Resource" id="Resource_2f7h2"]
 script = ExtResource("3_fvw0v")
 character_id = "Clover"
-text = "WOAH WOAH WAIT FOR ME!!"
+text = "WOAH WOAH NOT AGAIN!!!"
+typing_speed = 0.5
+auto_advance = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_5x2cc"]
+script = ExtResource("4_1uo5j")
+character_id = "Clover"
+x_pos = -370.0
+y_offset = 0.0
+duration = 1.5
+metadata/_custom_type_script = "uid://30jsstye3dlf"
 
 [sub_resource type="Resource" id="Resource_xw1pu"]
 script = ExtResource("5_31duc")
+time_seconds = 2.0
 metadata/_custom_type_script = "uid://brfsujgtv47v4"
+
+[sub_resource type="Resource" id="Resource_p3t80"]
+script = ExtResource("4_31duc")
+background = ExtResource("11_ycdng")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
 
 [sub_resource type="Resource" id="Resource_o6uit"]
 script = ExtResource("3_fvw0v")
 character_id = "Teller"
 text = "They arrive at the venue, luckily just in time for the opening."
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_ammmy"]
+script = ExtResource("4_1uo5j")
+character_id = "Clover"
+x_pos = 800.0
+y_offset = 0.0
+is_flipped = true
+duration = 2.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
+
+[sub_resource type="Resource" id="Resource_hp2y8"]
+script = ExtResource("5_31duc")
+time_seconds = 2.0
+metadata/_custom_type_script = "uid://brfsujgtv47v4"
+
+[sub_resource type="Resource" id="Resource_xm4qb"]
+script = ExtResource("4_1uo5j")
+character_id = "Lily"
+x_pos = 300.0
+y_offset = 0.0
+is_flipped = true
+duration = 2.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
 
 [sub_resource type="Resource" id="Resource_mun78"]
 script = ExtResource("3_fvw0v")
@@ -207,6 +258,6 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("6_57g3v")
-events = Array[ExtResource("2_mcdll")]([SubResource("Resource_sgc80"), SubResource("Resource_3ine8"), SubResource("Resource_ycdng"), SubResource("Resource_u2tva"), SubResource("Resource_e0kpp"), SubResource("Resource_g7oej"), SubResource("Resource_f3gh5"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_ishqp"), SubResource("Resource_rjk7c")])
+events = Array[ExtResource("2_mcdll")]([SubResource("Resource_sgc80"), SubResource("Resource_3ine8"), SubResource("Resource_ycdng"), SubResource("Resource_u2tva"), SubResource("Resource_e0kpp"), SubResource("Resource_g7oej"), SubResource("Resource_f3gh5"), SubResource("Resource_lqf37"), SubResource("Resource_ntf3o"), SubResource("Resource_lyobt"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_qprvt"), SubResource("Resource_2f7h2"), SubResource("Resource_5x2cc"), SubResource("Resource_xw1pu"), SubResource("Resource_p3t80"), SubResource("Resource_o6uit"), SubResource("Resource_ammmy"), SubResource("Resource_hp2y8"), SubResource("Resource_xm4qb"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_ishqp"), SubResource("Resource_rjk7c")])
 characters = Array[ExtResource("1_rd7qi")]([SubResource("Resource_vr2bo"), SubResource("Resource_yunxr"), SubResource("Resource_6l2hg")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"

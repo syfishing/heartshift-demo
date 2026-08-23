@@ -1220,6 +1220,7 @@ offset_right = -29.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+scroll_vertical = 646
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer4/Control/ScrollContainer" unique_id=1166203151]
@@ -1526,6 +1527,31 @@ icon = ExtResource("10_s47fv")
 icon_alignment = 1
 expand_icon = true
 
+[node name="DeleteProgress" type="Button" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container/Control" unique_id=426651390]
+layout_mode = 0
+offset_left = 371.0
+offset_top = 48.0
+offset_right = 519.0
+offset_bottom = 117.0
+theme_override_colors/icon_normal_color = Color(0.35791755, 0.07701317, 0.081304304, 1)
+theme_override_colors/icon_focus_color = Color(0.35791755, 0.07701317, 0.081304304, 1)
+theme_override_colors/icon_pressed_color = Color(0.2619769, 0.047667958, 0.050693028, 1)
+theme_override_colors/icon_hover_color = Color(0.5303597, 0.13557816, 0.14086664, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.35791755, 0.07701317, 0.081304304, 1)
+theme_override_colors/icon_disabled_color = Color(1, 1, 1, 0)
+theme_override_fonts/font = ExtResource("8_qp327")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_p6sxv")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_b7wb7")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_gnbbu")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_f7how")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ug6o4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fqo8u")
+text = "Reset Progress"
+icon = ExtResource("10_s47fv")
+icon_alignment = 1
+expand_icon = true
+
 [node name="Control" type="Control" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer" unique_id=876916301]
 layout_mode = 2
 
@@ -1586,5 +1612,6 @@ autoplay = &"TransitionIn"
 [connection signal="drag_ended" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control/SfxVolume" to="CanvasLayer4/Control" method="_on_sfx_volume_drag_ended"]
 [connection signal="drag_ended" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control2/MusicVolume" to="CanvasLayer4/Control" method="_on_music_volume_drag_ended"]
 [connection signal="pressed" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container/Control/DeleteSave" to="CanvasLayer4/Control" method="delete_save"]
+[connection signal="pressed" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container/Control/DeleteProgress" to="CanvasLayer4/Control" method="_on_delete_progress_pressed"]
 [connection signal="pressed" from="CanvasLayer4/ExitSaveButton" to="CanvasLayer4/Control" method="_on_button_pressed"]
 [connection signal="animation_finished" from="TransitionPlayer" to="CanvasLayer4/Control" method="_on_transition_player_animation_finished"]

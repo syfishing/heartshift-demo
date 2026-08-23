@@ -13,6 +13,7 @@ class_name CarouselContainer
 
 var current_chart: ChartData
 var selected_element
+var launching: bool = false
 
 const scene: PackedScene = preload("res://Prefabs/Scenes/Level.tscn") # change later!!
 
@@ -65,7 +66,7 @@ func _process(delta: float) -> void:
 
 
 func _on_up_button_pressed() -> void:
-	if selected_index == 0: return
+	if launching or selected_index == 0: return
 	$CarouselOffset.get_child(selected_index).toggle()
 	selected_index -= 1
 	$CarouselOffset.get_child(selected_index).toggle()
@@ -75,7 +76,7 @@ func _on_up_button_pressed() -> void:
 
 
 func _on_down_button_pressed() -> void:
-	if selected_index == position_offset_node.get_child_count() - 1: return
+	if launching or selected_index == position_offset_node.get_child_count() - 1: return
 	$CarouselOffset.get_child(selected_index).toggle()
 	selected_index += 1
 	$CarouselOffset.get_child(selected_index).toggle()
@@ -84,15 +85,17 @@ func _on_down_button_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_level_play_button_pressed() -> void:
+	if !current_chart or launching: return
+	launching = true
 	var inst
-	
+
 	if selected_element.special_level:
 		inst = selected_element.special_level.instantiate()
 	else:
 		inst = scene.instantiate()
 	#inst.story = story
 	inst.chart = current_chart
-	
+	inst.from_story = false
 	# Defer the swap to the next frame
 	call_deferred("_replace_scene", inst)
 	pass # Replace with function body.
@@ -100,18 +103,34 @@ func _on_level_play_button_pressed() -> void:
 
 func update_card():
 	selected_element = $CarouselOffset.get_child(selected_index)
-	
+
 	if !selected_element.chart: return
+
+	if selected_element.is_locked():
+		current_chart = null
+		%SongCover.texture = null
+		%LevelDifficultyLabel.text = ""
+		%LengthLabel.text = ""
+		%Grade.get_parent().modulate = Color(0.0, 0.0, 0.0, 0.0)
+		AudioHub.stop_music()
+		return
+
 	current_chart = selected_element.chart
 	%SongCover.texture = selected_element.chart.cover
 	%LevelDifficultyLabel.text = str(selected_element.chart.difficulty)
 	%LengthLabel.text = get_audio_length_formatted(selected_element.chart.audio)
-	
+
+	if Save.ranks.has(current_chart.id):
+		%Grade.get_parent().modulate = Color(1.0, 1.0, 1.0, 1.0)
+		%Grade.text = Save.ranks[current_chart.id].rank
+	else:
+		%Grade.get_parent().modulate = Color(0.0, 0.0, 0.0, 0.0)
+
 	var tween = create_tween()
 	tween.tween_property(%GradientBG, "self_modulate", selected_element.chart.song_colour, 0.25)
 	#%GradientBG.self_modulate = selected_element.chart.song_colour
 	AudioHub.play_music(selected_element.chart.audio)
-	
+
 
 func get_audio_length_formatted(stream: AudioStream):
 	if !stream: return "NaN"

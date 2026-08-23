@@ -839,6 +839,7 @@ notes = Array[ExtResource("2_6ofee")]([SubResource("Resource_f4teu"), SubResourc
 audio = ExtResource("1_es8ih")
 cover = ExtResource("2_ucxty")
 song_colour = Color(0.23529412, 0.30588236, 0.5764706, 1)
+id = "technicolor"
 name = "HZee - Technicolor"
 artist_name = "HZEE"
 charter_name = "HZEE"

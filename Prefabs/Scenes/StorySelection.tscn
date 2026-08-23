@@ -5,11 +5,14 @@
 [ext_resource type="Shader" uid="uid://lxiku6t8q08k" path="res://Assets/Shaders/Wave.gdshader" id="1_syosp"]
 [ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="2_4ru64"]
 [ext_resource type="Script" uid="uid://capsraxerbbg1" path="res://Scripts/Curve/curve_sketcher.gd" id="2_8lxbd"]
+[ext_resource type="Shader" uid="uid://c8ove5jxr8r46" path="res://Assets/Shaders/glitch.gdshader" id="2_80a2t"]
 [ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="3_flsia"]
 [ext_resource type="Texture2D" uid="uid://ddv0y3p33rdy5" path="res://Assets/UIAssets/circle.png" id="3_mjy6n"]
 [ext_resource type="Texture2D" uid="uid://dkjnkdcfmyf8k" path="res://Assets/UIAssets/dottedline.png" id="4_1572c"]
 [ext_resource type="Texture2D" uid="uid://dspben6w88v6d" path="res://Assets/UIAssets/SongCovers/pixel-cover-240x240.png" id="5_1r7ws"]
 [ext_resource type="Shader" uid="uid://bt23e3padhsoj" path="res://Assets/Shaders/bgtransition.gdshader" id="7_hfhdq"]
+[ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="7_r2lm4"]
+[ext_resource type="Shader" uid="uid://qc1puyfsk2q7" path="res://Assets/Shaders/Waveform.gdshader" id="8_2ifvf"]
 [ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="8_ntonj"]
 [ext_resource type="PackedScene" uid="uid://b0uh3xflk5wk7" path="res://Prefabs/Wave/storypoint.tscn" id="9_sgtdn"]
 [ext_resource type="Resource" uid="uid://dyq2jjd7qyfup" path="res://Scripts/Charts/Technicolor.tres" id="10_v1uep"]
@@ -25,6 +28,7 @@
 [ext_resource type="Resource" uid="uid://bsgyi85knrnef" path="res://Scripts/Charts/lastpulse.tres" id="21_48y5r"]
 [ext_resource type="PackedScene" uid="uid://b7jmlpusn5j51" path="res://Prefabs/Scenes/BossLevel.tscn" id="21_bbh37"]
 [ext_resource type="Resource" uid="uid://cieec8dc2jabw" path="res://Scripts/StoryResources/stage_5A.tres" id="23_bdsso"]
+[ext_resource type="Resource" uid="uid://bj3drwa4l2rhf" path="res://Scripts/Charts/Flutter.tres" id="25_88lke"]
 [ext_resource type="Resource" uid="uid://d078n7gglq3od" path="res://Scripts/StoryResources/stage_5B.tres" id="25_th8sy"]
 
 [sub_resource type="Environment" id="Environment_8lxbd"]
@@ -33,6 +37,24 @@ glow_enabled = true
 glow_normalized = true
 glow_strength = 1.5
 glow_bloom = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_puyuq"]
+shader = ExtResource("2_80a2t")
+shader_parameter/enabled = false
+shader_parameter/glitch_chance = 0.7600000361
+shader_parameter/glitch_speed = 10.52000049644012
+shader_parameter/slice_density = 14.0
+shader_parameter/slice_strength = 0.12
+shader_parameter/shake_strength = 0.008
+shader_parameter/chroma_offset = 0.006
+shader_parameter/noise_strength = 0.2
+shader_parameter/color_flash_strength = 0.4
+shader_parameter/scanline_strength = 0.18
+shader_parameter/local_warp_strength = 0.04
+shader_parameter/flip_chance = 0.1350000064125
+shader_parameter/modulate_affects_glitch = true
+shader_parameter/clip_outside = true
+shader_parameter/time_wrap = 120.0
 
 [sub_resource type="Shader" id="Shader_syosp"]
 code = "shader_type canvas_item;
@@ -448,12 +470,31 @@ shader_parameter/glow_threshold = 0.65
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sgtdn"]
 shader = ExtResource("1_syosp")
-shader_parameter/top_color = Color(0.7636256, 0.1680183, 1, 0)
+shader_parameter/top_color = Color(0.7094997, 0.17000002, 1, 0)
 shader_parameter/bottom_color = Color(0, 0, 0, 0.39200002)
 shader_parameter/wave_amp = 0.5
 shader_parameter/wave_size = 2.4800000703
 shader_parameter/wave_time_mul = 0.10000000149012
 shader_parameter/total_phases = 23
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1jvo8"]
+shader = ExtResource("8_2ifvf")
+shader_parameter/lines = 80
+shader_parameter/amplitude = 1.0
+shader_parameter/frequency = 0.1
+shader_parameter/intensity = 0.75
+shader_parameter/line_sharpness = 1.0
+shader_parameter/line_size = 0.8
+shader_parameter/fade = 0.1
+shader_parameter/rest_size = -0.2
+shader_parameter/edge = 0.0
+shader_parameter/speed = 0.5
+shader_parameter/color = Color(0.9165355, 0, 0.14508316, 1)
+shader_parameter/dot_matrix = false
+shader_parameter/dot_matriz_size = 80
+shader_parameter/speech_sim = false
+shader_parameter/speech_intensity = 0.8
+shader_parameter/progress = 0.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sgtdn"]
 
@@ -806,7 +847,6 @@ _data = {
 
 [node name="StorySelection" type="Node2D" unique_id=1295335304]
 script = ExtResource("1_sgtdn")
-storypointindex = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1182171406]
 environment = SubResource("Environment_8lxbd")
@@ -815,7 +855,9 @@ environment = SubResource("Environment_8lxbd")
 layer = 2
 
 [node name="Card" type="TextureRect" parent="Card Layer" unique_id=1984983618]
+unique_name_in_owner = true
 self_modulate = Color(1, 0.49803922, 1, 1)
+material = SubResource("ShaderMaterial_puyuq")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -851,6 +893,7 @@ expand_mode = 1
 
 [node name="SongCover" type="TextureRect" parent="Card Layer/Card" unique_id=1711415403]
 self_modulate = Color(0.46692407, 0.33480248, 0.9852893, 1)
+use_parent_material = true
 layout_mode = 0
 offset_left = 30.0
 offset_top = 19.0
@@ -908,6 +951,7 @@ expand_mode = 1
 
 [node name="InfoContainer" type="TextureRect" parent="Card Layer/Card" unique_id=1033615248]
 self_modulate = Color(0.032090727, 2.0553334e-06, 0.03209023, 1)
+use_parent_material = true
 layout_mode = 0
 offset_left = 300.0
 offset_top = 25.0
@@ -985,6 +1029,7 @@ uppercase = true
 
 [node name="Divider" type="TextureRect" parent="Card Layer/Card" unique_id=1340447236]
 self_modulate = Color(1, 0.49803922, 1, 1)
+use_parent_material = true
 layout_mode = 0
 offset_top = 194.0
 offset_right = 649.0
@@ -1007,6 +1052,32 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 36
 text = "\"Lorem Ipsum Doloret\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GradeBox" type="TextureRect" parent="Card Layer/Card" unique_id=702390827]
+self_modulate = Color(0.2086474, 0.19185418, 0.6471213, 1)
+layout_mode = 0
+offset_left = 625.0
+offset_top = -35.0
+offset_right = 695.0
+offset_bottom = 35.0
+scale = Vector2(0.855, 0.855)
+texture = ExtResource("2_4ru64")
+expand_mode = 1
+
+[node name="Grade" type="Label" parent="Card Layer/Card/GradeBox" unique_id=692850298]
+unique_name_in_owner = true
+self_modulate = Color(0.8, 0.64000005, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_r2lm4")
+theme_override_font_sizes/font_size = 51
+text = "-"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1034,6 +1105,7 @@ mouse_filter = 2
 layer = -1
 
 [node name="BG" type="ColorRect" parent="CanvasLayer" unique_id=1500265610]
+unique_name_in_owner = true
 z_as_relative = false
 material = SubResource("ShaderMaterial_sgtdn")
 anchors_preset = 15
@@ -1043,6 +1115,14 @@ offset_top = -48.0
 offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/BG" unique_id=996072307]
+visible = false
+material = SubResource("ShaderMaterial_1jvo8")
+layout_mode = 0
+offset_top = -74.0
+offset_right = 1153.0
+offset_bottom = 156.0
 
 [node name="RightButton" type="Button" parent="CanvasLayer" unique_id=1349503854]
 modulate = Color(1, 0.5573358, 1, 1)
@@ -1110,7 +1190,7 @@ width = 3.835
 default_color = Color(0.51065123, 0.36099148, 1, 1)
 script = ExtResource("2_8lxbd")
 curve_line = NodePath(".")
-point_nodes = [NodePath("../StoryPoints/StoryPoint"), NodePath("../StoryPoints/StoryPoint2"), NodePath("../StoryPoints/StoryPoint3"), NodePath("../StoryPoints/StoryPoint4"), NodePath("../StoryPoints/StoryPoint5")]
+point_nodes = [NodePath("../StoryPoints/StoryPoint"), NodePath("../StoryPoints/StoryPoint2"), NodePath("../StoryPoints/StoryPoint3"), NodePath("../StoryPoints/StoryPoint4")]
 handle_strength = 9.86
 
 [node name="StoryPointCursor" type="Node2D" parent="2DStuff" unique_id=1071556934]
@@ -1176,19 +1256,16 @@ position = Vector2(1176, 576)
 chart = ExtResource("18_sgc80")
 story = ExtResource("18_bbh37")
 story_quote = "Arrival"
+second_story = ExtResource("19_48y5r")
 
 [node name="StoryPoint4" parent="2DStuff/StoryPoints" unique_id=2026919033 instance=ExtResource("9_sgtdn")]
 position = Vector2(1476, 496)
-story = ExtResource("19_48y5r")
-story_quote = "Commotion"
-
-[node name="StoryPoint5" parent="2DStuff/StoryPoints" unique_id=810095983 instance=ExtResource("9_sgtdn")]
-position = Vector2(1776, 576)
+chart = ExtResource("25_88lke")
 story = ExtResource("20_sgc80")
 story_quote = "Uneasy Feelings"
 
-[node name="StoryPoint6" parent="2DStuff/StoryPoints" unique_id=110228382 instance=ExtResource("9_sgtdn")]
-position = Vector2(2376, 576)
+[node name="StoryPoint5" parent="2DStuff/StoryPoints" unique_id=110228382 instance=ExtResource("9_sgtdn")]
+position = Vector2(2076, 576)
 chart = ExtResource("21_48y5r")
 story = ExtResource("23_bdsso")
 story_quote = "Goodnight"

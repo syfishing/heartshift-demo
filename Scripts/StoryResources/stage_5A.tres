@@ -1,54 +1,69 @@
 [gd_resource type="Resource" script_class="StoryData" format=3 uid="uid://cieec8dc2jabw"]
 
 [ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="1_puyuq"]
+[ext_resource type="Texture2D" uid="uid://ca54yysfm1krx" path="res://Assets/UIAssets/lily.png" id="2_ttc4o"]
 [ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_y3e1o"]
+[ext_resource type="Texture2D" uid="uid://e1oopctow4qn" path="res://Assets/UIAssets/StoryBGs/windowsillbg.png" id="3_8ocep"]
 [ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="3_a04u4"]
+[ext_resource type="Texture2D" uid="uid://6v55veknts53" path="res://Assets/UIAssets/clover.png" id="3_wwukc"]
 [ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="4_8ocep"]
+[ext_resource type="Script" uid="uid://bcjahdm17p8oh" path="res://Scripts/DataElements/Story/background.gd" id="4_uppfw"]
+[ext_resource type="Script" uid="uid://30jsstye3dlf" path="res://Scripts/DataElements/Story/move.gd" id="5_8ocep"]
+[ext_resource type="Texture2D" uid="uid://cfknt2d3o7qlc" path="res://Assets/UIAssets/StoryBGs/phonebg.png" id="9_wwukc"]
+[ext_resource type="Script" uid="uid://brfsujgtv47v4" path="res://Scripts/DataElements/Story/delay.gd" id="10_nq6b0"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wcnqx"]
-load_path = "res://.godot/imported/lilyfingerportrait.png-d72cfd8008de6fe37b225339a0459e4c.ctex"
-
-[sub_resource type="Resource" id="Resource_f3lw0"]
+[sub_resource type="Resource" id="Resource_vr2bo"]
 script = ExtResource("1_puyuq")
 id = "Lily"
 name = "Lily"
 color = Color(0.7137255, 0.2627451, 0.40392157, 1)
 poses = Dictionary[String, Texture2D]({
-"lilyfinger": SubResource("CompressedTexture2D_wcnqx")
+"lilyidle": ExtResource("2_ttc4o")
 })
-default_pose = "lilyfinger"
+default_pose = "lilyidle"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
 [sub_resource type="Gradient" id="Gradient_3ine8"]
 interpolation_mode = 1
 colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ine8"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yunxr"]
 gradient = SubResource("Gradient_3ine8")
 
 [sub_resource type="Resource" id="Resource_yunxr"]
 script = ExtResource("1_puyuq")
 id = "Teller"
-name = ""
+name = "------"
 poses = Dictionary[String, Texture2D]({
-"invisible": SubResource("GradientTexture1D_3ine8")
+"invisible": SubResource("GradientTexture1D_yunxr")
 })
 default_pose = "invisible"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_6l2hg"]
-gradient = SubResource("Gradient_3ine8")
-
-[sub_resource type="Resource" id="Resource_vr2bo"]
+[sub_resource type="Resource" id="Resource_6l2hg"]
 script = ExtResource("1_puyuq")
 id = "Clover"
 name = "Clover"
 color = Color(0.9728525, 0.6835202, 0, 1)
 poses = Dictionary[String, Texture2D]({
-"invisible": SubResource("GradientTexture1D_6l2hg")
+"cloveridle": ExtResource("3_wwukc")
 })
-default_pose = "invisible"
+default_pose = "cloveridle"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_puyuq"]
+script = ExtResource("4_uppfw")
+background = ExtResource("3_8ocep")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
+
+[sub_resource type="Resource" id="Resource_xqauk"]
+script = ExtResource("5_8ocep")
+character_id = "Lily"
+x_pos = 300.0
+y_offset = 700.0
+is_flipped = true
+duration = 0.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
 
 [sub_resource type="Resource" id="Resource_uppfw"]
 script = ExtResource("3_a04u4")
@@ -84,12 +99,29 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 script = ExtResource("3_a04u4")
 character_id = "Lily"
 text = "[i]I'll talk to Rivley tomorrow. If something happened to her i will--[/i]"
+uninterruptible = true
+auto_advance = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_bod6y"]
+script = ExtResource("4_uppfw")
+background = ExtResource("9_wwukc")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
+
+[sub_resource type="Resource" id="Resource_yuhc3"]
+script = ExtResource("5_8ocep")
+character_id = "Lily"
+x_pos = -350.0
+y_offset = 0.0
+is_flipped = true
+duration = 0.0
+metadata/_custom_type_script = "uid://30jsstye3dlf"
 
 [sub_resource type="Resource" id="Resource_j3qgw"]
 script = ExtResource("3_a04u4")
 character_id = "Teller"
 text = "Her phone rings."
+uninterruptible = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_jo5hb"]
@@ -156,28 +188,50 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 script = ExtResource("3_a04u4")
 character_id = "Lily"
 text = "RIVLEY!! NO!!!"
+uninterruptible = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [sub_resource type="Resource" id="Resource_xv537"]
 script = ExtResource("3_a04u4")
 character_id = "Teller"
 text = "Rivley is having a heart attack."
+typing_speed = 0.5
+uninterruptible = true
+auto_advance = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_t7p1d"]
+script = ExtResource("10_nq6b0")
+metadata/_custom_type_script = "uid://brfsujgtv47v4"
 
 [sub_resource type="Resource" id="Resource_u8gkh"]
 script = ExtResource("3_a04u4")
 character_id = "Teller"
 text = "Stabilize the nightmare. Protect the dream."
+typing_speed = 0.5
+uninterruptible = true
+auto_advance = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_847k1"]
+script = ExtResource("10_nq6b0")
+metadata/_custom_type_script = "uid://brfsujgtv47v4"
 
 [sub_resource type="Resource" id="Resource_6yyv1"]
 script = ExtResource("3_a04u4")
 character_id = "Teller"
 text = "There's no time left. Good luck."
+typing_speed = 0.5
+uninterruptible = true
+auto_advance = true
 metadata/_custom_type_script = "uid://xixdgkhinwgb"
+
+[sub_resource type="Resource" id="Resource_m5fse"]
+script = ExtResource("10_nq6b0")
+metadata/_custom_type_script = "uid://brfsujgtv47v4"
 
 [resource]
 script = ExtResource("4_8ocep")
-events = Array[ExtResource("2_y3e1o")]([SubResource("Resource_uppfw"), SubResource("Resource_ttc4o"), SubResource("Resource_wwukc"), SubResource("Resource_nq6b0"), SubResource("Resource_ku4r5"), SubResource("Resource_mt0t0"), SubResource("Resource_j3qgw"), SubResource("Resource_jo5hb"), SubResource("Resource_k5xsg"), SubResource("Resource_0bcd6"), SubResource("Resource_0tqak"), SubResource("Resource_2osi0"), SubResource("Resource_wyvfq"), SubResource("Resource_4nr7t"), SubResource("Resource_v8hvg"), SubResource("Resource_2jhbp"), SubResource("Resource_dwqht"), SubResource("Resource_2a4pa"), SubResource("Resource_xv537"), SubResource("Resource_u8gkh"), SubResource("Resource_6yyv1")])
-characters = Array[ExtResource("1_puyuq")]([SubResource("Resource_f3lw0"), SubResource("Resource_yunxr"), SubResource("Resource_vr2bo")])
+events = Array[ExtResource("2_y3e1o")]([SubResource("Resource_puyuq"), SubResource("Resource_xqauk"), SubResource("Resource_uppfw"), SubResource("Resource_ttc4o"), SubResource("Resource_wwukc"), SubResource("Resource_nq6b0"), SubResource("Resource_ku4r5"), SubResource("Resource_mt0t0"), SubResource("Resource_bod6y"), SubResource("Resource_yuhc3"), SubResource("Resource_j3qgw"), SubResource("Resource_jo5hb"), SubResource("Resource_k5xsg"), SubResource("Resource_0bcd6"), SubResource("Resource_0tqak"), SubResource("Resource_2osi0"), SubResource("Resource_wyvfq"), SubResource("Resource_4nr7t"), SubResource("Resource_v8hvg"), SubResource("Resource_2jhbp"), SubResource("Resource_dwqht"), SubResource("Resource_2a4pa"), SubResource("Resource_xv537"), SubResource("Resource_t7p1d"), SubResource("Resource_u8gkh"), SubResource("Resource_847k1"), SubResource("Resource_6yyv1"), SubResource("Resource_m5fse")])
+characters = Array[ExtResource("1_puyuq")]([SubResource("Resource_vr2bo"), SubResource("Resource_yunxr"), SubResource("Resource_6l2hg")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"

@@ -13,14 +13,21 @@ var active: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if chart:
-		item_colour = chart.song_colour
-		$SongName.text = chart.name
+		if is_locked():
+			item_colour = Color("1f1f1f")
+			$SongName.text = "???"
+		else:
+			item_colour = chart.song_colour
+			$SongName.text = chart.name
 	initial_item_colour = item_colour
 	item_colour = Color("1f1f1f")
-	
-	
+
+
 	deactivate()
 	pass # Replace with function body.
+
+func is_locked() -> bool:
+	return get_index() > Save.stage
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

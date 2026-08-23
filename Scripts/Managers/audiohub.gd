@@ -16,6 +16,8 @@ var sfx_volume = 0.0
 var music_volume = 0.0
 var note_speed = 50.0
 
+var _fade_tweens: Dictionary = {}
+
 func _enter_tree() -> void:
 	pass
 
@@ -29,7 +31,16 @@ func _ready():
 
 
 func fade_volume(player: AudioStreamPlayer, from_db: float, to_db: float, duration: float) -> void:
+	# Cancel any fade already running on this player so rapid, repeated
+	# calls (e.g. fast scrolling through a song list) can't pile up and
+	# fire their delayed .play()/.stop() out of order.
+	if _fade_tweens.has(player):
+		var old_tween: Tween = _fade_tweens[player]
+		if old_tween and old_tween.is_valid():
+			old_tween.kill()
+
 	var tween := create_tween()
+	_fade_tweens[player] = tween
 	player.volume_db = from_db
 	tween.tween_property(player, "volume_db", to_db, duration)
 	await tween.finished
