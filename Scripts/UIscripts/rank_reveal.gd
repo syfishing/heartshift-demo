@@ -4,6 +4,7 @@ extends Control
 var close_reveal: bool = false
 var score: float = 0
 var rank: String = ""
+var song_completed: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -11,11 +12,12 @@ func _ready():
 	%ArtistLabel.text = $"../..".chart.artist_name
 	%ChartingLabel.text = $"../..".chart.charter_name
 	%SongCover.texture = $"../..".chart.cover
-	
+
 
 func _on_music_finished():
 	print("Music ended!")
-	
+	song_completed = true
+
 	if reveal_at_end:
 		%RevealPlayer.play("RankReveal")
 	
@@ -64,28 +66,30 @@ func _on_reveal_player_animation_finished(anim_name: StringName) -> void:
 	close_reveal = true
 	if anim_name == "CloseReveal":
 		print("left")
-		if Save.ranks.has($"../..".chart.id):
-			if score > Save.ranks[$"../..".chart.id].score:
-				Save.ranks[$"../..".chart.id].score = score
-				Save.ranks[$"../..".chart.id].rank = rank
-		else:
-			Save.ranks[$"../..".chart.id] = {
-				"score": score,
-				"rank": rank
-			}
-			if $"../..".from_story:
-				Save.unlock_next_stage()
-			
-		if $"../..".second_story:
-			var CoreStageScene: PackedScene = load("res://Prefabs/Scenes/Story.tscn")
-			var inst = CoreStageScene.instantiate()
-			inst.story = $"../..".second_story
-			inst.chart = null
+		if song_completed:
+			if Save.ranks.has($"../..".chart.id):
+				if score > Save.ranks[$"../..".chart.id].score:
+					Save.ranks[$"../..".chart.id].score = score
+					Save.ranks[$"../..".chart.id].rank = rank
+			else:
+				Save.ranks[$"../..".chart.id] = {
+					"score": score,
+					"rank": rank
+				}
+				if $"../..".from_story:
+					Save.unlock_next_stage()
 
-			# Defer the swap to the next frame
-			call_deferred("_replace_scene", inst)
-		else:
-			get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
+			if $"../..".second_story:
+				var CoreStageScene: PackedScene = load("res://Prefabs/Scenes/Story.tscn")
+				var inst = CoreStageScene.instantiate()
+				inst.story = $"../..".second_story
+				inst.chart = null
+
+				# Defer the swap to the next frame
+				call_deferred("_replace_scene", inst)
+				return
+
+		get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
 	pass # Replace with function body.
 
 
