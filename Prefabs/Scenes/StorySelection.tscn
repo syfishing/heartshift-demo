@@ -1169,26 +1169,29 @@ second_story = ExtResource("16_np72h")
 position = Vector2(876, 496)
 chart = ExtResource("10_v1uep")
 story = ExtResource("17_n1mdb")
-story_quote = "Arrival"
+story_quote = "Inbound"
 
 [node name="StoryPoint3" parent="2DStuff/StoryPoints" unique_id=1834699676 instance=ExtResource("9_sgtdn")]
 position = Vector2(1176, 576)
 chart = ExtResource("18_sgc80")
 story = ExtResource("18_bbh37")
+story_quote = "Arrival"
 
 [node name="StoryPoint4" parent="2DStuff/StoryPoints" unique_id=2026919033 instance=ExtResource("9_sgtdn")]
 position = Vector2(1476, 496)
 story = ExtResource("19_48y5r")
+story_quote = "Commotion"
 
-[node name="StoryPoint5" parent="2DStuff/StoryPoints" unique_id=1150236573 instance=ExtResource("9_sgtdn")]
+[node name="StoryPoint5" parent="2DStuff/StoryPoints" unique_id=810095983 instance=ExtResource("9_sgtdn")]
 position = Vector2(1776, 576)
 story = ExtResource("20_sgc80")
+story_quote = "Uneasy Feelings"
 
 [node name="StoryPoint6" parent="2DStuff/StoryPoints" unique_id=110228382 instance=ExtResource("9_sgtdn")]
 position = Vector2(2376, 576)
 chart = ExtResource("21_48y5r")
 story = ExtResource("23_bdsso")
-story_quote = "idk"
+story_quote = "Goodnight"
 special_level = ExtResource("21_bbh37")
 second_story = ExtResource("25_th8sy")
 
