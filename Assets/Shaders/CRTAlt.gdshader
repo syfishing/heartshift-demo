@@ -29,7 +29,7 @@ uniform float mask_scale    : hint_range(0.5, 4.0) = 1.0; // bigger = chunkier t
 uniform float chroma_offset_px : hint_range(0.0, 6.0) = 1.6; // RGB split in pixels
 uniform float luma_smear_px    : hint_range(0.0, 8.0) = 2.2; // horizontal smear
 uniform float jitter_px        : hint_range(0.0, 8.0) = 1.8; // per-line horizontal jitter
-uniform float wobble_px        : hint_range(0.0, 10.0) = 1.5; // slow wave wobble
+uniform float wobble_px        : hint_range(0.0, 10.0) = 0.0; // slow wave wobble
 
 uniform float tape_noise       : hint_range(0.0, 1.0) = 0.22; // grain + specks
 uniform float tape_lines       : hint_range(0.0, 1.0) = 0.35; // horizontal “tracking” lines

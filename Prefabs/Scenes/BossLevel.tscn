@@ -633,7 +633,7 @@ shader_parameter/mask_scale = 0.5
 shader_parameter/chroma_offset_px = 0.8570000407075
 shader_parameter/luma_smear_px = 0.0
 shader_parameter/jitter_px = 0.0
-shader_parameter/wobble_px = 0.78000003705
+shader_parameter/wobble_px = 0.0
 shader_parameter/tape_noise = 0.22
 shader_parameter/tape_lines = 0.1050000049875
 shader_parameter/roll_speed = 0.1
@@ -1828,6 +1828,18 @@ tracks/38/keys = {
 "update": 0,
 "values": [1.0, 1.0, 3.0]
 }
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("../PauseMenu/CRT/Shatter:visible")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 37.2, 38.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_iw33s"]
 length = 0.001
@@ -2298,6 +2310,18 @@ tracks/38/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("../PauseMenu/CRT/Shatter:visible")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x0pjv"]
@@ -3311,6 +3335,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Shatter" type="ColorRect" parent="PauseMenu/CRT" unique_id=1095969783]
+visible = false
 material = SubResource("ShaderMaterial_3hl7e")
 layout_mode = 1
 anchors_preset = 15
