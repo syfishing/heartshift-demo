@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://48h1a5vjudcp" path="res://Scripts/DataElements/characterdata.gd" id="1_ishqp"]
 [ext_resource type="Script" uid="uid://drnm4mcklq0n8" path="res://Scripts/DataElements/Story/storyevent.gd" id="2_rjk7c"]
 [ext_resource type="Script" uid="uid://xixdgkhinwgb" path="res://Scripts/DataElements/Story/dialogue.gd" id="3_6imve"]
+[ext_resource type="Texture2D" uid="uid://blldw52qlmaq5" path="res://Assets/UIAssets/StoryBGs/commotion.png" id="3_d60nu"]
 [ext_resource type="Script" uid="uid://b6hjkup5kcs0g" path="res://Scripts/DataElements/storydata.gd" id="4_d60nu"]
+[ext_resource type="Script" uid="uid://bcjahdm17p8oh" path="res://Scripts/DataElements/Story/background.gd" id="4_j33vm"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wcnqx"]
 load_path = "res://.godot/imported/lilyfingerportrait.png-d72cfd8008de6fe37b225339a0459e4c.ctex"
@@ -49,6 +51,11 @@ poses = Dictionary[String, Texture2D]({
 })
 default_pose = "invisible"
 metadata/_custom_type_script = "uid://48h1a5vjudcp"
+
+[sub_resource type="Resource" id="Resource_1h4ag"]
+script = ExtResource("4_j33vm")
+background = ExtResource("3_d60nu")
+metadata/_custom_type_script = "uid://bcjahdm17p8oh"
 
 [sub_resource type="Resource" id="Resource_3ine8"]
 script = ExtResource("3_6imve")
@@ -196,6 +203,6 @@ metadata/_custom_type_script = "uid://xixdgkhinwgb"
 
 [resource]
 script = ExtResource("4_d60nu")
-events = Array[ExtResource("2_rjk7c")]([SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_lyobt"), SubResource("Resource_xdvd7"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_j0wbi"), SubResource("Resource_g3yrs"), SubResource("Resource_6wog7")])
+events = Array[ExtResource("2_rjk7c")]([SubResource("Resource_1h4ag"), SubResource("Resource_3ine8"), SubResource("Resource_6l2hg"), SubResource("Resource_u2tva"), SubResource("Resource_lqf37"), SubResource("Resource_lyobt"), SubResource("Resource_xdvd7"), SubResource("Resource_1g5uw"), SubResource("Resource_e2agj"), SubResource("Resource_ov53a"), SubResource("Resource_ljurw"), SubResource("Resource_2f7h2"), SubResource("Resource_g7oej"), SubResource("Resource_xw1pu"), SubResource("Resource_o6uit"), SubResource("Resource_mun78"), SubResource("Resource_jlhv0"), SubResource("Resource_vh6uw"), SubResource("Resource_cvj6d"), SubResource("Resource_ckh3w"), SubResource("Resource_8ajhl"), SubResource("Resource_0od15"), SubResource("Resource_j0wbi"), SubResource("Resource_g3yrs"), SubResource("Resource_6wog7")])
 characters = Array[ExtResource("1_ishqp")]([SubResource("Resource_f3lw0"), SubResource("Resource_yunxr"), SubResource("Resource_vr2bo")])
 metadata/_custom_type_script = "uid://b6hjkup5kcs0g"
