@@ -5,6 +5,7 @@ extends Node2D
 @export var start_delay: float = 0.0
 @export var start_immediate: bool = true
 @export var from_story: bool = true
+@export var ignore_note_speed: bool = false
 var origin_index: int = -1
 
 # Called when the node enters the scene tree for the first time.
@@ -13,6 +14,9 @@ func _ready() -> void:
 	AudioHub.stop_menu_music()
 	if get_node("%IntroPlayer"):
 		%IntroPlayer.play("Intro")
+	if !ignore_note_speed:
+		$Conductor.load_data()
+	
 	
 	if start_immediate == false: return
 	

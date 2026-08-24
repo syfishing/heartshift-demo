@@ -7,6 +7,7 @@ var menu_to_change : String
 @onready var default_button = $CanvasLayer2/ButtonSelect/Story
 
 func _ready() -> void:
+	AudioHub.load_data()
 	AudioHub.play_menu_music(menu_theme, false)
 	default_button.grab_focus()
 

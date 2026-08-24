@@ -5724,7 +5724,7 @@ position = Vector2(-20, -20)
 script = ExtResource("22_mitl1")
 note_scene = ExtResource("23_xkypx")
 dummy_note_scene = ExtResource("24_dqge4")
-travel_time = 8.0
+travel_time = 9.0
 dummy_spawn_interval = 1.0
 sine_decay_rate = 0.2
 

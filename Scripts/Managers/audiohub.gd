@@ -39,7 +39,7 @@ func fade_volume(player: AudioStreamPlayer, from_db: float, to_db: float, durati
 		if old_tween and old_tween.is_valid():
 			old_tween.kill()
 
-	var tween := create_tween()
+	var tween = create_tween()
 	_fade_tweens[player] = tween
 	player.volume_db = from_db
 	tween.tween_property(player, "volume_db", to_db, duration)
@@ -48,20 +48,20 @@ func fade_volume(player: AudioStreamPlayer, from_db: float, to_db: float, durati
 
 func play_track(audio: AudioStream):
 	trackmusicplayer.stream = audio
-	trackmusicplayer.volume_db = -40
+	trackmusicplayer.volume_db = -60
 	trackmusicplayer.play()
-	fade_volume(trackmusicplayer, -40, music_volume, 0.8)
+	fade_volume(trackmusicplayer, -60, music_volume, 0.8)
 
 
 func toggle_trackpause():
 	if pause_state == false:
 		track_position = trackmusicplayer.get_playback_position()
 		trackmusicplayer.stop()
-		await fade_volume(trackmusicplayer, trackmusicplayer.volume_db, -40, 0.5)
+		await fade_volume(trackmusicplayer, trackmusicplayer.volume_db, -60, 0.5)
 		pause_state = true
 	else:
 		
-		await fade_volume(trackmusicplayer, -40, music_volume, 0.5)
+		await fade_volume(trackmusicplayer, -60, music_volume, 0.5)
 		trackmusicplayer.play(track_position)
 		pause_state = false
 
@@ -74,13 +74,13 @@ func stop_track():
 
 func play_music(audio: AudioStream):
 	bgmusicplayer.stream = audio
-	bgmusicplayer.volume_db = -40
+	bgmusicplayer.volume_db = 60
 	bgmusicplayer.play()
-	fade_volume(bgmusicplayer, -40, music_volume, 1.0)
+	fade_volume(bgmusicplayer, -60, music_volume, 1.0)
 
 
 func stop_music():
-	await fade_volume(bgmusicplayer, bgmusicplayer.volume_db, -40, 0.7)
+	await fade_volume(bgmusicplayer, bgmusicplayer.volume_db, -60, 0.7)
 	bgmusicplayer.stop()
 
 
@@ -90,16 +90,16 @@ func play_menu_music(audio: AudioStream, stopping: bool):
 
 	if stopping == false:
 		menumusicplayer.stream = audio
-		menumusicplayer.volume_db = -40
+		menumusicplayer.volume_db = -60
 		menumusicplayer.play()
-		fade_volume(menumusicplayer, -40, music_volume, 1.0)
+		fade_volume(menumusicplayer, -60, music_volume, 1.0)
 	else:
-		await fade_volume(menumusicplayer, menumusicplayer.volume_db, -40, 0.7)
+		await fade_volume(menumusicplayer, menumusicplayer.volume_db, -60, 0.7)
 		menumusicplayer.stop()
 
 
 func stop_menu_music():
-	await fade_volume(menumusicplayer, menumusicplayer.volume_db, -40, 0.7)
+	await fade_volume(menumusicplayer, menumusicplayer.volume_db, -60, 0.7)
 	menumusicplayer.stop()
 
 

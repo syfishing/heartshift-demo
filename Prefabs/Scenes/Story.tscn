@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c16dq5r6hiybv"]
 
 [ext_resource type="Script" uid="uid://bs3plsrjgdgq6" path="res://Scripts/UIscripts/story.gd" id="1_6ijvs"]
-[ext_resource type="Resource" uid="uid://d078n7gglq3od" path="res://Scripts/StoryResources/stage_5B.tres" id="2_3ine8"]
+[ext_resource type="Resource" uid="uid://coud6c7s687hj" path="res://Scripts/StoryResources/prologue_1.tres" id="2_3ine8"]
 [ext_resource type="Resource" uid="uid://bimc017r6vabh" path="res://Scripts/Charts/DreamOn.tres" id="3_f3lw0"]
 [ext_resource type="Shader" uid="uid://bt23e3padhsoj" path="res://Assets/Shaders/bgtransition.gdshader" id="3_wcnqx"]
 [ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="4_3ine8"]

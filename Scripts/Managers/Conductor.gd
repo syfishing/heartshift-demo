@@ -27,10 +27,9 @@ var dummy_spawn_count: int = 0
 const NOTE_HIT_X: float = 250.0
 const NOTE_SPAWN_SCREENS: float = 8.0
 const LANE_Y: Array[float] = [175.0, 325.0, 475.0]
-
 var song_time: float = 0.0
-
 var _pending_notes: Array[Array] = [[], [], []]
+var save_path = "user://options.save"
 
 func _ready() -> void:
 	process_priority = -100
@@ -176,3 +175,19 @@ func remove_active_note(note: Node) -> void:
 	#just removes the note from the active notes and updates the curve sketcher
 	active_notes.erase(note)
 	$"../Curve".point_nodes = active_notes
+
+
+func load_data():
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open(save_path, FileAccess.READ)
+
+		file.get_var() # sfx_volume
+		file.get_var() # music_volume
+
+		file.get_var(true) # first_lane
+		file.get_var(true) # second_lane
+		file.get_var(true) # third_lane
+		file.get_var(true) # select
+
+		var note_speed: float = file.get_var()
+		travel_time = 15 - note_speed

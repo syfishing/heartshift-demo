@@ -1808,6 +1808,7 @@ _data = {
 
 [sub_resource type="SystemFont" id="SystemFont_ahhwt"]
 font_names = PackedStringArray("Fira Code")
+subpixel_positioning = 0
 
 [sub_resource type="Shader" id="Shader_7uy4l"]
 resource_local_to_scene = true
@@ -4519,6 +4520,7 @@ script = ExtResource("1_jn8fe")
 chart = ExtResource("2_jn8fe")
 start_delay = 1.0
 start_immediate = false
+ignore_note_speed = true
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
 unique_name_in_owner = true
@@ -6560,7 +6562,7 @@ position = Vector2(-20, -20)
 script = ExtResource("23_miva0")
 note_scene = ExtResource("24_qljct")
 dummy_note_scene = ExtResource("25_a3lii")
-travel_time = 8.0
+travel_time = 11.0
 dummy_spawn_interval = 1.0
 sine_decay_rate = 0.2
 

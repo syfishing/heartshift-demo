@@ -37,9 +37,9 @@ Broken realities are unrecoverable by us.
 
 ## Credits
 
-- Syfish // Main writer and developer
+- Syfish // Main writer and a developer
 
-- Haseeb // Awesome developer and (music) artist
+- Haseeb // Lead developer, cover artist and the main music artist
 
 - Rory // Character art
 

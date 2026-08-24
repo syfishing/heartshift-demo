@@ -32,6 +32,8 @@ func _unhandled_input(event):
 
 
 func update_key_text():
+	%SaveButton.self_modulate = Color("631415")
+	
 	var events = InputMap.action_get_events(action)
 	if events.is_empty():
 		text = "None"

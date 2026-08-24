@@ -2697,6 +2697,7 @@ height = 110
 [node name="DemoLevel" type="Node2D" unique_id=253205913]
 script = ExtResource("1_ivveo")
 chart = ExtResource("2_jqkyv")
+ignore_note_speed = true
 
 [node name="PointManager" type="Node" parent="." unique_id=1475372008]
 unique_name_in_owner = true

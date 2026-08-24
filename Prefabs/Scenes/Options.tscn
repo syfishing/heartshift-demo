@@ -1220,7 +1220,7 @@ offset_right = -29.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_vertical = 646
+scroll_vertical = 100
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer4/Control/ScrollContainer" unique_id=1166203151]
@@ -1478,7 +1478,8 @@ theme_override_constants/separation = 50
 [node name="Control" type="Control" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container" unique_id=951438919]
 layout_mode = 2
 
-[node name="InputMapper" type="SpinBox" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container/Control" unique_id=316052164]
+[node name="NoteSpeed" type="SpinBox" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container/Control" unique_id=316052164]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -1490,6 +1491,9 @@ offset_top = -8.0
 offset_bottom = 23.0
 grow_horizontal = 0
 grow_vertical = 2
+min_value = 1.0
+max_value = 8.0
+value = 6.0
 
 [node name="Label" type="Label" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container/Control" unique_id=579285172]
 layout_mode = 1
@@ -1555,7 +1559,52 @@ expand_icon = true
 [node name="Control" type="Control" parent="CanvasLayer4/Control/ScrollContainer/VBoxContainer" unique_id=876916301]
 layout_mode = 2
 
-[node name="ExitSaveButton" type="Button" parent="CanvasLayer4" unique_id=1447574358]
+[node name="SaveButton" type="Button" parent="CanvasLayer4" unique_id=276337208]
+unique_name_in_owner = true
+self_modulate = Color(0.39, 0.077999994, 0.08319992, 1)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -244.0
+offset_top = -252.0
+offset_right = -68.359985
+offset_bottom = -176.13
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_colors/icon_disabled_color = Color(1, 1, 1, 0)
+theme_override_fonts/font = ExtResource("8_qp327")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxEmpty_p6sxv")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_b7wb7")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_gnbbu")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_f7how")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ug6o4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fqo8u")
+text = "Save"
+icon = ExtResource("10_s47fv")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="CanvasLayer4/SaveButton" unique_id=1241428096]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_qp327")
+theme_override_font_sizes/font_size = 21
+text = "Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="CanvasLayer4" unique_id=1447574358]
 unique_name_in_owner = true
 anchors_preset = 3
 anchor_left = 1.0
@@ -1582,7 +1631,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_gnbbu")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_f7how")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_ug6o4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_fqo8u")
-text = "Save & Exit?"
+text = "Exit?"
 icon = ExtResource("10_s47fv")
 icon_alignment = 1
 expand_icon = true
@@ -1613,5 +1662,6 @@ autoplay = &"TransitionIn"
 [connection signal="drag_ended" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/AudioSettings/Container/Control2/MusicVolume" to="CanvasLayer4/Control" method="_on_music_volume_drag_ended"]
 [connection signal="pressed" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container/Control/DeleteSave" to="CanvasLayer4/Control" method="delete_save"]
 [connection signal="pressed" from="CanvasLayer4/Control/ScrollContainer/VBoxContainer/GameSettings/Container/Control/DeleteProgress" to="CanvasLayer4/Control" method="_on_delete_progress_pressed"]
-[connection signal="pressed" from="CanvasLayer4/ExitSaveButton" to="CanvasLayer4/Control" method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer4/SaveButton" to="CanvasLayer4/Control" method="_on_save_button_pressed"]
+[connection signal="pressed" from="CanvasLayer4/ExitButton" to="CanvasLayer4/Control" method="_on_button_pressed"]
 [connection signal="animation_finished" from="TransitionPlayer" to="CanvasLayer4/Control" method="_on_transition_player_animation_finished"]
