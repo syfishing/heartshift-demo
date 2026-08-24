@@ -2,56 +2,49 @@
 The demo version for HEARTSHIFT- a rhythm-visual novel hybrid game about a dream machine.
 
 ## Important note
-This is a team project performed by 4 people: Syfish, Haseeb, Jolly and Spooky.
-Spooky has not worked on the project yet however.
-This project is submitted to https://macondo.hackclub.com too, currently with separate projects for every team member until macondo has implemented team projects.
+This is a team project performed by 3 people: Syfish, Haseeb and Jolly- with asset contributions from many friends including reviewing and music/art/photography!
+This project is submitted to https://macondo.hackclub.com too!
 
 ## Story/writing note
 Syfish's writing of the story, lore, characters, worldbuilding etc is tracked with Hack Club's Hackatime but is put into the .gitignore file to prevent spoiling the entire future story as we plan to progressively release the story during our Early Access period on Steam after we release our demo (this repo!) on itch.io. We have permission for this from the organisers at Macondo after asking them! Dialogue in the demo will probably still be in the repo though as it will actually be inside the demo!
 
-## Development Checklist
+## Story
 
-### Core Gameplay & Engine
-- [x] **Rework Wave Engine**: Transition away from trigonometric formulas to a more user-friendly system.
-- [ ] **Wave Editor**: Develop an in-game tool for creating/editing waves (no Desmos required).
-- [x] **Rhythm Mechanics**:
-    - [x] Timed "hits" with input leeway.
-    - [x] Hold notes.
-    - [ ] Unique/Experimental note types(?).
-- [x] **Sync System**: Ensure the wave engine is perfectly synced to the music track.
-- [x] **Dynamic Features**:
-    - [x] Mid-song scroll speed changes(possibly?).
-    - [x] Effect/Visual triggers for specific song segments.
-    - [x] Make the wave calm down into a regularised, smoother pattern toward the end of a song.
-    - [x] Pause functionality.
-- [ ] **Scoring & Feedback**:
-    - [x] Point system and ranking logic (S/A/B/C).
-    - [x] Accuracy labels (e.g. Dreamy, Dreamy, Great, Good, Fail).
-    - [ ] Difficulty labeling and life gauges.
+Experience the story of a girl pursuing the creation of art, yet not ready to face the events that await in the timeline of this story- through the lens of a 'game' on your computer that simulates and contains an entire reality. You are not the only observer. There are no dialogue options, only the linear passage of time.
 
-### Narrative & Creative
-- [x] **Game Vision**: Define the core theme and story "hook."
-- [x] **Character Design**: Conceptualize and design the main cast.
-- [x] **World Building**: Establish the lore, setting, and history.
-- [x] **Story Outline**: Develop the plot using the **Snowflake Method** (iterative depth).
+Art is a beautiful, human expression of the self.
+Creation is fulfilling and gives meaning to life.
+...
+Obsession can go too far, and cause the decay of self.
 
-### Systems & UI
-- [x] **Visual Novel Engine**: System for dialogue, sprites, and narrative delivery.
-- [x] **Hybrid Integration**: Seamless flow between Story → Song → Mid-song Dialogue → Story.
-- [ ] **Menu Suite**:
-    - [x] Main Menu.
-    - [ ] Settings Panel (Volume controls, offset calibration, etc.).
-    - [x] Story Mode Level Selector.
-    - [x] Song Select Menu (Free play for official and community/custom songs).
+If this reality isn't real, would you hold on to your dreams?
 
-### Future / Optional
-- [ ] **Beat Analyzer**: ML model integration for automated rhythm analysis.
-- [ ] **Internal Documentation**: Comprehensive guide on wave engine internals for team collaboration.
+## Rhythm
 
----
+Hit the notes on a waveform and calm it down to stabilize this dreamy world- you don't want destructive Nightmares to occur, do you?
 
-## Game Flow
-1. **Story** (Visual Novel/VN Engine)
-2. **Song** (Rhythm Engine)
-3. **Mid-song events** (Integrated VN/Rhythm)
-4. **Results** (Ranking & Accuracy)
+Every 'stage' in the story comes with a story scene followed by a song to go through!
+Nightmares are caused by instability, but don't worry! The Dreamscaper Program has safety guards that prevent YOUR poor performance from causing Nightmares.
+However, we can't say the same for Nightmares caused by... other sources.
+
+Replay songs you like in the 'Rhythm Play' menu and challenge yourself to improve your scores and ranks!
+
+With many more rhythm features and mechanics to come in future updates, there is a lot to look forward to!
+
+Keep the Dreamscaper program under control, alright?
+Broken realities are unrecoverable by us.
+
+
+## Credits
+
+- Syfish // Main writer and developer
+
+- Haseeb // Awesome developer and (music) artist
+
+- Rory // Character art
+
+- Sebi, Thrice and Heart // Reviewing and feedback
+
+- Mialo May // Featured musician
+
+- Minute // Photographer
