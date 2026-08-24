@@ -11,6 +11,7 @@ extends Node2D
 
 @export var second_story: StoryData
 @export var special_level: PackedScene
+var origin_index: int = -1
 
 const scene: PackedScene = preload("res://Prefabs/Scenes/Level.tscn") # change later!!
 
@@ -188,7 +189,8 @@ func _on_transition_player_animation_finished(anim_name: StringName) -> void:
 	#inst.story = story
 	
 	inst.chart = chart
-	
+	inst.origin_index = origin_index
+
 	if second_story:
 		inst.second_story = second_story
 	

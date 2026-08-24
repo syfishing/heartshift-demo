@@ -27,7 +27,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func is_locked() -> bool:
-	return get_index() > Save.stage
+	return !Save.ranks.has(chart.id)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

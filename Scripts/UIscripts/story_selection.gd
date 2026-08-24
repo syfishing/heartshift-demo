@@ -116,7 +116,7 @@ func _on_leave_player_animation_finished(anim_name: StringName) -> void:
 		var inst = CoreStageScene.instantiate()
 		inst.story = current_point.story
 		inst.chart = current_point.chart
-		#inst.origin_index = storypointindex
+		inst.origin_index = storypointindex
 
 		if current_point.special_level:
 			inst.special_level = current_point.special_level

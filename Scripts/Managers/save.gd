@@ -9,8 +9,8 @@ var ranks = {}
 func _enter_tree() -> void:
 	load_data()
 
-func unlock_next_stage() -> void:
-	stage += 1
+func unlock_next_stage(index: int) -> void:
+	stage = max(stage, index + 1)
 	save()
 
 

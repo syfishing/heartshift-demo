@@ -76,8 +76,9 @@ func _on_reveal_player_animation_finished(anim_name: StringName) -> void:
 					"score": score,
 					"rank": rank
 				}
-				if $"../..".from_story:
-					Save.unlock_next_stage()
+
+			if $"../..".from_story and $"../..".origin_index >= 0:
+				Save.unlock_next_stage($"../..".origin_index)
 
 			if $"../..".second_story:
 				var CoreStageScene: PackedScene = load("res://Prefabs/Scenes/Story.tscn")
