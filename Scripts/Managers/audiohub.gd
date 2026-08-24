@@ -76,7 +76,7 @@ func play_music(audio: AudioStream):
 	bgmusicplayer.stream = audio
 	bgmusicplayer.volume_db = -40
 	bgmusicplayer.play()
-	fade_volume(bgmusicplayer, -40, 0, 1.0)
+	fade_volume(bgmusicplayer, -40, music_volume, 1.0)
 
 
 func stop_music():
@@ -135,6 +135,7 @@ func load_data():
 		$TypingPlayer.volume_db = sfx_volume
 		$BGMusicStreamPlayer.volume_db = music_volume
 		$MainMenuMusicStreamPlayer.volume_db = music_volume
+		$TrackStreamPlayer.volume_db = music_volume
 
 	else:
 		return
