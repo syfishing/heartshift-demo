@@ -71,7 +71,7 @@ func _play_event() -> void:
 	if _event_idx >= story.events.size():
 		#get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
 		AudioHub.play_note_sfx()
-		$TransitionPlayer.play("Exit_Transition")
+		%TransitionPlayer.play("Exit_Transition")
 		return
 	
 	var event := story.events[_event_idx]
@@ -171,6 +171,12 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func _on_transition_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "Exit_Transition_Menu":
+		AudioHub.stop_music()
+		get_tree().change_scene_to_file("res://Prefabs/Scenes/StorySelection.tscn")
+	
+	
+	
 	if anim_name != "Exit_Transition": return
 	
 	AudioHub.stop_music()
@@ -204,7 +210,7 @@ func _on_transition_player_animation_finished(anim_name: StringName) -> void:
 func _replace_scene(new_scene):
 	await get_tree().process_frame  # wait one frame so the scene unlocks
 
-	var tree := get_tree()
+	var tree = get_tree()
 
 	tree.current_scene.free()
 	tree.root.add_child(new_scene)

@@ -6643,6 +6643,7 @@ texture = ExtResource("31_yvriw")
 
 [connection signal="animation_finished" from="EffectsAndReveal/RankReveal/RevealPlayer" to="EffectsAndReveal/RankReveal" method="_on_reveal_player_animation_finished"]
 [connection signal="button_down" from="EffectsAndReveal/CRT/Crash/Button" to="EffectsAndReveal/RankReveal" method="_on_button_button_down"]
+[connection signal="animation_finished" from="Pause Menu/AnimationPlayer" to="Pause Menu" method="_on_animation_player_animation_finished"]
 [connection signal="pressed" from="Pause Menu/Button/ExitLevel" to="Pause Menu" method="_on_exit_level_pressed"]
 [connection signal="pressed" from="Pause Menu/Button/ResumeLevel" to="Pause Menu" method="_on_resume_level_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Pause" to="Pause Menu" method="_on_pause_pressed"]

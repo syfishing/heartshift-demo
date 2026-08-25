@@ -6,6 +6,11 @@
 [ext_resource type="Shader" uid="uid://bt23e3padhsoj" path="res://Assets/Shaders/bgtransition.gdshader" id="3_wcnqx"]
 [ext_resource type="FontFile" uid="uid://clmh6tmtne2rs" path="res://Assets/UIAssets/Fonts/ShareTechMono-Regular.ttf" id="4_3ine8"]
 [ext_resource type="Texture2D" uid="uid://inugfemttnyn" path="res://Assets/UIAssets/roundeddiamond.png" id="4_f3lw0"]
+[ext_resource type="Texture2D" uid="uid://mf066mxeigh4" path="res://Assets/UIAssets/roundedrect.png" id="5_u2tva"]
+[ext_resource type="Script" uid="uid://bvpi3ib7pts4r" path="res://Scripts/UIscripts/pause_menu.gd" id="5_vr2bo"]
+[ext_resource type="Script" uid="uid://b0mpekyu727g3" path="res://Scripts/UIscripts/mainmenubutton.gd" id="6_ijre4"]
+[ext_resource type="Texture2D" uid="uid://d2llc20i0deox" path="res://Assets/UIAssets/key.png" id="6_lqf37"]
+[ext_resource type="Texture2D" uid="uid://casl3er5w4asi" path="res://Assets/UIAssets/roundedrectmenubig2.png" id="7_u2tva"]
 
 [sub_resource type="Gradient" id="Gradient_lgay8"]
 colors = PackedColorArray(1, 0.5686275, 0.2627451, 1, 0.19215687, 0.36078432, 0.99215686, 1)
@@ -17,6 +22,18 @@ fill_to = Vector2(0, 1)
 [sub_resource type="FontVariation" id="FontVariation_3ine8"]
 base_font = ExtResource("4_3ine8")
 variation_transform = Transform2D(1, 0.2, 0, 1, 0, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u2tva"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cvj6d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lqf37"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jlhv0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vh6uw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ckh3w"]
 
 [sub_resource type="Gradient" id="Gradient_o6uit"]
 
@@ -284,6 +301,33 @@ tracks/1/keys = {
 "values": [SubResource("GradientTexture2D_np72h")]
 }
 
+[sub_resource type="Animation" id="Animation_u2tva"]
+resource_name = "Exit_Transition_Menu"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Transition/TransitionRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Transition/TransitionRect:material:shader_parameter/transition_texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("GradientTexture2D_np72h")]
+}
+
 [sub_resource type="Animation" id="Animation_6l2hg"]
 resource_name = "Intro_Transition"
 tracks/0/type = "value"
@@ -341,9 +385,299 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ijre4"]
 _data = {
 &"Exit_Transition": SubResource("Animation_wcnqx"),
+&"Exit_Transition_Menu": SubResource("Animation_u2tva"),
 &"Intro_Transition": SubResource("Animation_6l2hg"),
 &"RESET": SubResource("Animation_vr2bo")
 }
+
+[sub_resource type="Animation" id="Animation_734hs"]
+resource_name = "MenuClose"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:offset_transform_position_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 1.5),
+"transitions": PackedFloat32Array(0.34151018, 0.34151006),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Button:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.033333335, 0.5233334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Transition/CRT:material:shader_parameter/source_softness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.350000064125, 0.250000011875]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Transition/CRT:material:shader_parameter/brightness")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.750000035625, 1.4950000710125]
+}
+
+[sub_resource type="Animation" id="Animation_7uy4l"]
+resource_name = "MenuOpen"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:offset_transform_position_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 1.5),
+"transitions": PackedFloat32Array(0.34151006, 1),
+"update": 0,
+"values": [Vector2(-1, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Button:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.51, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Transition/CRT:material:shader_parameter/brightness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.4950000710125, 0.750000035625]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Transition/CRT:material:shader_parameter/source_softness")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.250000011875, 1.350000064125]
+}
+
+[sub_resource type="Animation" id="Animation_3td5b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:offset_transform_position_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Button:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Transition/CRT:material:shader_parameter/brightness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.4950000710125]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Transition/CRT:material:shader_parameter/source_softness")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.250000011875]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lqf37"]
+_data = {
+&"MenuClose": SubResource("Animation_734hs"),
+&"MenuOpen": SubResource("Animation_7uy4l"),
+&"RESET": SubResource("Animation_3td5b")
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ntf3o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lyobt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1g5uw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e2agj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ov53a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ljurw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2f7h2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g7oej"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xw1pu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o6uit"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mun78"]
+
+[sub_resource type="SystemFont" id="SystemFont_jlhv0"]
+font_names = PackedStringArray("Fira Code")
+subpixel_positioning = 0
+
+[sub_resource type="Shader" id="Shader_7uy4l"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+// License: CC0
+// Author: Ultipuk, https://ultipuk.xyz
+// Link: https://godotshaders.com/shader/transition-with-a-pattern-texture/
+
+// Uncomment this if you want to use background texture
+//#define USE_BACKGROUND_TEXTURE
+
+// Uncomment this if you want to use closing transition,
+// starting removing the pattern after the progress reaches 0.5
+//#define USE_CLOSING
+
+// Uncomment this if you want to remove tile distortion.
+// The result will look weird in the editor, and the tiles will have some clipping. Intended for viewport-sized canvases.
+//#define REMOVE_DISTORTION
+
+/** Actual transition progress. You want to change it from a script. */
+uniform float progress: hint_range(0.0, 1.0) = 0.0;
+/** The width of the transition as a fraction of the UV. */
+uniform float width: hint_range(0.0, 1.0) = 0.5;
+
+/** Actual pattern. You can use a texture with an ALPHA channel.
+*   This color is modulated, so you can use modulate parameter to change the color. */
+uniform sampler2D tile_texture: source_color, repeat_disable;
+/** Tile size in pixels. */
+uniform float tile_pixel_size = 32.0;
+/** The maximum scale of the tile on the edge of the transition window. */
+uniform float tile_grown_scale: hint_range(0.0, 16.0) = 2.0;
+
+/** Transition uses red channel to determine when the part should be visible. */
+uniform sampler2D transition_texture;
+
+#ifdef USE_BACKGROUND_TEXTURE
+/** Simple background texture that will be mixed with the tile texture. It can be a SubViewport texture or just a gradient. */
+uniform sampler2D background_texture: source_color;
+#endif
+
+void fragment() {
+	vec2 tile_uv = vec2(
+		fract(FRAGCOORD.x / tile_pixel_size),
+		fract(FRAGCOORD.y / tile_pixel_size)
+	);
+	
+#ifdef REMOVE_DISTORTION
+	vec2 tiles = vec2(1.0 / SCREEN_PIXEL_SIZE / tile_pixel_size);
+	vec2 transition_uv = ceil(UV * tiles) / tiles;
+#else
+	vec2 transition_uv = UV;
+#endif
+	
+#ifdef USE_CLOSING
+	float part, transition;
+	
+	if (progress > 0.5) {
+		part = (1.0 - (progress - 0.5) * 2.0) * (1.0 + 2.0 * width) - width;
+		transition = 1.0 - texture(transition_texture, transition_uv).r;
+	} else {
+		part = 2.0 * progress * (1.0 + 2.0 * width) - width;
+		transition = texture(transition_texture, transition_uv).r;
+	}
+#else
+	float part = progress * (1.0 + 2.0 * width) - width;
+	float transition = texture(transition_texture, transition_uv).r;
+#endif
+	
+	float window = max(0.0, min(1.0, width + (part - transition) / width));
+	
+	tile_uv = tile_uv * 2.0 - 1.0;
+	tile_uv /= window * tile_grown_scale;
+	tile_uv = (tile_uv + 1.0) * 0.5;
+	
+#ifdef USE_BACKGROUND_TEXTURE
+	vec4 tile = texture(tile_texture, tile_uv) * texture(background_texture, UV);
+#else
+	vec4 tile = texture(tile_texture, tile_uv);
+#endif
+	
+	COLOR *= tile;
+}"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3td5b"]
+load_path = "res://.godot/imported/roundeddiamond.png-4ff04342e72f0a31fd057d2828b6b1a3.ctex"
+
+[sub_resource type="Gradient" id="Gradient_vh6uw"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j2t6j"]
+gradient = SubResource("Gradient_vh6uw")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cvj6d"]
+shader = SubResource("Shader_7uy4l")
+shader_parameter/progress = 0.0
+shader_parameter/width = 0.5
+shader_parameter/tile_texture = SubResource("CompressedTexture2D_3td5b")
+shader_parameter/tile_pixel_size = 32.0
+shader_parameter/tile_grown_scale = 2.0
+shader_parameter/transition_texture = SubResource("GradientTexture2D_j2t6j")
 
 [node name="Story" type="Node2D" unique_id=1874266194]
 script = ExtResource("1_6ijvs")
@@ -379,7 +713,6 @@ layer = 2
 
 [node name="Dialogue" type="Control" parent="CanvasLayer" unique_id=289329162]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -448,6 +781,50 @@ text = "Someone"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=2123068266]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Pause" type="Button" parent="CanvasLayer/Control" unique_id=1482975110]
+unique_name_in_owner = true
+self_modulate = Color(0.179842, 0.22810352, 0.7026473, 1)
+layout_mode = 0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 88.0
+offset_bottom = 80.0
+offset_transform_enabled = true
+theme_override_styles/normal = SubResource("StyleBoxEmpty_u2tva")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_cvj6d")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_lqf37")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jlhv0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_vh6uw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ckh3w")
+icon = ExtResource("5_u2tva")
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Pause" unique_id=946328316]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_lqf37")
+expand_mode = 1
+
 [node name="Transition" type="CanvasLayer" parent="." unique_id=2081132424]
 layer = 3
 
@@ -459,6 +836,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CRT" type="ColorRect" parent="Transition" unique_id=406904433]
 material = SubResource("ShaderMaterial_wcnqx")
@@ -470,7 +848,197 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="TransitionPlayer" type="AnimationPlayer" parent="." unique_id=1087218705]
+unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_ijre4")
 autoplay = &"Intro_Transition"
 
+[node name="Pause Menu" type="CanvasLayer" parent="." unique_id=738391578]
+layer = 4
+script = ExtResource("5_vr2bo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Pause Menu" unique_id=1049391567]
+libraries/ = SubResource("AnimationLibrary_lqf37")
+autoplay = &"RESET"
+
+[node name="ColorRect" type="ColorRect" parent="Pause Menu" unique_id=1618973722]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -71.0
+offset_right = 576.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(-1, 0)
+mouse_filter = 2
+color = Color(0, 0, 0, 0.6509804)
+
+[node name="Button" type="Control" parent="Pause Menu" unique_id=1774109413]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ExitLevel" type="Button" parent="Pause Menu/Button" unique_id=637159461]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 180.0
+offset_top = 287.0
+offset_right = -637.0
+offset_bottom = -285.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_right = NodePath("../ResumeLevel")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ntf3o")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_lyobt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1g5uw")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e2agj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ov53a")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ljurw")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_2f7h2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_g7oej")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xw1pu")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_o6uit")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mun78")
+script = ExtResource("6_ijre4")
+rest_color = Color(0.47727227, 0.5514406, 1, 1)
+
+[node name="StorySelectText" type="Label" parent="Pause Menu/Button/ExitLevel" unique_id=1242425312]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+mouse_filter = 1
+theme_override_fonts/font = SubResource("SystemFont_jlhv0")
+theme_override_font_sizes/font_size = 45
+text = "Exit Level?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Highlight" type="TextureRect" parent="Pause Menu/Button/ExitLevel" unique_id=695225764]
+self_modulate = Color(0.23921569, 0.36862746, 1, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("7_u2tva")
+expand_mode = 1
+
+[node name="ResumeLevel" type="Button" parent="Pause Menu/Button" unique_id=470898895]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 638.0
+offset_top = 287.0
+offset_right = -179.0
+offset_bottom = -285.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_left = NodePath("../ExitLevel")
+focus_neighbor_right = NodePath(".")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ntf3o")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_lyobt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1g5uw")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e2agj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ov53a")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ljurw")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_2f7h2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_g7oej")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xw1pu")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_o6uit")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mun78")
+script = ExtResource("6_ijre4")
+rest_color = Color(0.9426243, 0.7692707, 0.06626069, 1)
+
+[node name="StorySelectText" type="Label" parent="Pause Menu/Button/ResumeLevel" unique_id=1707089966]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+mouse_filter = 1
+theme_override_fonts/font = SubResource("SystemFont_jlhv0")
+theme_override_font_sizes/font_size = 45
+text = "Resume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Highlight" type="TextureRect" parent="Pause Menu/Button/ResumeLevel" unique_id=955407508]
+self_modulate = Color(0.9997932, 0.8499523, 0, 1)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("7_u2tva")
+expand_mode = 1
+
+[node name="DummyButton" type="Button" parent="Pause Menu/Button" unique_id=717266462]
+unique_name_in_owner = true
+top_level = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -257.0
+offset_top = -15.0
+offset_right = -113.0
+offset_bottom = 16.0
+grow_vertical = 2
+text = "I hate my life"
+
+[node name="ColorRect2" type="ColorRect" parent="Pause Menu" unique_id=1585906311]
+self_modulate = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_cvj6d")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InputBlock" type="ColorRect" parent="Pause Menu" unique_id=982514789]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -78.0
+offset_right = 576.0
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="pressed" from="CanvasLayer/Control/Pause" to="Pause Menu" method="_on_pause_pressed"]
 [connection signal="animation_finished" from="TransitionPlayer" to="." method="_on_transition_player_animation_finished"]
+[connection signal="animation_finished" from="Pause Menu/AnimationPlayer" to="Pause Menu" method="_on_animation_player_animation_finished"]
+[connection signal="pressed" from="Pause Menu/Button/ExitLevel" to="Pause Menu" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause Menu/Button/ResumeLevel" to="Pause Menu" method="_on_resume_level_pressed"]
