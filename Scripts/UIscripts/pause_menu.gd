@@ -2,7 +2,11 @@ extends CanvasLayer
 
 var menu_open: bool = false
 var closing: bool = false
-var closing: bool = false
+
+@onready var reveal_player = get_node_or_null("%RevealPlayer")
+@onready var transition_player = get_node_or_null("%TransitionPlayer")
+@onready var stars = get_node_or_null("%Stars")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,13 +24,6 @@ func _process(delta: float) -> void:
 
 
 func openmenu() -> void:
-
-	if menu_open:
-		return
-
-	menu_open = true
-	%Pause.disabled = true
-
 	if menu_open:
 		return
 
@@ -35,12 +32,8 @@ func openmenu() -> void:
 	$InputBlock.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	AudioHub.toggle_trackpause()
 	
-	if %Stars: 
-		%Stars.speed_scale = 0
-	
-	
-	if %Stars: 
-		%Stars.speed_scale = 0
+	if stars:
+		stars.speed_scale = 0
 	
 	$AnimationPlayer.play("MenuOpen")
 	$Button/ResumeLevel.grab_focus()
@@ -60,16 +53,10 @@ func _on_resume_level_pressed() -> void:
 	$AnimationPlayer.play("MenuClose")
 	
 func transitionout() -> void:
-	#%Transition.visible = true
-	#%TransitionPlayer.play("TransitionOut")
-	if %RevealPlayer:
-		%RevealPlayer.play("CloseReveal")
-	elif %TransitionPlayer:
-		%TransitionPlayer.play("Exit_Transition_Menu")
-	if %RevealPlayer:
-		%RevealPlayer.play("CloseReveal")
-	elif %TransitionPlayer:
-		%TransitionPlayer.play("Exit_Transition_Menu")
+	if reveal_player:
+		reveal_player.play("CloseReveal")
+	elif transition_player:
+		transition_player.play("Exit_Transition_Menu")
 	$AnimationPlayer.play("MenuClose")
 	pass
 
@@ -84,19 +71,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		closing = false
 		AudioHub.toggle_trackpause()
 	
-		if %Stars: %Stars.speed_scale = 1
-		
-		%Pause.disabled = false
-		%DummyButton.grab_focus()
-
-
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "MenuClose":
-		menu_open = false
-		closing = false
-		AudioHub.toggle_trackpause()
-	
-		if %Stars: %Stars.speed_scale = 1
+		if stars: stars.speed_scale = 1
 		
 		%Pause.disabled = false
 		%DummyButton.grab_focus()

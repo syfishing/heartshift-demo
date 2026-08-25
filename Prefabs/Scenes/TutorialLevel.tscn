@@ -1592,90 +1592,79 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/saturation")
+tracks/0/path = NodePath("ColorRect:offset_transform_position_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.9666667, 2),
-"transitions": PackedFloat32Array(0.34151018, 0.34151018),
-"update": 0,
-"values": [0.0, 2.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.9666667, 2),
-"transitions": PackedFloat32Array(0.34151018, 0.34151018),
-"update": 0,
-"values": [1.34000006365, 1.4950000710125]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/source_softness")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.9666667, 2),
-"transitions": PackedFloat32Array(0.34151018, 0.34151012),
-"update": 0,
-"values": [1.1950000567625, 0.250000011875]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("ColorRect:offset_transform_position_ratio")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0.5, 1.5),
 "transitions": PackedFloat32Array(0.34151018, 0.34151006),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(-1, 0)]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Button:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Button:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0.033333335, 0.5233334),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.750000035625, 1.4950000710125]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/source_softness")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.750000035625, 0.250000011875]
+}
 
 [sub_resource type="Animation" id="Animation_7uy4l"]
+resource_local_to_scene = true
 resource_name = "MenuOpen"
 length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/saturation")
+tracks/0/path = NodePath("ColorRect:offset_transform_position_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.34151018, 1),
+"times": PackedFloat32Array(0.5, 1.5),
+"transitions": PackedFloat32Array(0.34151006, 1),
 "update": 0,
-"values": [2.0, 0.0]
+"values": [Vector2(-1, 0), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
+tracks/1/path = NodePath("Button:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.34151018, 1),
+"times": PackedFloat32Array(1.51, 2),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [1.4950000710125, 1.34000006365]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -1685,33 +1674,21 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.34151012, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.250000011875, 1.1950000567625]
+"values": [0.250000011875, 0.750000035625]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ColorRect:offset_transform_position_ratio")
+tracks/3/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.5, 1.5),
-"transitions": PackedFloat32Array(0.34151006, 1),
-"update": 0,
-"values": [Vector2(-1, 0), Vector2(0, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Button:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(1.51, 2),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [1.4950000710125, 0.750000035625]
 }
 
 [sub_resource type="Animation" id="Animation_3td5b"]
@@ -1719,26 +1696,26 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/saturation")
+tracks/0/path = NodePath("ColorRect:offset_transform_position_ratio")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [2.0]
+"values": [Vector2(-1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
+tracks/1/path = NodePath("Button:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.4950000710125]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -1755,26 +1732,14 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ColorRect:offset_transform_position_ratio")
+tracks/3/path = NodePath("../EffectsAndReveal/CRT:material:shader_parameter/brightness")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-1, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Button:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [1.4950000710125]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_734hs"]
@@ -1810,7 +1775,7 @@ _data = {
 font_names = PackedStringArray("Fira Code")
 subpixel_positioning = 0
 
-[sub_resource type="Shader" id="Shader_7uy4l"]
+[sub_resource type="Shader" id="Shader_vvjpn"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -1893,23 +1858,23 @@ void fragment() {
 	COLOR *= tile;
 }"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3td5b"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fvfs0"]
 load_path = "res://.godot/imported/roundeddiamond.png-4ff04342e72f0a31fd057d2828b6b1a3.ctex"
 
 [sub_resource type="Gradient" id="Gradient_734hs"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_j2t6j"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h80l0"]
 gradient = SubResource("Gradient_734hs")
 fill_to = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8sjmd"]
-shader = SubResource("Shader_7uy4l")
+shader = SubResource("Shader_vvjpn")
 shader_parameter/progress = 0.0
 shader_parameter/width = 0.5
-shader_parameter/tile_texture = SubResource("CompressedTexture2D_3td5b")
+shader_parameter/tile_texture = SubResource("CompressedTexture2D_fvfs0")
 shader_parameter/tile_pixel_size = 32.0
 shader_parameter/tile_grown_scale = 2.0
-shader_parameter/transition_texture = SubResource("GradientTexture2D_j2t6j")
+shader_parameter/transition_texture = SubResource("GradientTexture2D_h80l0")
 
 [sub_resource type="Animation" id="Animation_r3bk5"]
 length = 0.001
@@ -6562,7 +6527,7 @@ position = Vector2(-20, -20)
 script = ExtResource("23_miva0")
 note_scene = ExtResource("24_qljct")
 dummy_note_scene = ExtResource("25_a3lii")
-travel_time = 11.0
+travel_time = 15.0
 dummy_spawn_interval = 1.0
 sine_decay_rate = 0.2
 
