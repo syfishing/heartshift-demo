@@ -2,6 +2,7 @@ extends CanvasLayer
 
 var menu_open: bool = false
 var closing: bool = false
+var closing: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,8 +26,18 @@ func openmenu() -> void:
 
 	menu_open = true
 	%Pause.disabled = true
+
+	if menu_open:
+		return
+
+	menu_open = true
+	%Pause.disabled = true
 	$InputBlock.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	AudioHub.toggle_trackpause()
+	
+	if %Stars: 
+		%Stars.speed_scale = 0
+	
 	
 	if %Stars: 
 		%Stars.speed_scale = 0
@@ -55,12 +66,28 @@ func transitionout() -> void:
 		%RevealPlayer.play("CloseReveal")
 	elif %TransitionPlayer:
 		%TransitionPlayer.play("Exit_Transition_Menu")
+	if %RevealPlayer:
+		%RevealPlayer.play("CloseReveal")
+	elif %TransitionPlayer:
+		%TransitionPlayer.play("Exit_Transition_Menu")
 	$AnimationPlayer.play("MenuClose")
 	pass
 
 
 func _on_pause_pressed() -> void:
 	openmenu()
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "MenuClose":
+		menu_open = false
+		closing = false
+		AudioHub.toggle_trackpause()
+	
+		if %Stars: %Stars.speed_scale = 1
+		
+		%Pause.disabled = false
+		%DummyButton.grab_focus()
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

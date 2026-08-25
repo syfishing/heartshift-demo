@@ -50,6 +50,7 @@ func fade_volume(player: AudioStreamPlayer, from_db: float, to_db: float, durati
 
 func play_track(audio: AudioStream):
 	track_position = 0.0
+	track_position = 0.0
 	trackmusicplayer.stream = audio
 	trackmusicplayer.volume_db = -60
 
@@ -89,6 +90,11 @@ func toggle_trackpause() -> void:
 			_resume_pending = true
 			trackmusicplayer.stop()
 			fade_volume(trackmusicplayer, trackmusicplayer.volume_db, -60, 0.5)
+		if trackmusicplayer.playing:
+			track_position = _current_track_position()
+			_resume_pending = true
+			trackmusicplayer.stop()
+			fade_volume(trackmusicplayer, trackmusicplayer.volume_db, -60, 0.5)
 	else:
 		pause_state = false
 		if not _resume_pending:
@@ -111,7 +117,10 @@ func stop_track():
 	trackmusicplayer.stop()
 	pause_state = false
 	_resume_pending = false
+	_resume_pending = false
 	track_position = 0.0
+	_track_anchor_position = 0.0
+	_track_anchor_time = 0
 	_track_anchor_position = 0.0
 	_track_anchor_time = 0
 
