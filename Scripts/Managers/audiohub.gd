@@ -9,6 +9,11 @@ var typingplayer: AudioStreamPlayer
 var pause_state = false
 var track_position = 0.0
 
+var _track_anchor_position = 0.0
+var _track_anchor_time = 0
+
+var _resume_pending = false
+
 
 var save_path = "user://options.save"
 
@@ -31,9 +36,6 @@ func _ready():
 
 
 func fade_volume(player: AudioStreamPlayer, from_db: float, to_db: float, duration: float) -> void:
-	# Cancel any fade already running on this player so rapid, repeated
-	# calls (e.g. fast scrolling through a song list) can't pile up and
-	# fire their delayed .play()/.stop() out of order.
 	if _fade_tweens.has(player):
 		var old_tween: Tween = _fade_tweens[player]
 		if old_tween and old_tween.is_valid():
@@ -47,28 +49,71 @@ func fade_volume(player: AudioStreamPlayer, from_db: float, to_db: float, durati
 
 
 func play_track(audio: AudioStream):
+	track_position = 0.0
 	trackmusicplayer.stream = audio
 	trackmusicplayer.volume_db = -60
-	trackmusicplayer.play()
+
+	if pause_state:
+		_resume_pending = true
+		return
+
+	_resume_pending = false
+	_start_track_at(0.0)
 	fade_volume(trackmusicplayer, -60, music_volume, 0.8)
 
 
-func toggle_trackpause():
+func clear_pause_state() -> void:
+	pause_state = false
+	_resume_pending = false
+
+
+func _start_track_at(position: float) -> void:
+	_track_anchor_position = position
+	_track_anchor_time = Time.get_ticks_usec()
+	trackmusicplayer.play(position)
+
+
+func _current_track_position() -> float:
+	var reported = trackmusicplayer.get_playback_position()
+	if reported < _track_anchor_position:
+		return _track_anchor_position + (Time.get_ticks_usec() - _track_anchor_time) / 1000000.0
+
+	return reported + AudioServer.get_time_since_last_mix()
+
+
+func toggle_trackpause() -> void:
 	if pause_state == false:
-		track_position = trackmusicplayer.get_playback_position()
-		trackmusicplayer.stop()
-		await fade_volume(trackmusicplayer, trackmusicplayer.volume_db, -60, 0.5)
 		pause_state = true
+		if trackmusicplayer.playing:
+			track_position = _current_track_position()
+			_resume_pending = true
+			trackmusicplayer.stop()
+			fade_volume(trackmusicplayer, trackmusicplayer.volume_db, -60, 0.5)
 	else:
-		
-		await fade_volume(trackmusicplayer, -60, music_volume, 0.5)
-		trackmusicplayer.play(track_position)
 		pause_state = false
+		if not _resume_pending:
+			return
+
+		_resume_pending = false
+		var length = _track_length()
+		if length > 0.0:
+			track_position = minf(track_position, length)
+		_start_track_at(track_position)
+		fade_volume(trackmusicplayer, -60, music_volume, 0.5)
+
+
+func _track_length() -> float:
+	if trackmusicplayer.stream == null:
+		return 0.0
+	return trackmusicplayer.stream.get_length()
 
 func stop_track():
 	trackmusicplayer.stop()
 	pause_state = false
+	_resume_pending = false
 	track_position = 0.0
+	_track_anchor_position = 0.0
+	_track_anchor_time = 0
 
 
 

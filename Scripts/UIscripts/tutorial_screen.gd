@@ -2,6 +2,7 @@ extends CanvasLayer
 
 var stages := []
 var current_stage := 0
+var tutorial_finished := false
 
 # FirstStage lane checks
 var lane_pressed := {
@@ -21,6 +22,10 @@ func _ready() -> void:
 	_update_visibility()
 
 func _process(delta: float) -> void:
+
+	if tutorial_finished:
+		return
+
 	if current_stage == 0:
 		_handle_first_stage_inputs()
 	else:
@@ -48,6 +53,7 @@ func _next_stage() -> void:
 	current_stage += 1
 	
 	if current_stage >= stages.size():
+		tutorial_finished = true
 		fade_out_and_finish()
 		return
 	

@@ -7,6 +7,7 @@ extends Node2D
 @export var from_story: bool = true
 @export var ignore_note_speed: bool = false
 var origin_index: int = -1
+var _level_started: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,6 +27,10 @@ func _ready() -> void:
 
 
 func start_level():
+	if _level_started:
+		return
+	_level_started = true
+
 	%Stars.emitting = true
 	$Conductor.chart = chart
 	%SongLabel.text = chart.name
